@@ -654,7 +654,7 @@ def z_axis_translate(
         schema=STEP1_SCHEMA,
         messages=s1_msgs,
         max_output_tokens=700,
-        temperature=0.2,
+        temperature=0.3,
         dry_run=dry_run,
     )
     if dry_run:
@@ -668,7 +668,7 @@ def z_axis_translate(
         schema=STEP2_SCHEMA,
         messages=s2_msgs,
         max_output_tokens=700,
-        temperature=0.2,
+        temperature=0.3,
         dry_run=False,
     )
 
@@ -680,7 +680,7 @@ def z_axis_translate(
         schema=STEP3_SCHEMA,
         messages=s3_msgs,
         max_output_tokens=500,
-        temperature=0.4,
+        temperature=0.7,
         dry_run=False,
     )
 
