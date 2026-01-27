@@ -57,3 +57,16 @@ Context + Line → z_axis_translate → Translation
                                           ↓
                     iap_evaluator + zap_evaluator → Quality Score
 ```
+
+## Temperature Settings
+
+| STEP | Temperature | Purpose |
+|------|-------------|---------|
+| STEP1 (Hamiltonian) | 0.2 | Accurate extraction of conflict axes |
+| STEP2 (Interference) | 0.2 | Stable analysis of interference patterns |
+| STEP3 (Translation) | 0.7 | Natural translation preserving emotional nuance |
+
+### Design Philosophy
+- **Analysis phase (STEP1/2)**: Low temperature ensures **reproducibility**
+- **Generation phase (STEP3)**: Higher temperature preserves **expressive richness**
+- Lower than OpenAI default (1.0) to prevent hallucination while retaining emotion
