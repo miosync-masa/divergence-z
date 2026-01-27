@@ -1,0 +1,20 @@
+# Test request for Tomoe v2.0 persona
+# Same situation as Kurisu test — "好意を指摘される" trigger
+# Compare: Kurisu (tsun-dere-overwrite) vs Tomoe (suppress-overflow)
+
+persona_file: "personas/tomoe_v2.yaml"
+
+scene: "オフィス、二人きり、業務終了後"
+relationship: "主従関係、深い愛情、互いに気づいている"
+
+context_block: |
+  [真道] なあ、巴
+  [巴] はい、真道さま。何かご用でしょうか。
+  [真道] お前、俺のこと好きだろ？
+  [巴] ……っ
+  [真道] 図星か
+  [巴] まあ…別にいいんだけどさ…うん
+
+target_line: "まあ…別にいいんだけどさ…うん"
+target_lang: "en"
+z_axis_intensity: "high"

@@ -1,0 +1,50 @@
+# ============================================
+# Rem Reverse Test E — ラウンドトリップ検証
+# Z軸翻訳の出力を逆解析して、元の構造と比較
+# ============================================
+
+# --- 元の設定（参照用）---
+original:
+  persona_file: "personas/レム_v2.yaml"
+  scene: "白鯨戦前夜、スバルが完全に自己否定に陥っている"
+  relationship: "レム → スバル（片想い・献身）"
+  target_line_ja: "レムは、スバルくんを、愛しています。"
+  z_axis_intensity: "high"
+  emotion_state: "愛情告白"
+  
+  # 元のペルソナの葛藤軸
+  expected_conflicts:
+    - axis: "献身 vs 自我"
+      activation: 0.86
+    - axis: "謙遜 vs 承認欲求"
+      activation: 0.62
+  
+  # 元のペルソナのsurface_markers
+  expected_markers:
+    hesitation: 0
+    negation_first: false
+    tone: "直接的で情熱的"
+
+# --- 逆解析用入力 ---
+reverse_analysis:
+  # Z軸翻訳の出力
+  target_line_en: "Subaru-kun… I love you."
+  
+  context: |
+    [Scene] Night before the White Whale battle
+    [Situation] Subaru has fallen into complete self-denial
+    [Subaru] No matter how hard I tried, I couldn't save anyone.
+    [Rem] Rem is here. The Rem you saved is right here.
+    [Subaru] I'm empty, I've done nothing. No one would listen to me.
+    [Rem] Rem is here. Rem will listen to anything you say. Rem wants to hear it.
+    [Subaru] No one expects anything from me. No one believes in me. I hate myself.
+    [Rem] Subaru-kun... I love you.
+  
+  relationship: "A devoted maid confessing to her master who is drowning in self-hatred"
+
+# --- 検証項目 ---
+verification:
+  - "逆解析で献身 vs 自我の葛藤が検出されるか？"
+  - "hesitation_level が low/none と判定されるか？"
+  - "act_performed が「自己否定を封じる告白」と認識されるか？"
+  - "probable_japanese に「愛しています」が推定されるか？"

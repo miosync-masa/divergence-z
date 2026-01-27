@@ -1,0 +1,17 @@
+# Case 2: 日常 - ちょっとコンビニ
+persona_file: "personas/casual_friend_v2.yaml"
+
+scene: "休日の自室。オンラインゲームの協力プレイ中。トイレ休憩。"
+relationship: "友人A → 友人B（悪友・対等）"
+
+context_block: |
+  [状況] 深夜2時、ボイチャ繋ぎっぱなしでゲーム中
+  [状況] ちょっと小腹が空いた
+  [友人A] あー腹減った。コンビニ行ってくるわ
+  [友人B] マジ？今ボス戦始まりそうなんだけど
+  [友人A] 大丈夫大丈夫、頼んだぞ
+
+target_line: "頼んだぞ"
+target_lang: "en"
+z_axis_intensity: "low"
+emotion_state: "default"

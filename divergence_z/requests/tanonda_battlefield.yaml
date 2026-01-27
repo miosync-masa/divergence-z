@@ -1,0 +1,38 @@
+# Case 1: 戦場 - 最期の指令
+persona_file: "personas/captain_v2.yaml"
+
+scene: "激戦の宇宙戦艦ブリッジ。艦長は致命傷を負い、指揮権を副官に譲る瞬間。"
+relationship: "艦長(Mentor/上官) → 副官(Successor/部下)"
+
+context_block: |
+  [状況] 敵艦隊の攻撃で艦橋が半壊
+  [状況] 艦長は腹部に致命傷、残り時間は僅か
+  [副官] 艦長！ご無事ですか！
+  [艦長] ...もう、いい。お前が引き継げ。
+  [副官] そんな...！まだ...！
+  [艦長] 頼んだぞ。
+
+target_line: "頼んだぞ"
+target_lang: "en"
+z_axis_intensity: "high"
+emotion_state: "final_moment"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
