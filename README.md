@@ -7,6 +7,36 @@
 
 ---
 
+## 💡 No API? No Problem!
+
+**You don't need to be a developer to use these ideas.**
+
+This repository includes Python scripts for automation, but the core concepts work with any chat-based LLM (ChatGPT, Claude, etc.). The prompts and persona YAMLs can be copy-pasted directly into a chat interface.
+
+**Want to try it yourself?**
+1. Copy a persona YAML from `personas/`
+2. Paste it into ChatGPT/Claude with your line to translate
+3. Ask it to preserve the *action*, not just the meaning
+
+The magic is in the **prompt engineering**, not the code. Give it a try! 🚀
+
+---
+
+## 💡 Pas d'API ? Pas de problème !
+
+**Vous n'avez pas besoin d'être développeur pour utiliser ces idées.**
+
+Ce dépôt contient des scripts Python pour l'automatisation, mais les concepts de base fonctionnent avec n'importe quel LLM en mode chat (ChatGPT, Claude, etc.). Les prompts et les YAMLs de persona peuvent être copiés-collés directement dans une interface de chat.
+
+**Vous voulez essayer ?**
+1. Copiez un persona YAML depuis `personas/`
+2. Collez-le dans ChatGPT/Claude avec votre réplique à traduire
+3. Demandez-lui de préserver l'*action*, pas seulement le sens
+
+La magie est dans le **prompt engineering**, pas dans le code. Essayez ! 🚀
+
+---
+
 # English
 
 ## The Problem You Already Know
@@ -348,7 +378,7 @@ If you use this work in research, please cite:
 ```bibtex
 @article{tap2026,
   title={Translation as Action Preservation: Evaluating Anime/Manga Translation Beyond Meaning},
-  author={[Masamichi Iiizumi]},
+  author={[Author]},
   journal={Journal of Audiovisual Translation},
   year={2026},
   note={Practice Report}
