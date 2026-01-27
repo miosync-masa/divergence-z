@@ -39,22 +39,57 @@ cd divergence_z
 # 1. Generate persona (uses Claude)
 python persona_generator.py --name "レム" --source "Re:Zero" --desc "献身的メイド"
 
-# 2. Translate with Z-axis (uses OpenAI)
+# 2a. [単発翻訳] Translate with Z-axis
 python z_axis_translate.py --config requests/rem_test.yaml
 
-# 3. Evaluate (uses OpenAI)
+# 2b. [対話翻訳] Translate dialogue scene ← NEW!
+python z_axis_dialogue.py --config requests/rem_subaru_dialogue.yaml
+
+# 3. Evaluate
 python iap_evaluator.py -o "スバルくんが良いんです" -t "I want you, Subaru-kun"
 python zap_evaluator.py --config requests/rem_test.yaml --translated "I want you, Subaru-kun"
+
+# ============================================
+# Optional: Content Generation Tools
+# ============================================
+
+# [derivative work] Generate original dialogue (LLM creates lines)
+python yaml_generator.py \
+  --persona personas/kurisu_v2.yaml \
+  --scene "ラボで岡部と二人きり" \
+  --mode solo
+
+# [Original plastic] Convert existing script to YAML
+python yaml_formatter.py \
+  --script scripts/rem_subaru_zero.txt \
+  --persona-a personas/レム_v2.yaml \
+  --persona-b personas/スバル_v2.yaml \
+  --hint "白鯨戦前夜、レムの告白"
 ```
 
 ## Workflow
 ```
-                    [Claude API]
-Character Info → persona_generator → Persona YAML
-                                          ↓
-                                    [OpenAI API]
-Context + Line → z_axis_translate → Translation
-                                          ↓
+                        [Claude API]
+    Character Info → persona_generator → Persona YAML
+                                              ↓
+    ┌─────────────────────────────────────────┴─────────────────────────────────────────┐
+    │                           REQUEST YAML GENERATION                                 │
+    │                                                                                   │
+    │   [derivative work]                              [Original Script]            　  │
+    │   Scene Hint → yaml_generator ─┐         Script.txt → yaml_formatter ─┐           │
+    │                [OpenAI]        │                      [OpenAI]        │           │
+    │                                ▼                                      ▼           │
+    │                         requests/*.yaml ◄─────────────────────────────            │
+    └────────────────────────────────┬──────────────────────────────────────────────────┘
+                                     ↓
+                              [OpenAI API]
+                    ┌─────────────────────────────────┐
+                    │  z_axis_translate (Monologue)   │
+                    │  z_axis_dialogue  (Dialog)      │
+                    └─────────────────────────────────┘
+                                     ↓
+                              Translation
+                                     ↓
                     iap_evaluator + zap_evaluator → Quality Score
 ```
 
