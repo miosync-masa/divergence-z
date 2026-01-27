@@ -378,7 +378,7 @@ If you use this work in research, please cite:
 ```bibtex
 @article{tap2026,
   title={Translation as Action Preservation: Evaluating Anime/Manga Translation Beyond Meaning},
-  author={[Author]},
+  author={[anonymous]},
   journal={Journal of Audiovisual Translation},
   year={2026},
   note={Practice Report}
