@@ -1,0 +1,459 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+ZAP (Z-Axis Preservation) Evaluator
+===================================
+
+Z軸翻訳の品質を評価する。
+ペルソナ × コンテキスト × 原文 に対して、訳文が適切かをLLMで判定。
+
+使い方:
+  # 訳文を直接指定
+  python zap_evaluator.py \
+    --persona personas/レム_v2.yaml \
+    --config requests/rem_test.yaml \
+    --translated "I love you, Subaru-kun."
+
+  # 複数訳文を比較
+  python zap_evaluator.py \
+    --persona personas/レム_v2.yaml \
+    --config requests/rem_test.yaml \
+    --compare "DeepL: Rem loves Subaru." "Z-Axis: I love you, Subaru-kun."
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+import yaml
+from dotenv import load_dotenv
+from openai import OpenAI
+
+load_dotenv()
+
+DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-4.1")
+
+
+# -----------------------------
+# Schema
+# -----------------------------
+
+ZAP_RESULT_SCHEMA = {
+    "type": "object",
+    "additionalProperties": False,
+    "properties": {
+        "overall_score": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "description": "Overall Z-Axis preservation score"
+        },
+        "character_voice": {
+            "type": "object",
+            "additionalProperties": False,
+            "properties": {
+                "score": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                "preserved": {"type": "boolean"},
+                "comment": {"type": "string", "maxLength": 200}
+            },
+            "required": ["score", "preserved", "comment"]
+        },
+        "emotional_intensity": {
+            "type": "object",
+            "additionalProperties": False,
+            "properties": {
+                "score": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                "preserved": {"type": "boolean"},
+                "original_level": {"type": "string", "enum": ["low", "medium", "high"]},
+                "translated_level": {"type": "string", "enum": ["low", "medium", "high"]},
+                "comment": {"type": "string", "maxLength": 200}
+            },
+            "required": ["score", "preserved", "original_level", "translated_level", "comment"]
+        },
+        "listener_relationship": {
+            "type": "object",
+            "additionalProperties": False,
+            "properties": {
+                "score": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                "preserved": {"type": "boolean"},
+                "original_type": {
+                    "type": "string",
+                    "enum": ["direct_address", "third_person", "self_reference", "indirect"]
+                },
+                "translated_type": {
+                    "type": "string",
+                    "enum": ["direct_address", "third_person", "self_reference", "indirect"]
+                },
+                "comment": {"type": "string", "maxLength": 200}
+            },
+            "required": ["score", "preserved", "original_type", "translated_type", "comment"]
+        },
+        "speech_pattern": {
+            "type": "object",
+            "additionalProperties": False,
+            "properties": {
+                "score": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                "preserved": {"type": "boolean"},
+                "comment": {"type": "string", "maxLength": 200}
+            },
+            "required": ["score", "preserved", "comment"]
+        },
+        "critical_issues": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of critical issues that break character voice or emotional dynamics"
+        },
+        "summary": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "Brief summary of the evaluation"
+        }
+    },
+    "required": [
+        "overall_score",
+        "character_voice",
+        "emotional_intensity", 
+        "listener_relationship",
+        "speech_pattern",
+        "critical_issues",
+        "summary"
+    ]
+}
+
+
+# -----------------------------
+# LLM Evaluation
+# -----------------------------
+
+def build_zap_prompt(
+    persona_yaml: str,
+    context: str,
+    original_text: str,
+    translated_text: str,
+    target_lang: str,
+    emotion_state: Optional[str] = None,
+) -> List[Dict[str, str]]:
+    """ZAP評価用のプロンプトを構築"""
+    
+    emotion_hint = f"\n[EMOTION STATE] {emotion_state}" if emotion_state else ""
+    
+    system = """You are an expert in character voice preservation and emotional nuance in translation.
+
+Your task: Evaluate whether a translation preserves the CHARACTER'S VOICE and EMOTIONAL DYNAMICS, not just literal meaning.
+
+## Evaluation Criteria
+
+1. **Character Voice** (0.0-1.0)
+   - Does the translation sound like something this character would actually say?
+   - Is the character's unique speech pattern reflected?
+   - Consider: first-person reference style, politeness level, word choice tendencies
+
+2. **Emotional Intensity** (0.0-1.0)
+   - Is the emotional strength preserved? (low/medium/high)
+   - A passionate confession should remain passionate, not become clinical
+
+3. **Listener Relationship** (0.0-1.0)
+   - Is the addressee relationship preserved?
+   - CRITICAL: Japanese self-reference by name (e.g., "レムは〜") in confessions is DIRECT ADDRESS to the listener, NOT third-person narration
+   - Translating "レムは〜愛しています" as "Rem loves..." loses the intimacy; "I love you" preserves it
+
+4. **Speech Pattern** (0.0-1.0)
+   - Hesitation, confidence, negation patterns
+   - Character-specific verbal tics or tendencies
+
+## Critical Issues to Flag
+- Third-person narration replacing direct confession
+- Loss of intimacy/directness
+- Emotional flattening
+- Out-of-character word choices
+- Wrong politeness register
+
+Output MUST be valid JSON matching the provided schema.
+"""
+
+    user = f"""[PERSONA]
+{persona_yaml}
+
+[CONTEXT]
+{context}
+{emotion_hint}
+
+[ORIGINAL TEXT]
+{original_text}
+
+[TRANSLATED TEXT ({target_lang})]
+{translated_text}
+
+Evaluate the Z-Axis preservation of this translation.
+Consider: Does this translation make the character "live" in the target language, or does it flatten them into generic text?
+"""
+    
+    return [
+        {"role": "system", "content": system},
+        {"role": "user", "content": user}
+    ]
+
+
+def evaluate_zap(
+    client: OpenAI,
+    persona_yaml: str,
+    context: str,
+    original_text: str,
+    translated_text: str,
+    target_lang: str = "en",
+    emotion_state: Optional[str] = None,
+    model: str = DEFAULT_MODEL,
+) -> Dict[str, Any]:
+    """ZAP評価を実行"""
+    
+    messages = build_zap_prompt(
+        persona_yaml=persona_yaml,
+        context=context,
+        original_text=original_text,
+        translated_text=translated_text,
+        target_lang=target_lang,
+        emotion_state=emotion_state,
+    )
+    
+    resp = client.chat.completions.create(
+        model=model,
+        messages=messages,
+        response_format={
+            "type": "json_schema",
+            "json_schema": {
+                "name": "zap_result",
+                "strict": True,
+                "schema": ZAP_RESULT_SCHEMA,
+            }
+        },
+        temperature=0.2,
+        max_completion_tokens=1000,
+    )
+    
+    result = json.loads(resp.choices[0].message.content)
+    return result
+
+
+# -----------------------------
+# Config Loading
+# -----------------------------
+
+def load_yaml(path: str) -> Dict[str, Any]:
+    """YAMLファイルを読み込む"""
+    p = Path(path)
+    if not p.exists():
+        raise FileNotFoundError(f"File not found: {p}")
+    return yaml.safe_load(p.read_text(encoding="utf-8")) or {}
+
+
+def load_persona(config: Dict[str, Any], config_dir: Path) -> str:
+    """ペルソナYAMLを読み込んで文字列として返す"""
+    if "persona_file" in config:
+        persona_file = config["persona_file"]
+        
+        # 1. まずカレントディレクトリからの相対パスを試す
+        persona_path = Path(persona_file)
+        if persona_path.exists():
+            return persona_path.read_text(encoding="utf-8")
+        
+        # 2. 次にconfigファイルからの相対パスを試す
+        persona_path = config_dir / persona_file
+        if persona_path.exists():
+            return persona_path.read_text(encoding="utf-8")
+        
+        # 3. 見つからない
+        raise FileNotFoundError(
+            f"Persona file not found: {persona_file}\n"
+            f"  Tried: {Path(persona_file).absolute()}\n"
+            f"  Tried: {(config_dir / persona_file).absolute()}"
+        )
+    elif "persona" in config:
+        return yaml.dump(config["persona"], allow_unicode=True, default_flow_style=False)
+    else:
+        raise ValueError("Config must have 'persona_file' or 'persona'")
+
+
+def build_context_from_config(config: Dict[str, Any]) -> str:
+    """configからコンテキスト文字列を構築"""
+    parts = []
+    if "scene" in config:
+        parts.append(f"[Scene] {config['scene']}")
+    if "relationship" in config:
+        parts.append(f"[Relationship] {config['relationship']}")
+    if "context_block" in config:
+        parts.append(f"[Dialogue]\n{config['context_block']}")
+    if "notes" in config:
+        parts.append(f"[Notes]\n{config['notes']}")
+    return "\n\n".join(parts)
+
+
+# -----------------------------
+# Report
+# -----------------------------
+
+def print_report(
+    original_text: str,
+    translated_text: str,
+    result: Dict[str, Any],
+    label: str = "",
+) -> None:
+    """評価結果を表示"""
+    
+    label_str = f" ({label})" if label else ""
+    
+    print("=" * 60)
+    print(f"ZAP (Z-Axis Preservation) Evaluation{label_str}")
+    print("=" * 60)
+    print()
+    
+    print("【Original】")
+    print(f"  {original_text}")
+    print()
+    
+    print("【Translated】")
+    print(f"  {translated_text}")
+    print()
+    
+    overall = result["overall_score"]
+    star = "★" if overall >= 0.8 else "☆" if overall >= 0.6 else "✗"
+    print(f"【ZAP Score】")
+    print(f"  {star} Overall: {overall:.2f}")
+    
+    cv = result["character_voice"]
+    ei = result["emotional_intensity"]
+    lr = result["listener_relationship"]
+    sp = result["speech_pattern"]
+    
+    print(f"  ├─ Character Voice: {cv['score']:.2f} {'✓' if cv['preserved'] else '✗'}")
+    print(f"  │    {cv['comment']}")
+    print(f"  ├─ Emotional Intensity: {ei['score']:.2f} {'✓' if ei['preserved'] else '✗'}")
+    print(f"  │    {ei['original_level']} → {ei['translated_level']}: {ei['comment']}")
+    print(f"  ├─ Listener Relationship: {lr['score']:.2f} {'✓' if lr['preserved'] else '✗'}")
+    print(f"  │    {lr['original_type']} → {lr['translated_type']}: {lr['comment']}")
+    print(f"  └─ Speech Pattern: {sp['score']:.2f} {'✓' if sp['preserved'] else '✗'}")
+    print(f"       {sp['comment']}")
+    print()
+    
+    if result["critical_issues"]:
+        print("【Critical Issues】")
+        for issue in result["critical_issues"]:
+            print(f"  ⚠️ {issue}")
+        print()
+    
+    print("【Summary】")
+    print(f"  {result['summary']}")
+    print()
+
+
+# -----------------------------
+# Main
+# -----------------------------
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="ZAP (Z-Axis Preservation) Evaluator",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument("--config", required=True, help="YAML config file (with persona, context, original)")
+    parser.add_argument("--translated", "-t", help="Translated text to evaluate")
+    parser.add_argument("--compare", nargs="+", help="Multiple translations to compare (format: 'Label: text')")
+    parser.add_argument("--model", default=DEFAULT_MODEL, help=f"Model to use (default: {DEFAULT_MODEL})")
+    parser.add_argument("--json", action="store_true", help="Output raw JSON")
+    
+    args = parser.parse_args()
+    
+    # Load config
+    config_path = Path(args.config)
+    config = load_yaml(args.config)
+    config_dir = config_path.parent
+    
+    # Load persona
+    persona_yaml = load_persona(config, config_dir)
+    
+    # Build context
+    context = build_context_from_config(config)
+    
+    # Get original text
+    original_text = config.get("target_line", "").strip()
+    if not original_text:
+        print("Error: config must have 'target_line'", file=sys.stderr)
+        return 1
+    
+    # Get target language
+    target_lang = config.get("target_lang", "en")
+    
+    # Get emotion state (optional)
+    emotion_state = config.get("emotion_state")
+    
+    # Build client
+    client = OpenAI()
+    
+    # Collect translations to evaluate
+    translations = []
+    if args.translated:
+        translations.append(("", args.translated))
+    if args.compare:
+        for item in args.compare:
+            if ": " in item:
+                label, text = item.split(": ", 1)
+                translations.append((label.strip(), text.strip()))
+            else:
+                translations.append(("", item.strip()))
+    
+    if not translations:
+        print("Error: provide --translated or --compare", file=sys.stderr)
+        return 1
+    
+    # Evaluate each translation
+    results = []
+    for label, translated_text in translations:
+        result = evaluate_zap(
+            client=client,
+            persona_yaml=persona_yaml,
+            context=context,
+            original_text=original_text,
+            translated_text=translated_text,
+            target_lang=target_lang,
+            emotion_state=emotion_state,
+            model=args.model,
+        )
+        results.append({
+            "label": label,
+            "translated": translated_text,
+            "result": result,
+        })
+    
+    # Output
+    if args.json:
+        print(json.dumps(results, ensure_ascii=False, indent=2))
+    else:
+        for item in results:
+            print_report(
+                original_text=original_text,
+                translated_text=item["translated"],
+                result=item["result"],
+                label=item["label"],
+            )
+        
+        # Comparison summary if multiple
+        if len(results) > 1:
+            print("=" * 60)
+            print("【Comparison Summary】")
+            print("=" * 60)
+            sorted_results = sorted(results, key=lambda x: x["result"]["overall_score"], reverse=True)
+            for i, item in enumerate(sorted_results, 1):
+                label = item["label"] or "Translation"
+                score = item["result"]["overall_score"]
+                print(f"  {i}. {label}: {score:.2f}")
+            print()
+    
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
