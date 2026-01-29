@@ -17,10 +17,6 @@ USE_CLAUDE_FOR_STEP3=false python z_axis_translate.py --config your_config.yaml
 python z_axis_translate.py --config your_config.yaml
 ```
 
-> **Example**: Same line「別に...あんたのためじゃないから」  
-> - GPT-5.2: "**N-not** that it's for you or anything..."  
-> - Opus: "It's not like… it's for you or anything."
-
 ## Setup
 
 ### 1. Install dependencies
