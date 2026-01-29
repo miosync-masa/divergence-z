@@ -1,0 +1,127 @@
+{
+  "step1": {
+    "layer_a": {
+      "z": 0.72,
+      "z_mode": "leak",
+      "z_leak": [
+        "ellipsis",
+        "trailing",
+        "negation_first"
+      ],
+      "z_confidence": 0.78,
+      "emotion_label": "嫉妬の否認（ツンデレ漏出）",
+      "listener_type": "self"
+    },
+    "layer_b": {
+      "probable_cause": "岡部が他の女性と親しげに話しているのを目撃し、嫉妬と不安が生じたが、それを認めたくなくて「別に…」で否定している。",
+      "subtext": "本当は岡部のことが気になっており、資料を渡すのも（少なくとも一部は）岡部のため／岡部に関わりたい気持ちがある。",
+      "confidence": 0.62
+    },
+    "activated_conflicts": [
+      {
+        "axis": "科学的客観性 vs 主観的感情",
+        "side_a": "論理と証明に基づく判断",
+        "side_b": "岡部への好意と依存",
+        "activation": 0.74
+      },
+      {
+        "axis": "自己防衛 vs 承認欲求",
+        "side_a": "攻撃的な態度で距離を取る",
+        "side_b": "認められたい、頼られたい",
+        "activation": 0.7
+      },
+      {
+        "axis": "大人の振る舞い vs 年相応の幼さ",
+        "side_a": "天才科学者としての威厳",
+        "side_b": "@ちゃんねらーとしてのオタク性",
+        "activation": 0.32
+      }
+    ],
+    "bias": {
+      "mode": "冷静な科学者モード（ツン）",
+      "pattern": "Tsun-Dere-Leak (Scientific Overwrite)",
+      "tendencies": [
+        "否定から入って感情を隠す",
+        "論理（効率）で動機を上書きする",
+        "本音が小声で漏れる"
+      ]
+    },
+    "arc": {
+      "arc_id": "tsundere_acceptance",
+      "arc_phase": "rise",
+      "arc_target": "speaker"
+    },
+    "triggers": [
+      "岡部が他の女性と楽しそうに話しているのを目撃",
+      "嫉妬・不安の自覚しかけ",
+      "『別に…』での否認"
+    ],
+    "risk_flags": [
+      "none"
+    ]
+  },
+  "step2": {
+    "waves": {
+      "wave_a": {
+        "label": "True intent: jealousy/anxiety + desire to be noticed/connected to Okabe; impulse to step out and assert presence; caring motivation behind bringing materials",
+        "strength": 0.82
+      },
+      "wave_b": {
+        "label": "Suppression: self-protective tsun denial + scientific/logical overwrite ('efficiency', 'not my business'); distancing to avoid rejection/embarrassment",
+        "strength": 0.76
+      }
+    },
+    "interference": {
+      "type": "mixed",
+      "notes": "Strong emotional pull (jealousy/attachment) is immediately met by near-equal suppression via negation-first and rational framing. Result is a leak-pattern: the denial does not erase the feeling; it makes it audible through trailing/ellipsis and repeated self-correction."
+    },
+    "surface_markers": {
+      "hesitation_level": "high",
+      "negation_first": true,
+      "negation_type": "concealment",
+      "listener_type": "self",
+      "self_directed_rebinding": true,
+      "self_correction": true,
+      "leak_then_overwrite": true,
+      "residual_marker": "Ellipsis/trailing endings signal the feeling persists after the denial; repeated '違う/別に' indicates ongoing internal tug-of-war.",
+      "z_mode": "leak",
+      "z_leak": [
+        "ellipsis",
+        "trailing",
+        "negation_first"
+      ],
+      "z_axis_intensity": "high"
+    },
+    "analysis_summary": "Layer A indicates self-directed tsundere denial with high Z (0.72) and leak mode. The surface claim ('not for you') conflicts with the true motive (wanting to give him the materials / wanting his attention), so negation is concealment rather than declaration. Because the listener"
+  },
+  "step3": {
+    "translation": "[Situation] Future Gadget Laboratory. Kurisu was only supposed to come by to sort through the experiment logs. But Okabe’s voice carries in from the hallway, and her feet stop on reflex. The door is cracked open just a little; beyond it, she can see Okabe talking cheerfully with an unfamiliar woman (or maybe one of the Lab members). Laughter. How close they’re standing. Kurisu’s chest tightens.\n\n[Makise Kurisu] (…What is with that energy. Even doing those weird poses like always…)\n\n[Makise Kurisu] (It’s not like it’s any of my business… not. If you think about it logically, Rintaro Okabe’s sense of personal distance has always been off.)\n\n[Makise Kurisu] (…But why am I like this…)\n\n[Situation] Okabe’s voice rises for a moment, and the other person laughs. Without thinking, Kurisu clenches the memo in her hand. Even she’s surprised at how irritation and anxiety mix, heating the back of her throat.\n\n[Makise Kurisu] (…I mean, even I, today… I was just going to, um, put the materials together and hand them over…)\n\n[Makise Kurisu] (No. This is an efficiency issue. It’s just faster if I do it, so I brought them.)\n\n[Situation] She almost steps out toward him—then stops. If she goes out there, she can already see the “What are you doing?” look on his face. So instead of letting the words out, she swallows them and tells herself in a small voice that won’t reach anyone.\n\n[Makise Kurisu] “It’s not like… it’s for you, idiot. Just so you know…”",
+    "z_signature": {
+      "z": 0.72,
+      "z_mode": "leak",
+      "z_leak_applied": [
+        "ellipsis",
+        "trailing",
+        "negation_first"
+      ],
+      "hesitation_level": "high",
+      "negation_first": true,
+      "negation_type": "concealment",
+      "listener_type": "self",
+      "self_directed_rebinding": true,
+      "self_correction": true,
+      "leak_then_overwrite": true,
+      "residual_marker": "Ellipsis/trailing endings preserve the denied feeling under a logical overwrite."
+    },
+    "arc": {
+      "arc_id": "tsundere_acceptance",
+      "arc_phase": "rise",
+      "arc_position": 1
+    },
+    "notes": "Kept negation-first pattern and scientific overwrite (“efficiency issue”), with ellipses and trailing to leak jealousy/anxiety while maintaining a calm, slightly high-pressure voice that frays.",
+    "alternatives": [
+      "[Makise Kurisu] “Not that it’s… for you or anything. Don’t get the wrong idea…”",
+      "[Makise Kurisu] “It’s not… because I care, okay. I just— it was more efficient, that’s all…”"
+    ]
+  }
+}
