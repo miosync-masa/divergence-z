@@ -1,22 +1,28 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-ZAP (Z-Axis Preservation) Evaluator
-===================================
+ZAP (Z-Axis Preservation) Evaluator v3.0
+========================================
 
-Z軸翻訳の品質を評価する。
-ペルソナ × コンテキスト × 原文 に対して、訳文が適切かをLLMで判定。
+Evaluate the quality of Z-axis translation.
+Use an LLM to determine whether the translated text
+is appropriate for the persona × context × source text.
 
-使い方:
-  # 訳文を直接指定
+v3.0 Changes:
+- z_mode preservation evaluation
+- z_leak marker detection
+- arc_phase appropriateness check
+
+How to Use:
+  # Specify the translation directly
   python zap_evaluator.py \
-    --persona personas/レム_v2.yaml \
+    --persona personas/レム_v3.yaml \
     --config requests/rem_test.yaml \
     --translated "I love you, Subaru-kun."
 
-  # 複数訳文を比較
+  # Compare multiple translations
   python zap_evaluator.py \
-    --persona personas/レム_v2.yaml \
+    --persona personas/レム_v3.yaml \
     --config requests/rem_test.yaml \
     --compare "DeepL: Rem loves Subaru." "Z-Axis: I love you, Subaru-kun."
 """
@@ -40,7 +46,7 @@ DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-4.1")
 
 
 # -----------------------------
-# Schema
+# Schema v3.0
 # -----------------------------
 
 ZAP_RESULT_SCHEMA = {
@@ -103,6 +109,53 @@ ZAP_RESULT_SCHEMA = {
             },
             "required": ["score", "preserved", "comment"]
         },
+        # v3.0: Z-Axis Fidelity
+        "z_axis_fidelity": {
+            "type": "object",
+            "additionalProperties": False,
+            "properties": {
+                "z_mode_appropriate": {
+                    "type": "boolean",
+                    "description": "Does the translation reflect the expected z_mode (collapse/rage/numb/plea/shame/leak/none)?"
+                },
+                "z_mode_detected": {
+                    "type": "string",
+                    "enum": ["collapse", "rage", "numb", "plea", "shame", "leak", "none"],
+                    "description": "What z_mode does the translation exhibit?"
+                },
+                "z_leak_markers_found": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": ["stutter", "ellipsis", "repetition", "negation_first", "overwrite", "trailing", "self_negation", "none"]
+                    },
+                    "description": "Which z_leak markers are present in the translation?"
+                },
+                "z_leak_appropriate": {
+                    "type": "boolean",
+                    "description": "Are the z_leak markers appropriate for the emotional context?"
+                },
+                "arc_phase_appropriate": {
+                    "type": "boolean",
+                    "description": "Does the translation fit the expected arc phase (bottom/rise/break/recovery/stable)?"
+                },
+                "score": {
+                    "type": "number",
+                    "minimum": 0.0,
+                    "maximum": 1.0
+                },
+                "comment": {"type": "string", "maxLength": 200}
+            },
+            "required": [
+                "z_mode_appropriate",
+                "z_mode_detected",
+                "z_leak_markers_found",
+                "z_leak_appropriate",
+                "arc_phase_appropriate",
+                "score",
+                "comment"
+            ]
+        },
         "critical_issues": {
             "type": "array",
             "items": {"type": "string"},
@@ -120,6 +173,7 @@ ZAP_RESULT_SCHEMA = {
         "emotional_intensity", 
         "listener_relationship",
         "speech_pattern",
+        "z_axis_fidelity",
         "critical_issues",
         "summary"
     ]
@@ -137,10 +191,23 @@ def build_zap_prompt(
     translated_text: str,
     target_lang: str,
     emotion_state: Optional[str] = None,
+    expected_z_mode: Optional[str] = None,
+    expected_z_leak: Optional[List[str]] = None,
+    expected_arc_phase: Optional[str] = None,
 ) -> List[Dict[str, str]]:
-    """ZAP評価用のプロンプトを構築"""
+    """ZAP評価用のプロンプトを構築（v3.0）"""
     
     emotion_hint = f"\n[EMOTION STATE] {emotion_state}" if emotion_state else ""
+    
+    # v3.0 hints
+    z_hints = []
+    if expected_z_mode:
+        z_hints.append(f"[EXPECTED Z_MODE] {expected_z_mode}")
+    if expected_z_leak:
+        z_hints.append(f"[EXPECTED Z_LEAK] {', '.join(expected_z_leak)}")
+    if expected_arc_phase:
+        z_hints.append(f"[EXPECTED ARC_PHASE] {expected_arc_phase}")
+    z_hints_str = "\n".join(z_hints)
     
     system = """You are an expert in character voice preservation and emotional nuance in translation.
 
@@ -166,12 +233,38 @@ Your task: Evaluate whether a translation preserves the CHARACTER'S VOICE and EM
    - Hesitation, confidence, negation patterns
    - Character-specific verbal tics or tendencies
 
+5. **Z-Axis Fidelity** (v3.0) (0.0-1.0)
+   - z_mode: Does the translation reflect the emotional breakdown type?
+     - collapse: stuttering, broken sentences, repetition
+     - rage: harsh vocabulary, fluent but aggressive
+     - numb: flat, emotionless, short
+     - plea: begging, repetitive requests
+     - shame: self-negation, hesitation
+     - leak: denial followed by truth slipping out (tsundere)
+     - none: stable speech
+   - z_leak markers: Are appropriate markers present?
+     - stutter: "I— I..."
+     - ellipsis: "..."
+     - repetition: "nobody— nobody"
+     - negation_first: "N-not that..."
+     - overwrite: "I mean—"
+     - trailing: "...I guess"
+     - self_negation: "I'm worthless"
+   - arc_phase: Does the tone fit the emotional arc position?
+     - bottom: lowest point, despair
+     - rise: building emotion
+     - break: turning point
+     - recovery: coming back
+     - stable: neutral
+
 ## Critical Issues to Flag
 - Third-person narration replacing direct confession
 - Loss of intimacy/directness
 - Emotional flattening
 - Out-of-character word choices
 - Wrong politeness register
+- Missing z_leak markers when emotion is high
+- Wrong z_mode (e.g., stable when should be collapse)
 
 Output MUST be valid JSON matching the provided schema.
 """
@@ -182,6 +275,7 @@ Output MUST be valid JSON matching the provided schema.
 [CONTEXT]
 {context}
 {emotion_hint}
+{z_hints_str}
 
 [ORIGINAL TEXT]
 {original_text}
@@ -189,8 +283,8 @@ Output MUST be valid JSON matching the provided schema.
 [TRANSLATED TEXT ({target_lang})]
 {translated_text}
 
-Evaluate the Z-Axis preservation of this translation.
-Consider: Does this translation make the character "live" in the target language, or does it flatten them into generic text?
+Evaluate the Z-Axis preservation of this translation (v3.0).
+Consider: Does this translation make the character "live" in the target language, with appropriate emotional breakdown patterns (z_mode) and surface markers (z_leak)?
 """
     
     return [
@@ -207,9 +301,12 @@ def evaluate_zap(
     translated_text: str,
     target_lang: str = "en",
     emotion_state: Optional[str] = None,
+    expected_z_mode: Optional[str] = None,
+    expected_z_leak: Optional[List[str]] = None,
+    expected_arc_phase: Optional[str] = None,
     model: str = DEFAULT_MODEL,
 ) -> Dict[str, Any]:
-    """ZAP評価を実行"""
+    """ZAP評価を実行（v3.0）"""
     
     messages = build_zap_prompt(
         persona_yaml=persona_yaml,
@@ -218,6 +315,9 @@ def evaluate_zap(
         translated_text=translated_text,
         target_lang=target_lang,
         emotion_state=emotion_state,
+        expected_z_mode=expected_z_mode,
+        expected_z_leak=expected_z_leak,
+        expected_arc_phase=expected_arc_phase,
     )
     
     resp = client.chat.completions.create(
@@ -226,13 +326,13 @@ def evaluate_zap(
         response_format={
             "type": "json_schema",
             "json_schema": {
-                "name": "zap_result",
+                "name": "zap_result_v3",
                 "strict": True,
                 "schema": ZAP_RESULT_SCHEMA,
             }
         },
         temperature=0.2,
-        max_completion_tokens=1000,
+        max_completion_tokens=1200,
     )
     
     result = json.loads(resp.choices[0].message.content)
@@ -293,7 +393,7 @@ def build_context_from_config(config: Dict[str, Any]) -> str:
 
 
 # -----------------------------
-# Report
+# Report v3.0
 # -----------------------------
 
 def print_report(
@@ -302,12 +402,12 @@ def print_report(
     result: Dict[str, Any],
     label: str = "",
 ) -> None:
-    """評価結果を表示"""
+    """評価結果を表示（v3.0）"""
     
     label_str = f" ({label})" if label else ""
     
     print("=" * 60)
-    print(f"ZAP (Z-Axis Preservation) Evaluation{label_str}")
+    print(f"ZAP (Z-Axis Preservation) Evaluation v3.0{label_str}")
     print("=" * 60)
     print()
     
@@ -328,6 +428,7 @@ def print_report(
     ei = result["emotional_intensity"]
     lr = result["listener_relationship"]
     sp = result["speech_pattern"]
+    zf = result["z_axis_fidelity"]
     
     print(f"  ├─ Character Voice: {cv['score']:.2f} {'✓' if cv['preserved'] else '✗'}")
     print(f"  │    {cv['comment']}")
@@ -335,8 +436,16 @@ def print_report(
     print(f"  │    {ei['original_level']} → {ei['translated_level']}: {ei['comment']}")
     print(f"  ├─ Listener Relationship: {lr['score']:.2f} {'✓' if lr['preserved'] else '✗'}")
     print(f"  │    {lr['original_type']} → {lr['translated_type']}: {lr['comment']}")
-    print(f"  └─ Speech Pattern: {sp['score']:.2f} {'✓' if sp['preserved'] else '✗'}")
-    print(f"       {sp['comment']}")
+    print(f"  ├─ Speech Pattern: {sp['score']:.2f} {'✓' if sp['preserved'] else '✗'}")
+    print(f"  │    {sp['comment']}")
+    
+    # v3.0: Z-Axis Fidelity
+    print(f"  └─ Z-Axis Fidelity: {zf['score']:.2f}")
+    print(f"       z_mode: {zf['z_mode_detected']} {'✓' if zf['z_mode_appropriate'] else '✗'}")
+    z_leak_str = ", ".join(zf['z_leak_markers_found']) if zf['z_leak_markers_found'] else "none"
+    print(f"       z_leak: [{z_leak_str}] {'✓' if zf['z_leak_appropriate'] else '✗'}")
+    print(f"       arc_phase: {'✓' if zf['arc_phase_appropriate'] else '✗'}")
+    print(f"       {zf['comment']}")
     print()
     
     if result["critical_issues"]:
@@ -356,7 +465,7 @@ def print_report(
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="ZAP (Z-Axis Preservation) Evaluator",
+        description="ZAP (Z-Axis Preservation) Evaluator v3.0",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument("--config", required=True, help="YAML config file (with persona, context, original)")
@@ -364,6 +473,11 @@ def main() -> int:
     parser.add_argument("--compare", nargs="+", help="Multiple translations to compare (format: 'Label: text')")
     parser.add_argument("--model", default=DEFAULT_MODEL, help=f"Model to use (default: {DEFAULT_MODEL})")
     parser.add_argument("--json", action="store_true", help="Output raw JSON")
+    
+    # v3.0 options
+    parser.add_argument("--z-mode", help="Expected z_mode (collapse/rage/numb/plea/shame/leak/none)")
+    parser.add_argument("--z-leak", nargs="+", help="Expected z_leak markers")
+    parser.add_argument("--arc-phase", help="Expected arc_phase (bottom/rise/break/recovery/stable)")
     
     args = parser.parse_args()
     
@@ -389,6 +503,11 @@ def main() -> int:
     
     # Get emotion state (optional)
     emotion_state = config.get("emotion_state")
+    
+    # v3.0: Get expected z values from config or args
+    expected_z_mode = args.z_mode or config.get("z_mode")
+    expected_z_leak = args.z_leak or config.get("z_leak_hint")
+    expected_arc_phase = args.arc_phase or config.get("arc_phase")
     
     # Build client
     client = OpenAI()
@@ -420,6 +539,9 @@ def main() -> int:
             translated_text=translated_text,
             target_lang=target_lang,
             emotion_state=emotion_state,
+            expected_z_mode=expected_z_mode,
+            expected_z_leak=expected_z_leak,
+            expected_arc_phase=expected_arc_phase,
             model=args.model,
         )
         results.append({
@@ -449,7 +571,8 @@ def main() -> int:
             for i, item in enumerate(sorted_results, 1):
                 label = item["label"] or "Translation"
                 score = item["result"]["overall_score"]
-                print(f"  {i}. {label}: {score:.2f}")
+                zf = item["result"]["z_axis_fidelity"]
+                print(f"  {i}. {label}: {score:.2f} (z_mode={zf['z_mode_detected']}, z_leak={len(zf['z_leak_markers_found'])} markers)")
             print()
     
     return 0
