@@ -1,7 +1,25 @@
 # Divergence-Z 🌀
 
-> "Don't Kill the Tsundere"
+> "Don't Kill the Tsundere"  
 > — Action-Preserving Translation for Fictional Speech
+
+## Model Characteristics
+
+| Model | Strength | Best For |
+|-------|----------|----------|
+| **GPT-5.2** | Strict z_leak marker application | Research demos, papers |
+| **Claude Opus 4.5** | Natural, literary quality | Production translation |
+```bash
+# GPT-5.2 (explicit markers, good for demos)
+USE_CLAUDE_FOR_STEP3=false python z_axis_translate.py --config your_config.yaml
+
+# Claude Opus (natural flow, production use)
+python z_axis_translate.py --config your_config.yaml
+```
+
+> **Example**: Same line「別に...あんたのためじゃないから」  
+> - GPT-5.2: "**N-not** that it's for you or anything..."  
+> - Opus: "It's not like… it's for you or anything."
 
 ## Setup
 
