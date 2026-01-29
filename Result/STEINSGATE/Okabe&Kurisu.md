@@ -41,8 +41,8 @@
 ---
 
 ### Turn 5 — 岡部倫太郎
-- **Original (JA):** ...紅莉栖。お前がいてくれて、俺は...いや、なんでもない。エル・プサイ・コングルゥ！  
-- **Translation (EN):** ...Kurisu. With you here, I... no, it's nothing. El Psy Kongroo!  
+- **Original (JA):** ...紅莉栖。お前がいてくれて、俺は...いや、なんでもない。  
+- **Translation (EN):** ...Kurisu. With you here, I... no, it's nothing.
 - **Z-Intensity:** medium (Δz=+0.00)  
 - **Z-Mode (pred):** none  
 - **Actual:** z_mode=leak, arc_phase=recovery  
@@ -74,5 +74,5 @@
 | 2 | 牧瀬紅莉栖 | **(0.62, leak, rise)** | negation_first; ellipsis; trailing | 助手じゃない！何度言えば...はぁ、で、何の実験よ。 | I’m not your assistant! How many times do I have to say it... haa, so—what experiment is it this time. |
 | 3 | 岡部倫太郎 | **(0.35, none, stable)** | playful challenge framing; role-labeling as distance; theatrical cadence; catchphrase as emotional shield | ほう、興味があるのか？やはり助手としての本能が...エル・プサイ・コングルゥ。 | Oh? So you’re interested? As expected, your instincts as my assistant are— El Psy Kongroo. |
 | 4 | 牧瀬紅莉栖 | **(0.78, leak, rise)** | stutter; ellipsis | べ、別に興味なんか...！科学者として当然の知的好奇心よ！ | N-not that I’m interested or anything...! It’s just normal scientific curiosity, as a scientist! |
-| 5 | 岡部倫太郎 | **(0.55, leak, recovery)** | ellipsis; overwrite; trailing | ...紅莉栖。お前がいてくれて、俺は...いや、なんでもない。エル・プサイ・コングルゥ！ | ...Kurisu. With you here, I... no, it's nothing. El Psy Kongroo! |
+| 5 | 岡部倫太郎 | **(0.55, leak, recovery)** | ellipsis; overwrite; trailing | ...紅莉栖。お前がいてくれて、俺は...いや、なんでもない。 | ...Kurisu. With you here, I... no, it's nothing.|
 | 6 | 牧瀬紅莉栖 | **(0.78, leak, rise)** | stutter; ellipsis; trailing | ...っ！な、何よ急に...ほんとアンタは...もう...！ | ...! W-what is it all of a sudden... honestly, you... seriously...! |
