@@ -169,11 +169,16 @@ Same meaning. Different character voice.
 pip install anthropic openai pyyaml python-dotenv requests
 
 # Create .env
-ANTHROPIC_API_KEY=sk-ant-xxxxx   # For persona generation
+ANTHROPIC_API_KEY=sk-ant-xxxxx   # For persona generation & translation(Step3　Olny)
 OPENAI_API_KEY=sk-xxxxx          # For translation & evaluation
 
 # Generate a persona
-python persona_generator.py --name "レム" --source "Re:Zero" --desc "献身的メイド"
+python persona_generator.py \
+  --name "レム" \
+  --source "Re:ゼロから始める異世界生活" \
+  --desc "ロズワール邸で働く鬼族の少女。姉への劣等感と自己評価の低さを抱えつつ、信頼した相手には強い献身と一途な愛情を向ける。自分の価値を他者への奉仕によって見出しやすく、極限状態では感情を抑えきれず直接的・独占的な想いが表に出ることがある。" \
+  --validate \
+  --output-dir ./personas
 
 # Translate with Z-axis preservation
 python z_axis_translate.py --config requests/rem_test.yaml
