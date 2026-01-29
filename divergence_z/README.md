@@ -109,7 +109,7 @@ python yaml_formatter.py \
 |------|-------------|---------|
 | STEP1 (Hamiltonian) | 0.3 | Accurate extraction of conflict axes |
 | STEP2 (Interference) | 0.3 | Stable analysis of interference patterns |
-| STEP3 (Translation) | 0.7 | Natural translation preserving emotional nuance |
+| STEP3 (Translation) | 0.7~0.9 | Natural translation preserving emotional nuance |※Only OpenAI Model
 
 ### Design Philosophy
 - **Analysis phase (STEP1/2)**: Low temperature ensures **reproducibility**
