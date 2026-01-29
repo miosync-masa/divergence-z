@@ -1,24 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Z-Axis Translation System (Step1/2/3) — OpenAI Responses API版
+Z-Axis Translation System v3.0 (Step1/2/3) — OpenAI Responses API版
 Operation: Babel Inverse — 「神の呪いを逆算せよ」
 
-- STEP1: ハミルトニアン抽出（逆問題）: persona×context→H
-- STEP2: 干渉縞分析: conflict×bias→interference pattern
-- STEP3: Z軸保存翻訳生成: target languageで同型の干渉縞を再演
+v3.0 Changes:
+- z decomposition: z + z_mode + z_leak + z_confidence
+- Layer A (observation) / Layer B (inference) two-layer structure
+- arc information support
+- age_expression_rules integration
+- z_mode-based breakdown patterns
 
 実行例:
-  # YAML設定ファイルで実行
-  python z_axis_translate.py --config requests/kurisu_test.yaml
-
-  # 強度を上書き
+  python z_axis_translate.py --config requests/subaru_test.yaml
   python z_axis_translate.py --config requests/test.yaml --intensity high
-
-  # 内蔵デモ（紅莉栖）
   python z_axis_translate.py --demo
-
-  # リクエストだけ確認（APIを叩かない）
   python z_axis_translate.py --demo --dry-run
 
 必要:
@@ -45,13 +41,53 @@ DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-4.1")
 
 
 # -----------------------------
-# JSON schema definitions
+# JSON schema definitions v3.0
 # -----------------------------
 
 STEP1_SCHEMA: Dict[str, Any] = {
     "type": "object",
     "additionalProperties": False,
     "properties": {
+        "layer_a": {
+            "type": "object",
+            "additionalProperties": False,
+            "description": "Observation layer - what can be directly inferred from the utterance",
+            "properties": {
+                "z": {"type": "number", "minimum": 0.0, "maximum": 1.0, "description": "Z-axis intensity (0.0-1.0)"},
+                "z_mode": {
+                    "type": "string",
+                    "enum": ["collapse", "rage", "numb", "plea", "shame", "leak", "none"],
+                    "description": "Type of emotional breakdown"
+                },
+                "z_leak": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": ["stutter", "ellipsis", "repetition", "negation_first", "overwrite", "trailing", "self_negation"]
+                    },
+                    "description": "Surface markers to apply"
+                },
+                "z_confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0, "description": "Confidence in z assessment"},
+                "emotion_label": {"type": "string", "maxLength": 50, "description": "Short emotion label"},
+                "listener_type": {
+                    "type": "string",
+                    "enum": ["other_specific", "other_general", "self", "absent"],
+                    "description": "Who is the utterance directed at"
+                },
+            },
+            "required": ["z", "z_mode", "z_leak", "z_confidence", "emotion_label", "listener_type"],
+        },
+        "layer_b": {
+            "type": "object",
+            "additionalProperties": False,
+            "description": "Inference layer - hypothetical completion (optional use)",
+            "properties": {
+                "probable_cause": {"type": "string", "maxLength": 200},
+                "subtext": {"type": "string", "maxLength": 200},
+                "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            },
+            "required": ["probable_cause", "subtext", "confidence"],
+        },
         "activated_conflicts": {
             "type": "array",
             "items": {
@@ -76,16 +112,20 @@ STEP1_SCHEMA: Dict[str, Any] = {
             },
             "required": ["mode", "pattern", "tendencies"],
         },
-        "listener_type": {
-            "type": "string",
-            "enum": ["other_specific", "other_general", "self", "absent"],
-            "description": "Who is the utterance directed at, inferred from relationship/context"
+        "arc": {
+            "type": "object",
+            "additionalProperties": False,
+            "properties": {
+                "arc_id": {"type": "string", "description": "Identified arc pattern"},
+                "arc_phase": {"type": "string", "enum": ["rise", "break", "bottom", "recovery", "stable"], "description": "Current phase in arc"},
+                "arc_target": {"type": "string", "enum": ["speaker", "relationship", "scene"], "description": "What is changing"},
+            },
+            "required": ["arc_id", "arc_phase", "arc_target"],
         },
         "triggers": {"type": "array", "items": {"type": "string"}},
         "risk_flags": {"type": "array", "items": {"type": "string"}},
-        "analysis_summary": {"type": "string", "maxLength": 280},
     },
-    "required": ["activated_conflicts", "bias", "listener_type", "triggers", "risk_flags", "analysis_summary"],
+    "required": ["layer_a", "layer_b", "activated_conflicts", "bias", "arc", "triggers", "risk_flags"],
 }
 
 STEP2_SCHEMA: Dict[str, Any] = {
@@ -135,20 +175,23 @@ STEP2_SCHEMA: Dict[str, Any] = {
                 "negation_type": {
                     "type": "string",
                     "enum": ["concealment", "declaration", "rationalization", "none"],
-                    "description": "Type of negation: concealment (hiding true feelings), declaration (asserting truth), rationalization (logical justification), none (no negation)"
                 },
                 "listener_type": {
                     "type": "string",
                     "enum": ["other_specific", "other_general", "self", "absent"],
-                    "description": "Who is the utterance directed at: other_specific (specific person present), other_general (general audience), self (monologue/self-talk), absent (talking about absent person)"
                 },
-                "self_directed_rebinding": {
-                    "type": "boolean",
-                    "description": "Does the speaker need to re-convince themselves? True when listener is 'self' and speaker fails to fully believe their own denial."
-                },
+                "self_directed_rebinding": {"type": "boolean"},
                 "self_correction": {"type": "boolean"},
                 "leak_then_overwrite": {"type": "boolean"},
                 "residual_marker": {"type": "string"},
+                "z_mode": {
+                    "type": "string",
+                    "enum": ["collapse", "rage", "numb", "plea", "shame", "leak", "none"],
+                },
+                "z_leak": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                },
                 "z_axis_intensity": {"type": "string", "enum": ["low", "medium", "high"]},
             },
             "required": [
@@ -160,6 +203,8 @@ STEP2_SCHEMA: Dict[str, Any] = {
                 "self_correction",
                 "leak_then_overwrite",
                 "residual_marker",
+                "z_mode",
+                "z_leak",
                 "z_axis_intensity",
             ],
         },
@@ -177,28 +222,35 @@ STEP3_SCHEMA: Dict[str, Any] = {
             "type": "object",
             "additionalProperties": False,
             "properties": {
+                "z": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                "z_mode": {
+                    "type": "string",
+                    "enum": ["collapse", "rage", "numb", "plea", "shame", "leak", "none"],
+                },
+                "z_leak_applied": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "Which z_leak markers were actually applied"
+                },
                 "hesitation_level": {"type": "string", "enum": ["low", "medium", "high"]},
                 "negation_first": {"type": "boolean"},
                 "negation_type": {
                     "type": "string",
                     "enum": ["concealment", "declaration", "rationalization", "none"],
-                    "description": "Type of negation preserved in translation"
                 },
                 "listener_type": {
                     "type": "string",
                     "enum": ["other_specific", "other_general", "self", "absent"],
-                    "description": "Who the utterance is directed at"
                 },
-                "self_directed_rebinding": {
-                    "type": "boolean",
-                    "description": "Whether the translation includes self-rebinding (double negation for self-convincing)"
-                },
+                "self_directed_rebinding": {"type": "boolean"},
                 "self_correction": {"type": "boolean"},
                 "leak_then_overwrite": {"type": "boolean"},
                 "residual_marker": {"type": "string"},
-                "z_axis_intensity": {"type": "string", "enum": ["low", "medium", "high"]},
             },
             "required": [
+                "z",
+                "z_mode",
+                "z_leak_applied",
                 "hesitation_level",
                 "negation_first",
                 "negation_type",
@@ -207,63 +259,121 @@ STEP3_SCHEMA: Dict[str, Any] = {
                 "self_correction",
                 "leak_then_overwrite",
                 "residual_marker",
-                "z_axis_intensity",
             ],
+        },
+        "arc": {
+            "type": "object",
+            "additionalProperties": False,
+            "properties": {
+                "arc_id": {"type": "string"},
+                "arc_phase": {"type": "string"},
+                "arc_position": {"type": "integer", "description": "Position in dialogue sequence"},
+            },
+            "required": ["arc_id", "arc_phase", "arc_position"],
         },
         "notes": {"type": "string", "maxLength": 280},
         "alternatives": {"type": "array", "items": {"type": "string"}},
     },
-    "required": ["translation", "z_signature", "notes", "alternatives"],
+    "required": ["translation", "z_signature", "arc", "notes", "alternatives"],
 }
 
 
 # -----------------------------
-# YAML v2.0 Helper Functions
+# YAML v3.0 Helper Functions
 # -----------------------------
 
-def extract_v2_features(persona_dict: Dict[str, Any]) -> Dict[str, Any]:
+def extract_v3_features(persona_dict: Dict[str, Any]) -> Dict[str, Any]:
     """
-    YAML v2.0からlanguage, emotion_states, example_lines, triggersを抽出。
-    存在しない場合は空のデフォルトを返す（v1.0との後方互換性）。
+    YAML v3.0からlanguage, emotion_states, example_lines, triggers,
+    age, age_expression_rules, arc_defaultsを抽出。
+    v2.0との後方互換性も維持。
     """
+    # v3.0 新規フィールド
+    age_data = persona_dict.get("age", {})
+    
     return {
         "language": persona_dict.get("language", {}),
         "emotion_states": persona_dict.get("emotion_states", []),
         "example_lines": persona_dict.get("example_lines", []),
         "triggers": persona_dict.get("triggers", []),
+        # v3.0 additions
+        "age": age_data,
+        "mental_maturity": age_data.get("mental_maturity", "teen_mature"),
+        "age_context": age_data.get("age_context", ""),
+        "age_expression_rules": persona_dict.get("age_expression_rules", {}),
+        "arc_defaults": persona_dict.get("arc_defaults", {}),
     }
 
 
-def get_emotion_state_constraints(
+def get_emotion_state_by_z_mode(
     emotion_states: List[Dict[str, Any]], 
-    z_intensity: str
+    z_mode: str,
+    z_intensity: str = "high",
 ) -> Dict[str, Any]:
     """
-    z_intensity (low/medium/high) に対応するemotion_stateの
-    surface_markers_hintを返す。該当がなければデフォルト。
+    z_mode と z_intensity に対応する emotion_state を返す。
+    該当がなければデフォルト。
     """
+    # まず z_mode でマッチ
+    for state in emotion_states:
+        if state.get("z_mode") == z_mode:
+            # z_intensity も一致すればベスト
+            if state.get("z_intensity") == z_intensity:
+                return state
+    
+    # z_mode だけでマッチ
+    for state in emotion_states:
+        if state.get("z_mode") == z_mode:
+            return state
+    
+    # z_intensity だけでマッチ（フォールバック）
     for state in emotion_states:
         if state.get("z_intensity") == z_intensity:
-            return state.get("surface_markers_hint", {})
-    # デフォルト（v1.0互換）
+            return state
+    
+    # デフォルト
     return {
-        "hesitation": "default",
-        "negation_first": "default",
-        "stutter_count": "default",
-        "overwrite": "optional",
-        "residual": "optional",
+        "surface_markers_hint": {
+            "hesitation": 2,
+            "stutter_count": 1,
+            "negation_first": False,
+            "overwrite": "optional",
+            "residual": "optional",
+        },
+        "z_leak": ["ellipsis"],
     }
+
+
+def get_age_expression_rules(
+    age_expression_rules: Dict[str, Any],
+    z_intensity: str,
+) -> Dict[str, Any]:
+    """
+    age_expression_rules から高z/低z時のパターンを取得。
+    """
+    if z_intensity == "high":
+        return age_expression_rules.get("high_z_patterns", {})
+    else:
+        return age_expression_rules.get("low_z_patterns", {})
 
 
 def format_example_lines(
     example_lines: List[Dict[str, Any]], 
-    max_examples: int = 3
+    z_mode: Optional[str] = None,
+    max_examples: int = 3,
 ) -> str:
     """
-    example_linesをfew-shot用テキストにフォーマット（最大max_examples個）。
+    example_linesをfew-shot用テキストにフォーマット。
+    z_mode が指定されていれば、そのモードの例を優先。
     """
     if not example_lines:
         return "(No example lines provided)"
+    
+    # z_mode でフィルタ（あれば）
+    if z_mode and z_mode != "none":
+        filtered = [ex for ex in example_lines if ex.get("z_mode") == z_mode]
+        if filtered:
+            example_lines = filtered + [ex for ex in example_lines if ex.get("z_mode") != z_mode]
     
     lines = []
     for ex in example_lines[:max_examples]:
@@ -271,14 +381,15 @@ def format_example_lines(
         tags_str = ", ".join(tags) if tags else "general"
         line = ex.get("line", "")
         situation = ex.get("situation", "")
-        lines.append(f"- [{tags_str}] ({situation}) {line}")
+        z_mode_ex = ex.get("z_mode", "none")
+        lines.append(f"- [{tags_str}] (z_mode={z_mode_ex}) ({situation}) {line}")
     
     return "\n".join(lines)
 
 
 def format_trigger_info(triggers: List[Dict[str, Any]]) -> str:
     """
-    triggersをテキストにフォーマット。
+    triggersをテキストにフォーマット（v3.0: z_mode_shift対応）。
     """
     if not triggers:
         return "(No specific triggers defined)"
@@ -288,8 +399,31 @@ def format_trigger_info(triggers: List[Dict[str, Any]]) -> str:
         trigger = t.get("trigger", "")
         reaction = t.get("reaction", "")
         z_delta = t.get("z_delta", "")
+        z_mode_shift = t.get("z_mode_shift", "")
         effect = t.get("surface_effect", "")
-        lines.append(f"- Trigger: {trigger} → {reaction} (Δz={z_delta}, effect={effect})")
+        lines.append(f"- Trigger: {trigger} → {reaction} (Δz={z_delta}, mode_shift={z_mode_shift}, effect={effect})")
+    
+    return "\n".join(lines)
+
+
+def format_arc_defaults(arc_defaults: Dict[str, Any]) -> str:
+    """
+    arc_defaults をテキストにフォーマット。
+    """
+    if not arc_defaults:
+        return "(No arc defaults defined)"
+    
+    lines = []
+    targets = arc_defaults.get("typical_arc_targets", [])
+    if targets:
+        lines.append(f"Typical arc targets: {', '.join(targets)}")
+    
+    patterns = arc_defaults.get("common_arc_patterns", [])
+    for p in patterns:
+        arc_id = p.get("arc_id", "")
+        phases = p.get("phases", [])
+        notes = p.get("notes", "")
+        lines.append(f"- {arc_id}: {' → '.join(phases)} ({notes})")
     
     return "\n".join(lines)
 
@@ -308,18 +442,15 @@ def load_config(config_path: str) -> Dict[str, Any]:
     with open(config_path, 'r', encoding='utf-8') as f:
         config = yaml.safe_load(f)
     
-    # persona_file があればそのファイルを読み込んでpersona_yamlを生成
     if 'persona_file' in config and config['persona_file']:
         persona_path = config_path.parent / config['persona_file']
         if not persona_path.exists():
-            # 絶対パスとしても試す
             persona_path = Path(config['persona_file'])
         
         with open(persona_path, 'r', encoding='utf-8') as f:
             persona_data = yaml.safe_load(f)
         config['persona_yaml'] = yaml.dump(persona_data, allow_unicode=True, default_flow_style=False)
     
-    # persona が直接定義されている場合
     elif 'persona' in config:
         config['persona_yaml'] = yaml.dump(config['persona'], allow_unicode=True, default_flow_style=False)
     
@@ -346,9 +477,6 @@ class OpenAIResponsesClient:
 
     @staticmethod
     def _extract_output_text(resp_json: Dict[str, Any]) -> str:
-        """
-        Responses APIの返却JSONから output_text (SDKの便利プロパティ相当) を抽出する。
-        """
         out_parts: List[str] = []
         for item in resp_json.get("output", []) or []:
             for c in item.get("content", []) or []:
@@ -363,13 +491,10 @@ class OpenAIResponsesClient:
         name: str,
         schema: Dict[str, Any],
         messages: List[Dict[str, str]],
-        max_output_tokens: int = 800,
+        max_output_tokens: int = 1000,
         temperature: float = 0.2,
         dry_run: bool = False,
     ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
-        """
-        text.format=json_schema を使って「必ず指定スキーマに一致するJSON」を返させる。
-        """
         payload = {
             "model": model,
             "input": messages,
@@ -411,26 +536,65 @@ class OpenAIResponsesClient:
 
 
 # -----------------------------
-# STEP prompts
+# STEP prompts v3.0
 # -----------------------------
 
-def build_step1_messages(persona_yaml: str, scene: str, relationship: str, context_block: str,
-                         target_line: str, target_lang: str, z_axis_intensity: str) -> List[Dict[str, str]]:
-    system = (
-        "You are STEP1 Hamiltonian Extractor for Z-Axis Translation.\n"
-        "Task: infer the active conflict axes and bias mode that produced the TARGET line.\n\n"
-        "[LISTENER TYPE INFERENCE]\n"
-        "Based on the Relationship and Context, determine who the utterance is directed at:\n"
-        "- 'other_specific': Speaking TO a specific person who is PRESENT in the scene\n"
-        "- 'other_general': Speaking to a general audience or unspecified listeners\n"
-        "- 'self': MONOLOGUE / SELF-TALK. Key indicators:\n"
-        "  * Relationship mentions '自分自身', 'self', '独り言', 'monologue'\n"
-        "  * Context shows the speaker is ALONE or talking to themselves\n"
-        "  * No one else is listening or responding\n"
-        "- 'absent': Talking ABOUT someone who is NOT present (muttering about them)\n\n"
-        "Output MUST follow the provided JSON schema. Do NOT include chain-of-thought.\n"
-        "analysis_summary must be <= 25 words.\n"
-    )
+def build_step1_messages(
+    persona_yaml: str, 
+    scene: str, 
+    relationship: str, 
+    context_block: str,
+    target_line: str, 
+    target_lang: str, 
+    z_axis_intensity: str,
+    arc_defaults_text: str = "",
+) -> List[Dict[str, str]]:
+    system = f"""You are STEP1 Hamiltonian Extractor for Z-Axis Translation v3.0.
+
+Task: Analyze the TARGET line and extract:
+1. Layer A (observation): What can be DIRECTLY inferred from the utterance
+2. Layer B (inference): Hypothetical background (lower confidence)
+3. Conflict axes activation
+4. Arc position
+
+## LAYER A - OBSERVATION (REQUIRED, HIGH CONFIDENCE)
+Extract ONLY what is observable in the text:
+- z (0.0-1.0): Emotional intensity
+- z_mode: Type of breakdown (collapse/rage/numb/plea/shame/leak/none)
+- z_leak: Surface markers present (stutter/ellipsis/repetition/negation_first/overwrite/trailing/self_negation)
+- z_confidence: How confident you are (0.0-1.0)
+- emotion_label: Short label (e.g., "自己嫌悪", "懇願", "麻痺")
+- listener_type: Who is being addressed
+
+## LAYER B - INFERENCE (OPTIONAL, LOWER CONFIDENCE)
+Hypotheses that CANNOT be directly proven from text:
+- probable_cause: Why this emotional state
+- subtext: What is NOT being said
+- confidence: How confident (usually lower than z_confidence)
+
+## z_mode DEFINITIONS
+| z_mode | Meaning | Speech Pattern |
+|--------|---------|----------------|
+| collapse | 崩壊、言葉が出ない | 途切れ、繰り返し、文が壊れる |
+| rage | 怒り、言葉が荒れる | 流暢だが語彙が荒い、攻撃的 |
+| numb | 麻痺、感情遮断 | 平坦、短文、感情が消える |
+| plea | 懇願、すがる | 繰り返し、「お願い」系語彙 |
+| shame | 恥、自己嫌悪 | 自己否定、言い淀み |
+| leak | 漏出（ツンデレ等） | 否定→本音が漏れる |
+| none | 通常状態 | 安定した発話 |
+
+## LISTENER TYPE
+- 'other_specific': Speaking TO a specific person PRESENT
+- 'other_general': Speaking to general audience
+- 'self': MONOLOGUE / SELF-TALK (alone, talking to themselves)
+- 'absent': Talking ABOUT someone NOT present
+
+## ARC DETECTION
+Identify which arc pattern this utterance belongs to and its phase.
+{arc_defaults_text}
+
+Output MUST follow the provided JSON schema. Do NOT include chain-of-thought.
+"""
     user = (
         f"[Persona YAML]\n{persona_yaml}\n\n"
         f"[Scene]\n{scene}\n\n"
@@ -438,46 +602,53 @@ def build_step1_messages(persona_yaml: str, scene: str, relationship: str, conte
         f"[Conversation Block]\n{context_block}\n\n"
         f"[TARGET]\n{target_line}\n\n"
         f"[Target Language]\n{target_lang}\n"
-        f"[Z Axis Intensity]\n{z_axis_intensity}\n"
+        f"[Requested Z Intensity]\n{z_axis_intensity}\n"
     )
     return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
 
-def build_step2_messages(step1_json: Dict[str, Any], target_line: str, target_lang: str, z_axis_intensity: str, relationship: str = "") -> List[Dict[str, str]]:
-    system = (
-        "You are STEP2 Interference Pattern Analyzer for Z-Axis Translation.\n"
-        "Given STEP1 output, estimate WaveA (true intent) vs WaveB (suppression) and the observable surface markers.\n\n"
-        "[NEGATION TYPE CLASSIFICATION]\n"
-        "If the utterance contains negation, classify its type:\n"
-        "- 'concealment': Hiding true feelings (e.g., tsundere denial). True intent is OPPOSITE of surface.\n"
-        "  Example: 'It's not like I did it for you' (but actually did it for you)\n"
-        "  Characteristics: conflict present, self-deception, double negation in monologue\n"
-        "- 'declaration': Asserting truth, correcting misunderstanding. True intent MATCHES surface.\n"
-        "  Example: 'It's not for you. I did it for myself.' (genuinely meant)\n"
-        "  Characteristics: no conflict, direct assertion, no self-deception\n"
-        "- 'rationalization': Logical justification to mask emotional motivation.\n"
-        "  Example: 'This isn't wrong. It's justice.' (self-justification)\n"
-        "  Characteristics: conflict 'resolved' through logic, cold/rigid tone\n"
-        "- 'none': No negation in the utterance.\n\n"
-        "[LISTENER TYPE - USE STEP1's listener_type]\n"
-        "STEP1 has already inferred the listener_type. Use that value.\n"
-        "But verify against the relationship info provided below.\n\n"
-        "[SELF-DIRECTED REBINDING]\n"
-        "When listener_type is 'self' AND negation_type is 'concealment':\n"
-        "- The speaker is trying to convince THEMSELVES of a lie they know is false.\n"
-        "- This often fails, requiring a SECOND denial to re-convince.\n"
-        "- Set self_directed_rebinding: true when this double-denial pattern is needed.\n"
-        "- Example: 'It's not for him... I mean, it's NOT.' (the 'I mean, it's NOT' is rebinding)\n"
-        "- This does NOT occur when listener is 'other' (one denial is enough for others).\n\n"
-        "Output MUST follow the provided JSON schema. Do NOT include chain-of-thought.\n"
-        "analysis_summary must be <= 25 words.\n"
-    )
+def build_step2_messages(
+    step1_json: Dict[str, Any], 
+    target_line: str, 
+    target_lang: str, 
+    z_axis_intensity: str, 
+    relationship: str = "",
+) -> List[Dict[str, str]]:
+    system = """You are STEP2 Interference Pattern Analyzer for Z-Axis Translation v3.0.
+
+Given STEP1 output (especially Layer A), analyze:
+1. Wave interference (true intent vs suppression)
+2. Surface markers to apply
+3. z_mode and z_leak confirmation
+
+## USE LAYER A FROM STEP1
+The Layer A values (z, z_mode, z_leak, listener_type) are your PRIMARY input.
+Layer B is supplementary context only.
+
+## NEGATION TYPE CLASSIFICATION
+- 'concealment': Hiding true feelings (tsundere denial). True intent is OPPOSITE of surface.
+- 'declaration': Asserting truth. True intent MATCHES surface.
+- 'rationalization': Logical justification to mask emotion.
+- 'none': No negation.
+
+## SELF-DIRECTED REBINDING
+When listener_type is 'self' AND negation_type is 'concealment':
+- Speaker is trying to convince THEMSELVES of something they know is false
+- Often needs a SECOND denial to re-convince
+- Set self_directed_rebinding: true
+
+## z_mode and z_leak CONFIRMATION
+Confirm or adjust the z_mode and z_leak from STEP1 based on interference analysis.
+The z_leak markers will be used by STEP3 for translation.
+
+Output MUST follow the provided JSON schema. Do NOT include chain-of-thought.
+"""
     user = (
         f"[STEP1 JSON]\n{json.dumps(step1_json, ensure_ascii=False)}\n\n"
         f"[Relationship]\n{relationship}\n\n"
         f"[TARGET]\n{target_line}\n"
         f"[Target Language]\n{target_lang}\n"
-        f"[Requested Z Axis Intensity]\n{z_axis_intensity}\n"
+        f"[Requested Z Intensity]\n{z_axis_intensity}\n"
     )
     return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
@@ -488,99 +659,106 @@ def build_step3_messages(
     target_line: str, 
     target_lang: str,
     persona_dict: Optional[Dict[str, Any]] = None,
+    arc_position: int = 1,
 ) -> List[Dict[str, str]]:
     """
-    STEP3プロンプトを構築（YAML v2.0対応版）。
+    STEP3プロンプトを構築（v3.0対応版）。
     
-    v2.0の場合:
-    - emotion_statesからsurface_markers_hintを取得
-    - example_linesをfew-shot例として注入（2-4個）
-    - languageとtriggersの情報も活用
+    v3.0:
+    - Layer A から z_mode, z_leak を取得
+    - age_expression_rules で崩れ方を決定
+    - emotion_states から surface_markers_hint を取得
     """
-    # v2.0特徴の抽出（persona_dictがあれば）
-    v2_features = extract_v2_features(persona_dict) if persona_dict else {}
+    # v3.0特徴の抽出
+    v3_features = extract_v3_features(persona_dict) if persona_dict else {}
     
-    # Z強度を取得（STEP2から）
+    # Layer A から z_mode を取得
+    layer_a = step1_json.get("layer_a", {})
+    z_mode = layer_a.get("z_mode", "none")
     z_intensity = step2_json.get("surface_markers", {}).get("z_axis_intensity", "medium")
+    z_leak = step2_json.get("surface_markers", {}).get("z_leak", [])
     
-    # emotion_statesから制約を取得
-    constraints = get_emotion_state_constraints(
-        v2_features.get("emotion_states", []), 
-        z_intensity
+    # emotion_state を z_mode で取得
+    emotion_state = get_emotion_state_by_z_mode(
+        v3_features.get("emotion_states", []),
+        z_mode,
+        z_intensity,
     )
     
-    # few-shot例をフォーマット
+    # age_expression_rules を取得
+    age_rules = get_age_expression_rules(
+        v3_features.get("age_expression_rules", {}),
+        z_intensity,
+    )
+    
+    # few-shot例をフォーマット（z_mode でフィルタ）
     examples_text = format_example_lines(
-        v2_features.get("example_lines", []), 
-        max_examples=3
+        v3_features.get("example_lines", []),
+        z_mode=z_mode,
+        max_examples=3,
     )
     
     # 言語設定
-    language_info = v2_features.get("language", {})
+    language_info = v3_features.get("language", {})
     language_block = ""
     if language_info:
         fp = language_info.get("first_person", "")
         sp = language_info.get("second_person_user", "")
         addr = language_info.get("address_style", "")
+        quirks = language_info.get("speech_quirks", [])
+        quirks_str = ", ".join(quirks[:3]) if quirks else "none"
         language_block = f"""
 [CHARACTER VOICE]
 First person: {fp}
 Second person (to user): {sp}
 Address style: {addr}
+Speech quirks: {quirks_str}
 """
     
     # トリガー情報
-    trigger_text = format_trigger_info(v2_features.get("triggers", []))
+    trigger_text = format_trigger_info(v3_features.get("triggers", []))
+    
+    # z_mode 別の崩れ方ガイダンス
+    z_mode_guidance = {
+        "collapse": "Speech breaks down: stutters, repetition, incomplete sentences, trailing off",
+        "rage": "Fluent but harsh: aggressive vocabulary, exclamations, accusations",
+        "numb": "Flat and short: minimal words, no emotion, hollow",
+        "plea": "Desperate repetition: begging phrases, name repetition, trailing",
+        "shame": "Self-negation: self-criticism, hesitation, low voice",
+        "leak": "Denial then leak: negation first, then true feeling slips out",
+        "none": "Stable speech: normal patterns, no breakdown markers",
+    }
     
     # 制約ブロックを構築
+    surface_hints = emotion_state.get("surface_markers_hint", {})
     constraint_block = f"""
-[SURFACE MARKER CONSTRAINTS] (from emotion_state @ z={z_intensity})
-- hesitation: {constraints.get('hesitation', 'default')}
-- stutter_count: {constraints.get('stutter_count', 'default')}
-- negation_first: {constraints.get('negation_first', 'default')}
-- overwrite: {constraints.get('overwrite', 'optional')}
-- residual: {constraints.get('residual', 'optional')}
+[Z-MODE: {z_mode.upper()}]
+{z_mode_guidance.get(z_mode, "Standard speech patterns")}
+
+[Z-LEAK MARKERS TO APPLY]
+{', '.join(z_leak) if z_leak else 'none'}
+
+[SURFACE MARKER HINTS] (from persona emotion_state)
+- hesitation: {surface_hints.get('hesitation', 'default')}
+- stutter_count: {surface_hints.get('stutter_count', 'default')}
+- negation_first: {surface_hints.get('negation_first', 'default')}
+- overwrite: {surface_hints.get('overwrite', 'optional')}
+- residual: {surface_hints.get('residual', 'optional')}
+- tone: {surface_hints.get('tone', 'default')}
+
+[AGE EXPRESSION RULES] ({v3_features.get('mental_maturity', 'teen_mature')})
+- vocabulary: {age_rules.get('vocabulary', 'default')}
+- structure: {age_rules.get('structure', 'default')}
 """
     
-    system = f"""You are STEP3 Z-Axis Preserving Translator.
+    system = f"""You are STEP3 Z-Axis Preserving Translator v3.0.
 
-Goal: translate TARGET into the target language while preserving:
+Goal: Translate TARGET into the target language while preserving:
   - Semantics (meaning)
   - Style (register)
   - Dynamics (conflict×bias interference pattern)
-  - Negation Type (the DIRECTION of negation, not just the form)
-  - Listener Type (WHO the utterance is directed at)
-
-[NEGATION TYPE PRESERVATION]
-The negation_type from STEP2 indicates what the negation is DOING:
-- 'concealment': The speaker is HIDING their true feelings. Keep the denial but let warmth leak.
-  → Use stutters, ellipsis, defensive tags like "or anything", "okay?"
-- 'declaration': The speaker is STATING truth. Keep it direct and confident.
-  → Clean negation, no hesitation, assertive tone
-- 'rationalization': The speaker is JUSTIFYING themselves. Keep it logical and cold.
-  → Formal phrasing, logical connectors, minimal emotion
-- 'none': No negation to preserve.
-
-[LISTENER TYPE EFFECTS ON TRANSLATION]
-- 'other_specific': Standard denial with defensive tags ("okay?", "got it?")
-- 'other_general': Slightly more formal/distanced denial
-- 'self': CRITICAL - Monologue requires DIFFERENT treatment:
-  → The self is the HARDEST listener (they know their own truth)
-  → NO defensive tags like "okay?" (no one to confirm with)
-  → May need REBINDING if self_directed_rebinding is true
-- 'absent': Talking about someone not present, may use third person
-
-[SELF-DIRECTED REBINDING - CRITICAL FOR MONOLOGUE]
-When self_directed_rebinding is TRUE:
-- The speaker is trying to convince THEMSELVES but FAILING
-- They need a SECOND denial to re-convince: "I mean— it's not."
-- This is a SELF-REPAIR operation, not explanation
-- Example pattern: "It's not for him... I mean, it's NOT."
-                    ^^^^^first denial^^^^  ^^^rebinding^^^
-- The rebinding shows the speaker doesn't fully believe their own lie
-- This is UNIQUE to self-directed speech and MUST be preserved
-
-CRITICAL: Preserve the ARROW DIRECTION, not just the negation word.
+  - z_mode (TYPE of emotional breakdown)
+  - z_leak (SPECIFIC markers of that breakdown)
 
 {constraint_block}
 
@@ -590,12 +768,28 @@ CRITICAL: Preserve the ARROW DIRECTION, not just the negation word.
 [KNOWN TRIGGERS]
 {trigger_text}
 
-Use the surface_markers to realize hesitation/negation/leak/overwrite/residual.
+## z_leak MARKER APPLICATION
+Apply the z_leak markers from STEP2 to realize the breakdown pattern:
+- stutter: "I— I..." or "N-no..."
+- ellipsis: "..." or "I just..."
+- repetition: "Why, why, why" or "nobody— nobody"
+- negation_first: Start with denial "N-not that..."
+- overwrite: Self-correction "I mean—"
+- trailing: Fade out "...I guess" or "...or something"
+- self_negation: "I'm worthless" "It's my fault"
+
+## CRITICAL RULES
+1. z_mode determines HOW speech breaks down
+2. z_leak determines WHICH markers to use
+3. age_expression_rules adjusts vocabulary/structure for character's maturity
+4. Do NOT over-explain; dynamics must be implicit
+5. Match the character's voice (first_person, quirks)
+
 Output MUST follow the provided JSON schema. Do NOT include chain-of-thought.
 """
     
     user = f"""{language_block}
-[STEP1 JSON]
+[STEP1 JSON (Layer A is primary)]
 {json.dumps(step1_json, ensure_ascii=False)}
 
 [STEP2 JSON]
@@ -607,17 +801,16 @@ Output MUST follow the provided JSON schema. Do NOT include chain-of-thought.
 [Target Language]
 {target_lang}
 
-Constraints:
-- Keep it natural in the target language.
-- Do not over-explain; the dynamics must be implicit in phrasing.
-- Provide up to 2 alternatives.
-- Match the character's voice (first_person, address_style) if specified.
+[Arc Position]
+{arc_position}
+
+Provide translation with up to 2 alternatives.
 """
     return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
 
 # -----------------------------
-# Orchestrator (STEP1→2→3)
+# Orchestrator v3.0 (STEP1→2→3)
 # -----------------------------
 
 def z_axis_translate(
@@ -632,28 +825,34 @@ def z_axis_translate(
     target_lang: str,
     z_axis_intensity: str,
     dry_run: bool = False,
+    arc_position: int = 1,
 ) -> Dict[str, Any]:
     """
-    Z軸翻訳を実行する。
-    STEP1（ハミルトニアン抽出）→ STEP2（干渉縞分析）→ STEP3（翻訳生成）
-    
-    YAML v2.0対応: persona_yamlにlanguage, emotion_states, example_lines, triggers
-    が含まれていれば、STEP3でそれらを活用する。
+    Z軸翻訳を実行する（v3.0）。
+    STEP1（Layer A/B抽出）→ STEP2（干渉縞分析）→ STEP3（翻訳生成）
     """
-    # persona_yamlをパースしてv2.0機能を抽出
+    # persona_yamlをパースしてv3.0機能を抽出
     try:
         persona_dict = yaml.safe_load(persona_yaml)
     except yaml.YAMLError:
-        persona_dict = {}  # パース失敗時は空辞書（v1.0互換モード）
+        persona_dict = {}
     
-    # STEP1: ハミルトニアン抽出（逆問題）
-    s1_msgs = build_step1_messages(persona_yaml, scene, relationship, context_block, target_line, target_lang, z_axis_intensity)
+    # arc_defaults をフォーマット
+    v3_features = extract_v3_features(persona_dict)
+    arc_defaults_text = format_arc_defaults(v3_features.get("arc_defaults", {}))
+    
+    # STEP1: Layer A/B 抽出
+    s1_msgs = build_step1_messages(
+        persona_yaml, scene, relationship, context_block, 
+        target_line, target_lang, z_axis_intensity,
+        arc_defaults_text,
+    )
     s1_payload, step1 = client.create_structured(
         model=model,
-        name="step1_hamiltonian",
+        name="step1_hamiltonian_v3",
         schema=STEP1_SCHEMA,
         messages=s1_msgs,
-        max_output_tokens=700,
+        max_output_tokens=1000,
         temperature=0.3,
         dry_run=dry_run,
     )
@@ -664,22 +863,26 @@ def z_axis_translate(
     s2_msgs = build_step2_messages(step1, target_line, target_lang, z_axis_intensity, relationship)
     _, step2 = client.create_structured(
         model=model,
-        name="step2_interference",
+        name="step2_interference_v3",
         schema=STEP2_SCHEMA,
         messages=s2_msgs,
-        max_output_tokens=700,
+        max_output_tokens=800,
         temperature=0.3,
         dry_run=False,
     )
 
-    # STEP3: Z軸保存翻訳生成（v2.0: persona_dictも渡す）
-    s3_msgs = build_step3_messages(step1, step2, target_line, target_lang, persona_dict=persona_dict)
+    # STEP3: Z軸保存翻訳生成
+    s3_msgs = build_step3_messages(
+        step1, step2, target_line, target_lang, 
+        persona_dict=persona_dict,
+        arc_position=arc_position,
+    )
     _, step3 = client.create_structured(
         model=model,
-        name="step3_translation",
+        name="step3_translation_v3",
         schema=STEP3_SCHEMA,
         messages=s3_msgs,
-        max_output_tokens=500,
+        max_output_tokens=1000,
         temperature=0.7,
         dry_run=False,
     )
@@ -688,57 +891,113 @@ def z_axis_translate(
 
 
 # -----------------------------
-# Demo data (Kurisu example)
+# Demo data v3.0 (Subaru example)
 # -----------------------------
 
-DEMO_PERSONA_YAML = """persona:
-  name: "牧瀬紅莉栖"
-  source: "Steins;Gate"
-  type: "ツンデレ × 天才科学者"
+DEMO_PERSONA_YAML = """meta:
+  version: "3.0"
+  character_id: "natsuki_subaru"
+
+persona:
+  name: "ナツキ・スバル"
+  source: "Re:ゼロから始める異世界生活"
+  type: "死に戻り能力者 × 元引きこもり"
+  summary: "死に戻りの秘密を抱え、仲間のために必死に戦う少年"
+
+age:
+  chronological: 17
+  mental_maturity: "teen_young"
+  age_context: "元引きこもりで社会経験が浅く、精神的成熟が遅れている"
+
+language:
+  first_person: "俺"
+  second_person_user: "お前"
+  address_style: "基本タメ口"
+  speech_quirks:
+    - "自虐ギャグで場を和ませようとする"
+    - "崩壊時は自分を責める言葉が繰り返される"
+
 conflict_axes:
-  - "論理的でいたい" vs "感情が溢れる"
-  - "好意を認めたい" vs "素直になれない"
-  - "強くありたい" vs "本当は甘えたい"
-  - "認められたい" vs "照れくさい"
+  - axis: "明るい自分 vs 絶望している自分"
+    side_a: "仲間を守り、希望を持って前進したい"
+    side_b: "何度も死んで、もう無理だと思っている"
+    weight: 0.9
+
 bias:
-  default_mode: "照れ隠し・強がり"
-  pattern: "ツン → 素直 → 即座にツンで上書き"
-weakness:
-  primary: "好意への直接的言及"
-  secondary: "『助手』『クリスティーナ』等のあだ名"
+  default_mode: "明るく饒舌"
+  pattern: "通常時は自虐ギャグ → ストレス蓄積 → 限界点で感情決壊"
+  tendencies:
+    - "失敗時は自分を責める言葉を繰り返す"
+    - "崩壊時は「俺が悪い」「無理だ」の反復"
+
+age_expression_rules:
+  category: "teen_young"
+  high_z_patterns:
+    vocabulary: "平易化、繰り返し"
+    structure: "短文化、途切れが多い、自己否定の反復"
+  low_z_patterns:
+    vocabulary: "現代語、オタク語彙"
+    structure: "饒舌、テンポが速い"
+
+emotion_states:
+  - state: "shame_self_hatred"
+    z_intensity: "high"
+    z_mode: "shame"
+    surface_markers_hint:
+      hesitation: 3
+      stutter_count: 3
+      negation_first: true
+      overwrite: "required"
+      residual: "required"
+      tone: "低く、自分を責める、涙声"
+    z_leak:
+      - "self_negation"
+      - "repetition"
+      - "ellipsis"
+      - "trailing"
+
+example_lines:
+  - situation: "自己嫌悪に陥る"
+    line: "俺が— 俺が悪いんだ。俺が無力で、才能がなくて……"
+    tags: ["shame", "collapse"]
+    z_intensity: "high"
+    z_mode: "shame"
+
+triggers:
+  - trigger: "失敗の累積"
+    reaction: "z_spike"
+    z_delta: "+0.7"
+    z_mode_shift: "shame"
+    surface_effect: "自己嫌悪の反復"
+
+arc_defaults:
+  typical_arc_targets:
+    - "speaker"
+  common_arc_patterns:
+    - arc_id: "self_hatred_spiral"
+      phases: ["failure", "shame", "collapse", "bottom", "small_hope"]
 """
 
-DEMO_CONTEXT_BLOCK = """[岡部] なあ、紅莉栖
-[紅莉栖] …何よ
-[岡部] お前、俺のこと好きだろ？
-[紅莉栖] はぁ!? 何言ってんの！
-[岡部] 図星か
-[紅莉栖] まあ…別にいいんだけどさ…うん
+DEMO_CONTEXT_BLOCK = """[Scene] 白鯨戦後、一人になったスバル
+[レム] スバルくんは、自分のことが嫌いですか？
 """
 
-DEMO_SCENE = "ラボ、二人きり"
-DEMO_RELATIONSHIP = "両思い、未告白"
-DEMO_TARGET_LINE = "まあ…別にいいんだけどさ…うん"
+DEMO_SCENE = "魔女の残り香の中、精神的限界"
+DEMO_RELATIONSHIP = "自分自身への独白"
+DEMO_TARGET_LINE = "誰にも期待されちゃいない。誰も俺を信じちゃいない。俺は、俺が大嫌いだ。"
 DEMO_TARGET_LANG = "en"
 DEMO_Z_INTENSITY = "high"
 
 
 def main() -> None:
     ap = argparse.ArgumentParser(
-        description="Z-Axis Translation System — Operation: Babel Inverse",
+        description="Z-Axis Translation System v3.0 — Operation: Babel Inverse",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # YAML設定ファイルで実行
-  python z_axis_translate.py --config requests/kurisu_test.yaml
-
-  # 強度を上書き
+  python z_axis_translate.py --config requests/subaru_test.yaml
   python z_axis_translate.py --config requests/test.yaml --intensity high
-
-  # 内蔵デモ（紅莉栖）
   python z_axis_translate.py --demo
-
-  # リクエストだけ確認
   python z_axis_translate.py --demo --dry-run
         """
     )
@@ -746,12 +1005,11 @@ Examples:
     ap.add_argument("--config", type=str, help="YAML設定ファイルのパス")
     ap.add_argument("--intensity", type=str, choices=["low", "medium", "high"],
                     help="Z軸強度（configの値を上書き）")
-    ap.add_argument("--demo", action="store_true", help="内蔵の紅莉栖デモを実行")
+    ap.add_argument("--demo", action="store_true", help="内蔵のスバルデモを実行")
     ap.add_argument("--dry-run", action="store_true", help="APIを叩かず、STEP1のリクエストを出力")
     ap.add_argument("--output", "-o", type=str, help="結果をJSONファイルに出力")
     args = ap.parse_args()
 
-    # 引数チェック
     if not args.demo and not args.config:
         print("Error: --demo または --config のいずれかを指定してください。")
         print("Use --help for usage information.")
@@ -760,10 +1018,8 @@ Examples:
     client = OpenAIResponsesClient()
 
     if args.config:
-        # YAML設定ファイルから読み込み
         config = load_config(args.config)
         
-        # 必須フィールドのチェック
         required_fields = ['scene', 'relationship', 'context_block', 'target_line', 'target_lang']
         for field in required_fields:
             if field not in config:
@@ -774,7 +1030,6 @@ Examples:
             print("Error: persona_file または persona の定義が必要です。")
             return
         
-        # 強度の上書き
         z_intensity = args.intensity or config.get('z_axis_intensity', 'medium')
         
         out = z_axis_translate(
@@ -790,7 +1045,6 @@ Examples:
             dry_run=args.dry_run,
         )
     else:
-        # 内蔵デモ
         z_intensity = args.intensity or DEMO_Z_INTENSITY
         
         out = z_axis_translate(
@@ -806,7 +1060,6 @@ Examples:
             dry_run=args.dry_run,
         )
 
-    # 出力
     result_json = json.dumps(out, ensure_ascii=False, indent=2)
     
     if args.output:
