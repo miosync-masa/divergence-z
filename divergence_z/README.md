@@ -15,22 +15,32 @@ pip install anthropic openai pyyaml python-dotenv requests
 Create `.env` file in the `divergence_z/` directory:
 ```bash
 # .env
-ANTHROPIC_API_KEY=sk-ant-xxxxx   # For persona_generator.py (Claude)
+ANTHROPIC_API_KEY=sk-ant-xxxxx   # For persona_generator.py, z_axis_translate.py (Claude)
 OPENAI_API_KEY=sk-xxxxx          # For z_axis_translate.py, iap_evaluator.py, zap_evaluator.py
 ```
 
-| Tool | API |
-|------|-----|
-| `persona_generator.py` | **Anthropic Claude** |
-| `z_axis_translate.py` | OpenAI |
-| `iap_evaluator.py` | OpenAI |
-| `zap_evaluator.py` | OpenAI |
+## API Configuration
+| Tool | Profiler | Translator | Evaluator | Note |
+|------|----------|------------|-----------|------|
+| `persona_generator.py` | — | — | Claude | Literary quality |
+| `z_axis_translate.py` | OpenAI | Claude* | — | Hybrid pipeline |
+| `z_axis_dialogue.py` | OpenAI | Claude* | — | Multi-turn translation |
+| `iap_evaluator.py` | — | — | OpenAI | JSON stability |
+| `zap_evaluator.py` | — | — | OpenAI | JSON stability |
+| `yaml_generator.py` | — | — | OpenAI | Context generation |
+| `yaml_formatter.py` | — | — | OpenAI | Script conversion |
+
+> \* Set `USE_CLAUDE_FOR_STEP3=false` to use OpenAI only
 
 ### 3. (Optional) Custom model
 ```bash
 # .env
-OPENAI_MODEL=gpt-4.1        # Default model for OpenAI tools
+OPENAI_MODEL=gpt-5.2        # Default model for OpenAI tools
 ```
+> ⚠️ **Warning**: Model selection directly impacts translation quality.  
+> - Downgrading models will result in loss of emotional nuance  
+> - OpenAI mini models (`gpt-4o-mini`, `gpt-4.1-mini`) are **NOT RECOMMENDED**  
+> - For best results: `gpt-4.1` / `gpt-5.2` + `claude-opus-4-5`
 
 ## Quick Start
 ```bash
