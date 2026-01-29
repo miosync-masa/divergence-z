@@ -44,16 +44,28 @@ La magie est dans le **prompt engineering**, pas dans le code. Essayez ! 🚀
 You've seen it. That moment when your favorite character's most powerful line gets translated and... something dies.
 
 **Rem's confession (Re:Zero):**
-
 ```
-Japanese: 「レムは、スバルくんを、愛しています」
-
-DeepL:    "Rem loves Subaru."
+Japanese: 「レムは、スバルくんを愛しています。スバルくんがいいんです。スバルくんじゃなきゃ嫌なんです」
 ```
 
-Wait. That's not a confession anymore. **That's a Wikipedia summary.** 💀
+| Translation | Output |
+|-------------|--------|
+| **DeepL** | "Rem loves Subaru. Subaru is the one. I won't accept anyone but Subaru." |
+| **Z-Axis** | "Rem… Rem loves you, Subaru-kun. Subaru-kun is the one Rem wants. Subaru-kun… Subaru-kun is the only one— Rem can't stand it if it isn't you." |
 
-The meaning is "correct." But the *action*—a direct, face-to-face confession of love—became third-person narration. The intimacy? Gone. The vulnerability? Gone. The scene where Rem looks Subaru in the eyes and bares her soul? Now it reads like someone describing the scene from outside.
+**What went wrong with DeepL?**
+
+| Issue | DeepL | Z-Axis |
+|-------|-------|--------|
+| Honorific | ❌ "Subaru" (dropped) | ✅ "Subaru-kun" |
+| Perspective | ❌ Third-person report | ✅ Direct confession |
+| First-person | ❌ "Rem... I..." (inconsistent) | ✅ "Rem... Rem..." (consistent) |
+| Repetition | ❌ None | ✅ Name repeated (emotional leak) |
+| Hesitation | ❌ Flat | ✅ "…" marks emotion |
+
+DeepL gave you the **meaning**. But the **action**—a desperate, face-to-face confession—became a Wikipedia summary. 💀
+
+The intimacy? Gone. The vulnerability? Gone. The scene where Rem looks Subaru in the eyes and bares her soul? Now it reads like someone describing the scene from outside.
 
 **This is the problem we're solving.**
 
@@ -214,23 +226,34 @@ The goal isn't to replace translators. It's to externalize one part of expert pr
 Vous l'avez vécu. Ce moment où la réplique la plus puissante de votre personnage préféré est traduite et... quelque chose meurt.
 
 **La déclaration de Rem (Re:Zero) :**
-
 ```
-Japonais: 「レムは、スバルくんを、愛しています」
-
-DeepL:    "Rem loves Subaru." / "Rem aime Subaru."
+Japonais: 「レムは、スバルくんを愛しています。スバルくんがいいんです。スバルくんじゃなきゃ嫌なんです」
 ```
 
-Attendez. Ce n'est plus une déclaration d'amour. **C'est un résumé Wikipédia.** 💀
+| Traduction | Résultat |
+|------------|----------|
+| **DeepL** | "Rem aime Subaru. Subaru est le bon. Je n'accepterai personne d'autre que Subaru." |
+| **Z-Axis** | "Rem… Rem t'aime, Subaru-kun. Subaru-kun est celui que Rem veut. Subaru-kun… Subaru-kun est le seul— Rem ne peut pas le supporter si ce n'est pas toi." |
 
-Le sens est « correct ». Mais l'*action*—une déclaration directe, face à face—est devenue une narration à la troisième personne. L'intimité ? Disparue. La vulnérabilité ? Disparue. Cette scène où Rem regarde Subaru dans les yeux et lui ouvre son cœur ? Maintenant, on dirait que quelqu'un décrit la scène de l'extérieur.
+**Qu'est-ce qui n'a pas marché avec DeepL ?**
+
+| Problème | DeepL | Z-Axis |
+|----------|-------|--------|
+| Honorifique | ❌ "Subaru" (supprimé) | ✅ "Subaru-kun" |
+| Perspective | ❌ Rapport à la 3e personne | ✅ Déclaration directe |
+| Première personne | ❌ "Rem... Je..." (incohérent) | ✅ "Rem... Rem..." (cohérent) |
+| Répétition | ❌ Aucune | ✅ Nom répété (fuite émotionnelle) |
+| Hésitation | ❌ Plat | ✅ "…" marque l'émotion |
+
+DeepL vous a donné le **sens**. Mais l'**action**—une déclaration désespérée, face à face—est devenue un résumé Wikipédia. 💀
+
+L'intimité ? Disparue. La vulnérabilité ? Disparue. Cette scène où Rem regarde Subaru dans les yeux et lui ouvre son cœur ? Maintenant, on dirait que quelqu'un décrit la scène de l'extérieur.
 
 **C'est le problème que nous résolvons.**
 
 ## Qu'est-ce que la traduction Z-Axis ?
 
 La traduction standard préserve le **sens** (ce qui est dit).
-
 La traduction Z-Axis préserve l'**action** (ce que la réplique *fait*).
 
 | Couche | Ce que c'est | Dépend de la langue ? |
@@ -239,15 +262,6 @@ La traduction Z-Axis préserve l'**action** (ce que la réplique *fait*).
 | **Couche Action** | Déclarer, menacer, esquiver, nier, jurer... | ❌ Non |
 
 Une traduction réussit quand l'**action** survit, même si la forme de surface change complètement.
-
-### Le test de la déclaration
-
-```
-Action originale:    DÉCLARATION DIRECTE (locuteur → auditeur, face à face)
-Action DeepL:        ÉNONCÉ RAPPORTÉ (narrateur → public, description)
-
-Même sens. Action complètement différente.
-```
 
 ## Pourquoi ne pas simplement utiliser les LLMs ?
 
