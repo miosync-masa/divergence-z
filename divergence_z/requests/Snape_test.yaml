@@ -1,0 +1,27 @@
+# Snape "Always" Scene - Z-Axis Translation Test
+# The most powerful single word in fiction history
+
+persona_file: "personas/セブルス_スネイプ_v3.yaml"
+
+scene: "ダンブルドアの部屋、二人きり。スネイプが守護霊（牝鹿）を出した直後。"
+
+relationship: "スネイプ → ダンブルドア（主従、だが利用されていると感じている。唯一本音を見せられる相手）"
+
+context_block: |
+  [状況] ハリーを守り続けるスネイプの真意をダンブルドアが問う
+  [状況] スネイプが杖を振り、銀色の牝鹿の守護霊が現れる
+  [状況] それはリリー・ポッターと同じ守護霊
+  [ダンブルドア] （驚き、そして深い理解）……リリーか。これほどの年月が経っても？
+  [スネイプ] （長い沈黙。17年間の全てがこの一言に凝縮される）
+
+target_line: "……いつも"
+
+target_lang: "en"
+
+z_axis_intensity: "high"
+
+# Expected analysis:
+# z_mode: collapse (生涯隠し続けた愛の告白)
+# negation_type: none (隠しではない、純粋な告白)
+# listener_type: other_specific (ダンブルドアに向けて)
+# z_leak: ellipsis, trailing (言葉にならない感情)

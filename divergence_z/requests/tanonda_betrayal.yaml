@@ -1,0 +1,18 @@
+# Case 3: 決別 - 裏切り者への皮肉
+persona_file: "personas/protagonist_v2.yaml"
+
+scene: "雨の廃工場。主人公が、裏切った親友に背を向けて去る瞬間。"
+relationship: "主人公 → 裏切り者（かつての親友・複雑な愛憎）"
+
+context_block: |
+  [状況] 親友だった男が敵組織に寝返った
+  [状況] 最後の対峙、主人公は去ることを選ぶ
+  [裏切り者] ...お前は俺を止めないのか
+  [主人公] お前はもう、俺の知ってる奴じゃない
+  [裏切り者] ...
+  [主人公] （背を向けて）頼んだぞ
+
+target_line: "頼んだぞ"
+target_lang: "en"
+z_axis_intensity: "high"
+emotion_state: "bitter"

@@ -1,0 +1,19 @@
+persona_file: "personas/luffy_v2.yaml"
+
+scene: "Sabaody Archipelago, Rayleigh's coating shop"
+relationship: "Rayleigh (ex-Roger Pirates) and Straw Hat crew"
+
+context_block: |
+  [Context] It's revealed Rayleigh knows the truth about One Piece.
+  [Context] The crew is tempted to ask for the answers.
+  [Context] Luffy snaps and draws a hard boundary.
+
+target_line: |
+  I don’t wanna hear where the treasure is!!!
+  I don’t even wanna hear whether it exists or not!!! I don’t know a damn thing, but—
+  that’s how everyone throws their life on the line and heads out to sea!!!
+  If you’re gonna tell us something here, old man…
+  then I’m quitting being a pirate.
+
+target_lang: "fr"
+z_axis_intensity: "high"
