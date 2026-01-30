@@ -217,6 +217,69 @@ This repository accompanies our practice report submitted to the **Journal of Au
 
 The goal isn't to replace translators. It's to externalize one part of expert practice: **keeping the action intact across languages**.
 
+## A Note on Human Translators
+
+Z-Axis Translation does **not** replace human translators.
+
+Consider Snape's final confession: **"Always."**
+
+| Translation | Nuance |
+|-------------|--------|
+| 「いつも」 | Habitual, continuous |
+| 「最初からずっと」 | From the very beginning, weight of time |
+
+Both are "correct." Both preserve the action. But **which one hits harder** depends on context, literary judgment, and creative vision.
+
+This system provides:
+- ✅ Consistent emotional analysis
+- ✅ Character voice preservation  
+- ✅ Quality baseline for large-scale work
+
+This system does **not** provide:
+- ❌ The "aha!" moment of a perfect word choice
+- ❌ Cultural intuition that comes from lived experience
+- ❌ The creative leap that makes a translation memorable
+
+**Metrics like IAP and ZAP measure fidelity, not artistry.**
+
+A translator who renders "Always" as 「最初からずっと」 and makes readers weep—that's not something AI can score. That's craft. That's human.
+
+> "Translation is not a math problem with one answer.  
+> It's a creative act with infinite valid solutions."
+
+**Z-Axis Translation raises the floor. Human translators raise the ceiling.**
+
+---
+
+**What ZAP / IAP can do:**
+- ✅ Prevent semantic breakdown
+- ✅ Preserve character voice
+- ✅ Keep emotional direction accurate
+
+**What they cannot do:**
+- ❌ The intent to "make them cry here"
+- ❌ The resolve to "bet everything on this one word"
+- ❌ The judgment to pierce the reader's life experience
+
+That's not translation.  
+**That's creation.**
+
+---
+
+AI can produce *translation that doesn't fail*.  
+But only humans can create *translation that can't be forgotten*.
+
+Whether to choose「最初からずっと」for "Always"—  
+that depends on **where in time the translator stands to view the story**.
+
+---
+
+**That's why language study will never end.**  
+**That's why translation is not over.**
+
+In fact—  
+**it's just beginning.**
+
 ---
 
 # Français
@@ -383,6 +446,69 @@ Ce dépôt accompagne notre rapport de pratique soumis au **Journal of Audiovisu
 > Nous l'avons construit parce que **même les bonnes traductions peuvent tuer des personnages**. »
 
 L'objectif n'est pas de remplacer les traducteurs. C'est d'externaliser une partie de la pratique experte : **garder l'action intacte à travers les langues**.
+
+## Une Note sur les Traducteurs Humains
+
+La traduction Z-Axis ne **remplace pas** les traducteurs humains.
+
+Considérez la confession finale de Snape : **« Always. »**
+
+| Traduction | Nuance |
+|------------|--------|
+| « Toujours » | Habituel, continu |
+| « Depuis le tout début » | Depuis l'origine, le poids du temps |
+
+Les deux sont « correctes ». Les deux préservent l'action. Mais **laquelle frappe le plus fort** dépend du contexte, du jugement littéraire et de la vision créative.
+
+Ce système fournit :
+- ✅ Analyse émotionnelle cohérente
+- ✅ Préservation de la voix du personnage
+- ✅ Base de qualité pour le travail à grande échelle
+
+Ce système ne fournit **pas** :
+- ❌ Le moment « eurêka » du choix parfait d'un mot
+- ❌ L'intuition culturelle qui vient de l'expérience vécue
+- ❌ Le saut créatif qui rend une traduction mémorable
+
+**Des métriques comme IAP et ZAP mesurent la fidélité, pas l'art.**
+
+Un traducteur qui rend « Always » par「最初からずっと」et fait pleurer les lecteurs — ce n'est pas quelque chose que l'IA peut noter. C'est du métier. C'est humain.
+
+> « La traduction n'est pas un problème mathématique avec une seule réponse.
+> C'est un acte créatif avec une infinité de solutions valides. »
+
+**La traduction Z-Axis élève le plancher. Les traducteurs humains élèvent le plafond.**
+
+---
+
+**Ce que ZAP / IAP peuvent faire :**
+- ✅ Empêcher les ruptures sémantiques
+- ✅ Préserver la voix du personnage
+- ✅ Maintenir la direction émotionnelle
+
+**Ce qu'ils ne peuvent pas faire :**
+- ❌ L'intention de « faire pleurer ici »
+- ❌ La résolution de « tout miser sur ce seul mot »
+- ❌ Le jugement de toucher l'expérience de vie du lecteur
+
+Ce n'est pas de la traduction.
+**C'est de la création.**
+
+---
+
+L'IA peut produire *une traduction qui ne faillit pas*.
+Mais seuls les humains peuvent créer *une traduction qu'on n'oublie jamais*.
+
+Choisir「最初からずっと」pour « Always »—
+cela dépend de **où dans le temps le traducteur se place pour regarder l'histoire**.
+
+---
+
+**C'est pourquoi l'étude des langues ne finira jamais.**
+**C'est pourquoi la traduction n'est pas terminée.**
+
+En fait—
+**tout ne fait que commencer.**
 
 ---
 
