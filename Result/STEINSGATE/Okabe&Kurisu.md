@@ -85,3 +85,15 @@
 | 5 | ellipsis | ✅ "**...**Kurisu" | ❌ "Kurisu" |
 | 5 | overwrite | ✅ "**no**, it's nothing" | ⚠️ "**I mean**, never mind" |
 | 6 | 拡張 | ✅ "seriously...!" (原文に忠実) | ❌ "**I can't believe you**...!" (追加) |
+
+### The "no" vs "I mean" Problem
+
+| Original | Z-Axis | DeepL |
+|----------|--------|-------|
+| 俺は...いや、なんでもない | "I... **no**, it's nothing" | "I... **I mean**, never mind" |
+
+**"no"** = Negation. Canceling what you almost said.  
+**"I mean"** = Correction. Rephrasing what you said.
+
+Okabe didn't misspeak. He **chose not to say it**.  
+That's a completely different action.
