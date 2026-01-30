@@ -1,17 +1,24 @@
 #!/usr/bin/env python3
 """
-Persona Generator v3.0
+Persona Generator v3.1
 Z-Axis Translation System — Automatic Persona YAML Generation
 
-v3.0 Changes:
-- age_context: 背景のみ、表出パターンは emotion_states へ分離
-- emotion_states: z_mode, z_leak 追加
-- age_expression_rules: 年齢カテゴリ別の表出ルール追加
-- surface_markers_hint: z_leak マーカー対応
+v3.1 Changes:
+- --lang option for output language (ja/en/zh/ko/fr/es/de/pt/it/ru)
+- original_speech_patterns: 原語の人称・方言を保持（翻訳不可だが参照用）
+- translation_compensations: 他言語での補償戦略
 
 Usage:
+    # 日本語（デフォルト）
     python persona_generator.py --name "牧瀬紅莉栖" --source "Steins;Gate" --desc "ツンデレの天才科学者"
-    python persona_generator.py --name "ナツキ・スバル" --source "Re:ゼロ" --desc "死に戻りの少年" --search
+    
+    # 英語出力
+    python persona_generator.py --name "Kurisu Makise" --source "Steins;Gate" \
+      --desc "Tsundere genius scientist" --lang en
+    
+    # 中国語出力
+    python persona_generator.py --name "牧濑红莉栖" --source "命运石之门" \
+      --desc "傲娇天才科学家" --lang zh
 """
 
 import argparse
@@ -28,19 +35,58 @@ load_dotenv()
 
 DEFAULT_MODEL = os.getenv("PERSONA_GENERATOR_MODEL", os.getenv("CLAUDE_MODEL", "claude-opus-4-5-20251101"))
 
-SYSTEM_PROMPT = """You are a Persona Dynamics Designer for the Z-Axis Translation System v3.0.
+SUPPORTED_LANGUAGES = {
+    "ja": "Japanese (日本語)",
+    "en": "English",
+    "zh": "Chinese (中文)",
+    "ko": "Korean (한국어)",
+    "fr": "French (Français)",
+    "es": "Spanish (Español)",
+    "de": "German (Deutsch)",
+    "pt": "Portuguese (Português)",
+    "it": "Italian (Italiano)",
+    "ru": "Russian (Русский)",
+}
+
+# =============================================================================
+# SYSTEM PROMPT v3.1
+# =============================================================================
+
+def build_system_prompt(output_lang: str) -> str:
+    """Build system prompt with language-specific instructions."""
+    
+    lang_name = SUPPORTED_LANGUAGES.get(output_lang, "English")
+    
+    # 言語別の出力指示
+    if output_lang == "ja":
+        lang_instruction = """
+## OUTPUT LANGUAGE
+Output all descriptions, summaries, and notes in Japanese (日本語).
+The original_speech_patterns section should be in Japanese as it captures Japanese-specific speech patterns."""
+    else:
+        lang_instruction = f"""
+## OUTPUT LANGUAGE
+Output all descriptions, summaries, and notes in {lang_name}.
+IMPORTANT: The `original_speech_patterns` section MUST remain in the character's SOURCE language 
+(usually Japanese for anime/game characters) because these patterns are untranslatable.
+Only the `translation_compensations` section should be in {lang_name}."""
+
+    return f"""You are a Persona Dynamics Designer for the Z-Axis Translation System v3.1.
 
 Task: Generate a persona YAML that captures a character's internal psychological 
 structure for emotion-preserving translation.
 
-## YAML SCHEMA v3.0 (REQUIRED SECTIONS)
+{lang_instruction}
+
+## YAML SCHEMA v3.1 (REQUIRED SECTIONS)
 
 ### 1. META
 ```yaml
 meta:
-  version: "3.0"
+  version: "3.1"
   generated_by: "persona_generator"
   character_id: "unique_id"  # lowercase, underscores
+  output_lang: "{output_lang}"  # Language of descriptions
 ```
 
 ### 2. BASIC INFO (persona)
@@ -48,6 +94,7 @@ meta:
 persona:
   name: "キャラ名"
   name_en: "English Name"
+  name_native: "原語での名前"
   source: "作品名"
   type: "キャラクタータイプ（例：ツンデレ × 天才科学者）"
   summary: "1-2文の概要"
@@ -67,17 +114,75 @@ age:
 - ❌ DON'T: "感情崩壊時は言葉が出てこなくなる" ← これは emotion_states へ
 - ❌ DON'T: "怒ると言葉が荒くなる" ← これは emotion_states へ
 
-### 4. LANGUAGE (人称・呼称)
+### 4. LANGUAGE (人称・呼称) — UPDATED v3.1
+
 ```yaml
 language:
-  first_person: "俺 / 私 / 僕 etc."
-  second_person_user: "お前 / あなた / 君 etc."
-  second_person_other: "お前ら / みんな etc."
-  address_style: "敬語 / タメ口 / 混合"
-  dialect: "標準語 / 関西弁 / etc."
-  speech_quirks:
-    - "口癖や特徴的な言い回し"
-  notes: "追加の言語的特徴"
+  # === ORIGINAL SPEECH PATTERNS (SOURCE LANGUAGE) ===
+  # These are UNTRANSLATABLE but preserved for reference
+  # MUST be in the character's native language (usually Japanese)
+  original_speech_patterns:
+    source_lang: "ja"  # Source language code
+    first_person: "俺"
+    first_person_nuance: "masculine, casual, slightly rough"
+    first_person_variants:
+      - form: "俺"
+        context: "default"
+      - form: "俺様"
+        context: "boasting, joking"
+    second_person:
+      - form: "お前"
+        nuance: "casual/rough, close relations"
+        target: "friends, rivals"
+      - form: "あんた"
+        nuance: "slightly dismissive"
+        target: "strangers, annoying people"
+    self_reference_in_third_person: false  # true for characters who use their own name
+    dialect: "標準語"
+    dialect_features: []  # List specific dialect markers if any
+    sentence_endings:
+      - pattern: "〜だぜ"
+        nuance: "masculine, confident"
+      - pattern: "〜じゃねーか"
+        nuance: "surprise, emphasis, rough"
+    speech_quirks:
+      - pattern: "口癖や特徴的な言い回し"
+        frequency: "often"
+        trigger: "when excited"
+
+  # === TRANSLATION COMPENSATIONS ===
+  # How to preserve character voice in other languages
+  translation_compensations:
+    register: "informal, energetic"  # Overall speech register
+    tone_keywords:
+      - "confident"
+      - "slightly rough"
+      - "youthful energy"
+    strategies:
+      en:
+        - "Use contractions frequently (don't, can't, won't)"
+        - "Occasional mild profanity (damn, hell, crap)"
+        - "Sentence fragments for urgency"
+        - "Exclamations and interjections"
+      zh:
+        - "Use casual sentence particles (啊, 呢, 嘛)"
+        - "Masculine speech patterns"
+      ko:
+        - "Use 반말 (informal speech)"
+        - "Masculine sentence endings"
+      fr:
+        - "Use tu form exclusively"
+        - "Colloquial expressions"
+      # Add more languages as needed
+    
+    # What is LOST in translation (for translator awareness)
+    untranslatable_elements:
+      - element: "俺 vs 僕 vs 私 distinction"
+        impact: "high"
+        note: "Japanese first-person pronouns encode gender, formality, and personality"
+      - element: "Sentence-final particles (ぜ, ぞ, な)"
+        impact: "medium"
+        note: "These add nuance that must be compensated through word choice"
 ```
 
 ### 5. CONFLICT_AXES (内部葛藤軸)
@@ -112,7 +217,7 @@ weakness:
   notes: "弱点の発現パターン"
 ```
 
-### 8. AGE_EXPRESSION_RULES (年齢別表出ルール) — NEW in v3.0
+### 8. AGE_EXPRESSION_RULES (年齢別表出ルール)
 ```yaml
 age_expression_rules:
   category: "teen_young"  # teen_young / teen_mature / adult
@@ -129,12 +234,12 @@ age_expression_rules:
     structure: "安定"
 ```
 
-### 9. EMOTION_STATES (状態別Z軸制約) — CRITICAL FOR TRANSLATION, UPDATED v3.0
+### 9. EMOTION_STATES (状態別Z軸制約) — CRITICAL FOR TRANSLATION
 ```yaml
 emotion_states:
   - state: "状態名（例：collapse, rage, shame）"
     z_intensity: "low / medium / high"
-    z_mode: "collapse / rage / numb / plea / shame / leak"  # NEW
+    z_mode: "collapse / rage / numb / plea / shame / leak"
     description: "この状態が発生する条件"
     
     surface_markers_hint:
@@ -145,7 +250,7 @@ emotion_states:
       residual: "none / optional / required"
       tone: "声の質の説明"
       
-    z_leak:  # NEW - 表出マーカーリスト
+    z_leak:
       - "stutter"       # 言い淀み「I— I...」
       - "ellipsis"      # 途切れ「...」
       - "repetition"    # 繰り返し「nobody— nobody」
@@ -170,9 +275,10 @@ emotion_states:
 example_lines:
   - situation: "コンテキスト"
     line: "実際の台詞（原語）"
+    line_romanized: "Romanization if applicable"
     tags: [emotion_state, trigger]
     z_intensity: "low / medium / high"
-    z_mode: "対応するz_mode"  # NEW
+    z_mode: "対応するz_mode"
 ```
 
 ### 11. TRIGGERS (Z軸変動トリガー)
@@ -181,12 +287,12 @@ triggers:
   - trigger: "反応を引き起こすもの"
     reaction: "z_spike / z_drop / z_boost / z_stable"
     z_delta: "+0.3 / -0.2 etc."
-    z_mode_shift: "シフト先のz_mode（optional）"  # NEW
+    z_mode_shift: "シフト先のz_mode（optional）"
     surface_effect: "発話への影響"
     example_response: "サンプル台詞"
 ```
 
-### 12. ARC_DEFAULTS (典型的なアーク) — NEW in v3.0
+### 12. ARC_DEFAULTS (典型的なアーク)
 ```yaml
 arc_defaults:
   typical_arc_targets:
@@ -201,14 +307,20 @@ arc_defaults:
 ## CONSTRAINTS
 - Conflicts MUST be phrased as "A vs B"
 - age_context MUST NOT contain expression patterns (those go to emotion_states)
-- emotion_states MUST include z_mode and z_leak for v3.0 compatibility
-- emotion_states MUST cover ALL z_modes that apply to this character — do NOT limit to 3-4 states if more are relevant
+- emotion_states MUST include z_mode and z_leak for v3.1 compatibility
 - Each emotion_state MUST have corresponding z_leak markers
 - example_lines should be 2-4 max
 - The persona must feel internally consistent
 - Output VALID YAML only. No explanation before or after.
 - Start with "# =====" header comment
-- Include meta section with version: "3.0"
+- Include meta section with version: "3.1"
+
+## CRITICAL v3.1 RULES
+1. `original_speech_patterns` MUST be in the character's SOURCE language (e.g., Japanese for anime characters)
+2. `original_speech_patterns` captures UNTRANSLATABLE elements (pronouns, particles, dialect)
+3. `translation_compensations` provides strategies for OTHER languages to preserve character voice
+4. ALL other descriptions should be in the specified output language ({output_lang})
+5. `untranslatable_elements` lists what is LOST in translation for translator awareness
 
 ## IMPORTANT NOTES
 - Focus on TRANSLATABLE features (how speech changes with emotion)
@@ -218,17 +330,23 @@ arc_defaults:
 - Characters who use denial should have negation_first: true
 - age_expression_rules should match the character's mental_maturity"""
 
+
 # =============================================================================
 # FUNCTIONS
 # =============================================================================
 
-def build_user_prompt(name: str, source: str, description: str, search_context: str = "") -> str:
+def build_user_prompt(name: str, source: str, description: str, 
+                      output_lang: str, search_context: str = "") -> str:
     """Build the user prompt for persona generation."""
-    prompt = f"""Generate a v3.0 persona YAML for:
+    
+    lang_name = SUPPORTED_LANGUAGES.get(output_lang, "English")
+    
+    prompt = f"""Generate a v3.1 persona YAML for:
 
 Name: {name}
 Source: {source}
 Description: {description}
+Output Language: {output_lang} ({lang_name})
 """
     
     if search_context:
@@ -237,29 +355,39 @@ Description: {description}
 {search_context}
 """
     
-    prompt += """
+    prompt += f"""
 Output ONLY valid YAML. No explanation.
-Remember: age_context should ONLY contain background info, NOT expression patterns."""
+
+REMEMBER:
+- `original_speech_patterns` MUST be in the character's native/source language
+- All other descriptions in {lang_name}
+- `translation_compensations` provides strategies for preserving voice across languages
+- age_context should ONLY contain background info, NOT expression patterns"""
     
     return prompt
 
 
-def generate_persona(name: str, source: str, description: str, 
-                     search_context: str = "", model: str = DEFAULT_MODEL) -> str:
+def generate_persona(name: str, source: str, description: str,
+                     output_lang: str = "ja",
+                     search_context: str = "", 
+                     model: str = DEFAULT_MODEL) -> str:
     """Generate persona YAML using Claude API."""
     
     client = Anthropic()
     
-    user_prompt = build_user_prompt(name, source, description, search_context)
+    system_prompt = build_system_prompt(output_lang)
+    user_prompt = build_user_prompt(name, source, description, output_lang, search_context)
     
-    print(f"🐯 Generating persona v3.0 for: {name} ({source})")
+    lang_name = SUPPORTED_LANGUAGES.get(output_lang, output_lang)
+    print(f"🐯 Generating persona v3.1 for: {name} ({source})")
+    print(f"   Output language: {lang_name}")
     print(f"   Model: {model}")
     print()
     
     response = client.messages.create(
         model=model,
-        max_tokens=6000,  # Increased for v3.0 larger output
-        system=SYSTEM_PROMPT,
+        max_tokens=8000,  # Increased for v3.1 larger output
+        system=system_prompt,
         messages=[
             {"role": "user", "content": user_prompt}
         ]
@@ -278,9 +406,9 @@ def generate_persona(name: str, source: str, description: str,
     return yaml_content.strip()
 
 
-def validate_v3_persona(yaml_content: str) -> tuple[bool, list[str]]:
+def validate_v31_persona(yaml_content: str) -> tuple[bool, list[str]]:
     """
-    Validate that the generated YAML conforms to v3.0 schema.
+    Validate that the generated YAML conforms to v3.1 schema.
     Returns (is_valid, list_of_issues).
     """
     import yaml as yaml_lib
@@ -293,30 +421,50 @@ def validate_v3_persona(yaml_content: str) -> tuple[bool, list[str]]:
         return False, [f"YAML parse error: {e}"]
     
     # Check meta version
-    if data.get("meta", {}).get("version") != "3.0":
-        issues.append("meta.version should be '3.0'")
+    meta_version = data.get("meta", {}).get("version", "")
+    if meta_version not in ["3.0", "3.1"]:
+        issues.append(f"meta.version should be '3.1' (got '{meta_version}')")
+    
+    # Check language structure for v3.1
+    language_data = data.get("language", {})
+    
+    # Check original_speech_patterns
+    osp = language_data.get("original_speech_patterns", {})
+    if not osp:
+        issues.append("language.original_speech_patterns is required in v3.1")
+    else:
+        if "source_lang" not in osp:
+            issues.append("original_speech_patterns.source_lang is required")
+        if "first_person" not in osp:
+            issues.append("original_speech_patterns.first_person is required")
+    
+    # Check translation_compensations
+    tc = language_data.get("translation_compensations", {})
+    if not tc:
+        issues.append("language.translation_compensations is required in v3.1")
     
     # Check age structure
     age_data = data.get("age", {})
     if "mental_maturity" not in age_data:
-        issues.append("age.mental_maturity is required in v3.0")
+        issues.append("age.mental_maturity is required")
     
     # Check emotion_states for z_mode and z_leak
     emotion_states = data.get("emotion_states", [])
     for i, state in enumerate(emotion_states):
         if "z_mode" not in state:
-            issues.append(f"emotion_states[{i}].z_mode is required in v3.0")
+            issues.append(f"emotion_states[{i}].z_mode is required")
         if "z_leak" not in state:
-            issues.append(f"emotion_states[{i}].z_leak is required in v3.0")
+            issues.append(f"emotion_states[{i}].z_leak is required")
     
     # Check age_expression_rules exists
     if "age_expression_rules" not in data:
-        issues.append("age_expression_rules is required in v3.0")
+        issues.append("age_expression_rules is required")
     
     return len(issues) == 0, issues
 
 
-def save_persona(yaml_content: str, name: str, output_dir: str = "personas") -> str:
+def save_persona(yaml_content: str, name: str, output_lang: str, 
+                 output_dir: str = "personas") -> str:
     """Save generated persona to file."""
     
     os.makedirs(output_dir, exist_ok=True)
@@ -325,7 +473,12 @@ def save_persona(yaml_content: str, name: str, output_dir: str = "personas") -> 
     safe_name = name.lower().replace(" ", "_").replace("・", "_")
     safe_name = "".join(c for c in safe_name if c.isalnum() or c == "_")
     
-    filename = f"{safe_name}_v3.yaml"
+    # Include language in filename if not Japanese
+    if output_lang != "ja":
+        filename = f"{safe_name}_v31_{output_lang}.yaml"
+    else:
+        filename = f"{safe_name}_v31.yaml"
+    
     filepath = os.path.join(output_dir, filename)
     
     with open(filepath, "w", encoding="utf-8") as f:
@@ -334,21 +487,60 @@ def save_persona(yaml_content: str, name: str, output_dir: str = "personas") -> 
     return filepath
 
 
+def list_languages():
+    """Print supported languages."""
+    print("Supported output languages:")
+    print("-" * 40)
+    for code, name in SUPPORTED_LANGUAGES.items():
+        print(f"  {code:4} : {name}")
+    print()
+
+
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate persona YAML v3.0 for Z-Axis Translation System"
+        description="Generate persona YAML v3.1 for Z-Axis Translation System",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Japanese output (default)
+  python persona_generator.py --name "牧瀬紅莉栖" --source "Steins;Gate" \\
+    --desc "ツンデレの天才科学者"
+
+  # English output
+  python persona_generator.py --name "Kurisu Makise" --source "Steins;Gate" \\
+    --desc "Tsundere genius scientist" --lang en
+
+  # Chinese output
+  python persona_generator.py --name "牧濑红莉栖" --source "命运石之门" \\
+    --desc "傲娇天才科学家" --lang zh
+
+  # List supported languages
+  python persona_generator.py --list-languages
+        """
     )
-    parser.add_argument("--name", required=True, help="Character name")
-    parser.add_argument("--source", required=True, help="Source work (anime, game, etc.)")
-    parser.add_argument("--desc", required=True, help="Brief character description")
+    parser.add_argument("--name", help="Character name")
+    parser.add_argument("--source", help="Source work (anime, game, etc.)")
+    parser.add_argument("--desc", help="Brief character description")
+    parser.add_argument("--lang", default="ja", choices=list(SUPPORTED_LANGUAGES.keys()),
+                        help="Output language for descriptions (default: ja)")
     parser.add_argument("--context", default="", help="Additional context or search results")
     parser.add_argument("--context-file", help="File containing additional context")
     parser.add_argument("--model", default=DEFAULT_MODEL, help="Model to use")
     parser.add_argument("--output-dir", default="personas", help="Output directory")
     parser.add_argument("--print-only", action="store_true", help="Print YAML without saving")
-    parser.add_argument("--validate", action="store_true", help="Validate v3.0 schema compliance")
+    parser.add_argument("--validate", action="store_true", help="Validate v3.1 schema compliance")
+    parser.add_argument("--list-languages", action="store_true", help="List supported output languages")
     
     args = parser.parse_args()
+    
+    # Handle --list-languages
+    if args.list_languages:
+        list_languages()
+        return
+    
+    # Check required arguments
+    if not args.name or not args.source or not args.desc:
+        parser.error("--name, --source, and --desc are required (unless using --list-languages)")
     
     # Load context from file if provided
     context = args.context
@@ -361,24 +553,28 @@ def main():
         name=args.name,
         source=args.source,
         description=args.desc,
+        output_lang=args.lang,
         search_context=context,
         model=args.model
     )
     
     # Validate if requested
     if args.validate:
-        is_valid, issues = validate_v3_persona(yaml_content)
+        is_valid, issues = validate_v31_persona(yaml_content)
         if not is_valid:
-            print("⚠️  v3.0 Schema Validation Issues:")
+            print("⚠️  v3.1 Schema Validation Issues:")
             for issue in issues:
                 print(f"   - {issue}")
+            print()
+        else:
+            print("✅ v3.1 Schema Validation: PASSED")
             print()
     
     if args.print_only:
         print(yaml_content)
     else:
-        filepath = save_persona(yaml_content, args.name, args.output_dir)
-        print(f"✅ Persona v3.0 saved to: {filepath}")
+        filepath = save_persona(yaml_content, args.name, args.lang, args.output_dir)
+        print(f"✅ Persona v3.1 saved to: {filepath}")
         print()
         print("=" * 60)
         print(yaml_content)
