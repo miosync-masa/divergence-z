@@ -1,0 +1,127 @@
+{
+  "step1": {
+    "layer_a": {
+      "z": 0.9,
+      "z_mode": "rage",
+      "z_leak": [
+        "repetition"
+      ],
+      "z_confidence": 0.86,
+      "emotion_label": "激昂・断固拒否",
+      "listener_type": "other_specific"
+    },
+    "layer_b": {
+      "probable_cause": "仲間が“答えを聞く”方向に傾きかけ、冒険の意味（自分の信念）が脅かされたため",
+      "subtext": "近道やネタバレで夢を汚されたくない／ここで聞くなら自分の海賊としての在り方が壊れる",
+      "confidence": 0.62
+    },
+    "activated_conflicts": [
+      {
+        "axis": "自由への渇望 vs 船長としての責任",
+        "side_a": "何にも縛られず好きに生きたい",
+        "side_b": "仲間を守り導く責任がある",
+        "activation": 0.55
+      },
+      {
+        "axis": "楽観的無鉄砲 vs 戦略的判断",
+        "side_a": "なんとかなる、やってみればいい",
+        "side_b": "仲間を死なせないための選択",
+        "activation": 0.25
+      },
+      {
+        "axis": "純粋な信頼 vs 怒りの爆発",
+        "side_a": "誰でも信じる、裏切りを想定しない",
+        "side_b": "仲間を傷つけた者への絶対的な怒り",
+        "activation": 0.6
+      }
+    ],
+    "bias": {
+      "mode": "Direct-Emotional-Burst",
+      "pattern": "感情→即発話。フィルターなし。回りくどい言い方をしない。思ったことをそのまま言う",
+      "tendencies": [
+        "怒ると言葉が短く、力強くなる",
+        "嘘をつかない（つけない）",
+        "興奮すると声が大きくなる"
+      ]
+    },
+    "arc": {
+      "arc_id": "trust_test",
+      "arc_phase": "rise",
+      "arc_target": "relationship"
+    },
+    "triggers": [
+      "真実（ワンピース）を教えてもらう提案",
+      "冒険の意味を“答え”で終わらせる気配"
+    ],
+    "risk_flags": [
+      "ultimatum",
+      "relationship_strain"
+    ]
+  },
+  "step2": {
+    "waves": {
+      "wave_a": {
+        "label": "True intent (core drive): protect the meaning of the journey; refuse spoilers/shortcuts; uphold identity as a pirate/captain",
+        "strength": 0.92
+      },
+      "wave_b": {
+        "label": "Suppression/override: forceful boundary-setting via anger + ultimatum to stop the conversation immediately",
+        "strength": 0.88
+      }
+    },
+    "interference": {
+      "type": "constructive",
+      "notes": "Layer A indicates high z=0.9 with z_mode='rage' directed at a specific other. The surface refusal and the underlying value-protection align (no hidden opposite). Anger amplifies clarity rather than masking it; the ultimatum functions as a hard stop to prevent the group from being"
+    },
+    "surface_markers": {
+      "hesitation_level": "low",
+      "negation_first": true,
+      "negation_type": "declaration",
+      "listener_type": "other_specific",
+      "self_directed_rebinding": false,
+      "self_correction": false,
+      "leak_then_overwrite": false,
+      "residual_marker": "Escalating repetition of refusal + moral framing ('everyone risks their lives') + identity ultimatum ('I'll quit')",
+      "z_mode": "rage",
+      "z_leak": [
+        "repetition",
+        "ultimatum",
+        "identity_claim",
+        "moralizing_frame"
+      ],
+      "z_axis_intensity": "high"
+    },
+    "analysis_summary": "Interference is constructive: the spoken 'I don't want to know' matches the true intent (protect the adventure's meaning and his pirate identity). Negation is declarative (not concealment). Primary leakage is repetition, reinforced by escalation into an ultimatum and identity-sta"
+  },
+  "step3": {
+    "translation": "I don’t wanna hear where the treasure is!!!\nI don’t wanna hear whether it even exists!!! I don’t know a damn thing, but—\nthat’s how everyone goes out to sea risking their lives!!!\nIf we’re gonna get told anything by you, old man, right here—\nthen I’m quitting being a pirate!",
+    "z_signature": {
+      "z": 0.9,
+      "z_mode": "rage",
+      "z_leak_applied": [
+        "repetition",
+        "ultimatum",
+        "identity_claim",
+        "moralizing_frame"
+      ],
+      "hesitation_level": "low",
+      "negation_first": true,
+      "negation_type": "declaration",
+      "listener_type": "other_specific",
+      "self_directed_rebinding": false,
+      "self_correction": false,
+      "leak_then_overwrite": false,
+      "residual_marker": "Escalating repetition of refusal + moral framing (risking lives) + identity ultimatum (quit being a pirate)"
+    },
+    "arc": {
+      "arc_id": "trust_test",
+      "arc_phase": "rise",
+      "arc_position": 1
+    },
+    "notes": "Kept declarative negation, repeated refusal, harsh address (“old man”), moralizing frame about risking lives, and the identity ultimatum. Vocabulary kept simple and heavy to match teen/young cold rage.",
+    "alternatives": [
+      "I don’t wanna know where the treasure is!!!\nI don’t wanna know if it’s even real!!! I don’t know anything—\nbut everyone still goes out to sea putting their lives on the line!!!\nIf we’re gonna hear the answer from you, old man—\nthen I’m done. I quit being a pirate!",
+      "I’m not asking where the treasure is!!!\nI’m not asking if it even exists!!! I don’t know a damn thing, but—\neveryone risks their life and sails out anyway!!!\nIf you’re gonna tell us something here, old man—\nthen I’m quitting. I’m not a pirate anymore!"
+    ]
+  }
+}
