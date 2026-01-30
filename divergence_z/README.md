@@ -3,12 +3,30 @@
 > "Don't Kill the Tsundere"  
 > — Action-Preserving Translation for Fictional Speech
 
+## What's New in v3.1 🌐
+
+### Multi-Language Support
+- **Persona generation** in 10 languages (ja/en/zh/ko/fr/es/de/pt/it/ru)
+- **Bidirectional translation** (ja→en, en→ja, zh→en, etc.)
+- **Original speech patterns preserved** — Japanese pronouns (俺/私/僕) kept in source language
+- **Translation compensations** — Strategies for preserving character voice across languages
+
+```bash
+# Generate English persona for international users
+python persona_generator.py --name "Kurisu Makise" --source "Steins;Gate" \
+  --desc "Tsundere genius scientist" --lang en
+
+# Translate Chinese → English
+python z_axis_dialogue.py --config dialogue_zh.yaml --source-lang zh --target-lang en
+```
+
 ## Model Characteristics
 
 | Model | Strength | Best For |
 |-------|----------|----------|
 | **GPT-5.2** | Strict z_leak marker application | Research demos, papers |
 | **Claude Opus 4.5** | Natural, literary quality | Production translation |
+
 ```bash
 # GPT-5.2 (explicit markers, good for demos)
 USE_CLAUDE_FOR_STEP3=false python z_axis_translate.py --config your_config.yaml
@@ -56,20 +74,70 @@ OPENAI_MODEL=gpt-5.2        # Default model for OpenAI tools
 > - OpenAI mini models (`gpt-4o-mini`, `gpt-4.1-mini`) are **NOT RECOMMENDED**  
 > - For best results: `gpt-4.1` / `gpt-5.2` + `claude-opus-4-5`
 
+## Supported Languages 🌍
+
+| Code | Language | Native |
+|------|----------|--------|
+| `ja` | Japanese | 日本語 |
+| `en` | English | English |
+| `zh` | Chinese | 中文 |
+| `ko` | Korean | 한국어 |
+| `fr` | French | Français |
+| `es` | Spanish | Español |
+| `de` | German | Deutsch |
+| `pt` | Portuguese | Português |
+| `it` | Italian | Italiano |
+| `ru` | Russian | Русский |
+
+```bash
+# List all supported languages
+python persona_generator.py --list-languages
+python z_axis_dialogue.py --list-languages
+```
+
 ## Quick Start
+
 ```bash
 cd divergence_z
 
-# 1. Generate persona (uses Claude)
-python persona_generator.py --name "レム" --source "Re:Zero" --desc "献身的メイド"
+# ============================================
+# Persona Generation (v3.1 Multi-language)
+# ============================================
 
-# 2a. [単発翻訳] Translate with Z-axis
-python z_axis_translate.py --config requests/rem_test.yaml
+# Japanese output (default)
+python persona_generator.py --name "牧瀬紅莉栖" --source "Steins;Gate" \
+  --desc "ツンデレの天才科学者"
 
-# 2b. [対話翻訳] Translate dialogue scene ← NEW!
+# English output — descriptions in English, speech patterns in Japanese
+python persona_generator.py --name "Kurisu Makise" --source "Steins;Gate" \
+  --desc "Tsundere genius scientist" --lang en
+
+# Chinese output
+python persona_generator.py --name "牧濑红莉栖" --source "命运石之门" \
+  --desc "傲娇天才科学家" --lang zh
+
+# ============================================
+# Translation (v3.1 Multi-language)
+# ============================================
+
+# Japanese → English (default)
+python z_axis_translate.py --config requests/kurisu_test.yaml
+
+# Dialogue: Japanese → English
 python z_axis_dialogue.py --config requests/rem_subaru_dialogue.yaml
 
-# 3. Evaluate
+# Dialogue: English → Japanese
+python z_axis_dialogue.py --config requests/dialogue_en.yaml \
+  --source-lang en --target-lang ja
+
+# Dialogue: Chinese → English
+python z_axis_dialogue.py --config requests/dialogue_zh.yaml \
+  -s zh -t en
+
+# ============================================
+# Evaluation
+# ============================================
+
 python iap_evaluator.py -o "スバルくんが良いんです" -t "I want you, Subaru-kun"
 python zap_evaluator.py --config requests/rem_test.yaml --translated "I want you, Subaru-kun"
 
@@ -77,44 +145,119 @@ python zap_evaluator.py --config requests/rem_test.yaml --translated "I want you
 # Optional: Content Generation Tools
 # ============================================
 
-# [derivative work] Generate original dialogue (LLM creates lines)
+# [Derivative work] Generate original dialogue (LLM creates lines)
 python yaml_generator.py \
-  --persona personas/kurisu_v2.yaml \
+  --persona personas/kurisu_v3.yaml \
   --scene "ラボで岡部と二人きり" \
   --mode solo
 
-# [Original plastic] Convert existing script to YAML
+# [Original Script] Convert existing script to YAML
 python yaml_formatter.py \
   --script scripts/rem_subaru_zero.txt \
-  --persona-a personas/レム_v2.yaml \
-  --persona-b personas/スバル_v2.yaml \
+  --persona-a personas/レム_v3.yaml \
+  --persona-b personas/スバル_v3.yaml \
   --hint "白鯨戦前夜、レムの告白"
 ```
 
+## Persona YAML v3.1 Structure
+
+### Key Innovation: Original Speech Patterns + Translation Compensations
+
+```yaml
+language:
+  # === PRESERVED IN SOURCE LANGUAGE ===
+  # These are UNTRANSLATABLE but kept for reference
+  original_speech_patterns:
+    source_lang: "ja"
+    first_person: "俺"                    # ← Kept in Japanese!
+    first_person_nuance: "masculine, casual, slightly rough"  # ← Explained in output lang
+    sentence_endings:
+      - pattern: "〜だぜ"                 # ← Kept in Japanese!
+        nuance: "masculine, confident"    # ← Explained in output lang
+    speech_quirks:
+      - pattern: "べ、別に〜"             # ← Iconic tsundere marker, untranslatable
+        trigger: "when caught showing care"
+
+  # === COMPENSATION STRATEGIES ===
+  # How to preserve character voice in OTHER languages
+  translation_compensations:
+    register: "informal, energetic"
+    strategies:
+      en:
+        - "Use contractions (don't, can't)"
+        - "Occasional mild profanity (damn, hell)"
+      zh:
+        - "Use casual particles (啊, 呢, 嘛)"
+      ko:
+        - "Use 반말 (informal speech)"
+    
+    # What is LOST in translation (for translator awareness)
+    untranslatable_elements:
+      - element: "俺 vs 僕 vs 私 distinction"
+        impact: "high"
+        note: "Japanese first-person pronouns encode gender, formality, and personality"
+```
+
+### Why This Matters
+
+| Problem | Traditional Approach | Divergence-Z v3.1 |
+|---------|---------------------|-------------------|
+| "俺" → "I" loses personality | Ignore it | Preserve original + explain nuance + provide compensation strategies |
+| "べ、別に" tsundere stutter | Translate literally | Mark as untranslatable + use "It's not like..." in English |
+| Character voice flattens | Accept the loss | Define per-language compensation strategies |
+
 ## Workflow
+
 ```
                         [Claude API]
-    Character Info → persona_generator → Persona YAML
-                                              ↓
-    ┌─────────────────────────────────────────┴─────────────────────────────────────────┐
+    Character Info → persona_generator → Persona YAML v3.1
+         ↓                                     │
+    --lang en/zh/ko/...                        │
+    (multi-language output)                    │
+                                               ↓
+    ┌──────────────────────────────────────────┴────────────────────────────────────────┐
     │                           REQUEST YAML GENERATION                                 │
     │                                                                                   │
-    │   [derivative work]                              [Original Script]            　  │
+    │   [Derivative Work]                              [Original Script]                │
     │   Scene Hint → yaml_generator ─┐         Script.txt → yaml_formatter ─┐           │
     │                [OpenAI]        │                      [OpenAI]        │           │
     │                                ▼                                      ▼           │
     │                         requests/*.yaml ◄─────────────────────────────            │
     └────────────────────────────────┬──────────────────────────────────────────────────┘
                                      ↓
-                              [OpenAI API]
+                              [OpenAI + Claude API]
                     ┌─────────────────────────────────┐
                     │  z_axis_translate (Monologue)   │
-                    │  z_axis_dialogue  (Dialog)      │
-                    └─────────────────────────────────┘
+                    │  z_axis_dialogue  (Dialog)      │◄── --source-lang / --target-lang
+                    └─────────────────────────────────┘    (bidirectional translation)
                                      ↓
                               Translation
                                      ↓
                     iap_evaluator + zap_evaluator → Quality Score
+```
+
+## Dialogue YAML v3.1 Format
+
+```yaml
+personas:
+  A: "personas/subaru_v3.yaml"
+  B: "personas/rem_v3.yaml"
+
+scene: "白鯨戦後、精神的限界"
+
+relationships:
+  A_to_B: "信頼、依存しつつある"
+  B_to_A: "愛情、献身"
+
+# NEW in v3.1
+source_lang: "ja"    # Source language (default: ja)
+target_lang: "en"    # Target language (default: en)
+
+dialogue:
+  - speaker: A
+    line: "俺は、俺が大嫌いだ"
+  - speaker: B
+    line: "レムは、スバルくんの味方です"
 ```
 
 ## Temperature Settings
@@ -123,9 +266,26 @@ python yaml_formatter.py \
 |------|-------------|---------|
 | STEP1 (Hamiltonian) | 0.3 | Accurate extraction of conflict axes |
 | STEP2 (Interference) | 0.3 | Stable analysis of interference patterns |
-| STEP3 (Translation) | 0.7~0.9 | Natural translation preserving emotional nuance ※Only OpenAI Model|
+| STEP3 (Translation) | 0.7~0.9 | Natural translation preserving emotional nuance ※Only OpenAI Model |
 
 ### Design Philosophy
 - **Analysis phase (STEP1/2)**: Low temperature ensures **reproducibility**
 - **Generation phase (STEP3)**: Higher temperature preserves **expressive richness**
 - Lower than OpenAI default (1.0) to prevent hallucination while retaining emotion
+
+## TAP Framework Philosophy
+
+> **"What cannot be translated must be compensated."**
+
+Divergence-Z v3.1 implements the **Translation as Action Preservation (TAP)** framework:
+
+1. **Identify** what is untranslatable (pronouns, particles, dialect markers)
+2. **Preserve** original patterns for reference
+3. **Explain** the nuance in the target language
+4. **Compensate** using target-language-appropriate strategies
+
+This is not about perfect translation — it's about **preserving the character's voice** across language boundaries.
+
+---
+
+*Developed by Miosync, Inc. — Breaking language barriers through understanding, not just conversion.*
