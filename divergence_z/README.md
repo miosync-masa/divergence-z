@@ -20,6 +20,58 @@ python persona_generator.py --name "Kurisu Makise" --source "Steins;Gate" \
 python z_axis_dialogue.py --config dialogue_zh.yaml --source-lang zh --target-lang en
 ```
 
+### 🔮 Persona Extractor (NEW)
+**Automatic persona extraction from original source texts.**
+
+Extract character psychology, speech patterns, and emotional states directly from novels, scripts, or any text file.
+
+```bash
+# Extract Juliet's persona from Shakespeare (Tsubouchi translation)
+python persona_extractor.py \
+  --source "scripts/romeo_and_juliet.txt" \
+  --character "ヂューリエット" \
+  --model gpt-5.2-pro \
+  --reasoning high \
+  --lang ja \
+  --background
+```
+
+Features:
+- **400K context** — Entire novels processed at once (no RAG/chunking)
+- **GPT-5.2 Pro** — Extended reasoning for deep character analysis
+- **Background mode** — Handle long processing without timeout
+- **Multi-encoding** — Supports UTF-8, Shift_JIS, EUC-JP (for classical texts)
+
+### 🎭 Persona Voice Mode (NEW)
+**Transform any input into a character's voice using cognitive STEPs.**
+
+This is not simple text replacement — it's **Spirit Arrival**: the process of giving direction (Vector) to Information, creating authentic character responses.
+
+```bash
+# Transform modern text into Juliet's voice
+python persona_voice.py \
+  --persona personas/ヂューリエット_extracted_v31.yaml \
+  --input "既読無視しないで！" \
+  --context "LINEで3時間返事がない、不安で仕方ない" \
+  --thinking-steps steps/response_step_full.txt \
+  --show-thinking
+```
+
+Output:
+```
+あゝ、三時も待った……三時もぢゃ！
+何故ひと言の返事も寄越さぬ？
+おゝ、予を……予を忘れたのかいの？
+予の心がここで千々に裂けるのを知らぬのかいの？
+頼む、頼むゆゑ……ひと言でよい、返事をしてたも！
+```
+
+Features:
+- **Extended Thinking** — 13-STEP cognitive process with full traceability
+- **Emotion Tensor** — Λ (meaning density), ρT (tension), σₛ (resonance)
+- **Conflict Tensor** — Models internal character struggles (Ξ)
+- **z_mode / z_leak** — Automatic application of breakdown patterns
+
 ## Model Characteristics
 
 | Model | Strength | Best For |
@@ -55,6 +107,8 @@ OPENAI_API_KEY=sk-xxxxx          # For z_axis_translate.py, iap_evaluator.py, za
 | Tool | Profiler | Translator | Evaluator | Note |
 |------|----------|------------|-----------|------|
 | `persona_generator.py` | — | — | Claude | Literary quality |
+| `persona_extractor.py` | — | — | GPT-5.2 Pro | 400K context, background mode |
+| `persona_voice.py` | — | — | Claude Opus 4.5 | Extended Thinking |
 | `z_axis_translate.py` | OpenAI | Claude* | — | Hybrid pipeline |
 | `z_axis_dialogue.py` | OpenAI | Claude* | — | Multi-turn translation |
 | `iap_evaluator.py` | — | — | OpenAI | JSON stability |
@@ -115,6 +169,51 @@ python persona_generator.py --name "Kurisu Makise" --source "Steins;Gate" \
 # Chinese output
 python persona_generator.py --name "牧濑红莉栖" --source "命运石之门" \
   --desc "傲娇天才科学家" --lang zh
+
+# ============================================
+# 🔮 Persona Extraction (NEW)
+# ============================================
+
+# Extract character from novel/script (supports txt, pdf, epub)
+python persona_extractor.py \
+  --source "scripts/your_novel.txt" \
+  --character "キャラ名" \
+  --model gpt-5.2-pro \
+  --reasoning high \
+  --lang ja \
+  --background
+
+# Extract multiple characters
+python persona_extractor.py \
+  --source "scripts/your_novel.txt" \
+  --characters "キャラA,キャラB,キャラC" \
+  --model gpt-5.2-pro \
+  --reasoning high
+
+# ============================================
+# 🎭 Persona Voice Mode (NEW)
+# ============================================
+
+# Transform modern text into character's voice
+python persona_voice.py \
+  --persona personas/your_character.yaml \
+  --input "現代的な発話" \
+  --context "背景情報、状況説明"
+
+# With target persona (for relationship context)
+python persona_voice.py \
+  --persona personas/kurisu_v3.yaml \
+  --input "ちょっと待ってよ" \
+  --context "岡部が急に実験を始めようとした" \
+  --target-persona personas/okabe.yaml
+
+# Full STEP with thinking trace
+python persona_voice.py \
+  --persona personas/subaru_v3.yaml \
+  --input "もう無理..." \
+  --context "白鯨戦で仲間を失った直後" \
+  --thinking-steps steps/response_step_full.txt \
+  --show-thinking
 
 # ============================================
 # Translation (v3.1 Multi-language)
