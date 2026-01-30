@@ -1,20 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Z-Axis Dialogue Translation System v3.0
-Operation: Babel Inverse — 対話シーン翻訳
+Z-Axis Dialogue Translation System v3.1
+Operation: Babel Inverse — 対話シーン翻訳（多言語対応）
 
 複数のペルソナ間の対話を、Z軸（感情・葛藤構造）を保存しながら翻訳する。
 z_axis_translate.py v3.0 をベースに、対話特有の機能を追加。
 
-v3.0 Changes:
-- z decomposition support (z + z_mode + z_leak)
-- Layer A/B two-layer output handling
-- arc tracking across dialogue turns
-- z_mode_shift trigger detection
+v3.1 Changes:
+- Multi-language support (--source-lang / --target-lang)
+- original_speech_patterns integration from persona v3.1
+- Dynamic language display in summary
+- Bidirectional translation support (ja→en, en→ja, zh→en, etc.)
 
 実行例:
+  # 日本語→英語（デフォルト）
   python z_axis_dialogue.py --config requests/subaru_rem_dialogue.yaml
+
+  # 英語→日本語
+  python z_axis_dialogue.py --config requests/dialogue_en.yaml --target-lang ja
+
+  # 中国語→英語
+  python z_axis_dialogue.py --config requests/dialogue_zh.yaml --source-lang zh --target-lang en
 
 YAML形式:
   personas:
@@ -26,13 +33,14 @@ YAML形式:
     A_to_B: "信頼、依存しつつある"
     B_to_A: "愛情、献身"
   
+  source_lang: "ja"  # NEW in v3.1 (optional, default: ja)
+  target_lang: "en"
+  
   dialogue:
     - speaker: A
       line: "俺は、俺が大嫌いだ"
     - speaker: B
       line: "レムは、スバルくんの味方です"
-  
-  target_lang: "en"
 """
 
 from __future__ import annotations
@@ -69,7 +77,30 @@ load_dotenv()
 
 
 # =============================================================================
-# DIALOGUE-SPECIFIC FUNCTIONS v3.0
+# LANGUAGE CONFIGURATION v3.1
+# =============================================================================
+
+SUPPORTED_LANGUAGES = {
+    "ja": {"name": "Japanese", "native": "日本語", "code": "JA"},
+    "en": {"name": "English", "native": "English", "code": "EN"},
+    "zh": {"name": "Chinese", "native": "中文", "code": "ZH"},
+    "ko": {"name": "Korean", "native": "한국어", "code": "KO"},
+    "fr": {"name": "French", "native": "Français", "code": "FR"},
+    "es": {"name": "Spanish", "native": "Español", "code": "ES"},
+    "de": {"name": "German", "native": "Deutsch", "code": "DE"},
+    "pt": {"name": "Portuguese", "native": "Português", "code": "PT"},
+    "it": {"name": "Italian", "native": "Italiano", "code": "IT"},
+    "ru": {"name": "Russian", "native": "Русский", "code": "RU"},
+}
+
+def get_lang_display(lang_code: str) -> str:
+    """言語コードから表示用文字列を取得"""
+    lang_info = SUPPORTED_LANGUAGES.get(lang_code, {})
+    return lang_info.get("code", lang_code.upper())
+
+
+# =============================================================================
+# DIALOGUE-SPECIFIC FUNCTIONS v3.1
 # =============================================================================
 
 def load_dialogue_config(config_path: str) -> Dict[str, Any]:
@@ -107,6 +138,24 @@ def load_dialogue_config(config_path: str) -> Dict[str, Any]:
 def extract_triggers_v3(persona_data: Dict[str, Any]) -> List[Dict[str, Any]]:
     """ペルソナからtrigger情報を抽出（v3.0: z_mode_shift対応）"""
     return persona_data.get('triggers', [])
+
+
+def extract_original_speech_patterns(persona_data: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    ペルソナから original_speech_patterns を抽出（v3.1）。
+    翻訳時の参照用。
+    """
+    language = persona_data.get('language', {})
+    return language.get('original_speech_patterns', {})
+
+
+def extract_translation_compensations(persona_data: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    ペルソナから translation_compensations を抽出（v3.1）。
+    ターゲット言語での補償戦略。
+    """
+    language = persona_data.get('language', {})
+    return language.get('translation_compensations', {})
 
 
 def check_triggers_v3(
@@ -171,16 +220,21 @@ def build_dialogue_context_v3(
     translated_turns: List[Dict[str, Any]],
     current_index: int,
     max_context_turns: int = 5,
+    source_lang: str = "ja",
+    target_lang: str = "en",
 ) -> str:
     """
-    前の発話を context_block 形式で構築する（v3.0）。
-    z_mode と arc_phase も含める。
+    前の発話を context_block 形式で構築する（v3.1）。
+    z_mode と arc_phase も含める。言語コードを動的に表示。
     """
     if not translated_turns:
         return ""
     
     start = max(0, current_index - max_context_turns)
     relevant_turns = translated_turns[start:current_index]
+    
+    source_code = get_lang_display(source_lang)
+    target_code = get_lang_display(target_lang)
     
     context_lines = []
     for turn in relevant_turns:
@@ -192,7 +246,7 @@ def build_dialogue_context_v3(
         
         context_lines.append(f"[{speaker}] (z_mode={z_mode}, arc={arc_phase}) {original}")
         if translated:
-            context_lines.append(f"[{speaker} (EN)] {translated}")
+            context_lines.append(f"[{speaker} ({target_code})] {translated}")
     
     return "\n".join(context_lines)
 
@@ -271,8 +325,50 @@ def extract_z_info_from_result(translate_result: Dict[str, Any]) -> Dict[str, An
     return z_info
 
 
+def build_compensation_context(
+    persona_data: Dict[str, Any],
+    target_lang: str,
+) -> str:
+    """
+    v3.1: translation_compensations からターゲット言語用の補償戦略を構築。
+    翻訳プロンプトに追加するコンテキスト。
+    """
+    compensations = extract_translation_compensations(persona_data)
+    if not compensations:
+        return ""
+    
+    lines = ["[TRANSLATION COMPENSATION STRATEGIES]"]
+    
+    # Register
+    register = compensations.get('register', '')
+    if register:
+        lines.append(f"Register: {register}")
+    
+    # Tone keywords
+    tone = compensations.get('tone_keywords', [])
+    if tone:
+        lines.append(f"Tone: {', '.join(tone)}")
+    
+    # Language-specific strategies
+    strategies = compensations.get('strategies', {})
+    lang_strategies = strategies.get(target_lang, [])
+    if lang_strategies:
+        lines.append(f"Strategies for {target_lang.upper()}:")
+        for s in lang_strategies:
+            lines.append(f"  - {s}")
+    
+    # Untranslatable elements (for awareness)
+    untranslatable = compensations.get('untranslatable_elements', [])
+    if untranslatable:
+        lines.append("Untranslatable elements (compensate via other means):")
+        for elem in untranslatable[:3]:  # Top 3
+            lines.append(f"  - {elem.get('element', '')}: {elem.get('note', '')}")
+    
+    return "\n".join(lines)
+
+
 # =============================================================================
-# MAIN DIALOGUE TRANSLATION v3.0
+# MAIN DIALOGUE TRANSLATION v3.1
 # =============================================================================
 
 def z_axis_dialogue_translate(
@@ -280,30 +376,45 @@ def z_axis_dialogue_translate(
     client: OpenAIResponsesClient,
     model: str,
     config: Dict[str, Any],
+    source_lang: Optional[str] = None,
+    target_lang: Optional[str] = None,
     dry_run: bool = False,
     verbose: bool = True,
 ) -> Dict[str, Any]:
     """
-    対話シーン全体を翻訳する（v3.0）。
+    対話シーン全体を翻訳する（v3.1）。
     
-    v3.0 changes:
-    - z_mode tracking across turns
-    - z_mode_shift trigger detection
-    - arc_position passing
-    - Layer A/B output handling
+    v3.1 changes:
+    - source_lang / target_lang support
+    - original_speech_patterns integration
+    - translation_compensations context
+    - Dynamic language display
     """
     personas_yaml = config['personas_yaml']
     persona_data = config['persona_data']
     dialogue = config.get('dialogue', [])
     scene = config.get('scene', '')
     relationships = config.get('relationships', {})
-    target_lang = config.get('target_lang', 'en')
+    
+    # v3.1: 言語設定（CLI > YAML > default）
+    source_lang = source_lang or config.get('source_lang', 'ja')
+    target_lang = target_lang or config.get('target_lang', 'en')
+    
     base_z_intensity = config.get('z_axis_intensity', 'medium')
+    
+    # 言語表示用コード
+    source_code = get_lang_display(source_lang)
+    target_code = get_lang_display(target_lang)
     
     # 話者名のマッピング
     speaker_names = {}
     for role, data in persona_data.items():
         speaker_names[role] = get_speaker_name(data)
+    
+    if verbose:
+        print(f"\n🌐 Translation: {source_code} → {target_code}")
+        print(f"   Scene: {scene}")
+        print(f"   Personas: {speaker_names}")
     
     results = []
     accumulated_z = {role: 0.0 for role in personas_yaml.keys()}
@@ -317,11 +428,12 @@ def z_axis_dialogue_translate(
         
         speaker_name = speaker_names.get(speaker_role, speaker_role)
         persona_yaml = personas_yaml.get(speaker_role, '')
+        speaker_persona_data = persona_data.get(speaker_role, {})
         
         if verbose:
             print(f"\n{'='*60}")
             print(f"Turn {i+1}: [{speaker_name}]")
-            print(f"Original: {line}")
+            print(f"Original ({source_code}): {line}")
         
         # 相手役を特定
         other_roles = [r for r in personas_yaml.keys() if r != speaker_role]
@@ -356,10 +468,19 @@ def z_axis_dialogue_translate(
         relationship_key = f"{speaker_role}_to_{other_roles[0]}" if other_roles else ""
         relationship = relationships.get(relationship_key, '')
         
-        # Context構築（v3.0）
-        context_block = build_dialogue_context_v3(results, i)
+        # Context構築（v3.1: 言語コード対応）
+        context_block = build_dialogue_context_v3(
+            results, i,
+            source_lang=source_lang,
+            target_lang=target_lang,
+        )
         if scene:
             context_block = f"[Scene] {scene}\n\n" + context_block
+        
+        # v3.1: translation_compensations を追加
+        compensation_context = build_compensation_context(speaker_persona_data, target_lang)
+        if compensation_context:
+            context_block = context_block + "\n\n" + compensation_context
         
         # z_axis_translate を呼び出し（v3.0: arc_position追加）
         translate_result = z_axis_translate(
@@ -373,7 +494,7 @@ def z_axis_dialogue_translate(
             target_lang=target_lang,
             z_axis_intensity=current_z,
             dry_run=dry_run,
-            arc_position=i + 1,  # v3.0
+            arc_position=i + 1,
         )
         
         # v3.0: z情報を抽出
@@ -406,31 +527,37 @@ def z_axis_dialogue_translate(
             current_z_mode[speaker_role] = actual_z_mode
             
             if verbose:
-                print(f"  Translation: {translation}")
+                print(f"  Translation ({target_code}): {translation}")
                 print(f"  Actual z_mode: {actual_z_mode}, arc_phase: {z_info.get('arc_phase', '?')}")
         
         results.append(turn_result)
     
     return {
-        'version': '3.0',
-        'scene': scene,
+        'version': '3.1',
+        'source_lang': source_lang,
         'target_lang': target_lang,
+        'scene': scene,
         'personas': {role: speaker_names[role] for role in personas_yaml.keys()},
         'turns': results,
     }
 
 
 def print_dialogue_summary_v3(result: Dict[str, Any]) -> None:
-    """対話翻訳結果のサマリーを表示（v3.0）"""
+    """対話翻訳結果のサマリーを表示（v3.1: 多言語対応）"""
+    source_lang = result.get('source_lang', 'ja')
+    target_lang = result.get('target_lang', 'en')
+    source_code = get_lang_display(source_lang)
+    target_code = get_lang_display(target_lang)
+    
     print("\n" + "=" * 70)
-    print("📖 DIALOGUE TRANSLATION SUMMARY v3.0")
+    print("📖 DIALOGUE TRANSLATION SUMMARY v3.1")
     print("=" * 70)
     print(f"Scene: {result.get('scene', 'N/A')}")
-    print(f"Target Language: {result.get('target_lang', 'N/A')}")
+    print(f"Translation: {source_code} → {target_code}")
     print(f"Personas: {result.get('personas', {})}")
     print("-" * 70)
     
-    print("\n🎭 ORIGINAL → TRANSLATED\n")
+    print(f"\n🎭 ORIGINAL ({source_code}) → TRANSLATED ({target_code})\n")
     
     for turn in result.get('turns', []):
         speaker = turn.get('speaker_name', '???')
@@ -444,9 +571,18 @@ def print_dialogue_summary_v3(result: Dict[str, Any]) -> None:
         # v3.0: より詳細な表示
         print(f"[{speaker}] (z={z:.2f}, mode={z_mode}, arc={arc_phase})")
         print(f"  z_leak: {', '.join(z_leak) if z_leak else 'none'}")
-        print(f"  JA: {original}")
-        print(f"  EN: {translation}")
+        print(f"  {source_code}: {original}")
+        print(f"  {target_code}: {translation}")
         print()
+
+
+def list_languages():
+    """Print supported languages."""
+    print("Supported languages:")
+    print("-" * 40)
+    for code, info in SUPPORTED_LANGUAGES.items():
+        print(f"  {code:4} : {info['name']} ({info['native']})")
+    print()
 
 
 # =============================================================================
@@ -455,22 +591,49 @@ def print_dialogue_summary_v3(result: Dict[str, Any]) -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser(
-        description="Z-Axis Dialogue Translation System v3.0",
+        description="Z-Axis Dialogue Translation System v3.1 (Multi-language)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
+  # Japanese → English (default)
   python z_axis_dialogue.py --config requests/subaru_rem_dialogue.yaml
-  python z_axis_dialogue.py --config requests/dialogue.yaml --quiet
-  python z_axis_dialogue.py --config requests/dialogue.yaml --output result.json
+
+  # English → Japanese
+  python z_axis_dialogue.py --config requests/dialogue_en.yaml --target-lang ja
+
+  # Chinese → English  
+  python z_axis_dialogue.py --config requests/dialogue_zh.yaml --source-lang zh --target-lang en
+
+  # List supported languages
+  python z_axis_dialogue.py --list-languages
+
+  # Quiet mode with JSON output
+  python z_axis_dialogue.py --config requests/dialogue.yaml --quiet --output result.json
         """
     )
-    ap.add_argument("--config", required=True, help="対話設定YAMLファイルのパス")
+    ap.add_argument("--config", help="対話設定YAMLファイルのパス")
     ap.add_argument("--model", default=DEFAULT_MODEL, help="使用するモデル")
+    ap.add_argument("--source-lang", "-s", 
+                    choices=list(SUPPORTED_LANGUAGES.keys()),
+                    help="Source language (overrides YAML)")
+    ap.add_argument("--target-lang", "-t",
+                    choices=list(SUPPORTED_LANGUAGES.keys()),
+                    help="Target language (overrides YAML)")
     ap.add_argument("--output", "-o", help="結果をJSONファイルに出力")
     ap.add_argument("--quiet", "-q", action="store_true", help="詳細出力を抑制")
     ap.add_argument("--dry-run", action="store_true", help="APIを叩かず設定確認のみ")
+    ap.add_argument("--list-languages", action="store_true", help="List supported languages")
     
     args = ap.parse_args()
+    
+    # Handle --list-languages
+    if args.list_languages:
+        list_languages()
+        return
+    
+    # Check required arguments
+    if not args.config:
+        ap.error("--config is required (unless using --list-languages)")
     
     config = load_dialogue_config(args.config)
     client = OpenAIResponsesClient()
@@ -479,6 +642,8 @@ Examples:
         client=client,
         model=args.model,
         config=config,
+        source_lang=args.source_lang,
+        target_lang=args.target_lang,
         dry_run=args.dry_run,
         verbose=not args.quiet,
     )
