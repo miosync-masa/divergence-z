@@ -405,4 +405,4 @@ This is not about perfect translation — it's about **preserving the character'
 
 ---
 
-*Developed by Miosync, Inc. — Breaking language barriers through understanding, not just conversion.*
+*— Breaking language barriers through understanding, not just conversion.*
