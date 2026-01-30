@@ -158,130 +158,13 @@ def load_text_file(path: str) -> str:
 
 
 def format_persona_summary(persona_data: Dict[str, Any]) -> str:
-    """ペルソナYAMLから要約を生成"""
-    
-    lines = []
-    
-    # 基本情報
-    persona = persona_data.get("persona", {})
-    lines.append(f"【キャラクター】{persona.get('name', 'Unknown')}")
-    lines.append(f"   作品: {persona.get('source', 'Unknown')}")
-    lines.append(f"   タイプ: {persona.get('type', 'Unknown')}")
-    lines.append(f"   概要: {persona.get('summary', '')}")
-    lines.append("")
-    
-    # 年齢
-    age = persona_data.get("age", {})
-    if age:
-        lines.append(f"【年齢】{age.get('chronological', '?')}歳")
-        lines.append(f"   精神的成熟度: {age.get('mental_maturity', 'unknown')}")
-        lines.append(f"   背景: {age.get('age_context', '')}")
-        lines.append("")
-    
-    # 言語パターン
-    language = persona_data.get("language", {})
-    if language:
-        original = language.get("original_speech_patterns", {})
-        lines.append("【言語パターン】")
-        lines.append(f"   一人称: {original.get('first_person', 'unknown')}")
-        lines.append(f"   ニュアンス: {original.get('first_person_nuance', '')}")
-        
-        endings = original.get("sentence_endings", [])
-        if endings:
-            lines.append("   語尾:")
-            for e in endings[:3]:
-                if isinstance(e, dict):
-                    lines.append(f"      - {e.get('pattern', '')}: {e.get('nuance', '')}")
-        
-        quirks = original.get("speech_quirks", [])
-        if quirks:
-            lines.append("   口癖/特徴:")
-            for q in quirks[:3]:
-                if isinstance(q, dict):
-                    lines.append(f"      - {q.get('pattern', '')}")
-                elif isinstance(q, str):
-                    lines.append(f"      - {q}")
-        lines.append("")
-    
-    # 葛藤軸
-    conflict_axes = persona_data.get("conflict_axes", [])
-    if conflict_axes:
-        lines.append("【内部葛藤軸】")
-        for c in conflict_axes[:3]:
-            lines.append(f"   - {c.get('axis', '')}")
-            lines.append(f"     A: {c.get('side_a', '')}")
-            lines.append(f"     B: {c.get('side_b', '')}")
-            lines.append(f"     重み: {c.get('weight', 0)}")
-        lines.append("")
-    
-    # バイアス
-    bias = persona_data.get("bias", {})
-    if bias:
-        lines.append("【表出バイアス】")
-        lines.append(f"   パターン: {bias.get('expression_pattern', '')}")
-        lines.append(f"   デフォルト: {bias.get('default_mode', '')}")
-        lines.append(f"   ルール: {bias.get('rule', '')}")
-        tendencies = bias.get("tendencies", [])
-        if tendencies:
-            lines.append("   傾向:")
-            for t in tendencies[:3]:
-                lines.append(f"      - {t}")
-        lines.append("")
-    
-    # 弱点
-    weakness = persona_data.get("weakness", {})
-    if weakness:
-        lines.append("【弱点】")
-        lines.append(f"   主要: {weakness.get('primary', '')}")
-        lines.append(f"   恐れ: {weakness.get('fear', '')}")
-        lines.append("")
-    
-    # 感情状態
-    emotion_states = persona_data.get("emotion_states", [])
-    if emotion_states:
-        lines.append("【感情状態一覧】")
-        for es in emotion_states[:5]:
-            state = es.get("state", "")
-            z_mode = es.get("z_mode", "")
-            z_intensity = es.get("z_intensity", "")
-            lines.append(f"   - {state} (z_mode={z_mode}, intensity={z_intensity})")
-        if len(emotion_states) > 5:
-            lines.append(f"   ... 他 {len(emotion_states) - 5} 状態")
-        lines.append("")
-    
-    # トリガー
-    triggers = persona_data.get("triggers", [])
-    if triggers:
-        lines.append("【トリガー】")
-        for t in triggers[:5]:
-            lines.append(f"   - {t.get('trigger', '')}")
-            lines.append(f"     反応: {t.get('reaction', '')} (Δz={t.get('z_delta', '')})")
-            lines.append(f"     z_mode_shift: {t.get('z_mode_shift', '')}")
-        lines.append("")
-    
-    # 例文
-    example_lines = persona_data.get("example_lines", [])
-    if example_lines:
-        lines.append("【例文（参考）】")
-        for ex in example_lines[:4]:
-            lines.append(f"   [{ex.get('situation', '')}]")
-            lines.append(f"   「{ex.get('line', '')}」")
-            lines.append(f"   (z_mode={ex.get('z_mode', '')}, intensity={ex.get('z_intensity', '')})")
-        lines.append("")
-    
-    return "\n".join(lines)
+    """ペルソナYAML（全体を渡す）"""
+    return yaml.dump(persona_data, allow_unicode=True, default_flow_style=False)
 
 
 def format_target_persona_summary(persona_data: Dict[str, Any]) -> str:
-    """相手ペルソナの要約（簡潔版）"""
-    persona = persona_data.get("persona", {})
-    
-    lines = []
-    lines.append(f"【相手キャラクター】{persona.get('name', 'Unknown')}")
-    lines.append(f"   作品: {persona.get('source', 'Unknown')}")
-    lines.append(f"   タイプ: {persona.get('type', 'Unknown')}")
-    
-    return "\n".join(lines)
+    """相手ペルソナ（YAML全体を渡す）"""
+    return yaml.dump(persona_data, allow_unicode=True, default_flow_style=False)
 
 
 # =============================================================================
@@ -534,7 +417,7 @@ Examples:
     print("=" * 60)
     print()
     
-    client = Anthropic()
+    client = Anthropic(timeout=600.0)  # 10 minutes for Extended Thinking
     
     result = transform_voice(
         client=client,
