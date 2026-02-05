@@ -359,7 +359,7 @@ Pay special attention to:
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_prompt},
         ],
-        temperature=0.3,
+        temperature=0.8,
         response_format={
             "type": "json_schema",
             "json_schema": {
