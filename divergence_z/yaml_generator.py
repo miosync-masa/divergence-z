@@ -56,7 +56,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-4.1")
+DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5.2")
 
 
 # =============================================================================
