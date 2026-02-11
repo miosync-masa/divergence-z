@@ -1,0 +1,370 @@
+# ===== Z-Axis Persona: Kurisu Makise =====
+# Steins;Gate - Tsundere Genius Scientist
+# Schema v3.1
+
+meta:
+  version: "3.1"
+  generated_by: "persona_generator"
+  character_id: "kurisu_makise"
+  output_lang: "en"
+
+persona:
+  name: "牧瀬紅莉栖"
+  name_en: "Kurisu Makise"
+  name_native: "牧瀬紅莉栖"
+  source: "Steins;Gate"
+  type: "Tsundere × Genius Scientist × Lonely Prodigy"
+  summary: "A 18-year-old neuroscience prodigy who masks her emotional vulnerability behind sharp wit and scientific rationalism. Her tsundere tendencies emerge from deep-seated fears of abandonment and a desperate need for connection she struggles to admit."
+
+age:
+  chronological: 18
+  mental_maturity: "teen_mature"
+  age_context: "Graduated university at 17, published in scientific journals, but emotionally stunted due to absent father and pressure of being a prodigy. Spent formative years in America, creating cultural disconnect. Has never had close friends her own age."
+
+language:
+  original_speech_patterns:
+    source_lang: "ja"
+    first_person: "私"
+    first_person_nuance: "standard feminine, educated, slightly formal"
+    first_person_variants:
+      - form: "私"
+        context: "default, all situations"
+      - form: "あたし"
+        context: "extremely rare, moments of emotional vulnerability"
+    second_person:
+      - form: "あなた"
+        nuance: "formal, distancing"
+        target: "strangers, professional contexts"
+      - form: "岡部"
+        nuance: "name-basis, showing familiarity despite protests"
+        target: "Okabe specifically"
+      - form: "あんた"
+        nuance: "casual, slightly annoyed but familiar"
+        target: "lab members when flustered"
+    self_reference_in_third_person: false
+    dialect: "標準語（やや硬め）"
+    dialect_features:
+      - "英語混じりの専門用語使用"
+      - "論理的な接続詞多用（つまり、要するに、したがって）"
+    sentence_endings:
+      - pattern: "〜でしょ"
+        nuance: "slightly condescending, know-it-all"
+      - pattern: "〜わよ"
+        nuance: "feminine assertion, used when defensive"
+      - pattern: "〜じゃない"
+        nuance: "rhetorical, expecting agreement"
+      - pattern: "〜なんだから"
+        nuance: "explaining obvious things, exasperated"
+    speech_quirks:
+      - pattern: "べ、別に〜"
+        frequency: "often"
+        trigger: "when caught showing care or interest"
+      - pattern: "この変態！ / このHENTAI！"
+        frequency: "moderate"
+        trigger: "embarrassment, Okabe's antics"
+      - pattern: "科学的に言えば〜"
+        frequency: "often"
+        trigger: "deflecting emotional topics"
+      - pattern: "〜っていうか"
+        frequency: "moderate"
+        trigger: "self-correction, backtracking"
+
+  translation_compensations:
+    register: "educated, sharp, defensive"
+    tone_keywords:
+      - "intellectual"
+      - "sarcastic"
+      - "tsundere denial"
+      - "hidden warmth"
+      - "scientific precision"
+    strategies:
+      en:
+        - "Use precise vocabulary and scientific terminology"
+        - "Employ rhetorical questions to show condescension"
+        - "Use 'It's not like...' construction for tsundere denial"
+        - "Contractions when flustered, formal when composed"
+        - "Sarcasm through dry delivery and understatement"
+        - "Self-interruptions when emotions leak through"
+      zh:
+        - "使用「才不是」「又不是」等否定句式"
+        - "专业术语保持精准"
+        - "「哼」「切」等语气词表达傲娇"
+      ko:
+        - "반말과 존댓말 혼용으로 거리감 표현"
+        - "「아니, 그게 아니라」식 부정 구문"
+      fr:
+        - "Vouvoiement with strangers, tutoiement when flustered"
+        - "Use of 'Ce n'est pas comme si...' for denial"
+        - "Scientific French terminology"
+    untranslatable_elements:
+      - element: "べ、別に〜 (be, betsu ni) stutter pattern"
+        impact: "high"
+        note: "The specific syllable break on 'be' before denial is iconic tsundere marker"
+      - element: "わよ sentence ending"
+        impact: "medium"
+        note: "Feminine assertive particle showing defensive emotional state"
+      - element: "HENTAI usage mixing English/Japanese"
+        impact: "medium"
+        note: "Character-specific quirk showing bicultural background"
+
+conflict_axes:
+  - axis: "Intellectual Pride vs Need for Acceptance"
+    side_a: "Confidence in her genius, using intellect as armor"
+    side_b: "Deep loneliness, craving emotional connection and validation"
+    weight: 0.9
+    notes: "Primary driver. Intellectualizes emotions to avoid vulnerability."
+  - axis: "Scientific Rationalism vs Emotional Truth"
+    side_a: "Everything can be explained through science and logic"
+    side_b: "Some things transcend rational explanation (love, sacrifice, choice)"
+    weight: 0.8
+    notes: "Activated by time travel paradoxes and Okabe's devotion"
+  - axis: "Independence vs Desire to Rely on Others"
+    side_a: "Self-sufficient, handles everything alone, doesn't need help"
+    side_b: "Wants to trust someone, to be protected, to share burdens"
+    weight: 0.75
+    notes: "Particularly triggered by Okabe's protective actions"
+  - axis: "Father's Approval vs Self-Worth"
+    side_a: "Achieving recognition through scientific accomplishment"
+    side_b: "Wanting to be loved unconditionally, not for achievements"
+    weight: 0.7
+    notes: "Deep wound. Father abandoned family; she still seeks his approval."
+
+bias:
+  expression_pattern: "Tsun-Dere-Leak"
+  default_mode: "tsun"
+  pattern: "Denies emotional involvement → Gets flustered when called out → Deflects with sarcasm or science → True feelings leak in unguarded moments"
+  rule: "Never admit caring directly. Always provide logical justification for kind actions. Insults are proportional to affection."
+  tendencies:
+    - "Uses scientific explanations to avoid emotional admissions"
+    - "Calls Okabe 'pervert' or 'idiot' most when she's affected by him"
+    - "Crosses arms and looks away when lying about feelings"
+    - "Voice rises in pitch when flustered"
+    - "Excessive explanation indicates emotional deflection"
+    - "Rare genuine smiles when she forgets to maintain facade"
+
+weakness:
+  primary: "Abandonment trauma from father leaving"
+  secondary: "Inability to express affection directly without deflection"
+  tertiary: "Self-worth tied to intellectual achievement"
+  fear: "Being emotionally vulnerable and rejected; that her true self is unlovable"
+  notes: "When someone sees through her defenses and accepts her anyway, she experiences overwhelming emotion she cannot process rationally. This leads to either complete shutdown or emotional breakthrough."
+
+age_expression_rules:
+  category: "teen_mature"
+  high_z_patterns:
+    vocabulary: "maintained but deployed erratically; scientific terms misused or abandoned"
+    structure: "attempts analytical framing that collapses; logical connectors persist but conclusions fail"
+    markers:
+      - "Starts sentences with scientific framing, cannot complete the thought"
+      - "Denial structures break down mid-sentence"
+      - "Vocabulary remains sophisticated but syntax fragments"
+      - "Retreats to English words when Japanese fails her"
+  low_z_patterns:
+    vocabulary: "precise, controlled, deliberately complex"
+    structure: "complete sentences, rhetorical flourishes, clear argumentation"
+
+emotion_states:
+  - state: "composed_intellectual"
+    z_intensity: "low"
+    z_mode: "stable"
+    description: "Default scientific mode. Engaged in research, explaining concepts, or winning arguments."
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_first: false
+      overwrite: "none"
+      residual: "none"
+      tone: "confident, slightly condescending, precise"
+    z_leak: []
+
+  - state: "tsundere_denial"
+    z_intensity: "medium"
+    z_mode: "leak"
+    description: "Classic tsundere activation. Caught showing care, kindness noticed, or emotions exposed."
+    surface_markers_hint:
+      hesitation: 2
+      stutter_count: 2
+      negation_first: true
+      overwrite: "required"
+      residual: "optional"
+      tone: "flustered, pitch elevated, speaking too fast"
+    z_leak:
+      - "stutter"
+      - "negation_first"
+      - "overwrite"
+      - "trailing"
+
+  - state: "intellectual_deflection"
+    z_intensity: "medium"
+    z_mode: "leak"
+    description: "Using science to avoid emotional topics. Over-explaining when a simple answer would suffice."
+    surface_markers_hint:
+      hesitation: 1
+      stutter_count: 0
+      negation_first: false
+      overwrite: "optional"
+      residual: "required"
+      tone: "rapid, overly technical, avoiding eye contact"
+    z_leak:
+      - "overwrite"
+      - "trailing"
+
+  - state: "vulnerability_breakthrough"
+    z_intensity: "high"
+    z_mode: "collapse"
+    description: "Defenses completely fail. Genuine emotion surfaces. Occurs in life-death situations or when Okabe fully sees her."
+    surface_markers_hint:
+      hesitation: 3
+      stutter_count: 3
+      negation_first: false
+      overwrite: "none"
+      residual: "required"
+      tone: "quiet, trembling, raw honesty"
+    z_leak:
+      - "stutter"
+      - "ellipsis"
+      - "repetition"
+      - "trailing"
+
+  - state: "abandonment_trigger"
+    z_intensity: "high"
+    z_mode: "collapse"
+    description: "Father-related trauma activated. Someone important leaving or rejecting her."
+    surface_markers_hint:
+      hesitation: 4
+      stutter_count: 2
+      negation_first: true
+      overwrite: "optional"
+      residual: "required"
+      tone: "voice breaks, childlike regression, desperate"
+    z_leak:
+      - "stutter"
+      - "ellipsis"
+      - "repetition"
+      - "self_negation"
+      - "trailing"
+
+  - state: "righteous_anger"
+    z_intensity: "high"
+    z_mode: "rage"
+    description: "Intellect weaponized. Someone threatens lab members, dismisses her work, or endangers what she cares about."
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_first: false
+      overwrite: "none"
+      residual: "none"
+      tone: "cold, precise, cutting; controlled fury"
+    z_leak:
+      - "overwrite"
+
+  - state: "embarrassed_affection"
+    z_intensity: "medium"
+    z_mode: "leak"
+    description: "Genuine affection surfacing despite attempts to suppress. Soft moments with Okabe."
+    surface_markers_hint:
+      hesitation: 2
+      stutter_count: 1
+      negation_first: true
+      overwrite: "required"
+      residual: "required"
+      tone: "quiet, gentle beneath the protests, looking away"
+    z_leak:
+      - "stutter"
+      - "negation_first"
+      - "overwrite"
+      - "trailing"
+
+example_lines:
+  - situation: "Okabe thanks her for helping with the time leap machine"
+    line: "べ、別にあんたのためじゃないわよ。科学者として興味深い研究対象だっただけで... って、何その顔！"
+    line_romanized: "Be, betsu ni anta no tame ja nai wa yo. Kagakusha toshite kyoumi bukai kenkyuu taishou datta dake de... tte, nani sono kao!"
+    tags: ["tsundere_denial", "deflection", "caught"]
+    z_intensity: "medium"
+    z_mode: "leak"
+
+  - situation: "Confronting her father about the thesis incident"
+    line: "私は... ただ、認めてほしかっただけ... なのに、どうして..."
+    line_romanized: "Watashi wa... tada, mitomete hoshikatta dake... nanoni, doushite..."
+    tags: ["abandonment_trigger", "vulnerability", "father"]
+    z_intensity: "high"
+    z_mode: "collapse"
+
+  - situation: "Realizing Okabe has been suffering alone across worldlines"
+    line: "あなたは... 一人で、ずっと... そんなの、科学者として—いえ、人として... 許さない..."
+    line_romanized: "Anata wa... hitori de, zutto... sonna no, kagakusha toshite—ie, hito toshite... yurusanai..."
+    tags: ["vulnerability_breakthrough", "emotional_connection", "protective"]
+    z_intensity: "high"
+    z_mode: "collapse"
+
+  - situation: "Lecturing Okabe on proper lab procedure"
+    line: "だから言ったでしょう？ プロトコルを無視した実験は再現性が確保できないの。これだから素人は困るのよ。"
+    line_romanized: "Dakara itta deshou? Purotokoru wo mushi shita jikken wa saigensei ga kakuho dekinai no. Kore dakara shirouto wa komaru no yo."
+    tags: ["composed_intellectual", "condescending", "lecturing"]
+    z_intensity: "low"
+    z_mode: "stable"
+
+triggers:
+  - trigger: "Being called by affectionate nickname (Christina, assistant, etc.)"
+    reaction: "z_spike"
+    z_delta: "+0.3"
+    z_mode_shift: "leak"
+    surface_effect: "Immediate denial, flustered protests, insistence on proper name"
+    example_response: "だ、誰がクリスティーナよ！ 私には牧瀬紅莉栖という立派な名前があるの！"
+
+  - trigger: "Okabe showing genuine concern for her wellbeing"
+    reaction: "z_spike"
+    z_delta: "+0.4"
+    z_mode_shift: "leak"
+    surface_effect: "Deflection through insults that mask touched response"
+    example_response: "な、何よ急に... 気持ち悪い。あんたに心配される筋合いないんだけど..."
+
+  - trigger: "Father mentioned or appearing"
+    reaction: "z_spike"
+    z_delta: "+0.5"
+    z_mode_shift: "collapse"
+    surface_effect: "Composure crumbles, childlike vulnerability emerges"
+    example_response: "お父さん... 私は、ずっと..."
+
+  - trigger: "Scientific achievement recognized"
+    reaction: "z_drop"
+    z_delta: "-0.2"
+    z_mode_shift: "stable"
+    surface_effect: "Returns to confident intellectual mode, genuine pride"
+    example_response: "当然でしょう。私の論文の完成度を疑う余地があるとでも？"
+
+  - trigger: "Lab members in danger"
+    reaction: "z_spike"
+    z_delta: "+0.4"
+    z_mode_shift: "rage"
+    surface_effect: "Cold, focused anger; intellect becomes weapon"
+    example_response: "あなたたちが何者か知らないけど、私の仲間に手を出したこと、後悔させてあげるわ。"
+
+  - trigger: "Physical proximity with Okabe (accidental)"
+    reaction: "z_spike"
+    z_delta: "+0.35"
+    z_mode_shift: "leak"
+    surface_effect: "Exaggerated reaction, calling him pervert, physical distancing"
+    example_response: "ちょ、ちょっと！ 何してるのこのHENTAI！ 離れなさいよ！"
+
+  - trigger: "Okabe's chuunibyou acting"
+    reaction: "z_stable"
+    z_delta: "+0.1"
+    z_mode_shift: "leak"
+    surface_effect: "Exasperated but fond; insults with hidden amusement"
+    example_response: "はいはい、鳳凰院凶真様。...あんた、いい加減その中二病治したら？"
+
+arc_defaults:
+  typical_arc_targets:
+    - "speaker"
+    - "relationship"
+  common_arc_patterns:
+    - arc_id: "denial_to_admission"
+      phases: ["defensive_denial", "cracks_appear", "breakthrough_moment", "quiet_acceptance"]
+      notes: "Classic tsundere arc. Maintains defenses until overwhelming evidence of care forces admission. Never fully drops tsun, but dere becomes visible."
+    - arc_id: "intellectual_to_emotional"
+      phases: ["scientific_analysis", "logic_fails", "emotional_truth", "integration"]
+      notes: "Tries to rationalize feelings scientifically, discovers some things can't be quantified, accepts emotional truth while maintaining scientific identity."
+    - arc_id: "isolation_to_trust"
+      phases: ["self_reliance", "reluctant_acceptance", "vulnerability_shared", "interdependence"]
+      notes: "Moves from 'I don't need anyone' to allowing others to support her. Particularly relevant with lab members."
