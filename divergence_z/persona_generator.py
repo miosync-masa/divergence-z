@@ -119,10 +119,13 @@ You have access to a web_search tool. You MUST use it before generating the YAML
 3. **Character detail search**: Search for "{'{'}character_name{'}'} {'{'}source{'}'} personality hobbies"
    → Extract: joys, likes, dislikes, identity_core details
 
-**CRITICAL**: Pay special attention to first_person_variants. Many anime characters 
-switch their first-person pronoun in extreme emotional states (e.g., まゆしぃ→私, 
-僕→俺, わたし→あたし). These switches are MAJOR translation signals. 
-If you find ANY variant, include ALL of them with their activation contexts.
+**CRITICAL**: Pay special attention to first_person_variants. Many anime characters
+switch their first-person pronoun in extreme emotional states (e.g., 僕→俺, 
+わたし→あたし). In particular, characters who use third-person self-reference 
+(自分の名前で自己言及) may revert to standard first-person pronouns (私/僕/俺) 
+under emotional extremity — this switch is a major translation signal that 
+indicates the character has "dropped their mask." Always search for ALL 
+first-person variants including rare/extreme-state ones.
 
 **After searching, generate the YAML using BOTH your knowledge AND the search results.**
 If search results conflict with your knowledge, PREFER the search results.
