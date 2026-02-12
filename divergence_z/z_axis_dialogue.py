@@ -287,7 +287,7 @@ Which of {listener_name}'s triggers (if any) are activated by this line?"""
         schema=TRIGGER_CHECK_SCHEMA,
         messages=messages,
         max_output_tokens=500,
-        temperature=0.2,
+        temperature=0.3,
         dry_run=False,
     )
     
