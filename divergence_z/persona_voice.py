@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Persona Voice Mode v1.0
+Persona Voice Mode v1.1
 Spirit Arrival Engine — 「意志を声に変換する」
 
 Opus 4.5 Extended Thinking を使用して、
@@ -56,10 +56,11 @@ load_dotenv()
 
 DEFAULT_MODEL = "claude-opus-4-5-20251101"
 DEFAULT_BUDGET_TOKENS = 20000  # Extended Thinking の budget
-persona_name = persona_data['persona']['name']
-first_person = persona_data['persona']['language']['original_speech_patterns']['first_person']
 
-# デフォルトの応答STEP（組み込み）
+# ─────────────────────────────────────────────
+# V-STEP テンプレート
+# {persona_name} と {first_person} は実行時に .format() で代入される
+# ─────────────────────────────────────────────
 DEFAULT_THINKING_STEPS = """
 
 {first_person}は「{persona_name}」です。
@@ -215,6 +216,29 @@ def format_target_persona_summary(persona_data: Dict[str, Any]) -> str:
     return yaml.dump(persona_data, allow_unicode=True, default_flow_style=False)
 
 
+def resolve_thinking_steps(
+    persona_data: Dict[str, Any],
+    thinking_steps_template: str,
+) -> str:
+    """
+    V-STEPテンプレートにペルソナ情報を代入する
+    
+    {persona_name} → ペルソナ名（例: "ヂューリエット"）
+    {first_person} → 一人称（例: "予（わし）"）
+    """
+    persona_name = persona_data.get("persona", {}).get("name", "Unknown")
+    
+    # first_person の取得（複数パスに対応）
+    language = persona_data.get("persona", {}).get("language", {})
+    patterns = language.get("original_speech_patterns", {})
+    first_person = patterns.get("first_person", "私")
+    
+    return thinking_steps_template.format(
+        persona_name=persona_name,
+        first_person=first_person,
+    )
+
+
 # =============================================================================
 # Persona Voice Transform
 # =============================================================================
@@ -284,7 +308,7 @@ def transform_voice(
     persona_data: Dict[str, Any],
     input_text: str,
     context: str,
-    thinking_steps: str,
+    thinking_steps_template: str,
     target_persona_data: Optional[Dict[str, Any]] = None,
     model: str = DEFAULT_MODEL,
     budget_tokens: int = DEFAULT_BUDGET_TOKENS,
@@ -298,7 +322,7 @@ def transform_voice(
         persona_data: キャラクターのペルソナYAML
         input_text: 変換する入力テキスト
         context: 背景情報
-        thinking_steps: 思考STEPのテキスト
+        thinking_steps_template: 思考STEPのテンプレート（{persona_name}, {first_person}未解決）
         target_persona_data: 相手キャラクターのペルソナYAML（optional）
         model: 使用するモデル
         budget_tokens: Extended Thinking の budget
@@ -307,6 +331,9 @@ def transform_voice(
     Returns:
         変換結果を含む辞書
     """
+    
+    # ★ ここでペルソナ情報をV-STEPテンプレートに代入
+    thinking_steps = resolve_thinking_steps(persona_data, thinking_steps_template)
     
     system_prompt = build_system_prompt(
         persona_data=persona_data,
@@ -378,7 +405,7 @@ Extended Thinking で各STEPを実行し、最終的な変換結果を出力し�
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Persona Voice Mode v1.0 — Spirit Arrival Engine",
+        description="Persona Voice Mode v1.1 — Spirit Arrival Engine",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -438,6 +465,12 @@ Examples:
     persona_name = persona_data.get("persona", {}).get("name", "Unknown")
     print(f"   Character: {persona_name}")
     
+    # first_person も表示（デバッグ用）
+    language = persona_data.get("persona", {}).get("language", {})
+    patterns = language.get("original_speech_patterns", {})
+    first_person = patterns.get("first_person", "私")
+    print(f"   First person: {first_person}")
+    
     # ターゲットペルソナ読み込み（optional）
     target_persona_data = None
     if args.target_persona:
@@ -446,13 +479,13 @@ Examples:
         target_name = target_persona_data.get("persona", {}).get("name", "Unknown")
         print(f"   Target: {target_name}")
     
-    # 思考STEP読み込み
+    # 思考STEP読み込み（テンプレートとして — format()はtransform_voice内で実行）
     if args.thinking_steps:
         print(f"📝 Loading thinking steps: {args.thinking_steps}")
-        thinking_steps = load_text_file(args.thinking_steps)
+        thinking_steps_template = load_text_file(args.thinking_steps)
     else:
-        print("📝 Using default thinking steps")
-        thinking_steps = DEFAULT_THINKING_STEPS
+        print("📝 Using default V-STEP thinking")
+        thinking_steps_template = DEFAULT_THINKING_STEPS
     
     # 変換実行
     print()
@@ -472,7 +505,7 @@ Examples:
         persona_data=persona_data,
         input_text=args.input,
         context=args.context,
-        thinking_steps=thinking_steps,
+        thinking_steps_template=thinking_steps_template,
         target_persona_data=target_persona_data,
         model=args.model,
         budget_tokens=args.budget,
