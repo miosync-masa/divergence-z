@@ -22,7 +22,7 @@ v3.1 Changes:
 
 実行例:
   # 日本語→英語（デフォルト）
-  python z_axis_dialogue.py --config requests/subaru_rem_dialogue.yaml
+  python z_axis_dialogue.py --config requests/rem_subaru_zero_v3.yaml
 
   # 英語→日本語
   python z_axis_dialogue.py --config requests/dialogue_en.yaml --target-lang ja
