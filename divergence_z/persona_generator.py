@@ -6,7 +6,10 @@ Z-Axis Translation System — Automatic Persona YAML Generation
 v3.3 Changes:
 - IDENTITY_CORE: New I₀ layer — describes WHO the character IS, not just how they REACT
   - essence (required), true_nature, desires, joys, likes, dislikes, unfiltered_self (optional)
-  - Generator uses WEB SEARCH to find character's likes, hobbies, personality traits
+- WEB SEARCH: Generator now uses Anthropic web_search tool to research character details
+  - Searches fan wikis, official profiles, character databases automatically
+  - Verifies first_person variants, speech quirks, likes/dislikes against source material
+  - Use --no-search to disable (falls back to LLM knowledge only)
 - All Ln sections (conflict_axes, triggers, emotion_states) remain from v3.2
 
 v3.2 Changes:
@@ -21,15 +24,18 @@ v3.1 Changes:
 - translation_compensations: 他言語での補償戦略
 
 Usage:
-    # 日本語（デフォルト）
+    # 日本語（デフォルト） — web searchで自動リサーチ
     python persona_generator.py --name "牧瀬紅莉栖" --source "Steins;Gate" --desc "ツンデレの天才科学者"
     
+    # web search無効化（LLM知識のみで生成）
+    python persona_generator.py --name "牧瀬紅莉栖" --source "Steins;Gate" --desc "ツンデレの天才科学者" --no-search
+    
     # 英語出力
-    python persona_generator.py --name "Kurisu Makise" --source "Steins;Gate" \
+    python persona_generator.py --name "Kurisu Makise" --source "Steins;Gate" \\
       --desc "Tsundere genius scientist" --lang en
     
     # 中国語出力
-    python persona_generator.py --name "牧濑红莉栖" --source "命运石之门" \
+    python persona_generator.py --name "牧濑红莉栖" --source "命运石之门" \\
       --desc "傲娇天才科学家" --lang zh
 """
 
@@ -61,7 +67,7 @@ SUPPORTED_LANGUAGES = {
 }
 
 # =============================================================================
-# SYSTEM PROMPT v3.2
+# SYSTEM PROMPT v3.3
 # =============================================================================
 
 def build_system_prompt(output_lang: str) -> str:
@@ -89,6 +95,37 @@ Task: Generate a persona YAML that captures a character's internal psychological
 structure for emotion-preserving translation.
 
 {lang_instruction}
+
+## MANDATORY WEB SEARCH — DO THIS FIRST
+
+You have access to a web_search tool. You MUST use it before generating the YAML.
+**Do NOT rely solely on your training knowledge.** LLM knowledge frequently misses:
+- first_person variants (e.g., a character switching from "まゆしぃ" to "私" in extreme scenes)
+- Specific likes, hobbies, favorite foods, catchphrases
+- Precise relationship dynamics and character-specific speech quirks
+- Dialect features, sentence endings, and their exact usage conditions
+
+**SEARCH PROTOCOL (execute ALL of these):**
+
+1. **Character wiki search**: Search for "{'{'}character_name{'}'} {'{'}source{'}'} wiki" or 
+   "{'{'}character_name{'}'} {'{'}source{'}'} character profile"
+   → Extract: background, personality, relationships, likes/dislikes, speech patterns
+
+2. **Speech pattern search**: Search for "{'{'}character_name{'}'} 一人称" or 
+   "{'{'}character_name{'}'} speech patterns quotes"
+   → Extract: first_person variants (ALL of them, including rare/extreme ones),
+   sentence endings, dialect, verbal tics, catchphrases
+   
+3. **Character detail search**: Search for "{'{'}character_name{'}'} {'{'}source{'}'} personality hobbies"
+   → Extract: joys, likes, dislikes, identity_core details
+
+**CRITICAL**: Pay special attention to first_person_variants. Many anime characters 
+switch their first-person pronoun in extreme emotional states (e.g., まゆしぃ→私, 
+僕→俺, わたし→あたし). These switches are MAJOR translation signals. 
+If you find ANY variant, include ALL of them with their activation contexts.
+
+**After searching, generate the YAML using BOTH your knowledge AND the search results.**
+If search results conflict with your knowledge, PREFER the search results.
 
 ## YAML SCHEMA v3.3 (REQUIRED SECTIONS)
 
@@ -153,13 +190,14 @@ identity_core:
 - Include what you CAN FIND. Omit what you cannot.
 - DO NOT invent information. Only include what is supported by evidence.
 
-**SEARCH GUIDANCE (for persona_generator):**
-Look for the following in fan wikis, official profiles, creator interviews:
+**SEARCH GUIDANCE:**
+Use the web_search tool to find the following (you HAVE this tool available):
 - "Likes", "Hobbies", "Personality" sections on character wiki pages
 - Official character profiles from games/anime/manga
 - Scenes described where the character is relaxed or happy
 - Creator interviews about the character's core personality
 - What the character does when NOT in conflict
+- **First-person pronoun variants and when they switch**
 
 **EXAMPLE:**
 ```yaml
@@ -526,9 +564,14 @@ Output Language: {output_lang} ({lang_name})
     prompt += f"""
 Output ONLY valid YAML. No explanation.
 
+BEFORE generating YAML, you MUST use web_search to research this character.
+Search for: wiki page, speech patterns (一人称 variants!), likes/hobbies, personality.
+DO NOT skip this step. Your training data may be missing critical details.
+
 REMEMBER:
 - `identity_core.essence` is REQUIRED — describe who this character IS, not just how they react
-- Search for: likes, hobbies, personality traits, what makes them happy, their "true self"
+- **USE WEB SEARCH** to find: likes, hobbies, personality traits, what makes them happy, first_person variants
+- first_person_variants must include ALL variants (including rare/extreme state ones)
 - Other identity_core fields (joys, likes, dislikes, etc.) are optional — include what you find
 - `original_speech_patterns` MUST be in the character's native/source language
 - All other descriptions in {lang_name}
@@ -545,12 +588,14 @@ def generate_persona(name: str, source: str, description: str,
                      output_lang: str = "ja",
                      search_context: str = "", 
                      model: str = DEFAULT_MODEL,
-                     thinking_budget: int = 0) -> str:
-    """Generate persona YAML using Claude API.
+                     thinking_budget: int = 0,
+                     no_search: bool = False) -> str:
+    """Generate persona YAML using Claude API with web search.
     
     Args:
         thinking_budget: If > 0, enable extended thinking with this token budget.
                         Recommended: 10000-16000 for complex characters.
+        no_search: If True, disable web search (LLM knowledge only).
     """
     
     client = Anthropic()
@@ -562,6 +607,10 @@ def generate_persona(name: str, source: str, description: str,
     print(f"🐯 Generating persona v3.3 for: {name} ({source})")
     print(f"   Output language: {lang_name}")
     print(f"   Model: {model}")
+    if no_search:
+        print(f"   🔍 Web search: OFF (LLM knowledge only)")
+    else:
+        print(f"   🔍 Web search: ON (will research character details)")
     if thinking_budget > 0:
         print(f"   🧠 Thinking mode: ON (budget: {thinking_budget} tokens)")
     print()
@@ -576,6 +625,16 @@ def generate_persona(name: str, source: str, description: str,
         ]
     }
     
+    # === WEB SEARCH TOOL (v3.3) ===
+    if not no_search:
+        api_kwargs["tools"] = [
+            {
+                "type": "web_search_20250305",
+                "name": "web_search",
+                "max_uses": 8
+            }
+        ]
+    
     if thinking_budget > 0:
         api_kwargs["thinking"] = {
             "type": "enabled",
@@ -584,12 +643,22 @@ def generate_persona(name: str, source: str, description: str,
     
     response = client.messages.create(**api_kwargs)
     
-    # Extract text content (skip thinking blocks)
+    # Extract text content (skip thinking blocks and search result blocks)
+    # With web search, response contains interleaved blocks:
+    #   [text?] [web_search_tool_use] [web_search_tool_result] [text?] ... [text (YAML)]
+    # The YAML is in the LAST text block.
     yaml_content = ""
+    search_count = 0
     for block in response.content:
         if block.type == "text":
-            yaml_content = block.text
-            break
+            yaml_content = block.text  # Keep overwriting → last text block wins
+        elif block.type == "web_search_tool_use":
+            search_count += 1
+    
+    if search_count > 0:
+        print(f"   🔍 Web searches performed: {search_count}")
+    elif not no_search:
+        print(f"   ⚠️  Model did not use web search (relying on training knowledge only)")
     
     # Clean up if wrapped in code blocks
     if yaml_content.startswith("```yaml"):
@@ -757,9 +826,13 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Japanese output (default)
+  # Japanese output (default) — with web search
   python persona_generator.py --name "牧瀬紅莉栖" --source "Steins;Gate" \\
     --desc "ツンデレの天才科学者"
+
+  # Without web search (LLM knowledge only)
+  python persona_generator.py --name "牧瀬紅莉栖" --source "Steins;Gate" \\
+    --desc "ツンデレの天才科学者" --no-search
 
   # English output
   python persona_generator.py --name "Kurisu Makise" --source "Steins;Gate" \\
@@ -772,6 +845,10 @@ Examples:
   # With validation
   python persona_generator.py --name "ナツキ・スバル" --source "Re:Zero" \\
     --desc "死に戻り能力者" --validate
+
+  # With extended thinking + web search (maximum quality)
+  python persona_generator.py --name "椎名まゆり" --source "Steins;Gate" \\
+    --desc "天然癒し系の幼馴染" --thinking 10000
 
   # List supported languages
   python persona_generator.py --list-languages
@@ -787,6 +864,8 @@ Examples:
     parser.add_argument("--model", default=DEFAULT_MODEL, help="Model to use")
     parser.add_argument("--thinking", type=int, default=0, metavar="BUDGET",
                         help="Enable extended thinking with token budget (e.g. --thinking 10000)")
+    parser.add_argument("--no-search", action="store_true",
+                        help="Disable web search (use LLM knowledge only). Default: search enabled")
     parser.add_argument("--output-dir", default="personas", help="Output directory")
     parser.add_argument("--print-only", action="store_true", help="Print YAML without saving")
     parser.add_argument("--validate", action="store_true", help="Validate v3.3 schema compliance")
@@ -817,7 +896,8 @@ Examples:
         output_lang=args.lang,
         search_context=context,
         model=args.model,
-        thinking_budget=args.thinking
+        thinking_budget=args.thinking,
+        no_search=args.no_search
     )
     
     # Always validate in v3.2 (show warnings)
