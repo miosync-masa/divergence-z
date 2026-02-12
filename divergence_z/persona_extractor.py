@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Persona Extractor v1.1
+Persona Extractor v1.2
 原作テキスト/PDFから直接キャラクターペルソナを抽出
 
 v1.1 Changes:
-- Schema updated to v3.2 (trigger balance requirements)
+- Schema updated to v3.3 (identity_core I₀ layer + trigger balance requirements)
 - Positive triggers (z_recovery, z_shock) explicitly required
 - Trigger granularity guidance for extraction
 - Evidence-based trigger extraction from source text
@@ -167,15 +167,15 @@ def load_epub(path: Path) -> str:
 
 
 # =============================================================================
-# SYSTEM PROMPT FOR PERSONA EXTRACTION — v3.2
+# SYSTEM PROMPT FOR PERSONA EXTRACTION — v3.3
 # =============================================================================
 
 def build_extraction_prompt(output_lang: str) -> str:
-    """ペルソナ抽出用のシステムプロンプトを構築（v3.2対応）"""
+    """ペルソナ抽出用のシステムプロンプトを構築（v3.3対応）"""
     
     lang_name = SUPPORTED_LANGUAGES.get(output_lang, "English")
     
-    return f"""You are a Persona Extractor for the Z-Axis Translation System v3.2.
+    return f"""You are a Persona Extractor for the Z-Axis Translation System v3.3.
 
 ## YOUR TASK
 Given a complete source text (novel, script, etc.) and a character name, extract a comprehensive persona YAML that captures the character's psychological structure for emotion-preserving translation.
@@ -211,15 +211,23 @@ Given a complete source text (novel, script, etc.) and a character name, extract
 - Distinguish LEVELS of positive impact (mild thanks vs deep acceptance vs love confession)
 - A character's RECOVERY behavior is as important as their BREAKDOWN behavior
 
+### Phase 6: Identity Core Extraction (NEW in v3.3)
+- Find scenes where the character is NOT in conflict — relaxed, happy, being themselves
+- What do they do in their free time? What makes them genuinely happy?
+- How do other characters describe them when they're being natural?
+- What are their hobbies, preferences, habits mentioned in the text?
+- What do they enjoy that has NOTHING to do with their conflicts?
+- This is the character's I₀ — who they ARE, not how they REACT
+
 ## OUTPUT FORMAT
 
-Output MUST be valid YAML following the v3.2 schema.
+Output MUST be valid YAML following the v3.3 schema.
 All descriptions should be in {lang_name}.
 `original_speech_patterns` section MUST preserve the SOURCE LANGUAGE of the text.
 
 ```yaml
 meta:
-  version: "3.2"
+  version: "3.3"
   generated_by: "persona_extractor"
   character_id: "unique_id"
   output_lang: "{output_lang}"
@@ -233,6 +241,39 @@ persona:
   source: "作品名"
   type: "キャラクタータイプ"
   summary: "1-2文の概要（{lang_name}）"
+```
+
+### IDENTITY_CORE (I₀ — 存在の核) — NEW in v3.3
+
+This section describes WHO the character IS — not how they REACT.
+conflict_axes/triggers/emotion_states describe Ln (surface dynamics).
+identity_core describes I₀ (the subject experiencing those dynamics).
+
+**Without I₀, the persona describes a "reaction machine" — not a person.**
+
+```yaml
+identity_core:
+  essence: "1-2文。この人が何者かを、葛藤抜きで記述"  # ← REQUIRED
+  true_nature: "防衛や葛藤がない時の素顔"              # optional
+  desires:                                              # optional
+    - "what they genuinely want"
+  joys:                                                 # optional
+    - joy: "何に喜ぶか"
+      expression: "その時どうなるか"                    # optional
+  likes: ["好きなもの"]                                 # optional
+  dislikes: ["嫌いなもの"]                              # optional
+  unfiltered_self: "葛藤がない時の自然な姿"             # optional
+```
+
+**EXTRACTION GUIDANCE (for persona_extractor):**
+Extract from the SOURCE TEXT — do NOT invent or assume:
+- Scenes where the character is relaxed, happy, or at peace
+- Direct mentions of hobbies, preferences, or habits
+- How other characters describe this character's personality
+- What the character does in downtime (not during conflict)
+- Moments of genuine joy or satisfaction unrelated to their conflicts
+- If the text does not contain enough information, include only `essence` and omit other fields
+- **DO NOT guess** — only include what the text directly supports
 
 age:
   chronological: 数値
@@ -424,6 +465,9 @@ arc_defaults:
 7. **POSITIVE GRANULARITY**: Positive triggers must distinguish mild from strong from overwhelming
 8. **RECOVERY MATTERS**: A character's recovery behavior is as important as breakdown for translation
 9. **age_context**: MUST NOT contain expression patterns (those go to emotion_states)
+10. **identity_core.essence is REQUIRED**: Describe who this character IS, not just how they react
+11. **identity_core — EXTRACT, don't invent**: Only include likes/joys/desires that are directly evidenced in the text. If the text doesn't show the character's hobbies or preferences, omit those fields — do NOT guess.
+12. **I₀ vs Ln separation**: identity_core describes the person (I₀); conflict_axes/triggers describe their reactions (Ln). Keep them distinct.
 
 ## EXAMPLE ANALYSIS PROCESS
 
@@ -508,7 +552,7 @@ class OpenAIResponsesClient:
 
 ## INSTRUCTIONS
 
-Analyze the complete source text above and extract a comprehensive persona YAML v3.2 for the character "{character_name}".
+Analyze the complete source text above and extract a comprehensive persona YAML v3.3 for the character "{character_name}".
 
 Focus on:
 1. Every line of dialogue spoken by this character
@@ -518,11 +562,15 @@ Focus on:
 5. Specific speech quirks and verbal tics
 6. **BOTH negative AND positive emotional triggers — with granularity**
 7. **How the character reacts to comfort, praise, love, and acceptance**
+8. **WHO this character IS beyond their conflicts — their I₀ (identity_core)**
 
 Output language for descriptions: {SUPPORTED_LANGUAGES.get(output_lang, output_lang)}
 Keep original_speech_patterns in the source text's language.
 
 REMEMBER:
+- identity_core.essence is REQUIRED — describe who this character IS, not just their reactions
+- identity_core: EXTRACT from the text, do NOT invent — omit fields with no textual evidence
+- Look for scenes where the character is relaxed, happy, or simply being themselves
 - Triggers MUST be balanced (at least 2-3 positive AND 2-3 negative)
 - Positive triggers MUST be granular (mild encouragement ≠ love confession)
 - Use actual quotes from the source text for example_responses when possible
@@ -653,12 +701,12 @@ Output ONLY valid YAML."""
 
 
 # =============================================================================
-# VALIDATION (v3.2)
+# VALIDATION (v3.3)
 # =============================================================================
 
-def validate_v32_persona(yaml_text: str) -> tuple[bool, list[str]]:
+def validate_v33_persona(yaml_text: str) -> tuple[bool, list[str]]:
     """
-    抽出されたYAMLがv3.2スキーマに準拠しているか検証
+    抽出されたYAMLがv3.3スキーマに準拠しているか検証
     Returns (is_valid, list_of_issues).
     """
     import yaml as yaml_lib
@@ -672,8 +720,21 @@ def validate_v32_persona(yaml_text: str) -> tuple[bool, list[str]]:
     
     # Check meta version
     meta_version = data.get("meta", {}).get("version", "")
-    if meta_version not in ["3.0", "3.1", "3.2"]:
-        issues.append(f"meta.version should be '3.2' (got '{meta_version}')")
+    if meta_version not in ["3.0", "3.1", "3.2", "3.3"]:
+        issues.append(f"meta.version should be '3.3' (got '{meta_version}')")
+    
+    # === v3.3 IDENTITY_CORE CHECK ===
+    identity_core = data.get("identity_core", {})
+    if not identity_core:
+        issues.append(
+            "v3.3 requires identity_core section — describes WHO the character IS (I₀). "
+            "At minimum, identity_core.essence is required."
+        )
+    elif not identity_core.get("essence"):
+        issues.append(
+            "identity_core.essence is REQUIRED — a 1-2 sentence description of "
+            "who this character is, independent of their conflicts."
+        )
     
     # Check language structure
     language_data = data.get("language", {})
@@ -746,7 +807,7 @@ def save_persona(yaml_text: str, character_name: str, output_dir: str = "persona
     if not safe_name:
         safe_name = "extracted"
     
-    filename = f"{safe_name}_extracted_v32.yaml"
+    filename = f"{safe_name}_extracted_v33.yaml"
     filepath = os.path.join(output_dir, filename)
     
     with open(filepath, "w", encoding="utf-8") as f:
@@ -757,7 +818,7 @@ def save_persona(yaml_text: str, character_name: str, output_dir: str = "persona
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Persona Extractor v1.1 - Extract character persona from source text (v3.2 schema)",
+        description="Persona Extractor v1.2 - Extract character persona from source text (v3.3 schema)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -857,14 +918,14 @@ Examples:
         yaml_text = result["yaml_text"]
         
         # v3.2 validation (always run)
-        is_valid, issues = validate_v32_persona(yaml_text)
+        is_valid, issues = validate_v33_persona(yaml_text)
         if not is_valid:
-            print("⚠️  v3.2 Schema Validation Issues:")
+            print("⚠️  v3.3 Schema Validation Issues:")
             for issue in issues:
                 print(f"   - {issue}")
             print()
         else:
-            print("✅ v3.2 Schema Validation: PASSED")
+            print("✅ v3.3 Schema Validation: PASSED")
         
         print()
         print(f"📊 Extraction complete!")
