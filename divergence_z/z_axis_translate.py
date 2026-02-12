@@ -37,7 +37,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
-DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-4.1")
+DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5.2")
 
 
 # -----------------------------
