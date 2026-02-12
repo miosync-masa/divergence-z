@@ -576,72 +576,94 @@ def _research_character(client, name: str, source: str, description: str,
     """Pass 1: Research character details using web search.
     
     Returns a text summary of search findings for use as context in generation.
+    Uses tool_choice to FORCE the model to perform web searches.
     """
     
-    research_prompt = f"""Research the following character for a persona YAML generation.
-Search for their wiki page, speech patterns, personality, likes/hobbies, and relationships.
+    research_prompt = f"""You MUST use the web_search tool to research this character. 
+Do NOT answer from memory. Your task is ONLY to search and report findings.
 
 Character: {name}
 Source: {source}
 Description: {description}
 
-SEARCH PROTOCOL (execute ALL):
-1. Search: "{name} {source} wiki" — for background, personality, relationships
-2. Search: "{name} 一人称" or "{name} speech patterns" — for first-person pronouns (ALL variants including rare/extreme ones), sentence endings, dialect, catchphrases
-3. Search: "{name} {source} personality hobbies likes" — for identity_core details
+Execute these searches IN ORDER:
+1. Search: "{name} {source} wiki"
+2. Search: "{name} 一人称 speech patterns"  
+3. Search: "{name} {source} personality hobbies likes"
 
-IMPORTANT: For first_person_variants, find ALL variants including ones used only in extreme emotional states.
-Characters who use third-person self-reference (自分の名前で自己言及) may revert to standard 
-first-person pronouns (私/僕/俺) under emotional extremity — always check for this.
-
-After searching, output a structured summary of your findings:
+After ALL searches are complete, compile your findings into this format:
 
 ## Background
-(what you found about their history, role, relationships)
+(from search results)
 
 ## Speech Patterns  
-(first-person pronoun and ALL variants with contexts, sentence endings, catchphrases, dialect)
+(first-person pronoun and ALL variants with contexts, sentence endings, catchphrases)
 
 ## Personality & Identity
-(likes, dislikes, hobbies, joys, personality traits, what they're like when relaxed)
+(likes, dislikes, hobbies, joys, personality traits)
 
 ## Key Relationships
 (important relationships and dynamics)
 
 ## Emotional Patterns
-(how they react under stress, what triggers them positively/negatively)
+(how they react under stress, what triggers them)
 
-Only include information you actually found. Do NOT invent details."""
+IMPORTANT: For first_person_variants, find ALL variants including ones used only in 
+extreme emotional states. Characters who use third-person self-reference may revert 
+to standard first-person pronouns under emotional extremity.
+
+Only include information you actually found in search results. Do NOT invent details."""
 
     print("   📖 Pass 1: Researching character via web search...")
     
-    response = client.messages.create(
-        model=model,
-        max_tokens=4000,
-        tools=[
+    # Force search: tool_choice + system prompt + user prompt all insist
+    api_kwargs = {
+        "model": model,
+        "max_tokens": 4000,
+        "system": "You are a research assistant. You MUST use the web_search tool for EVERY request. "
+                  "NEVER answer from your own knowledge alone. Always search first, then summarize findings. "
+                  "Perform at least 2 separate searches before answering.",
+        "tools": [
             {
                 "type": "web_search_20250305",
                 "name": "web_search",
                 "max_uses": 5
             }
         ],
-        messages=[
+        "messages": [
             {"role": "user", "content": research_prompt}
         ]
-    )
+    }
+    
+    # Try to force tool use (may not work with server-side tools)
+    try:
+        api_kwargs["tool_choice"] = {"type": "any"}
+        response = client.messages.create(**api_kwargs)
+    except Exception:
+        # If tool_choice fails with web_search, retry without it
+        print("   ⚠️  tool_choice not supported for web_search, retrying without...")
+        del api_kwargs["tool_choice"]
+        response = client.messages.create(**api_kwargs)
     
     # Extract text and count searches
+    # Debug: show all block types to diagnose search detection
     research_text = ""
     search_count = 0
+    block_types = []
     for block in response.content:
+        block_types.append(block.type)
         if block.type == "text":
             research_text = block.text  # Last text block has the summary
-        elif block.type == "web_search_tool_use":
+        elif block.type in ("web_search_tool_use", "server_tool_use", "tool_use"):
             search_count += 1
     
+    print(f"   📊 Response blocks: {block_types}")
     print(f"   🔍 Web searches performed: {search_count}")
     if search_count == 0:
         print(f"   ⚠️  Model did not use web search in research pass")
+        # Show first 200 chars of response for debugging
+        if research_text:
+            print(f"   📄 Response preview: {research_text[:200]}...")
     
     return research_text
 
