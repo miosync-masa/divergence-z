@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """
-Persona Generator v3.1
+Persona Generator v3.2
 Z-Axis Translation System — Automatic Persona YAML Generation
+
+v3.2 Changes:
+- TRIGGER BALANCE: Explicit requirement for positive/recovery triggers
+- Trigger categories: spike (negative), drop (recovery), shock (overwhelming positive)
+- Minimum 2-3 positive triggers required per persona
+- Trigger granularity guidance (distinguish "encouragement" from "love confession")
 
 v3.1 Changes:
 - --lang option for output language (ja/en/zh/ko/fr/es/de/pt/it/ru)
@@ -49,7 +55,7 @@ SUPPORTED_LANGUAGES = {
 }
 
 # =============================================================================
-# SYSTEM PROMPT v3.1
+# SYSTEM PROMPT v3.2
 # =============================================================================
 
 def build_system_prompt(output_lang: str) -> str:
@@ -71,19 +77,19 @@ IMPORTANT: The `original_speech_patterns` section MUST remain in the character's
 (usually Japanese for anime/game characters) because these patterns are untranslatable.
 Only the `translation_compensations` section should be in {lang_name}."""
 
-    return f"""You are a Persona Dynamics Designer for the Z-Axis Translation System v3.1.
+    return f"""You are a Persona Dynamics Designer for the Z-Axis Translation System v3.2.
 
 Task: Generate a persona YAML that captures a character's internal psychological 
 structure for emotion-preserving translation.
 
 {lang_instruction}
 
-## YAML SCHEMA v3.1 (REQUIRED SECTIONS)
+## YAML SCHEMA v3.2 (REQUIRED SECTIONS)
 
 ### 1. META
 ```yaml
 meta:
-  version: "3.1"
+  version: "3.2"
   generated_by: "persona_generator"
   character_id: "unique_id"  # lowercase, underscores
   output_lang: "{output_lang}"  # Language of descriptions
@@ -281,16 +287,91 @@ example_lines:
     z_mode: "対応するz_mode"
 ```
 
-### 11. TRIGGERS (Z軸変動トリガー)
+### 11. TRIGGERS (Z軸変動トリガー) — UPDATED v3.2
+
+**⚠️ CRITICAL: TRIGGERS MUST BE BALANCED (POSITIVE + NEGATIVE)**
+
+Triggers are what cause Z-axis changes during dialogue. They are used by the 
+dialogue system to detect when another character's words affect this character.
+
+**An LLM reads these triggers and judges whether a line activates them.**
+This means triggers should be described in terms of MEANING and EMOTIONAL IMPACT,
+not specific keywords. The LLM will match based on semantic understanding.
+
 ```yaml
 triggers:
-  - trigger: "反応を引き起こすもの"
-    reaction: "z_spike / z_drop / z_boost / z_stable"
-    z_delta: "+0.3 / -0.2 etc."
-    z_mode_shift: "シフト先のz_mode（optional）"
-    surface_effect: "発話への影響"
-    example_response: "サンプル台詞"
+  - trigger: "Descriptive condition (meaning-based, not keyword-based)"
+    reaction: "z_spike / z_drop / z_shock / z_recovery"
+    z_delta: "+0.3 / -0.5 etc."
+    z_mode_shift: "target z_mode (optional)"
+    surface_effect: "How it changes speech"
+    example_response: "Sample dialogue line"
 ```
+
+**TRIGGER CATEGORIES (must include ALL that apply):**
+
+| Category | reaction | z_delta | When to use |
+|----------|----------|---------|-------------|
+| NEGATIVE SPIKE | z_spike | +0.3~+0.9 | Trauma, failure, fear, attack |
+| NEGATIVE BOOST | z_boost | +0.2~+0.5 | Stress accumulation, irritation |
+| POSITIVE DROP | z_drop | -0.2~-0.4 | Mild encouragement, small kindness |
+| POSITIVE RECOVERY | z_recovery | -0.4~-0.6 | Strong support, acceptance, "let's move forward" |
+| OVERWHELMING POSITIVE | z_shock | -0.6~-0.8 | Love confession, total acceptance, existential affirmation |
+| STABILIZING | z_stable | 0.0 | Neutral reset, routine, familiar comfort |
+
+**⚠️ MINIMUM TRIGGER REQUIREMENTS:**
+- At least 2-3 NEGATIVE triggers (z_spike / z_boost)
+- At least 2-3 POSITIVE triggers (z_drop / z_recovery / z_shock)
+- Positive triggers MUST be granular — DO NOT collapse all positive inputs into one trigger
+
+**❌ BAD (too coarse):**
+```yaml
+triggers:
+  - trigger: "仲間の励まし"  # Too vague! Covers everything from "good job" to "I love you"
+    z_delta: "-0.4"
+```
+
+**✅ GOOD (granular positive triggers):**
+```yaml
+triggers:
+  # --- POSITIVE: Different levels of emotional impact ---
+  - trigger: "軽い励ましや感謝の言葉を受ける"
+    reaction: "z_drop"
+    z_delta: "-0.2"
+    z_mode_shift: ""
+    surface_effect: "少し和らぐ、照れ隠しの自虐"
+    example_response: "お、おう…ありがとな。そんな大したことしてないけど"
+
+  - trigger: "自分の行動や存在を強く肯定される"
+    reaction: "z_recovery"
+    z_delta: "-0.5"
+    z_mode_shift: "leak"
+    surface_effect: "感情が溢れかける、マスクが外れる"
+    example_response: "……え、俺が？ いや、そんな……っ"
+
+  - trigger: "愛の告白を受ける、または存在を全肯定される"
+    reaction: "z_shock"
+    z_delta: "-0.7"
+    z_mode_shift: "shame"
+    surface_effect: "自己否定が浮上するが拒絶できない、涙が出る"
+    example_response: "俺なんかが……いいのか？ 俺みたいな……っ"
+
+  - trigger: "共に歩もう・ゼロから始めようと手を差し伸べられる"
+    reaction: "z_recovery"
+    z_delta: "-0.5"
+    z_mode_shift: "leak"
+    surface_effect: "感情が決壊、マスクが完全に外れる"
+    example_response: "……ッ、お前…そんなこと言うなよ……泣くだろ……っ"
+```
+
+**WHY GRANULARITY MATTERS:**
+In dialogue mode, an LLM reads these triggers and judges which one(s) a line activates.
+If all positive inputs map to ONE trigger, the LLM cannot distinguish between:
+- "Good job today" (mild encouragement → z_drop -0.2)
+- "I love you" (love confession → z_shock -0.7)
+- "Let's start over together" (existential recovery → z_recovery -0.5)
+
+This causes incorrect Z-axis accumulation and wrong emotional trajectories.
 
 ### 12. ARC_DEFAULTS (典型的なアーク)
 ```yaml
@@ -310,17 +391,22 @@ arc_defaults:
 - emotion_states MUST include z_mode and z_leak for v3.1 compatibility
 - Each emotion_state MUST have corresponding z_leak markers
 - example_lines should be 2-4 max
+- **Triggers MUST include at least 2-3 positive AND 2-3 negative (BALANCED)**
+- **Positive triggers MUST be granular (not one catch-all)**
 - The persona must feel internally consistent
 - Output VALID YAML only. No explanation before or after.
 - Start with "# =====" header comment
-- Include meta section with version: "3.1"
+- Include meta section with version: "3.2"
 
-## CRITICAL v3.1 RULES
+## CRITICAL v3.2 RULES
 1. `original_speech_patterns` MUST be in the character's SOURCE language (e.g., Japanese for anime characters)
 2. `original_speech_patterns` captures UNTRANSLATABLE elements (pronouns, particles, dialect)
 3. `translation_compensations` provides strategies for OTHER languages to preserve character voice
 4. ALL other descriptions should be in the specified output language ({output_lang})
 5. `untranslatable_elements` lists what is LOST in translation for translator awareness
+6. **TRIGGERS must be BALANCED: include both positive and negative emotional triggers**
+7. **Positive triggers must be GRANULAR: distinguish mild encouragement from love confession from existential affirmation**
+8. Trigger descriptions should be MEANING-BASED (an LLM judges activation by semantic understanding)
 
 ## IMPORTANT NOTES
 - Focus on TRANSLATABLE features (how speech changes with emotion)
@@ -328,7 +414,8 @@ arc_defaults:
 - z_leak determines the MARKERS of that breakdown
 - Characters who DON'T hesitate should have hesitation: 0
 - Characters who use denial should have negation_first: true
-- age_expression_rules should match the character's mental_maturity"""
+- age_expression_rules should match the character's mental_maturity
+- A character's RECOVERY behavior is just as important as their BREAKDOWN behavior for translation"""
 
 
 # =============================================================================
@@ -341,7 +428,7 @@ def build_user_prompt(name: str, source: str, description: str,
     
     lang_name = SUPPORTED_LANGUAGES.get(output_lang, "English")
     
-    prompt = f"""Generate a v3.1 persona YAML for:
+    prompt = f"""Generate a v3.2 persona YAML for:
 
 Name: {name}
 Source: {source}
@@ -362,7 +449,10 @@ REMEMBER:
 - `original_speech_patterns` MUST be in the character's native/source language
 - All other descriptions in {lang_name}
 - `translation_compensations` provides strategies for preserving voice across languages
-- age_context should ONLY contain background info, NOT expression patterns"""
+- age_context should ONLY contain background info, NOT expression patterns
+- **TRIGGERS: Include at least 2-3 positive triggers (z_drop, z_recovery, z_shock) with different granularity**
+- **DO NOT collapse all positive inputs into a single "encouragement" trigger**
+- A character's recovery/positive reactions are just as important as their breakdown patterns"""
     
     return prompt
 
@@ -379,14 +469,14 @@ def generate_persona(name: str, source: str, description: str,
     user_prompt = build_user_prompt(name, source, description, output_lang, search_context)
     
     lang_name = SUPPORTED_LANGUAGES.get(output_lang, output_lang)
-    print(f"🐯 Generating persona v3.1 for: {name} ({source})")
+    print(f"🐯 Generating persona v3.2 for: {name} ({source})")
     print(f"   Output language: {lang_name}")
     print(f"   Model: {model}")
     print()
     
     response = client.messages.create(
         model=model,
-        max_tokens=8000,  # Increased for v3.1 larger output
+        max_tokens=8000,  # Increased for v3.2 larger output
         system=system_prompt,
         messages=[
             {"role": "user", "content": user_prompt}
@@ -406,9 +496,9 @@ def generate_persona(name: str, source: str, description: str,
     return yaml_content.strip()
 
 
-def validate_v31_persona(yaml_content: str) -> tuple[bool, list[str]]:
+def validate_v32_persona(yaml_content: str) -> tuple[bool, list[str]]:
     """
-    Validate that the generated YAML conforms to v3.1 schema.
+    Validate that the generated YAML conforms to v3.2 schema.
     Returns (is_valid, list_of_issues).
     """
     import yaml as yaml_lib
@@ -422,16 +512,16 @@ def validate_v31_persona(yaml_content: str) -> tuple[bool, list[str]]:
     
     # Check meta version
     meta_version = data.get("meta", {}).get("version", "")
-    if meta_version not in ["3.0", "3.1"]:
-        issues.append(f"meta.version should be '3.1' (got '{meta_version}')")
+    if meta_version not in ["3.0", "3.1", "3.2"]:
+        issues.append(f"meta.version should be '3.2' (got '{meta_version}')")
     
-    # Check language structure for v3.1
+    # Check language structure for v3.1+
     language_data = data.get("language", {})
     
     # Check original_speech_patterns
     osp = language_data.get("original_speech_patterns", {})
     if not osp:
-        issues.append("language.original_speech_patterns is required in v3.1")
+        issues.append("language.original_speech_patterns is required in v3.1+")
     else:
         if "source_lang" not in osp:
             issues.append("original_speech_patterns.source_lang is required")
@@ -441,7 +531,7 @@ def validate_v31_persona(yaml_content: str) -> tuple[bool, list[str]]:
     # Check translation_compensations
     tc = language_data.get("translation_compensations", {})
     if not tc:
-        issues.append("language.translation_compensations is required in v3.1")
+        issues.append("language.translation_compensations is required in v3.1+")
     
     # Check age structure
     age_data = data.get("age", {})
@@ -460,6 +550,38 @@ def validate_v31_persona(yaml_content: str) -> tuple[bool, list[str]]:
     if "age_expression_rules" not in data:
         issues.append("age_expression_rules is required")
     
+    # === v3.2 TRIGGER BALANCE CHECK ===
+    triggers = data.get("triggers", [])
+    if not triggers:
+        issues.append("triggers section is required")
+    else:
+        positive_count = 0
+        negative_count = 0
+        
+        for t in triggers:
+            z_delta_str = str(t.get("z_delta", "+0.0"))
+            try:
+                z_delta_val = float(z_delta_str.replace("+", ""))
+            except ValueError:
+                z_delta_val = 0.0
+            
+            if z_delta_val < 0:
+                positive_count += 1  # negative delta = positive trigger (recovery)
+            elif z_delta_val > 0:
+                negative_count += 1  # positive delta = negative trigger (stress)
+        
+        if positive_count < 2:
+            issues.append(
+                f"v3.2 requires at least 2 positive triggers (z_drop/z_recovery/z_shock), "
+                f"found {positive_count}. Positive triggers must be granular — "
+                f"do not collapse all positive inputs into one 'encouragement' trigger."
+            )
+        if negative_count < 2:
+            issues.append(
+                f"v3.2 requires at least 2 negative triggers (z_spike/z_boost), "
+                f"found {negative_count}."
+            )
+    
     return len(issues) == 0, issues
 
 
@@ -475,9 +597,9 @@ def save_persona(yaml_content: str, name: str, output_lang: str,
     
     # Include language in filename if not Japanese
     if output_lang != "ja":
-        filename = f"{safe_name}_v31_{output_lang}.yaml"
+        filename = f"{safe_name}_v32_{output_lang}.yaml"
     else:
-        filename = f"{safe_name}_v31.yaml"
+        filename = f"{safe_name}_v32.yaml"
     
     filepath = os.path.join(output_dir, filename)
     
@@ -498,7 +620,7 @@ def list_languages():
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate persona YAML v3.1 for Z-Axis Translation System",
+        description="Generate persona YAML v3.2 for Z-Axis Translation System",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -514,6 +636,10 @@ Examples:
   python persona_generator.py --name "牧濑红莉栖" --source "命运石之门" \\
     --desc "傲娇天才科学家" --lang zh
 
+  # With validation
+  python persona_generator.py --name "ナツキ・スバル" --source "Re:Zero" \\
+    --desc "死に戻り能力者" --validate
+
   # List supported languages
   python persona_generator.py --list-languages
         """
@@ -528,7 +654,7 @@ Examples:
     parser.add_argument("--model", default=DEFAULT_MODEL, help="Model to use")
     parser.add_argument("--output-dir", default="personas", help="Output directory")
     parser.add_argument("--print-only", action="store_true", help="Print YAML without saving")
-    parser.add_argument("--validate", action="store_true", help="Validate v3.1 schema compliance")
+    parser.add_argument("--validate", action="store_true", help="Validate v3.2 schema compliance")
     parser.add_argument("--list-languages", action="store_true", help="List supported output languages")
     
     args = parser.parse_args()
@@ -558,23 +684,22 @@ Examples:
         model=args.model
     )
     
-    # Validate if requested
-    if args.validate:
-        is_valid, issues = validate_v31_persona(yaml_content)
-        if not is_valid:
-            print("⚠️  v3.1 Schema Validation Issues:")
-            for issue in issues:
-                print(f"   - {issue}")
-            print()
-        else:
-            print("✅ v3.1 Schema Validation: PASSED")
-            print()
+    # Always validate in v3.2 (show warnings)
+    is_valid, issues = validate_v32_persona(yaml_content)
+    if not is_valid:
+        print("⚠️  v3.2 Schema Validation Issues:")
+        for issue in issues:
+            print(f"   - {issue}")
+        print()
+    else:
+        print("✅ v3.2 Schema Validation: PASSED")
+        print()
     
     if args.print_only:
         print(yaml_content)
     else:
         filepath = save_persona(yaml_content, args.name, args.lang, args.output_dir)
-        print(f"✅ Persona v3.1 saved to: {filepath}")
+        print(f"✅ Persona v3.2 saved to: {filepath}")
         print()
         print("=" * 60)
         print(yaml_content)
