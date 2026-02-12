@@ -63,7 +63,7 @@ STEP1_SCHEMA: Dict[str, Any] = {
                     "type": "array",
                     "items": {
                         "type": "string",
-                        "enum": ["stutter", "ellipsis", "repetition", "negation_first", "overwrite", "trailing", "self_negation"]
+                        "enum": ["stutter", "ellipsis", "repetition", "negation_concealment", "negation_counter", "negation_declaration", "overwrite", "trailing", "self_negation"]
                     },
                     "description": "Surface markers to apply"
                 },
@@ -174,7 +174,7 @@ STEP2_SCHEMA: Dict[str, Any] = {
                 "negation_first": {"type": "boolean"},
                 "negation_type": {
                     "type": "string",
-                    "enum": ["concealment", "declaration", "rationalization", "none"],
+                    "enum": ["concealment", "declaration", "rationalization", "counter", "none"],
                 },
                 "listener_type": {
                     "type": "string",
@@ -236,7 +236,7 @@ STEP3_SCHEMA: Dict[str, Any] = {
                 "negation_first": {"type": "boolean"},
                 "negation_type": {
                     "type": "string",
-                    "enum": ["concealment", "declaration", "rationalization", "none"],
+                    "enum": ["concealment", "declaration", "rationalization", "counter", "none"],
                 },
                 "listener_type": {
                     "type": "string",
@@ -336,7 +336,7 @@ def get_emotion_state_by_z_mode(
         "surface_markers_hint": {
             "hesitation": 2,
             "stutter_count": 1,
-            "negation_first": False,
+            "negation_type": "none",
             "overwrite": "optional",
             "residual": "optional",
         },
@@ -561,7 +561,7 @@ Task: Analyze the TARGET line and extract:
 Extract ONLY what is observable in the text:
 - z (0.0-1.0): Emotional intensity
 - z_mode: Type of breakdown (collapse/rage/numb/plea/shame/leak/none)
-- z_leak: Surface markers present (stutter/ellipsis/repetition/negation_first/overwrite/trailing/self_negation)
+- z_leak: Surface markers present (stutter/ellipsis/repetition/negation_concealment/negation_counter/negation_declaration/overwrite/trailing/self_negation)
 - z_confidence: How confident you are (0.0-1.0)
 - emotion_label: Short label (e.g., "自己嫌悪", "懇願", "麻痺")
 - listener_type: Who is being addressed
@@ -629,6 +629,7 @@ Layer B is supplementary context only.
 - 'concealment': Hiding true feelings (tsundere denial). True intent is OPPOSITE of surface.
 - 'declaration': Asserting truth. True intent MATCHES surface.
 - 'rationalization': Logical justification to mask emotion.
+- 'counter': Denying the OTHER's claim/negation (devotion-type rebuttal). "No— that's not true!"
 - 'none': No negation.
 
 ## SELF-DIRECTED REBINDING
@@ -741,7 +742,7 @@ Speech quirks: {quirks_str}
 [SURFACE MARKER HINTS] (from persona emotion_state)
 - hesitation: {surface_hints.get('hesitation', 'default')}
 - stutter_count: {surface_hints.get('stutter_count', 'default')}
-- negation_first: {surface_hints.get('negation_first', 'default')}
+- negation_type: {surface_hints.get('negation_type', 'none')}
 - overwrite: {surface_hints.get('overwrite', 'optional')}
 - residual: {surface_hints.get('residual', 'optional')}
 - tone: {surface_hints.get('tone', 'default')}
@@ -773,7 +774,9 @@ Apply the z_leak markers from STEP2 to realize the breakdown pattern:
 - stutter: "I— I..." or "N-no..."
 - ellipsis: "..." or "I just..."
 - repetition: "Why, why, why" or "nobody— nobody"
-- negation_first: Start with denial "N-not that..."
+- negation_concealment: Hide feelings "N-not that it's for you..."
+- negation_counter: Rebut other's claim "No— that's not true!"
+- negation_declaration: Assert will "I'm not looking to rule!"
 - overwrite: Self-correction "I mean—"
 - trailing: Fade out "...I guess" or "...or something"
 - self_negation: "I'm worthless" "It's my fault"
@@ -946,7 +949,7 @@ emotion_states:
     surface_markers_hint:
       hesitation: 3
       stutter_count: 3
-      negation_first: true
+      negation_type: "none"
       overwrite: "required"
       residual: "required"
       tone: "低く、自分を責める、涙声"
