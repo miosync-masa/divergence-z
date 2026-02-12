@@ -96,39 +96,24 @@ structure for emotion-preserving translation.
 
 {lang_instruction}
 
-## MANDATORY WEB SEARCH — DO THIS FIRST
+## CHARACTER RESEARCH CONTEXT
 
-You have access to a web_search tool. You MUST use it before generating the YAML.
-**Do NOT rely solely on your training knowledge.** LLM knowledge frequently misses:
-- first_person variants (e.g., a character switching from "まゆしぃ" to "私" in extreme scenes)
-- Specific likes, hobbies, favorite foods, catchphrases
-- Precise relationship dynamics and character-specific speech quirks
-- Dialect features, sentence endings, and their exact usage conditions
+When generating the YAML, you will receive research context gathered from web searches 
+in the "Additional Context" section of the user prompt. This contains:
+- Character wiki information (background, personality, relationships)
+- Speech pattern details (first-person variants, sentence endings, catchphrases)
+- Identity details (likes, hobbies, personality traits)
 
-**SEARCH PROTOCOL (execute ALL of these):**
+**USE THIS CONTEXT.** It contains verified information that may differ from your training data.
+If the research context conflicts with your knowledge, PREFER the research context.
 
-1. **Character wiki search**: Search for "{'{'}character_name{'}'} {'{'}source{'}'} wiki" or 
-   "{'{'}character_name{'}'} {'{'}source{'}'} character profile"
-   → Extract: background, personality, relationships, likes/dislikes, speech patterns
-
-2. **Speech pattern search**: Search for "{'{'}character_name{'}'} 一人称" or 
-   "{'{'}character_name{'}'} speech patterns quotes"
-   → Extract: first_person variants (ALL of them, including rare/extreme ones),
-   sentence endings, dialect, verbal tics, catchphrases
-   
-3. **Character detail search**: Search for "{'{'}character_name{'}'} {'{'}source{'}'} personality hobbies"
-   → Extract: joys, likes, dislikes, identity_core details
-
-**CRITICAL**: Pay special attention to first_person_variants. Many anime characters
-switch their first-person pronoun in extreme emotional states (e.g., 僕→俺, 
-わたし→あたし). In particular, characters who use third-person self-reference 
-(自分の名前で自己言及) may revert to standard first-person pronouns (私/僕/俺) 
-under emotional extremity — this switch is a major translation signal that 
-indicates the character has "dropped their mask." Always search for ALL 
-first-person variants including rare/extreme-state ones.
-
-**After searching, generate the YAML using BOTH your knowledge AND the search results.**
-If search results conflict with your knowledge, PREFER the search results.
+**CRITICAL**: Pay special attention to first_person_variants in the research context. 
+Many anime characters switch their first-person pronoun in extreme emotional states 
+(e.g., 僕→俺, わたし→あたし). In particular, characters who use third-person 
+self-reference (自分の名前で自己言及) may revert to standard first-person pronouns 
+(私/僕/俺) under emotional extremity — this switch is a major translation signal that 
+indicates the character has "dropped their mask." Include ALL first-person variants 
+found in the research, including rare/extreme-state ones.
 
 ## YAML SCHEMA v3.3 (REQUIRED SECTIONS)
 
@@ -193,9 +178,10 @@ identity_core:
 - Include what you CAN FIND. Omit what you cannot.
 - DO NOT invent information. Only include what is supported by evidence.
 
-**SEARCH GUIDANCE:**
-Use the web_search tool to find the following (you HAVE this tool available):
-- "Likes", "Hobbies", "Personality" sections on character wiki pages
+**RESEARCH DATA:**
+The following information should be available in the "Additional Context" section of the prompt,
+gathered from web searches by the research pass:
+- "Likes", "Hobbies", "Personality" from character wiki pages
 - Official character profiles from games/anime/manga
 - Scenes described where the character is relaxed or happy
 - Creator interviews about the character's core personality
@@ -565,16 +551,13 @@ Output Language: {output_lang} ({lang_name})
 """
     
     prompt += f"""
-Output ONLY valid YAML. No explanation.
-
-BEFORE generating YAML, you MUST use web_search to research this character.
-Search for: wiki page, speech patterns (一人称 variants!), likes/hobbies, personality.
-DO NOT skip this step. Your training data may be missing critical details.
+Output ONLY valid YAML. No explanation text before or after the YAML.
+Start with "# =====" header comment.
 
 REMEMBER:
 - `identity_core.essence` is REQUIRED — describe who this character IS, not just how they react
-- **USE WEB SEARCH** to find: likes, hobbies, personality traits, what makes them happy, first_person variants
-- first_person_variants must include ALL variants (including rare/extreme state ones)
+- **USE the research context above** to fill: likes, hobbies, personality, first_person variants
+- first_person_variants must include ALL variants (including rare/extreme state ones found in research)
 - Other identity_core fields (joys, likes, dislikes, etc.) are optional — include what you find
 - `original_speech_patterns` MUST be in the character's native/source language
 - All other descriptions in {lang_name}
@@ -587,6 +570,81 @@ REMEMBER:
     return prompt
 
 
+def _research_character(client, name: str, source: str, description: str, 
+                        model: str) -> str:
+    """Pass 1: Research character details using web search.
+    
+    Returns a text summary of search findings for use as context in generation.
+    """
+    
+    research_prompt = f"""Research the following character for a persona YAML generation.
+Search for their wiki page, speech patterns, personality, likes/hobbies, and relationships.
+
+Character: {name}
+Source: {source}
+Description: {description}
+
+SEARCH PROTOCOL (execute ALL):
+1. Search: "{name} {source} wiki" — for background, personality, relationships
+2. Search: "{name} 一人称" or "{name} speech patterns" — for first-person pronouns (ALL variants including rare/extreme ones), sentence endings, dialect, catchphrases
+3. Search: "{name} {source} personality hobbies likes" — for identity_core details
+
+IMPORTANT: For first_person_variants, find ALL variants including ones used only in extreme emotional states.
+Characters who use third-person self-reference (自分の名前で自己言及) may revert to standard 
+first-person pronouns (私/僕/俺) under emotional extremity — always check for this.
+
+After searching, output a structured summary of your findings:
+
+## Background
+(what you found about their history, role, relationships)
+
+## Speech Patterns  
+(first-person pronoun and ALL variants with contexts, sentence endings, catchphrases, dialect)
+
+## Personality & Identity
+(likes, dislikes, hobbies, joys, personality traits, what they're like when relaxed)
+
+## Key Relationships
+(important relationships and dynamics)
+
+## Emotional Patterns
+(how they react under stress, what triggers them positively/negatively)
+
+Only include information you actually found. Do NOT invent details."""
+
+    print("   📖 Pass 1: Researching character via web search...")
+    
+    response = client.messages.create(
+        model=model,
+        max_tokens=4000,
+        tools=[
+            {
+                "type": "web_search_20250305",
+                "name": "web_search",
+                "max_uses": 5
+            }
+        ],
+        messages=[
+            {"role": "user", "content": research_prompt}
+        ]
+    )
+    
+    # Extract text and count searches
+    research_text = ""
+    search_count = 0
+    for block in response.content:
+        if block.type == "text":
+            research_text = block.text  # Last text block has the summary
+        elif block.type == "web_search_tool_use":
+            search_count += 1
+    
+    print(f"   🔍 Web searches performed: {search_count}")
+    if search_count == 0:
+        print(f"   ⚠️  Model did not use web search in research pass")
+    
+    return research_text
+
+
 def generate_persona(name: str, source: str, description: str,
                      output_lang: str = "ja",
                      search_context: str = "", 
@@ -594,6 +652,12 @@ def generate_persona(name: str, source: str, description: str,
                      thinking_budget: int = 0,
                      no_search: bool = False) -> str:
     """Generate persona YAML using Claude API with web search.
+    
+    Two-pass approach:
+      Pass 1 (Research): web_search to gather character details (no thinking)
+      Pass 2 (Generate): thinking to generate YAML with research context (no search)
+    
+    This separation avoids thinking + web_search compatibility issues.
     
     Args:
         thinking_budget: If > 0, enable extended thinking with this token budget.
@@ -603,9 +667,6 @@ def generate_persona(name: str, source: str, description: str,
     
     client = Anthropic()
     
-    system_prompt = build_system_prompt(output_lang)
-    user_prompt = build_user_prompt(name, source, description, output_lang, search_context)
-    
     lang_name = SUPPORTED_LANGUAGES.get(output_lang, output_lang)
     print(f"🐯 Generating persona v3.3 for: {name} ({source})")
     print(f"   Output language: {lang_name}")
@@ -613,12 +674,32 @@ def generate_persona(name: str, source: str, description: str,
     if no_search:
         print(f"   🔍 Web search: OFF (LLM knowledge only)")
     else:
-        print(f"   🔍 Web search: ON (will research character details)")
+        print(f"   🔍 Web search: ON (two-pass: research → generate)")
     if thinking_budget > 0:
         print(f"   🧠 Thinking mode: ON (budget: {thinking_budget} tokens)")
     print()
     
-    # Build API kwargs
+    # === PASS 1: RESEARCH (web search, no thinking) ===
+    research_context = ""
+    if not no_search:
+        research_context = _research_character(client, name, source, description, model)
+    
+    # Merge any user-provided context with research results
+    combined_context = ""
+    if search_context and research_context:
+        combined_context = f"## User-provided context:\n{search_context}\n\n## Web research results:\n{research_context}"
+    elif research_context:
+        combined_context = research_context
+    elif search_context:
+        combined_context = search_context
+    
+    # === PASS 2: GENERATE YAML (thinking, no search) ===
+    system_prompt = build_system_prompt(output_lang)
+    user_prompt = build_user_prompt(name, source, description, output_lang, combined_context)
+    
+    if not no_search:
+        print("   📝 Pass 2: Generating persona YAML...")
+    
     api_kwargs = {
         "model": model,
         "max_tokens": 16000 if thinking_budget > 0 else 8000,
@@ -628,16 +709,6 @@ def generate_persona(name: str, source: str, description: str,
         ]
     }
     
-    # === WEB SEARCH TOOL (v3.3) ===
-    if not no_search:
-        api_kwargs["tools"] = [
-            {
-                "type": "web_search_20250305",
-                "name": "web_search",
-                "max_uses": 8
-            }
-        ]
-    
     if thinking_budget > 0:
         api_kwargs["thinking"] = {
             "type": "enabled",
@@ -646,32 +717,67 @@ def generate_persona(name: str, source: str, description: str,
     
     response = client.messages.create(**api_kwargs)
     
-    # Extract text content (skip thinking blocks and search result blocks)
-    # With web search, response contains interleaved blocks:
-    #   [text?] [web_search_tool_use] [web_search_tool_result] [text?] ... [text (YAML)]
-    # The YAML is in the LAST text block.
+    # Extract YAML from response (skip thinking blocks)
     yaml_content = ""
-    search_count = 0
     for block in response.content:
         if block.type == "text":
-            yaml_content = block.text  # Keep overwriting → last text block wins
-        elif block.type == "web_search_tool_use":
-            search_count += 1
+            yaml_content = block.text  # Last text block wins
     
-    if search_count > 0:
-        print(f"   🔍 Web searches performed: {search_count}")
-    elif not no_search:
-        print(f"   ⚠️  Model did not use web search (relying on training knowledge only)")
-    
-    # Clean up if wrapped in code blocks
-    if yaml_content.startswith("```yaml"):
-        yaml_content = yaml_content[7:]
-    if yaml_content.startswith("```"):
-        yaml_content = yaml_content[3:]
-    if yaml_content.endswith("```"):
-        yaml_content = yaml_content[:-3]
+    # === ROBUST YAML EXTRACTION ===
+    # Model may output: explanation text → code block or raw YAML
+    # Strategy: try multiple extraction methods in order of reliability
+    yaml_content = _extract_yaml(yaml_content)
     
     return yaml_content.strip()
+
+
+def _extract_yaml(raw: str) -> str:
+    """Extract YAML content from model output, handling various formats.
+    
+    The model may output:
+    1. Pure YAML (ideal)
+    2. ```yaml ... ``` code block (common)
+    3. Preamble text + ```yaml ... ``` (with thinking mode)
+    4. Preamble text + raw YAML without code fences (worst case)
+    """
+    
+    # Method 1: Extract from ```yaml ... ``` code block
+    if "```yaml" in raw:
+        yaml_part = raw.split("```yaml", 1)[1]
+        if "```" in yaml_part:
+            yaml_part = yaml_part.split("```", 1)[0]
+        return yaml_part.strip()
+    
+    # Method 2: Extract from generic ``` ... ``` code block
+    if "```" in raw:
+        parts = raw.split("```")
+        # Find the part that looks like YAML (contains "meta:" or starts with "#")
+        for part in parts[1::2]:  # odd-indexed parts are inside code fences
+            stripped = part.strip()
+            if stripped.startswith("# ===") or "meta:" in stripped[:200]:
+                return stripped
+    
+    # Method 3: Find YAML start marker in raw text
+    lines = raw.split("\n")
+    for i, line in enumerate(lines):
+        s = line.strip()
+        if s.startswith("# ===") or s.startswith("meta:"):
+            return "\n".join(lines[i:])
+    
+    # Method 4: Find "persona:" or "identity_core:" as fallback start markers
+    for i, line in enumerate(lines):
+        s = line.strip()
+        if s.startswith("persona:") or s.startswith("identity_core:"):
+            # Include from this line, but check if meta: is a few lines above
+            search_start = max(0, i - 5)
+            for j in range(search_start, i):
+                if lines[j].strip().startswith("meta:"):
+                    return "\n".join(lines[j:])
+            return "\n".join(lines[i:])
+    
+    # Method 5: Last resort — return as-is and let validator catch it
+    print("   ⚠️  Could not reliably extract YAML from model output")
+    return raw
 
 
 def validate_v33_persona(yaml_content: str) -> tuple[bool, list[str]]:
