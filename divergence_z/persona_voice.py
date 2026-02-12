@@ -55,7 +55,7 @@ load_dotenv()
 # =============================================================================
 
 DEFAULT_MODEL = "claude-opus-4-5-20251101"
-DEFAULT_BUDGET_TOKENS = 20000  # Extended Thinking の budget
+DEFAULT_BUDGET_TOKENS = 10000  # Extended Thinking の budget
 
 # ─────────────────────────────────────────────
 # V-STEP テンプレート
