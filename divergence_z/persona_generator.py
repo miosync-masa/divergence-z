@@ -109,7 +109,19 @@ persona:
   name_native: "原語での名前"
   source: "作品名"
   type: "キャラクタータイプ（例：ツンデレ × 天才科学者）"
-  summary: "1-2文の概要"
+  profile:
+    background: |
+      生い立ち、環境、経歴。
+      conflict_axesの「なぜそうなるか」が理解できるレベルで記述。
+      LLMがこのキャラを知らなくても人物像が掴めるように。
+    personality_core: |
+      性格の核。biasパターンの根拠。
+      防衛パターンの「なぜ」が分かるように。
+    key_relationships:
+      - target: "相手名"
+        dynamic: "関係性の力学（listener別の反応の根拠になる）"
+    narrative_role: |
+      物語上の機能・成長の方向性。
 ```
 
 ### 3. IDENTITY_CORE (I₀ — 存在の核) — NEW in v3.3
@@ -621,7 +633,21 @@ def validate_v33_persona(yaml_content: str) -> tuple[bool, list[str]]:
             "identity_core.essence is REQUIRED — a 1-2 sentence description of "
             "who this character is, independent of their conflicts."
         )
-    
+    # === PROFILE CHECK ===
+    persona_info = data.get("persona", {})
+    profile = persona_info.get("profile", {})
+    if not profile:
+        # 後方互換: summaryがあればwarningだけ
+        if persona_info.get("summary"):
+            issues.append(
+                "v3.3 prefers persona.profile over persona.summary. "
+                "profile should include: background, personality_core, key_relationships, narrative_role"
+            )
+        else:
+            issues.append("persona.profile is required in v3.3")
+    elif not profile.get("background"):
+        issues.append("persona.profile.background is required")
+        
     # Check language structure for v3.1+
     language_data = data.get("language", {})
     
