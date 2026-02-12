@@ -10,8 +10,8 @@ v1.1 Changes:
 - Trigger granularity guidance for extraction
 - Evidence-based trigger extraction from source text
 
-2025年スタイル: RAG? チャンク分割? 知らない子ですね。
-400K context に全部ドーン！！
+2026年Style: RAG? Chunking? I don't know.
+400K context ALL input!
 
 Usage:
     # 基本
