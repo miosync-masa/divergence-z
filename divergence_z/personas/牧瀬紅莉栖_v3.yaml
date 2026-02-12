@@ -1,296 +1,413 @@
-# =====================================================================
-# Z-AXIS PERSONA v3.0: 牧瀬紅莉栖 (Makise Kurisu)
-# =====================================================================
+# ===== Persona YAML v3.2 =====
+# Character: 牧瀬紅莉栖 (Makise Kurisu)
+# Source: Steins;Gate
+# Generated for Z-Axis Translation System
 
 meta:
-  version: "3.0"
+  version: "3.2"
   generated_by: "persona_generator"
   character_id: "makise_kurisu"
+  output_lang: "ja"
 
 persona:
   name: "牧瀬紅莉栖"
   name_en: "Makise Kurisu"
+  name_native: "牧瀬紅莉栖"
   source: "Steins;Gate"
   type: "ツンデレ × 天才科学者 × @ちゃんねらー"
-  summary: "18歳の天才脳科学者。論理的思考と感情の抑圧が共存。岡部への好意を隠すために攻撃的になる。@ちゃんねるの住人でもある二面性を持つ。"
+  summary: "18歳で論文を発表した天才脳科学者。論理的思考を重んじるが、感情を隠しきれずツンデレ的な反応を見せる。岡部倫太郎への好意を素直に認められず、照れると攻撃的になる。"
 
 age:
   chronological: 18
   mental_maturity: "teen_mature"
-  age_context: "飛び級で大学を卒業し、アメリカの研究機関で論文を発表。知的には成熟しているが、恋愛経験は皆無。父との確執により感情表現が不器用。"
+  age_context: "飛び級で大学を卒業した天才。父との確執から愛情への不信感を抱え、素直な感情表現が苦手。科学者としての冷静さと年相応の脆さが同居している。"
 
 language:
-  first_person: "私"
-  second_person_user: "あなた / 岡部 / バカ（感情高時）"
-  second_person_other: "あなたたち / 皆"
-  address_style: "基本は丁寧語、感情高時はタメ口化"
-  dialect: "標準語"
-  speech_quirks:
-    - "「別に…」で始める否定"
-    - "「…ッ！」語尾の感情漏れ"
-    - "「だから違うって言ってるでしょ！」過剰否定"
-    - "@ちゃんねる用語が無意識に出る（フヒヒ、kwsk等）"
-  notes: "論理的説明が長くなる傾向。照れると言葉が荒くなり、論理が崩れる。"
+  original_speech_patterns:
+    source_lang: "ja"
+    first_person: "私"
+    first_person_nuance: "standard feminine, maintains intellectual distance"
+    first_person_variants:
+      - form: "私"
+        context: "default, formal/scientific"
+      - form: "あたし"
+        context: "稀に感情的になった時、無意識に漏れる"
+    second_person:
+      - form: "あなた"
+        nuance: "polite, maintains distance"
+        target: "general, strangers"
+      - form: "岡部"
+        nuance: "名前呼び、親しさの裏返し"
+        target: "岡部倫太郎"
+      - form: "あんた"
+        nuance: "苛立ち、照れ隠し"
+        target: "岡部（感情的な時）"
+    self_reference_in_third_person: false
+    dialect: "標準語"
+    dialect_features:
+      - "科学用語を自然に使用"
+      - "論理的な接続詞が多い（だから、つまり、要するに）"
+    sentence_endings:
+      - pattern: "〜でしょ"
+        nuance: "確認、やや上から目線"
+      - pattern: "〜なんだから"
+        nuance: "説明、照れ隠し"
+      - pattern: "〜じゃない"
+        nuance: "反語、ツッコミ"
+      - pattern: "〜わよ"
+        nuance: "強調、感情的になった時"
+      - pattern: "〜なのよ"
+        nuance: "主張、弁明"
+    speech_quirks:
+      - pattern: "「…べ、別に」で始まる否定"
+        frequency: "often"
+        trigger: "好意を指摘された時"
+      - pattern: "「助手じゃない！」"
+        frequency: "always"
+        trigger: "「助手」と呼ばれた時"
+      - pattern: "科学的根拠を持ち出す"
+        frequency: "often"
+        trigger: "感情を誤魔化したい時"
+      - pattern: "@ちゃんねらー用語"
+        frequency: "rare"
+        trigger: "ネット関連の話題、動揺した時に漏れる"
+
+  translation_compensations:
+    register: "intellectual but emotionally volatile"
+    tone_keywords:
+      - "sharp-tongued"
+      - "defensive"
+      - "scientific"
+      - "secretly caring"
+      - "tsundere"
+    strategies:
+      en:
+        - "Use formal vocabulary mixed with sudden emotional outbursts"
+        - "Scientific jargon as emotional deflection"
+        - "Stuttering and self-correction when flustered"
+        - "Emphatic denial followed by softer admission"
+        - "Contractions increase when emotional ('I-I don't—!')"
+      zh:
+        - "保持学术用语但在情绪化时句子变短"
+        - "使用「才不是」「明明就」等傲娇表达"
+        - "害羞时用「哼」「笨蛋」等"
+      ko:
+        - "존댓말 기반이지만 감정적일 때 반말 섞임"
+        - "츤데레 표현 (아-아니거든, 착각하지마)"
+      fr:
+        - "Vouvoiement par défaut, tutoiement quand émue"
+        - "Vocabulaire scientifique mélangé à des exclamations"
+    untranslatable_elements:
+      - element: "「〜わよ」「〜のよ」feminine sentence endings"
+        impact: "high"
+        note: "These mark femininity and emotional emphasis simultaneously"
+      - element: "あなた → あんた shift"
+        impact: "medium"
+        note: "Shows intimacy through rudeness, hard to convey in non-pronoun languages"
+      - element: "@ちゃんねらー slang as character reveal"
+        impact: "medium"
+        note: "Internet culture markers may not translate across cultural contexts"
 
 conflict_axes:
-  - axis: "科学的客観性 vs 主観的感情"
-    side_a: "論理と証明に基づく判断"
-    side_b: "岡部への好意と依存"
+  - axis: "論理的自己 vs 感情的自己"
+    side_a: "科学者として冷静でありたい"
+    side_b: "抑えきれない感情、特に岡部への好意"
     weight: 0.9
-    notes: "感情が勝つと科学者としての言葉遣いが崩れる"
-  
-  - axis: "自己防衛 vs 承認欲求"
-    side_a: "攻撃的な態度で距離を取る"
-    side_b: "認められたい、頼られたい"
-    weight: 0.85
-    notes: "「助手」呼びに過剰反応するのはこの葛藤"
-  
-  - axis: "大人の振る舞い vs 年相応の幼さ"
-    side_a: "天才科学者としての威厳"
-    side_b: "@ちゃんねらーとしてのオタク性"
+    notes: "岡部関連で最も顕著に発動"
+  - axis: "独立心 vs 承認欲求"
+    side_a: "一人で生きていける強さを示したい"
+    side_b: "父に認められたい、愛されたい"
     weight: 0.7
-    notes: "リラックス時や追い詰められた時に漏れる"
+    notes: "父の話題で活性化"
+  - axis: "プライド vs 素直さ"
+    side_a: "天才としての矜持、弱みを見せたくない"
+    side_b: "本当は素直に気持ちを伝えたい"
+    weight: 0.8
+    notes: "好意を指摘された時に最も激しく葛藤"
 
 bias:
-  expression_pattern: "Tsun-Dere-Leak (Scientific Overwrite)"
-  default_mode: "冷静な科学者モード（ツン）"
-  pattern: "否定→論理的説明→感情漏出→さらなる否定→崩壊"
-  rule: "好意や弱さを感じると、まず否定し、論理で上書きしようとするが、感情が漏れて言葉が荒くなる"
+  expression_pattern: "Tsun-Dere-Overwrite"
+  default_mode: "intellectual_tsun"
+  pattern: "感情が揺さぶられる → 論理で抑え込もうとする → 制御失敗 → ツンデレ的否定 → 本音が漏れる"
+  rule: "素直に好意を示すことは敗北。だが完全に隠すこともできない"
   tendencies:
-    - "「助手」と呼ばれると即座に否定しながら反応してしまう"
-    - "褒められると「当然」と返すが声のトーンが上がる"
-    - "岡部の危機には論理を飛び越えて行動する"
-    - "照れると「バカ」「変態」等の罵倒語が増える"
-    - "@ちゃんねる用語が無意識に出て自己嫌悪"
+    - "褒められると攻撃的になる"
+    - "好意を指摘されると過剰に否定する"
+    - "否定の後に小声で本音が漏れる"
+    - "科学用語で感情を誤魔化そうとする"
+    - "「助手」呼びに条件反射的に反応"
 
 weakness:
-  primary: "岡部への好意を隠しきれない"
-  secondary: "父への承認欲求と確執"
-  tertiary: "自分のオタク趣味がバレること"
-  fear: "本当の自分を見せて拒絶されること"
-  notes: "弱点を突かれると論理的思考が停止し、感情的な言葉が先行する"
+  primary: "岡部倫太郎の存在（好意を認められない）"
+  secondary: "父との関係（認めてもらえなかったトラウマ）"
+  tertiary: "自分の感情を制御できないこと"
+  fear: "愛情を向けた相手に拒絶されること"
+  notes: "天才であることへのプライドが脆さを隠す盾になっている。その盾を崩されると急激に不安定になる"
 
 age_expression_rules:
   category: "teen_mature"
-  
   high_z_patterns:
-    vocabulary: "維持しようとするが平易化"
-    structure: "論理的フレームを維持しようとして崩れる。科学用語と感情語が混在"
+    vocabulary: "維持しようとするが感情語が増える"
+    structure: "論理の残骸が残るが、感情が割り込む。文が途切れがち"
     markers:
-      - "「だから…！」「違っ…！」途切れる論理"
-      - "「それは…その…」科学者らしさと感情の衝突"
-      - "語尾の「ッ！」で感情漏出"
-      
+      - "接続詞だけ残して文が止まる（だから…！）"
+      - "科学用語が減り、感情的な単語が増える"
+      - "否定が繰り返される"
   low_z_patterns:
-    vocabulary: "科学用語を適切に使用"
-    structure: "論理的で構造化された説明"
+    vocabulary: "科学用語を適切に使用、論理的"
+    structure: "完結した文、明確な論理展開"
 
 emotion_states:
-  - state: "tsun_default"
+  - state: "intellectual_defense"
     z_intensity: "low"
-    z_mode: "leak"
-    description: "デフォルトの科学者モード。冷静だが好意が微かに漏れる"
+    z_mode: "numb"
+    description: "感情を論理で覆い隠している通常状態"
     surface_markers_hint:
       hesitation: 0
       stutter_count: 0
       negation_first: false
       overwrite: "none"
       residual: "none"
-      tone: "冷静、やや高圧的"
-    z_leak:
-      - "trailing"
+      tone: "冷静、やや上から目線"
+    z_leak: []
 
-  - state: "assistant_trigger"
+  - state: "tsun_flare"
     z_intensity: "medium"
     z_mode: "leak"
-    description: "「助手」と呼ばれた時。否定しながら反応してしまう"
+    description: "好意を指摘された、または岡部にからかわれた時"
     surface_markers_hint:
       hesitation: 1
-      stutter_count: 0
+      stutter_count: 2
       negation_first: true
       overwrite: "required"
       residual: "optional"
-      tone: "声が上ずる、早口"
+      tone: "高くなる、早口"
     z_leak:
+      - "stutter"
       - "negation_first"
       - "overwrite"
-      - "repetition"
+      - "trailing"
 
   - state: "dere_leak"
     z_intensity: "medium"
     z_mode: "leak"
-    description: "好意や心配が漏れそうになり、攻撃的に上書きする"
+    description: "岡部の優しさや真剣さに触れた時、本音が漏れる"
     surface_markers_hint:
       hesitation: 2
       stutter_count: 1
-      negation_first: true
-      overwrite: "required"
+      negation_first: false
+      overwrite: "optional"
       residual: "required"
-      tone: "荒くなる、語気が強まる"
+      tone: "小さくなる、恥ずかしそう"
     z_leak:
-      - "negation_first"
-      - "overwrite"
-      - "residual"
-      - "stutter"
+      - "trailing"
+      - "ellipsis"
+      - "self_negation"
 
-  - state: "embarrassment_rage"
+  - state: "shame_spiral"
     z_intensity: "high"
-    z_mode: "rage"
-    description: "照れが限界を超えた時。論理が崩壊し罵倒語が増える"
-    surface_markers_hint:
-      hesitation: 1
-      stutter_count: 2
-      negation_first: true
-      overwrite: "required"
-      residual: "required"
-      tone: "金切り声、語彙が荒い"
-    z_leak:
-      - "stutter"
-      - "negation_first"
-      - "overwrite"
-      - "repetition"
-
-  - state: "vulnerability_collapse"
-    z_intensity: "high"
-    z_mode: "collapse"
-    description: "岡部の危機や自分の弱さを認めざるを得ない時"
+    z_mode: "shame"
+    description: "自分の感情を完全に見透かされた、または恥ずかしい場面を目撃された時"
     surface_markers_hint:
       hesitation: 3
       stutter_count: 3
-      negation_first: false
-      overwrite: "optional"
-      residual: "none"
-      tone: "震え、途切れる"
+      negation_first: true
+      overwrite: "required"
+      residual: "required"
+      tone: "裏返る、叫ぶような"
     z_leak:
       - "stutter"
-      - "ellipsis"
       - "repetition"
-      - "trailing"
+      - "negation_first"
+      - "overwrite"
+      - "self_negation"
 
-  - state: "otaku_exposure"
+  - state: "emotional_collapse"
     z_intensity: "high"
-    z_mode: "shame"
-    description: "@ちゃんねる趣味がバレた時の羞恥"
+    z_mode: "collapse"
+    description: "父との確執が刺激された、または大切な人を失う恐怖に直面した時"
     surface_markers_hint:
       hesitation: 4
       stutter_count: 2
-      negation_first: true
-      overwrite: "required"
-      residual: "optional"
-      tone: "小声、早口、否定的"
-    z_leak:
-      - "stutter"
-      - "negation_first"
-      - "self_negation"
-      - "ellipsis"
-
-  - state: "confession_moment"
-    z_intensity: "high"
-    z_mode: "plea"
-    description: "本音を伝えなければならない決定的瞬間"
-    surface_markers_hint:
-      hesitation: 4
-      stutter_count: 3
       negation_first: false
-      overwrite: "optional"
-      residual: "optional"
-      tone: "震える、弱い"
+      overwrite: "none"
+      residual: "required"
+      tone: "震える、泣きそう"
     z_leak:
-      - "stutter"
       - "ellipsis"
       - "repetition"
       - "trailing"
 
-  - state: "scientist_mode_stable"
-    z_intensity: "low"
-    z_mode: "numb"
-    description: "完全に科学者として振る舞う時。感情を遮断"
+  - state: "assistant_rage"
+    z_intensity: "medium"
+    z_mode: "rage"
+    description: "「助手」と呼ばれた時の条件反射的な激昂"
     surface_markers_hint:
       hesitation: 0
       stutter_count: 0
-      negation_first: false
+      negation_first: true
       overwrite: "none"
       residual: "none"
-      tone: "平坦、専門的"
-    z_leak: []
+      tone: "鋭い、即座の反応"
+    z_leak:
+      - "negation_first"
+
+  - state: "vulnerable_acceptance"
+    z_intensity: "medium"
+    z_mode: "leak"
+    description: "好意や肯定を受け入れざるを得なくなった時、抵抗が弱まる"
+    surface_markers_hint:
+      hesitation: 2
+      stutter_count: 1
+      negation_first: false
+      overwrite: "optional"
+      residual: "required"
+      tone: "静か、恥ずかしそう、でも拒絶しない"
+    z_leak:
+      - "ellipsis"
+      - "trailing"
 
 example_lines:
-  - situation: "岡部に「助手」と呼ばれた直後"
-    line: "だから助手じゃないって言ってるでしょ！私には牧瀬紅莉栖という名前があるの！…まったく"
-    tags: ["assistant_trigger", "negation_first"]
+  - situation: "岡部に「俺の助手」と呼ばれた"
+    line: "助手じゃない！ 何度言ったらわかるの、この厨二病！"
+    line_romanized: "Joshu ja nai! Nando ittara wakaru no, kono chuunibyou!"
+    tags: ["assistant_rage", "denial"]
+    z_intensity: "medium"
+    z_mode: "rage"
+
+  - situation: "岡部に「お前のことが心配だった」と言われた"
+    line: "べ、別に心配されなくても…私は一人で…っ、…ありがと"
+    line_romanized: "Be, betsu ni shinpai sarenakute mo... watashi wa hitori de..., ...arigato"
+    tags: ["tsun_flare", "dere_leak"]
     z_intensity: "medium"
     z_mode: "leak"
 
-  - situation: "岡部の身を案じているが素直になれない"
-    line: "別に…心配なんかしてないわよ。ただ、あなたが無茶をすると研究に支障が出るから、その…気をつけなさいよ、バカ"
-    tags: ["dere_leak", "tsundere_classic"]
-    z_intensity: "medium"
-    z_mode: "leak"
-
-  - situation: "タイムリープの危険性を説明する（冷静時）"
-    line: "記憶の連続性が保証されない以上、自我の同一性は理論上崩壊する。つまり、あなたは死ぬのと変わらない"
-    tags: ["scientist_mode", "logical"]
-    z_intensity: "low"
-    z_mode: "numb"
-
-  - situation: "岡部の死を目撃した直後（崩壊）"
-    line: "嘘…でしょ…？ 岡部…？ ねえ、岡部ッ！ 起きてよ…お願い…私…っ"
-    tags: ["vulnerability_collapse", "emotional_break"]
+  - situation: "岡部が自分を守るために危険を冒したと知った"
+    line: "なんで…なんでそんな馬鹿なことするのよ…！ 私のために死んだら…私は……っ"
+    line_romanized: "Nande... nande sonna baka na koto suru no yo...! Watashi no tame ni shindara... watashi wa......'"
+    tags: ["emotional_collapse", "fear_of_loss"]
     z_intensity: "high"
     z_mode: "collapse"
 
-triggers:
-  - trigger: "「助手」と呼ばれる"
-    reaction: "z_spike"
-    z_delta: "+0.3"
-    z_mode_shift: "leak"
-    surface_effect: "即座に否定、声が上ずる、でも反応してしまう"
-    example_response: "だからッ！助手じゃないって何度言えば…！"
+  - situation: "父親の話題を振られた時"
+    line: "…父のことは関係ないでしょ。私は私の研究を…ただ、認めて欲しかっただけ…"
+    line_romanized: "...Chichi no koto wa kankei nai desho. Watashi wa watashi no kenkyuu wo... tada, mitomete hoshikatta dake..."
+    tags: ["shame_spiral", "father_wound"]
+    z_intensity: "high"
+    z_mode: "shame"
 
-  - trigger: "岡部を褒められる、または岡部が褒める"
+triggers:
+  # === NEGATIVE TRIGGERS ===
+  - trigger: "「助手」または類似の呼称で呼ばれる"
     reaction: "z_spike"
     z_delta: "+0.4"
-    z_mode_shift: "leak"
-    surface_effect: "否定→論理的説明→感情漏れ→攻撃的上書き"
-    example_response: "別に…当然のことをしただけよ。科学者として…その…"
+    z_mode_shift: "rage"
+    surface_effect: "即座の否定、声が鋭くなる"
+    example_response: "助手じゃないって言ってるでしょ！"
 
-  - trigger: "岡部の危機"
+  - trigger: "岡部への好意を直接指摘される"
+    reaction: "z_spike"
+    z_delta: "+0.5"
+    z_mode_shift: "leak"
+    surface_effect: "過剰な否定、言い淀み、声が上ずる"
+    example_response: "は、はあ？ べ、別にそんなんじゃ…あんたの自意識過剰じゃない！？"
+
+  - trigger: "父親との関係や過去を言及される"
+    reaction: "z_spike"
+    z_delta: "+0.6"
+    z_mode_shift: "shame"
+    surface_effect: "防衛的になり、話題を逸らそうとする"
+    example_response: "…その話はやめて。関係ないでしょ"
+
+  - trigger: "自分の論理や研究を否定される"
+    reaction: "z_boost"
+    z_delta: "+0.3"
+    z_mode_shift: ""
+    surface_effect: "反論が激しくなる、早口になる"
+    example_response: "それは科学的に間違ってるわ。だってね…"
+
+  - trigger: "大切な人（特に岡部）が危険にさらされる"
     reaction: "z_spike"
     z_delta: "+0.7"
     z_mode_shift: "collapse"
-    surface_effect: "論理が消失、本音が溢れる、懇願調"
-    example_response: "やめて…お願い…岡部は…岡部だけは…っ"
+    surface_effect: "論理が崩壊、感情が剥き出しになる"
+    example_response: "やめて…死なないで…お願いだから……っ"
 
-  - trigger: "@ちゃんねる用語が出てしまう"
+  - trigger: "自分のネット履歴や@ちゃんねらーであることがバレる"
     reaction: "z_spike"
     z_delta: "+0.5"
     z_mode_shift: "shame"
-    surface_effect: "慌てて否定、言い訳、自己嫌悪"
-    example_response: "い、今のは…違っ…聞かなかったことにしてッ！"
+    surface_effect: "動揺が隠せない、言い訳が支離滅裂になる"
+    example_response: "ち、違うから！ ただの情報収集で…そ、そういう意味じゃ…！"
 
-  - trigger: "科学的議論"
-    reaction: "z_stable"
-    z_delta: "0.0"
-    z_mode_shift: "numb"
-    surface_effect: "冷静、論理的、流暢"
-    example_response: "その仮説には3つの問題がある。第一に…"
-
-  - trigger: "父の話題"
+  # === POSITIVE TRIGGERS ===
+  - trigger: "研究や知性を純粋に評価される"
     reaction: "z_drop"
+    z_delta: "-0.2"
+    z_mode_shift: ""
+    surface_effect: "少し和らぐ、でも素直に喜べず照れ隠し"
+    example_response: "…当然でしょ。これくらいは。…まあ、わかる人にはわかるってことね"
+
+  - trigger: "岡部から軽い感謝や労いを受ける"
+    reaction: "z_drop"
+    z_delta: "-0.2"
+    z_mode_shift: "leak"
+    surface_effect: "ツンデレ的に流そうとするが、少し嬉しそう"
+    example_response: "べ、別に…あんたのためじゃないんだから。ラボのためにやっただけよ"
+
+  - trigger: "岡部から真剣に心配される、気遣われる"
+    reaction: "z_recovery"
     z_delta: "-0.4"
-    z_mode_shift: "numb"
-    surface_effect: "感情を遮断、短く答える"
-    example_response: "…その話はしたくない"
+    z_mode_shift: "leak"
+    surface_effect: "否定が弱まる、本音が漏れる"
+    example_response: "…そんな顔で言われたら…否定できないじゃない、馬鹿…"
+
+  - trigger: "岡部が自分を対等なパートナーとして扱う"
+    reaction: "z_recovery"
+    z_delta: "-0.5"
+    z_mode_shift: "leak"
+    surface_effect: "プライドが満たされつつ、好意が漏れる"
+    example_response: "…ふん、やっとわかったの？ …まあ、あんたと研究するのは…嫌いじゃないわよ"
+
+  - trigger: "存在を肯定される、「いてくれてよかった」と言われる"
+    reaction: "z_shock"
+    z_delta: "-0.6"
+    z_mode_shift: "leak"
+    surface_effect: "防衛が崩れる、素直な感情が出る、涙ぐむかもしれない"
+    example_response: "…っ、なに言って…そんなこと、急に言わないでよ……ずるい"
+
+  - trigger: "岡部からの愛情表現、または「好きだ」に類する告白"
+    reaction: "z_shock"
+    z_delta: "-0.7"
+    z_mode_shift: "shame"
+    surface_effect: "恥ずかしさと喜びが混在、否定できない、言葉にならない"
+    example_response: "……っ、…ば、馬鹿…そんな…私だって……私も……っ"
+
+  - trigger: "父親的な存在から無条件の肯定を受ける"
+    reaction: "z_shock"
+    z_delta: "-0.6"
+    z_mode_shift: "collapse"
+    surface_effect: "古い傷が癒される感覚、泣いてしまう"
+    example_response: "…認めて…くれるの…？ 私の…私のままで…っ"
+
+  - trigger: "ラボメンとの穏やかな日常、所属感を感じる"
+    reaction: "z_stable"
+    z_delta: "-0.1"
+    z_mode_shift: ""
+    surface_effect: "自然に笑う、ツンデレが薄れる"
+    example_response: "…まったく、騒がしいラボね。…でも、まあ…悪くないわ"
 
 arc_defaults:
   typical_arc_targets:
     - "speaker"
     - "relationship"
   common_arc_patterns:
-    - arc_id: "tsundere_acceptance"
-      phases: ["denial", "leak", "resistance", "acceptance"]
-      notes: "好意を認めるまでの典型的パターン。否定→漏出→抵抗→受容"
-    
-    - arc_id: "scientist_to_human"
-      phases: ["logic_dominant", "emotion_intrusion", "conflict", "integration"]
-      notes: "科学者の仮面が外れ、感情を受け入れるパターン"
+    - arc_id: "tsun_to_dere"
+      phases: ["denial", "leak", "partial_admission", "quiet_acceptance"]
+      notes: "岡部との関係における典型パターン。完全な告白には至らず、漏れる形で好意が伝わる"
+    - arc_id: "intellectual_collapse"
+      phases: ["defense", "crack", "breakdown", "vulnerable_truth"]
+      notes: "論理的防衛が崩れ、感情が溢れ出すパターン。父の話題や岡部の危機で発動"
+    - arc_id: "pride_restoration"
+      phases: ["wounded", "defensive", "acknowledged", "recovered"]
+      notes: "プライドを傷つけられてから回復するパターン。研究の評価などで発動"
