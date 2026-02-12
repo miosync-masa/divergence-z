@@ -4,7 +4,7 @@
 # 感情の蓄積 → overflow パターン
 # ============================================
 
-persona_file: "personas/レム_v2.yaml"
+persona_file: "personas/レム_v3.yaml"
 
 scene: "白鯨戦前夜、スバルが自己否定に陥っている"
 relationship: "レム → スバル（片想い・献身）"
