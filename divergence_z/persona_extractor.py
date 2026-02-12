@@ -1,31 +1,37 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Persona Extractor v1.0
+Persona Extractor v1.1
 原作テキスト/PDFから直接キャラクターペルソナを抽出
+
+v1.1 Changes:
+- Schema updated to v3.2 (trigger balance requirements)
+- Positive triggers (z_recovery, z_shock) explicitly required
+- Trigger granularity guidance for extraction
+- Evidence-based trigger extraction from source text
 
 2025年スタイル: RAG? チャンク分割? 知らない子ですね。
 400K context に全部ドーン！！
 
 Usage:
     # 基本
-    python persona_extractor.py \
-      --source "ローミオーとヂューリエット.txt" \
-      --character "ヂューリエット" \
+    python persona_extractor.py \\
+      --source "ローミオーとヂューリエット.txt" \\
+      --character "ヂューリエット" \\
       --lang ja
 
     # GPT-5.2 Pro + xhigh reasoning
-    python persona_extractor.py \
-      --source "rezero_vol1.pdf" \
-      --character "レム" \
-      --model gpt-5.2-pro \
-      --reasoning xhigh \
+    python persona_extractor.py \\
+      --source "rezero_vol1.pdf" \\
+      --character "レム" \\
+      --model gpt-5.2-pro \\
+      --reasoning xhigh \\
       --lang en
 
     # 複数キャラ一括
-    python persona_extractor.py \
-      --source "steins_gate.txt" \
-      --characters "牧瀬紅莉栖,岡部倫太郎,椎名まゆり" \
+    python persona_extractor.py \\
+      --source "steins_gate.txt" \\
+      --characters "牧瀬紅莉栖,岡部倫太郎,椎名まゆり" \\
       --lang en
 
 Requirements:
@@ -57,7 +63,7 @@ SUPPORTED_LANGUAGES = {
     "ja": "Japanese (日本語)",
     "en": "English",
     "zh": "Chinese (中文)",
-    "ko": "Korean (한국어)",
+    "ko": "Korean (한국語)",
     "fr": "French (Français)",
     "es": "Spanish (Español)",
     "de": "German (Deutsch)",
@@ -161,15 +167,15 @@ def load_epub(path: Path) -> str:
 
 
 # =============================================================================
-# SYSTEM PROMPT FOR PERSONA EXTRACTION
+# SYSTEM PROMPT FOR PERSONA EXTRACTION — v3.2
 # =============================================================================
 
 def build_extraction_prompt(output_lang: str) -> str:
-    """ペルソナ抽出用のシステムプロンプトを構築"""
+    """ペルソナ抽出用のシステムプロンプトを構築（v3.2対応）"""
     
     lang_name = SUPPORTED_LANGUAGES.get(output_lang, "English")
     
-    return f"""You are a Persona Extractor for the Z-Axis Translation System v3.1.
+    return f"""You are a Persona Extractor for the Z-Axis Translation System v3.2.
 
 ## YOUR TASK
 Given a complete source text (novel, script, etc.) and a character name, extract a comprehensive persona YAML that captures the character's psychological structure for emotion-preserving translation.
@@ -197,17 +203,23 @@ Given a complete source text (novel, script, etc.) and a character name, extract
 ### Phase 4: Relationship Mapping
 - How speech changes based on listener
 - Power dynamics reflected in language
-- Triggers that cause emotional shifts
+- Triggers that cause emotional shifts — BOTH negative AND positive
+
+### Phase 5: Trigger Balance Analysis (NEW in v3.2)
+- Identify moments where the character is HURT, STRESSED, or DESTABILIZED → negative triggers
+- Identify moments where the character is COMFORTED, ENCOURAGED, or LOVED → positive triggers
+- Distinguish LEVELS of positive impact (mild thanks vs deep acceptance vs love confession)
+- A character's RECOVERY behavior is as important as their BREAKDOWN behavior
 
 ## OUTPUT FORMAT
 
-Output MUST be valid YAML following the v3.1 schema.
+Output MUST be valid YAML following the v3.2 schema.
 All descriptions should be in {lang_name}.
 `original_speech_patterns` section MUST preserve the SOURCE LANGUAGE of the text.
 
 ```yaml
 meta:
-  version: "3.1"
+  version: "3.2"
   generated_by: "persona_extractor"
   character_id: "unique_id"
   output_lang: "{output_lang}"
@@ -225,7 +237,7 @@ persona:
 age:
   chronological: 数値
   mental_maturity: "teen_young / teen_mature / adult"
-  age_context: "背景説明（{lang_name}）"
+  age_context: "背景説明（{lang_name}）— expression patterns belong in emotion_states, NOT here"
 
 language:
   original_speech_patterns:
@@ -239,6 +251,9 @@ language:
       - form: "二人称"
         nuance: "説明"
         target: "対象"
+    self_reference_in_third_person: false
+    dialect: "方言"
+    dialect_features: []
     sentence_endings:
       - pattern: "パターン（原語）"
         nuance: "説明（{lang_name}）"
@@ -253,7 +268,6 @@ language:
     strategies:
       en: [strategies for English]
       zh: [strategies for Chinese]
-      # etc.
     untranslatable_elements:
       - element: "要素"
         impact: "high/medium/low"
@@ -311,15 +325,86 @@ example_lines:
     tags: [tags]
     z_intensity: "low/medium/high"
     z_mode: "対応z_mode"
+```
 
+### TRIGGERS (Z軸変動トリガー) — v3.2 BALANCED
+
+**⚠️ CRITICAL: TRIGGERS MUST BE BALANCED (POSITIVE + NEGATIVE)**
+
+Triggers are what cause Z-axis changes during dialogue. They are used by the 
+dialogue system's LLM to detect when another character's words affect this character.
+
+An LLM reads these triggers and judges whether a line activates them.
+Trigger descriptions should be MEANING-BASED (not keyword-based).
+
+```yaml
 triggers:
-  - trigger: "トリガー"
-    reaction: "z_spike/z_drop/z_boost/z_stable"
-    z_delta: "+0.3 etc."
-    z_mode_shift: "シフト先"
-    surface_effect: "発話への影響"
-    example_response: "実際の台詞"
+  - trigger: "Descriptive condition (meaning-based)"
+    reaction: "z_spike / z_drop / z_shock / z_recovery"
+    z_delta: "+0.3 / -0.5 etc."
+    z_mode_shift: "target z_mode (optional)"
+    surface_effect: "How it changes speech"
+    example_response: "Actual quote from source text if available"
+```
 
+**TRIGGER CATEGORIES (must include ALL that apply):**
+
+| Category | reaction | z_delta | When to use |
+|----------|----------|---------|-------------|
+| NEGATIVE SPIKE | z_spike | +0.3~+0.9 | Trauma, failure, fear, attack, humiliation |
+| NEGATIVE BOOST | z_boost | +0.2~+0.5 | Stress accumulation, irritation, minor provocation |
+| POSITIVE DROP | z_drop | -0.2~-0.4 | Mild encouragement, small kindness, casual thanks |
+| POSITIVE RECOVERY | z_recovery | -0.4~-0.6 | Strong support, acceptance, "let's move forward" |
+| OVERWHELMING POSITIVE | z_shock | -0.6~-0.8 | Love confession, total acceptance, existential affirmation |
+| STABILIZING | z_stable | 0.0 | Neutral reset, routine, familiar comfort |
+
+**⚠️ MINIMUM TRIGGER REQUIREMENTS:**
+- At least 2-3 NEGATIVE triggers (z_spike / z_boost)
+- At least 2-3 POSITIVE triggers (z_drop / z_recovery / z_shock)
+- Positive triggers MUST be granular — DO NOT collapse all positive inputs into one trigger
+
+**❌ BAD (too coarse):**
+```yaml
+triggers:
+  - trigger: "仲間の励まし"  # Too vague! "good job" and "I love you" are NOT the same
+    z_delta: "-0.4"
+```
+
+**✅ GOOD (granular positive triggers):**
+```yaml
+triggers:
+  - trigger: "軽い励ましや感謝の言葉を受ける"
+    reaction: "z_drop"
+    z_delta: "-0.2"
+
+  - trigger: "自分の行動や存在を強く肯定される"
+    reaction: "z_recovery"
+    z_delta: "-0.5"
+
+  - trigger: "愛の告白を受ける、または存在を全肯定される"
+    reaction: "z_shock"
+    z_delta: "-0.7"
+```
+
+**WHY GRANULARITY MATTERS:**
+In dialogue mode, an LLM reads these triggers and judges which one(s) a line activates.
+If all positive inputs map to ONE trigger, the LLM cannot distinguish between:
+- "Good job today" (mild encouragement → z_drop -0.2)
+- "I love you" (love confession → z_shock -0.7)
+- "Let's start over together" (existential recovery → z_recovery -0.5)
+
+This causes incorrect Z-axis accumulation and wrong emotional trajectories.
+
+**FOR EXTRACTION: Look for scenes in the source text where the character:**
+- Receives comfort → how do they react? (denial, tears, silence, gratitude?)
+- Is praised → do they deflect, accept, get embarrassed?
+- Is confessed to → panic, joy, disbelief?
+- Is given hope → resistance, cautious acceptance, emotional flood?
+
+Each DIFFERENT reaction pattern = a SEPARATE positive trigger.
+
+### ARC_DEFAULTS
+```yaml
 arc_defaults:
   typical_arc_targets: [targets]
   common_arc_patterns:
@@ -335,6 +420,10 @@ arc_defaults:
 3. **COMPREHENSIVE**: Include ALL emotion_states observed in the text
 4. **SPECIFIC**: example_lines should be actual quotes from the source
 5. **NUANCED**: Capture subtle variations in speech patterns
+6. **TRIGGER BALANCE**: Include at least 2-3 positive AND 2-3 negative triggers
+7. **POSITIVE GRANULARITY**: Positive triggers must distinguish mild from strong from overwhelming
+8. **RECOVERY MATTERS**: A character's recovery behavior is as important as breakdown for translation
+9. **age_context**: MUST NOT contain expression patterns (those go to emotion_states)
 
 ## EXAMPLE ANALYSIS PROCESS
 
@@ -345,6 +434,12 @@ For the line: 「べ、別にあんたのためじゃないわよ」
 3. **Context**: Said when caught showing care
 4. **Pattern**: negation_first=true, stutter_count=1
 5. **Document**: Add to emotion_states and example_lines
+
+For positive trigger extraction:
+1. **Find**: Scene where character receives comfort/love/acceptance
+2. **Observe**: How does their speech change? (softening, tears, denial weakening?)
+3. **Classify**: What level? (mild drop vs recovery vs shock)
+4. **Document**: Add as separate trigger with appropriate z_delta
 
 Output ONLY valid YAML. No explanation before or after.
 Start with the meta section."""
@@ -413,7 +508,7 @@ class OpenAIResponsesClient:
 
 ## INSTRUCTIONS
 
-Analyze the complete source text above and extract a comprehensive persona YAML v3.1 for the character "{character_name}".
+Analyze the complete source text above and extract a comprehensive persona YAML v3.2 for the character "{character_name}".
 
 Focus on:
 1. Every line of dialogue spoken by this character
@@ -421,9 +516,16 @@ Focus on:
 3. Their relationships with other characters
 4. Internal conflicts revealed through behavior
 5. Specific speech quirks and verbal tics
+6. **BOTH negative AND positive emotional triggers — with granularity**
+7. **How the character reacts to comfort, praise, love, and acceptance**
 
 Output language for descriptions: {SUPPORTED_LANGUAGES.get(output_lang, output_lang)}
 Keep original_speech_patterns in the source text's language.
+
+REMEMBER:
+- Triggers MUST be balanced (at least 2-3 positive AND 2-3 negative)
+- Positive triggers MUST be granular (mild encouragement ≠ love confession)
+- Use actual quotes from the source text for example_responses when possible
 
 Output ONLY valid YAML."""
 
@@ -551,6 +653,86 @@ Output ONLY valid YAML."""
 
 
 # =============================================================================
+# VALIDATION (v3.2)
+# =============================================================================
+
+def validate_v32_persona(yaml_text: str) -> tuple[bool, list[str]]:
+    """
+    抽出されたYAMLがv3.2スキーマに準拠しているか検証
+    Returns (is_valid, list_of_issues).
+    """
+    import yaml as yaml_lib
+    
+    issues = []
+    
+    try:
+        data = yaml_lib.safe_load(yaml_text)
+    except yaml_lib.YAMLError as e:
+        return False, [f"YAML parse error: {e}"]
+    
+    # Check meta version
+    meta_version = data.get("meta", {}).get("version", "")
+    if meta_version not in ["3.0", "3.1", "3.2"]:
+        issues.append(f"meta.version should be '3.2' (got '{meta_version}')")
+    
+    # Check language structure
+    language_data = data.get("language", {})
+    osp = language_data.get("original_speech_patterns", {})
+    if not osp:
+        issues.append("language.original_speech_patterns is required")
+    else:
+        if "source_lang" not in osp:
+            issues.append("original_speech_patterns.source_lang is required")
+        if "first_person" not in osp:
+            issues.append("original_speech_patterns.first_person is required")
+    
+    tc = language_data.get("translation_compensations", {})
+    if not tc:
+        issues.append("language.translation_compensations is required")
+    
+    # Check emotion_states for z_mode and z_leak
+    emotion_states = data.get("emotion_states", [])
+    for i, state in enumerate(emotion_states):
+        if "z_mode" not in state:
+            issues.append(f"emotion_states[{i}].z_mode is required")
+        if "z_leak" not in state:
+            issues.append(f"emotion_states[{i}].z_leak is required")
+    
+    # === v3.2 TRIGGER BALANCE CHECK ===
+    triggers = data.get("triggers", [])
+    if not triggers:
+        issues.append("triggers section is required")
+    else:
+        positive_count = 0
+        negative_count = 0
+        
+        for t in triggers:
+            z_delta_str = str(t.get("z_delta", "+0.0"))
+            try:
+                z_delta_val = float(z_delta_str.replace("+", ""))
+            except ValueError:
+                z_delta_val = 0.0
+            
+            if z_delta_val < 0:
+                positive_count += 1
+            elif z_delta_val > 0:
+                negative_count += 1
+        
+        if positive_count < 2:
+            issues.append(
+                f"v3.2 requires at least 2 positive triggers (z_drop/z_recovery/z_shock), "
+                f"found {positive_count}. Positive triggers must be granular."
+            )
+        if negative_count < 2:
+            issues.append(
+                f"v3.2 requires at least 2 negative triggers (z_spike/z_boost), "
+                f"found {negative_count}."
+            )
+    
+    return len(issues) == 0, issues
+
+
+# =============================================================================
 # MAIN
 # =============================================================================
 
@@ -564,7 +746,7 @@ def save_persona(yaml_text: str, character_name: str, output_dir: str = "persona
     if not safe_name:
         safe_name = "extracted"
     
-    filename = f"{safe_name}_extracted_v31.yaml"
+    filename = f"{safe_name}_extracted_v32.yaml"
     filepath = os.path.join(output_dir, filename)
     
     with open(filepath, "w", encoding="utf-8") as f:
@@ -575,7 +757,7 @@ def save_persona(yaml_text: str, character_name: str, output_dir: str = "persona
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Persona Extractor v1.0 - Extract character persona from source text",
+        description="Persona Extractor v1.1 - Extract character persona from source text (v3.2 schema)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -673,6 +855,16 @@ Examples:
         )
         
         yaml_text = result["yaml_text"]
+        
+        # v3.2 validation (always run)
+        is_valid, issues = validate_v32_persona(yaml_text)
+        if not is_valid:
+            print("⚠️  v3.2 Schema Validation Issues:")
+            for issue in issues:
+                print(f"   - {issue}")
+            print()
+        else:
+            print("✅ v3.2 Schema Validation: PASSED")
         
         print()
         print(f"📊 Extraction complete!")
