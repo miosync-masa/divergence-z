@@ -240,7 +240,7 @@ persona:
   name_native: "原語での名前"
   source: "作品名"
   type: "キャラクタータイプ"
-  summary: "1-2文の概要（{lang_name}）"
+  summary: "プロフィール概要（{lang_name}）"
 ```
 
 ### IDENTITY_CORE (I₀ — 存在の核) — NEW in v3.3
@@ -353,7 +353,7 @@ emotion_states:
     surface_markers_hint:
       hesitation: 0-4
       stutter_count: 0-4
-      negation_first: true/false
+      negation_type: "none / concealment / counter / declaration"
       overwrite: "none/optional/required"
       residual: "none/optional/required"
       tone: "声の質"
@@ -476,7 +476,7 @@ For the line: 「べ、別にあんたのためじゃないわよ」
 1. **Observe**: Stutter on べ, denial pattern, わよ ending
 2. **Classify**: tsundere_denial state, z_mode=leak
 3. **Context**: Said when caught showing care
-4. **Pattern**: negation_first=true, stutter_count=1
+4. **Pattern**: negation_type="concealment", stutter_count=1
 5. **Document**: Add to emotion_states and example_lines
 
 For positive trigger extraction:
