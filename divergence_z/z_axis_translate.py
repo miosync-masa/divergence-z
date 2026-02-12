@@ -34,11 +34,14 @@ from typing import Any, Dict, List, Optional, Tuple
 import requests
 import yaml
 from dotenv import load_dotenv
+from anthropic import Anthropic
+
 
 load_dotenv()
 OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
 DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5.2")
-
+CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-opus-4-6")
+USE_CLAUDE_FOR_STEP3 = os.getenv("USE_CLAUDE_FOR_STEP3", "true").lower() == "true"
 
 # -----------------------------
 # JSON schema definitions v3.0
@@ -534,6 +537,88 @@ class OpenAIResponsesClient:
 
         raise RuntimeError("OpenAI API retry exceeded")
 
+# -----------------------------
+# Claude Client for STEP3 (Literary Translation)
+# -----------------------------
+
+class ClaudeTranslationClient:
+    """Claude client specifically for STEP3 translation - better literary quality."""
+    
+    def __init__(self, api_key: Optional[str] = None):
+        self.client = Anthropic(api_key=api_key)
+    
+    def translate_step3(
+        self,
+        *,
+        model: str = CLAUDE_MODEL,
+        system_prompt: str,
+        user_prompt: str,
+        max_tokens: int = 1500,
+        temperature: float = 1.0,
+    ) -> Dict[str, Any]:
+        """
+        Execute STEP3 translation using Claude.
+        Returns parsed JSON matching STEP3_SCHEMA.
+        """
+        json_system = system_prompt + """
+
+## OUTPUT FORMAT
+You MUST output valid JSON matching this structure:
+{
+  "translation": "the translated text",
+  "z_signature": {
+    "z": 0.0-1.0,
+    "z_mode": "collapse|rage|numb|plea|shame|leak|none",
+    "z_leak_applied": ["markers", "actually", "used"],
+    "hesitation_level": "low|medium|high",
+    "negation_first": true/false,
+    "negation_type": "concealment|declaration|rationalization|counter|none",
+    "listener_type": "other_specific|other_general|self|absent",
+    "self_directed_rebinding": true/false,
+    "self_correction": true/false,
+    "leak_then_overwrite": true/false,
+    "residual_marker": "marker text or empty"
+  },
+  "arc": {
+    "arc_id": "arc name",
+    "arc_phase": "phase name",
+    "arc_position": position_number
+  },
+  "notes": "brief notes",
+  "alternatives": ["alt1", "alt2"]
+}
+
+Output ONLY the JSON. No markdown code blocks. No explanation before or after."""
+
+        response = self.client.messages.create(
+            model=model,
+            max_tokens=max_tokens,
+            temperature=temperature,
+            system=json_system,
+            messages=[
+                {"role": "user", "content": user_prompt}
+            ]
+        )
+        
+        raw_text = response.content[0].text.strip()
+        
+        # Clean up potential markdown
+        if raw_text.startswith("```json"):
+            raw_text = raw_text[7:]
+        if raw_text.startswith("```"):
+            raw_text = raw_text[3:]
+        if raw_text.endswith("```"):
+            raw_text = raw_text[:-3]
+        raw_text = raw_text.strip()
+        
+        try:
+            return json.loads(raw_text)
+        except json.JSONDecodeError as e:
+            return {
+                "_parse_error": True,
+                "_raw_text": raw_text,
+                "_error": str(e),
+            }
 
 # -----------------------------
 # STEP prompts v3.0
@@ -880,18 +965,32 @@ def z_axis_translate(
         persona_dict=persona_dict,
         arc_position=arc_position,
     )
-    _, step3 = client.create_structured(
-        model=model,
-        name="step3_translation_v3",
-        schema=STEP3_SCHEMA,
-        messages=s3_msgs,
-        max_output_tokens=1000,
-        temperature=0.7,
-        dry_run=False,
-    )
+    
+    if USE_CLAUDE_FOR_STEP3:
+        # Use Claude for STEP3 (better literary quality)
+        claude_client = ClaudeTranslationClient()
+        system_prompt = s3_msgs[0]["content"] if s3_msgs[0]["role"] == "system" else ""
+        user_prompt = s3_msgs[1]["content"] if len(s3_msgs) > 1 else s3_msgs[0]["content"]
+        
+        step3 = claude_client.translate_step3(
+            model=CLAUDE_MODEL,
+            system_prompt=system_prompt,
+            user_prompt=user_prompt,
+            max_tokens=1500,
+            temperature=1.0,
+        )
+    else:
+        _, step3 = client.create_structured(
+            model=model,
+            name="step3_translation_v3",
+            schema=STEP3_SCHEMA,
+            messages=s3_msgs,
+            max_output_tokens=1000,
+            temperature=0.7,
+            dry_run=False,
+        )
 
     return {"step1": step1, "step2": step2, "step3": step3}
-
 
 # -----------------------------
 # Demo data v3.0 (Subaru example)
