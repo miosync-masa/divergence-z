@@ -43,6 +43,7 @@ import argparse
 import json
 import os
 import sys
+import time
 from anthropic import Anthropic
 from dotenv import load_dotenv
 load_dotenv()
@@ -650,7 +651,8 @@ def generate_persona(name: str, source: str, description: str,
                      search_context: str = "", 
                      model: str = DEFAULT_MODEL,
                      thinking_budget: int = 0,
-                     no_search: bool = False) -> str:
+                     no_search: bool = False,
+                     no_wait: bool = False) -> str:
     """Generate persona YAML using Claude API with web search.
     
     Two-pass approach:
@@ -683,6 +685,14 @@ def generate_persona(name: str, source: str, description: str,
     research_context = ""
     if not no_search:
         research_context = _research_character(client, name, source, description, model)
+        # Rate limit protection: wait between passes
+        # Tier 1 Opus: 8K output tokens/min — Pass 1 uses ~2-3K, Pass 2 needs the rest
+        if not no_wait:
+            print("   ⏳ Waiting 60s for rate limit reset (Tier 1: 8K output tokens/min)...")
+            print("   💡 Use --no-wait to skip (if you have Tier 2+ API key)")
+            time.sleep(60)
+        else:
+            print("   ⚡ Skipping rate limit wait (--no-wait)")
     
     # Merge any user-provided context with research results
     combined_context = ""
@@ -975,6 +985,8 @@ Examples:
                         help="Enable extended thinking with token budget (e.g. --thinking 10000)")
     parser.add_argument("--no-search", action="store_true",
                         help="Disable web search (use LLM knowledge only). Default: search enabled")
+    parser.add_argument("--no-wait", action="store_true",
+                        help="Skip rate limit wait between passes (for Tier 2+ API keys)")
     parser.add_argument("--output-dir", default="personas", help="Output directory")
     parser.add_argument("--print-only", action="store_true", help="Print YAML without saving")
     parser.add_argument("--validate", action="store_true", help="Validate v3.3 schema compliance")
@@ -1006,7 +1018,8 @@ Examples:
         search_context=context,
         model=args.model,
         thinking_budget=args.thinking,
-        no_search=args.no_search
+        no_search=args.no_search,
+        no_wait=args.no_wait
     )
     
     # Always validate in v3.2 (show warnings)
