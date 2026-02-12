@@ -530,8 +530,14 @@ REMEMBER:
 def generate_persona(name: str, source: str, description: str,
                      output_lang: str = "ja",
                      search_context: str = "", 
-                     model: str = DEFAULT_MODEL) -> str:
-    """Generate persona YAML using Claude API."""
+                     model: str = DEFAULT_MODEL,
+                     thinking_budget: int = 0) -> str:
+    """Generate persona YAML using Claude API.
+    
+    Args:
+        thinking_budget: If > 0, enable extended thinking with this token budget.
+                        Recommended: 10000-16000 for complex characters.
+    """
     
     client = Anthropic()
     
@@ -542,18 +548,34 @@ def generate_persona(name: str, source: str, description: str,
     print(f"🐯 Generating persona v3.3 for: {name} ({source})")
     print(f"   Output language: {lang_name}")
     print(f"   Model: {model}")
+    if thinking_budget > 0:
+        print(f"   🧠 Thinking mode: ON (budget: {thinking_budget} tokens)")
     print()
     
-    response = client.messages.create(
-        model=model,
-        max_tokens=8000,  # Increased for v3.2 larger output
-        system=system_prompt,
-        messages=[
+    # Build API kwargs
+    api_kwargs = {
+        "model": model,
+        "max_tokens": 16000 if thinking_budget > 0 else 8000,
+        "system": system_prompt,
+        "messages": [
             {"role": "user", "content": user_prompt}
         ]
-    )
+    }
     
-    yaml_content = response.content[0].text
+    if thinking_budget > 0:
+        api_kwargs["thinking"] = {
+            "type": "enabled",
+            "budget_tokens": thinking_budget
+        }
+    
+    response = client.messages.create(**api_kwargs)
+    
+    # Extract text content (skip thinking blocks)
+    yaml_content = ""
+    for block in response.content:
+        if block.type == "text":
+            yaml_content = block.text
+            break
     
     # Clean up if wrapped in code blocks
     if yaml_content.startswith("```yaml"):
@@ -735,6 +757,8 @@ Examples:
     parser.add_argument("--context", default="", help="Additional context or search results")
     parser.add_argument("--context-file", help="File containing additional context")
     parser.add_argument("--model", default=DEFAULT_MODEL, help="Model to use")
+    parser.add_argument("--thinking", type=int, default=0, metavar="BUDGET",
+                        help="Enable extended thinking with token budget (e.g. --thinking 10000)")
     parser.add_argument("--output-dir", default="personas", help="Output directory")
     parser.add_argument("--print-only", action="store_true", help="Print YAML without saving")
     parser.add_argument("--validate", action="store_true", help="Validate v3.3 schema compliance")
@@ -764,7 +788,8 @@ Examples:
         description=args.desc,
         output_lang=args.lang,
         search_context=context,
-        model=args.model
+        model=args.model,
+        thinking_budget=args.thinking
     )
     
     # Always validate in v3.2 (show warnings)
