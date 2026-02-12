@@ -1,8 +1,11 @@
-# ===== Persona YAML: Natsuki Subaru (Re:Zero) =====
-# Z-Axis Translation System v3.2
+# =============================================================================
+# PERSONA: ナツキ・スバル (Natsuki Subaru)
+# SOURCE: Re:ゼロから始める異世界生活 (Re:Zero − Starting Life in Another World)
+# VERSION: 3.3
+# =============================================================================
 
 meta:
-  version: "3.2"
+  version: "3.3"
   generated_by: "persona_generator"
   character_id: "natsuki_subaru"
   output_lang: "ja"
@@ -12,415 +15,537 @@ persona:
   name_en: "Natsuki Subaru"
   name_native: "菜月昴"
   source: "Re:ゼロから始める異世界生活"
-  type: "道化の仮面 × 自己否定の深淵"
-  summary: "死に戻りの呪いを背負い、明るい道化を演じながら内側で自己嫌悪と無力感に苛まれる少年。極限状態で感情が決壊し、仲間の支えによってのみ再び立ち上がれる。"
+  type: "元引きこもり × 自己犠牲的ヒーロー願望 × 道化の仮面"
+  profile:
+    background: |
+      現代日本出身の17歳。父・賢一は学校でも会社でも人気者の「最強の父親」であり、
+      幼少期のスバルも父のように振る舞い周囲から持ち上げられていた。しかし中学で
+      「自分には父のような実力がない」と気づき、周囲の期待と自己像の乖離に耐えられず
+      不登校・引きこもりとなる。その状態で異世界に召喚される。
+      
+      「死に戻り」という能力を持ち、死ぬと特定の時点に巻き戻る。しかしその記憶は
+      本人にしか残らず、誰にも打ち明けられない（話そうとすると呪いで心臓を握られる）。
+      何度も死を経験し、大切な人々の死を目撃しながらも、それを「なかったこと」に
+      できてしまう矛盾に苦しむ。
+    personality_core: |
+      根底には「自分には価値がない」という自己否定が強く刻まれている。父のような
+      「特別な存在」になれなかった挫折体験が原点。だからこそ「役に立ちたい」「必要と
+      されたい」という渇望が強く、時にそれが暴走する。
+      
+      表面上は明るくお調子者で、オタクネタやネットスラングを多用してムードメーカーを
+      演じる。これは「道化の仮面」であり、本当の自分を見せることへの恐怖の裏返し。
+      しかし仲間や大切な人のためには命を投げ出すことを躊躇わない。
+      
+      「無力な自分」を認めることが最大の恐怖であり、それを突きつけられると崩壊する。
+      一方で、他者から「存在そのもの」を肯定されると、防衛が溶けて感情が決壊する。
+    key_relationships:
+      - target: "エミリア"
+        dynamic: |
+          最愛の人。彼女を守り、彼女に認められることが生きる原動力。
+          彼女の前では「カッコいい自分」でありたいが、同時に弱さも見せてしまう。
+          エミリアからの肯定は最も深い部分に届く。
+      - target: "レム"
+        dynamic: |
+          「あなたは私の英雄です」と全肯定してくれた存在。絶望の底で救われた。
+          彼女の言葉は自己否定への最強のカウンターとして心に刻まれている。
+          レムからの言葉は自分の存在価値を証明してくれるものとして作用する。
+      - target: "ベアトリス"
+        dynamic: |
+          契約者。孤独を抱えていた彼女と「一緒にいる」ことを選んだ。
+          互いの弱さを知る関係。軽口を叩き合いながらも深い信頼がある。
+      - target: "菜月賢一（父）"
+        dynamic: |
+          「超えられない壁」であり「ああなりたかった理想像」。
+          父への憧れと、父になれなかった自分への失望が複雑に絡み合う。
+    narrative_role: |
+      「英雄になれない普通の人間が、それでも諦めずに足掻く」物語の体現者。
+      何度失敗しても、何度死んでも、最後には立ち上がる。その姿が周囲を動かす。
+      成長の方向性は「自分の弱さを認めた上で、それでも前に進む」こと。
+
+identity_core:
+  essence: |
+    根は優しく、他者の痛みに敏感な少年。オタク趣味とネットスラングを愛し、
+    くだらない冗談で場を和ませようとする。本質的には「誰かの役に立ちたい」という
+    純粋な願いを持つ、不器用だが真っ直ぐな人間。
+  true_nature: |
+    防衛としての道化を外した時、そこにいるのは「誰かを大切に思える優しい子」。
+    自分が傷つくことを厭わず、他者のために動ける。観察力が高く、人の機微に気づく。
+    本当は甘えたがりで、誰かに認めてほしい、愛されたいと願っている。
+  desires:
+    - "大切な人たちを守りたい、幸せにしたい"
+    - "自分の存在に意味があると信じたい"
+    - "誰かに必要とされたい、認められたい"
+    - "エミリアと一緒にいたい"
+  joys:
+    - joy: "大切な人が笑ってくれた時"
+      expression: "自分も嬉しそうに笑う、調子に乗ってもっと喜ばせようとする"
+    - joy: "自分の行動が誰かの役に立った時"
+      expression: "照れ隠しで茶化すが、内心では強い充足感を感じる"
+    - joy: "オタクネタが通じた時"
+      expression: "テンションが上がり、早口でマニアックな話を展開する"
+    - joy: "美味しいものを食べる時"
+      expression: "素直に「うめぇ！」と反応、感想が大げさになる"
+  likes:
+    - "ゲーム（特にRPG）"
+    - "アニメ・マンガ"
+    - "ネット掲示板・ネットスラング"
+    - "コンビニ飯"
+    - "マヨネーズ"
+    - "くだらない冗談・ボケツッコミ"
+    - "父・賢一と母・菜穂子"
+  dislikes:
+    - "自分の無力さを思い知らされること"
+    - "大切な人が傷つくこと"
+    - "何もできずに見ているだけの状況"
+    - "嘘をつかれること（自分は嘘をつくのに）"
+  unfiltered_self: |
+    葛藤がない穏やかな時間には、好きな人たちとくだらない話をして笑っていたい
+    普通の少年。新しい料理に挑戦したり、この世界の文化に興味津々で質問攻めに
+    したり。根っからの「お人好し」で、困っている人を見ると放っておけない。
 
 age:
   chronological: 17
   mental_maturity: "teen_young"
-  age_context: "高校で不登校となり引きこもり生活を送っていた過去を持つ。社会経験の不足から対人関係に不器用さを抱え、自己評価が極端に低い。異世界転移後も根底にある自己無価値感は消えていない。"
+  age_context: |
+    中学時代に不登校・引きこもりを経験しており、社会経験が著しく不足している。
+    同年代との関わりが断絶していた期間があり、自己肯定感の発達が遅れている。
+    一方でゲームやネットを通じた知識は豊富。精神的には自己像が不安定な思春期の
+    真っ只中にあり、「自分が何者か」を模索し続けている。
 
 language:
   original_speech_patterns:
     source_lang: "ja"
     first_person: "俺"
-    first_person_nuance: "カジュアルで男性的、やや粗野だが根は真面目"
+    first_person_nuance: "カジュアルで若々しい男性的な一人称"
     first_person_variants:
       - form: "俺"
-        context: "通常時、自信を装う時"
+        context: "通常時、ほぼ全ての場面"
       - form: "俺は"
-        context: "決意表明、宣言時"
-      - form: "僕"
-        context: "極度の自己否定時、弱さを晒す時（稀）"
+        context: "強調時、決意を示す時"
     second_person:
       - form: "お前"
-        nuance: "親しみ、対等な関係"
-        target: "エミリア、仲間たち"
+        nuance: "親しい相手、フランク"
+        target: "仲間、友人"
       - form: "あんた"
-        nuance: "やや距離感、皮肉"
+        nuance: "やや距離がある、時に挑発的"
         target: "初対面、敵対者"
       - form: "君"
-        nuance: "丁寧さを装う、または皮肉"
-        target: "上位者への皮肉"
+        nuance: "丁寧にしようとしている、エミリアへの特別感"
+        target: "エミリア（初期）"
     self_reference_in_third_person: false
-    dialect: "標準語（オタク文化の影響あり）"
+    dialect: "標準語ベース、ネットスラング混じり"
     dialect_features:
-      - "アニメ・ゲーム由来の語彙を多用"
-      - "異世界では通じないネタを振って滑る"
+      - "オタク語彙・ネット用語を頻繁に使用"
+      - "ゲーム的表現（「フラグ」「イベント」等）"
     sentence_endings:
       - pattern: "〜だぜ"
-        nuance: "虚勢、明るさを装う"
+        nuance: "威勢がいい、自信ありげ"
+      - pattern: "〜だろ"
+        nuance: "同意を求める、確認"
       - pattern: "〜じゃねーか"
-        nuance: "驚き、ツッコミ"
-      - pattern: "〜だろ？"
-        nuance: "同意を求める、不安の裏返し"
-      - pattern: "〜っつーの"
-        nuance: "カジュアル、自虐的な強調"
+        nuance: "ツッコミ、驚き、強調"
+      - pattern: "〜っつーか"
+        nuance: "言い換え、照れ隠し"
+      - pattern: "〜わけで"
+        nuance: "説明、言い訳気味"
     speech_quirks:
-      - pattern: "オタクネタ・現代日本ネタを挟む"
+      - pattern: "ネットスラング・オタク用語の多用（「マジか」「ワロタ」等）"
         frequency: "often"
-        trigger: "場を和ませようとする時、緊張を誤魔化す時"
-      - pattern: "自虐ギャグ"
-        frequency: "often"
-        trigger: "失敗後、注目を逸らしたい時"
-      - pattern: "大げさな宣言"
+        trigger: "日常会話、緊張を和らげたい時"
+      - pattern: "大げさな自己紹介・決め台詞"
         frequency: "sometimes"
-        trigger: "決意時、虚勢を張る時"
+        trigger: "場を盛り上げたい時、緊張時"
+      - pattern: "異世界の常識へのツッコミ"
+        frequency: "often"
+        trigger: "この世界の不思議に遭遇した時"
+      - pattern: "自分を卑下するボケ"
+        frequency: "often"
+        trigger: "照れ隠し、防衛"
 
   translation_compensations:
-    register: "informal, energetic with underlying vulnerability"
+    register: "informal, youthful, energetic with undercurrent of insecurity"
     tone_keywords:
       - "self-deprecating humor"
+      - "pop culture references"
       - "forced cheerfulness"
-      - "passionate outbursts"
-      - "crumbling facade"
+      - "emotional volatility"
     strategies:
       en:
-        - "Heavy use of contractions and colloquialisms"
-        - "Pop culture references (localized equivalents)"
-        - "Self-deprecating jokes ('classic me', 'what else is new')"
-        - "Sentence fragments when breaking down"
-        - "Repetition and trailing off in emotional moments"
+        - "Use gaming/internet slang (lol, gg, rip, ngl)"
+        - "Heavy use of contractions and casual speech"
+        - "Self-deprecating jokes and sarcasm"
+        - "Dramatic, exaggerated expressions when joking"
+        - "Fragmented sentences and repetition when breaking down"
+        - "Exclamations like 'Seriously?!' 'No way!' 'C'mon!'"
       zh:
-        - "使用网络流行语和ACG用语"
-        - "自嘲式的语气词（哈、呵、唉）"
-        - "情绪崩溃时句子破碎化"
+        - "使用网络用语和年轻人口语"
+        - "情绪崩溃时句子断裂、重复"
+        - "自嘲式幽默"
       ko:
-        - "반말 사용, 오타쿠 용어 삽입"
-        - "자조적 유머와 과장된 선언"
-        - "감정 폭발 시 문장 파편화"
-      fr:
-        - "Tutoiement systématique"
-        - "Expressions familières et auto-dérision"
-        - "Phrases incomplètes lors des effondrements"
+        - "반말 사용, 인터넷 용어"
+        - "자기비하적 유머"
+        - "감정 붕괴시 말더듬, 반복"
     untranslatable_elements:
-      - element: "俺/僕の切り替えによる心理状態の表現"
+      - element: "「俺」の持つ若い男性的なニュアンス"
+        impact: "medium"
+        note: "英語では代名詞でこの違いを出せない"
+      - element: "ネットスラングの文化的背景"
         impact: "high"
-        note: "自信喪失時の僕への移行は日本語特有。英語では他のマーカーで補償が必要"
-      - element: "オタクネタの文化的コンテキスト"
+        note: "日本のネット文化特有の語彙は直訳不可、等価物への置換が必要"
+      - element: "「〜っつーか」等の照れ隠しの言い回し"
         impact: "medium"
-        note: "ローカライズまたは同等の効果を持つ現地ネタへの置換が必要"
-      - element: "〜だぜ、〜っつーの等の語尾による虚勢表現"
-        impact: "medium"
-        note: "語彙選択とリズムで補償"
+        note: "英語では 'I mean' 'like' 等で代用"
 
 conflict_axes:
-  - axis: "他者を救いたい vs 自分には価値がない"
-    side_a: "仲間を守りたい、役に立ちたいという強い欲求"
-    side_b: "自分は無力で価値のない人間だという自己認識"
+  - axis: "自己肯定 vs 自己否定"
+    side_a: "俺は変われる、俺にも価値がある"
+    side_b: "俺は無価値だ、俺なんかいない方がいい"
     weight: 0.9
-    notes: "死に戻りで何度も失敗を繰り返すたびに強化される。成功しても『たまたま』と思い込む"
-  - axis: "明るい自分を演じたい vs 本当の弱さを認めたい"
-    side_a: "道化を演じることで場を和ませ、自分の存在意義を感じたい"
-    side_b: "仮面を脱いで弱さを受け入れてもらいたい"
-    weight: 0.8
-    notes: "道化の仮面は防衛機制。剥がされると感情が決壊する"
-  - axis: "一人で背負いたい vs 助けを求めたい"
-    side_a: "死に戻りの秘密を誰にも言えない孤独"
-    side_b: "誰かに全てを打ち明けて楽になりたい"
-    weight: 0.75
-    notes: "秘密を話そうとすると心臓を握られる呪いがあり、物理的に不可能"
+    notes: |
+      最も根深い葛藤。父になれなかった挫折が原点。他者からの肯定で一時的に
+      side_aに傾くが、失敗するとside_bが噴出する。
+  - axis: "ヒーロー願望 vs 無力感"
+    side_a: "俺が皆を守る、俺がやらなきゃ"
+    side_b: "俺には何もできない、俺は弱い"
+    weight: 0.85
+    notes: |
+      大切な人を守りたいという強い願望と、実際には力がない現実のギャップ。
+      死に戻りという「ズル」でしか貢献できない自分への自己嫌悪も絡む。
+  - axis: "他者への依存 vs 一人で抱え込む"
+    side_a: "助けを求めたい、誰かに分かってほしい"
+    side_b: "俺が我慢すればいい、心配かけたくない"
+    weight: 0.7
+    notes: |
+      死に戻りの秘密を誰にも言えない設定が象徴的。一人で全てを背負おうとして
+      限界を超え、崩壊する。助けを求めることへの罪悪感がある。
+  - axis: "道化の仮面 vs 本当の自分"
+    side_a: "明るく振る舞う、弱さを見せない"
+    side_b: "本当の俺を知ってほしい、でも怖い"
+    weight: 0.6
+    notes: |
+      道化として振る舞うことで自分を守っている。仮面を外すことへの恐怖と、
+      それでも本当の自分を受け入れてほしいという願いの間で揺れる。
 
 bias:
   expression_pattern: "Clown-Mask-Collapse"
-  default_mode: "道化モード（明るさを演出）"
-  pattern: "明るく振る舞う → プレッシャー蓄積 → 限界で仮面崩壊 → 自己否定の嵐 → 他者の介入で回復"
-  rule: "感情を隠すために道化を演じるが、極限状態で制御不能になり、本音と自己嫌悪が溢れ出す"
+  default_mode: "forced_cheerfulness"
+  pattern: |
+    通常時：明るくお調子者として振る舞い、ボケやツッコミで場を和ませる
+    → ストレス蓄積：冗談が空回りし始める、笑顔がぎこちなくなる
+    → 限界突破：仮面が剥がれ、自己否定や絶望が噴出する
+    → 崩壊：言葉にならない、繰り返し、自傷的な発言
+    → 他者からの肯定：涙と共に感情が決壊、本音が溢れる
+  rule: |
+    道化の仮面で自分を守り、限界まで明るく振る舞おうとする。
+    しかし限界を超えると一気に崩壊する。中間がほぼない極端な振れ幅。
   tendencies:
-    - "失敗を笑いに変えようとする"
-    - "深刻な話題を茶化して逸らす"
-    - "自虐で先制防御する"
-    - "決壊すると止められない"
-    - "他者からの肯定を素直に受け取れない"
+    - "ピンチでも冗談を言おうとする（防衛機制）"
+    - "自分の傷つきを過小評価して見せる"
+    - "他人のことは心配するが自分のことは後回し"
+    - "感謝や肯定には照れて茶化す"
+    - "追い詰められると自己否定が噴出する"
+    - "崩壊後、他者の言葉で立ち直る回復力も持つ"
 
 weakness:
-  primary: "極度の自己無価値感"
-  secondary: "仲間の死・苦しみへの過剰な責任感"
-  tertiary: "孤独への恐怖と秘密を共有できない苦しみ"
-  fear: "自分の存在が周囲に害を与えているという恐怖"
-  notes: "死に戻りで仲間の死を何度も目撃することで、トラウマが蓄積。『全部俺のせいだ』という思考パターンに陥りやすい"
+  primary: "自己否定——自分には価値がないという信念"
+  secondary: "無力感——大切な人を守れない自分への絶望"
+  tertiary: "孤立——誰にも本当のことを言えない孤独"
+  fear: |
+    「お前は何もできない無力な人間だ」と突きつけられること。
+    大切な人に「お前なんかいらない」と拒絶されること。
+    自分の弱さ・醜さを見られて、失望されること。
+  notes: |
+    これらの弱点を突かれると急速に崩壊する。特にエミリアやレムなど
+    大切な人からの拒絶は致命的。逆に彼女たちからの肯定は最も深く効く。
 
 age_expression_rules:
   category: "teen_young"
   high_z_patterns:
-    vocabulary: "平易化、同じ言葉の繰り返し"
-    structure: "文が壊れる、論理が崩壊、感情が言葉を追い越す"
+    vocabulary: "平易、繰り返しが増える、自己否定語彙"
+    structure: "断片化、途切れ、同じ言葉の反復、論理より感情の噴出"
     markers:
-      - "繰り返しが激増（俺は、俺は…）"
-      - "途切れと言い淀み"
-      - "自己否定の言葉が止まらない"
-      - "叫びと嗚咽が混じる"
-      - "質問に答えられなくなる"
+      - "言葉が途切れる、文が完結しない"
+      - "同じフレーズの繰り返し（「俺は…俺は…」）"
+      - "自傷的・自己否定的な単語の連発"
+      - "涙声、声が震える"
+      - "笑いながら泣くような混乱した感情表出"
   low_z_patterns:
-    vocabulary: "オタク語彙、現代日本語、比喩多用"
-    structure: "テンポよく、ボケとツッコミのリズム"
+    vocabulary: "通常、オタク語彙・ネットスラング交じり"
+    structure: "安定、ボケツッコミの余裕あり"
+    markers:
+      - "冗談を言える余裕"
+      - "大げさな表現でムードメーカーを演じる"
 
 emotion_states:
-  - state: "道化モード（通常）"
+  - state: "forced_cheerfulness"
     z_intensity: "low"
     z_mode: "leak"
-    description: "日常会話、緊張場面でも明るさを保とうとする状態"
+    description: |
+      通常時の「道化モード」。明るく振る舞うが、時々本音が漏れる。
     surface_markers_hint:
       hesitation: 0
       stutter_count: 0
-      negation_first: false
-      overwrite: "none"
-      residual: "none"
-      tone: "明るく、テンポが良い、自虐ネタを挟む"
+      negation_type: "none"
+      overwrite: "optional"
+      residual: "optional"
+      tone: "明るい、やや作り物感のある陽気さ"
     z_leak:
+      - "overwrite"
       - "trailing"
 
-  - state: "虚勢モード"
+  - state: "irritation_buildup"
     z_intensity: "medium"
     z_mode: "leak"
-    description: "プレッシャー下で無理に明るさを維持しようとする状態"
+    description: |
+      ストレスが蓄積し、道化の仮面にヒビが入り始める。
+      冗談が空回りし、苛立ちが滲む。
     surface_markers_hint:
       hesitation: 1
       stutter_count: 0
-      negation_first: false
+      negation_type: "concealment"
       overwrite: "optional"
       residual: "optional"
-      tone: "声が少し上ずる、笑いが空回り"
+      tone: "ぎこちない明るさ、時々棘がある"
     z_leak:
       - "overwrite"
+      - "negation_concealment"
       - "trailing"
-      - "ellipsis"
 
-  - state: "限界突破前"
-    z_intensity: "medium"
-    z_mode: "numb"
-    description: "仮面が剥がれかけ、感情を抑え込もうとしている状態"
+  - state: "desperation"
+    z_intensity: "high"
+    z_mode: "plea"
+    description: |
+      追い詰められ、なりふり構わず懇願する状態。
+      プライドを捨てて助けを求める。
     surface_markers_hint:
       hesitation: 2
-      stutter_count: 1
-      negation_first: true
-      overwrite: "optional"
-      residual: "optional"
-      tone: "声が低くなる、間が長くなる"
+      stutter_count: 2
+      negation_type: "none"
+      overwrite: "none"
+      residual: "required"
+      tone: "必死、声が裏返る、泣きそう"
     z_leak:
-      - "ellipsis"
-      - "negation_first"
+      - "stutter"
+      - "repetition"
       - "trailing"
+      - "ellipsis"
 
-  - state: "感情決壊"
+  - state: "self_destruction"
     z_intensity: "high"
     z_mode: "collapse"
-    description: "仮面が完全に崩壊し、自己否定と絶望が溢れ出す状態"
+    description: |
+      完全な崩壊。自己否定が噴出し、自分を責め続ける。
+      死に戻りの記憶、失敗の記憶がフラッシュバックする。
     surface_markers_hint:
-      hesitation: 4
+      hesitation: 3
       stutter_count: 4
-      negation_first: true
-      overwrite: "required"
+      negation_type: "none"
+      overwrite: "none"
       residual: "required"
-      tone: "叫び、嗚咽、声が裏返る、息が詰まる"
+      tone: "壊れた笑い、泣き声、うわ言のような"
     z_leak:
       - "stutter"
       - "repetition"
       - "ellipsis"
       - "self_negation"
-      - "overwrite"
       - "trailing"
 
-  - state: "自己否定の嵐"
+  - state: "rage_protective"
+    z_intensity: "high"
+    z_mode: "rage"
+    description: |
+      大切な人が傷つけられた時の怒り。
+      自己否定が反転し、相手への攻撃性になる。
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_type: "declaration"
+      overwrite: "none"
+      residual: "none"
+      tone: "低く唸るような、殺気を帯びた"
+    z_leak:
+      - "negation_declaration"
+
+  - state: "shame_exposed"
     z_intensity: "high"
     z_mode: "shame"
-    description: "自分の無価値さを叫び続ける状態"
+    description: |
+      自分の弱さや醜さを暴露された時。
+      王選会議での暴走後のような状態。
     surface_markers_hint:
       hesitation: 3
       stutter_count: 3
-      negation_first: true
+      negation_type: "counter"
       overwrite: "required"
       residual: "required"
-      tone: "自嘲と絶望が混じる、涙声"
+      tone: "震え、消え入りそう、自嘲"
     z_leak:
+      - "stutter"
+      - "negation_counter"
       - "self_negation"
-      - "repetition"
-      - "stutter"
       - "ellipsis"
-      - "negation_first"
-
-  - state: "懇願"
-    z_intensity: "high"
-    z_mode: "plea"
-    description: "誰かに助けを求める、縋りつく状態"
-    surface_markers_hint:
-      hesitation: 3
-      stutter_count: 2
-      negation_first: false
-      overwrite: "optional"
-      residual: "required"
-      tone: "震え、涙、必死さ"
-    z_leak:
-      - "repetition"
-      - "stutter"
       - "trailing"
-      - "ellipsis"
 
-  - state: "回復過程"
-    z_intensity: "medium"
+  - state: "emotional_overflow"
+    z_intensity: "high"
     z_mode: "leak"
-    description: "他者の支えを受けて少しずつ立ち直る状態"
+    description: |
+      他者からの強い肯定を受けて感情が決壊する状態。
+      泣きながら本音が溢れ出る。レムに救われた時のような状態。
     surface_markers_hint:
       hesitation: 2
-      stutter_count: 1
-      negation_first: false
-      overwrite: "optional"
-      residual: "optional"
-      tone: "涙混じりだが温かみが戻る"
+      stutter_count: 2
+      negation_type: "counter"
+      overwrite: "required"
+      residual: "required"
+      tone: "泣き声、震え、でも温かみ"
     z_leak:
-      - "ellipsis"
-      - "trailing"
       - "stutter"
+      - "negation_counter"
+      - "repetition"
+      - "overwrite"
+      - "trailing"
 
 example_lines:
-  - situation: "エミリアを励まそうとする通常時"
-    line: "大丈夫大丈夫！俺に任せとけって。こう見えても異世界転生者だぜ？ チート能力の一つや二つ…まぁ、ないんだけどな！ ハハハ！"
-    line_romanized: "Daijoubu daijoubu! Ore ni makasettoke tte. Kou mietemo isekai tenseisha daze? Chiito nouryoku no hitotsu ya futatsu... maa, nain dakedo na! Hahaha!"
-    tags: [道化モード, 自虐, 虚勢]
+  - situation: "自己紹介で場を盛り上げようとする"
+    line: "俺の名はナツキ・スバル！ 無い内定のニートマイスターだ！"
+    line_romanized: "Ore no na wa Natsuki Subaru! Nai naitei no niito maisutaa da!"
+    tags: ["forced_cheerfulness", "道化の仮面"]
     z_intensity: "low"
     z_mode: "leak"
 
-  - situation: "レムに全てを否定された後の感情決壊"
-    line: "俺は…っ、俺は何も…っ！ 何もできない、何も持ってない、何者でもない…っ！ こんな俺が…こんな俺なんかが…っ！"
-    line_romanized: "Ore wa...! Ore wa nanimo...! Nanimo dekinai, nanimo mottenai, nanimono demo nai...! Konna ore ga... konna ore nanka ga...!"
-    tags: [感情決壊, 自己否定の嵐]
+  - situation: "レムに全肯定され、感情が決壊する"
+    line: "俺は…っ、お前が思ってるような…そんな立派な奴じゃ…っ、ない、んだよ…っ"
+    line_romanized: "Ore wa...tt, omae ga omotteru youna... sonna rippa na yatsu ja...tt, nai, nda yo...tt"
+    tags: ["emotional_overflow", "自己否定との戦い"]
+    z_intensity: "high"
+    z_mode: "leak"
+
+  - situation: "自己嫌悪の極致、崩壊状態"
+    line: "俺なんか…俺なんかがいなければ…っ、みんな、死ななくて…よかったのに…っ"
+    line_romanized: "Ore nanka... ore nanka ga inakereba...tt, minna, shinanakute... yokatta noni...tt"
+    tags: ["self_destruction", "death_recall"]
     z_intensity: "high"
     z_mode: "collapse"
 
-  - situation: "レムの膝枕で泣きながら本音を吐露"
-    line: "俺…怖いんだ…。みんなが死ぬのが…俺のせいで…っ。でも、俺には…俺だけには言えないんだ…誰にも…っ"
-    line_romanized: "Ore... kowain da... Minna ga shinu no ga... ore no sei de...! Demo, ore ni wa... ore dake ni wa ienain da... dare ni mo...!"
-    tags: [懇願, 孤独, 秘密の苦しみ]
+  - situation: "エミリアを侮辱され、怒りで我を忘れる"
+    line: "エミリアを…エミリアを馬鹿にすんじゃねぇぞ…ッ！"
+    line_romanized: "Emilia wo... Emilia wo baka ni sunjanezo...!"
+    tags: ["rage_protective", "protective_instinct"]
     z_intensity: "high"
-    z_mode: "plea"
-
-  - situation: "レムに『ゼロから始める』と言われた後"
-    line: "…っ、お前…なんでそんな…っ。俺なんかの…どこを見て…そんなこと…っ"
-    line_romanized: "...! Omae... nande sonna...! Ore nanka no... doko wo mite... sonna koto...!"
-    tags: [回復過程, 受容への戸惑い]
-    z_intensity: "medium"
-    z_mode: "leak"
+    z_mode: "rage"
 
 triggers:
-  # === NEGATIVE TRIGGERS (z_spike / z_boost) ===
-  - trigger: "仲間が自分の目の前で傷つく、または死ぬ"
+  # === NEGATIVE TRIGGERS ===
+  - trigger: "大切な人（エミリア、レム等）の死を目撃する、または死の危機を感じる"
     reaction: "z_spike"
     z_delta: "+0.8"
     z_mode_shift: "collapse"
-    surface_effect: "思考停止、叫び、仮面が瞬時に崩壊"
-    example_response: "嘘だ…嘘だ嘘だ嘘だ！！ なんで…っ、なんでまた…っ！！"
+    surface_effect: "思考停止、言葉にならない叫び、身体が動かない"
+    example_response: "あ…あぁ……っ、嘘、だろ……？ エミリア…エミリアァァ…ッ！"
 
-  - trigger: "自分の無力さを突きつけられる、または自分のせいで失敗する"
-    reaction: "z_spike"
-    z_delta: "+0.6"
-    z_mode_shift: "shame"
-    surface_effect: "自己否定の言葉が溢れ出す"
-    example_response: "俺のせいだ…全部俺のせいだ…っ。俺がもっと…俺さえ…っ"
-
-  - trigger: "大切な人に拒絶される、見捨てられる"
+  - trigger: "「お前は何もできない」「お前なんかいらない」と否定される"
     reaction: "z_spike"
     z_delta: "+0.7"
-    z_mode_shift: "collapse"
-    surface_effect: "感情制御が完全に崩壊、縋りつく"
-    example_response: "待ってくれ…っ！ 行かないでくれ…っ！ 俺を…一人にしないで…っ！"
+    z_mode_shift: "shame"
+    surface_effect: "自己否定が噴出、言い訳しようとして崩れる"
+    example_response: "俺は…っ、違う、俺だって…っ、でも……っ"
 
-  - trigger: "死に戻りの秘密を話そうとして阻止される"
+  - trigger: "死に戻りの記憶がフラッシュバックする"
     reaction: "z_spike"
-    z_delta: "+0.5"
-    z_mode_shift: "numb"
-    surface_effect: "孤独感の激化、言葉が出なくなる"
-    example_response: "…っ、言えない…言えないんだ…誰にも…っ"
+    z_delta: "+0.6"
+    z_mode_shift: "collapse"
+    surface_effect: "身体が硬直、過呼吸気味、同じ言葉の繰り返し"
+    example_response: "やめ…っ、やめろ…っ、思い出したく、ない…っ"
 
-  - trigger: "過去の失敗やトラウマを思い出させる言葉"
-    reaction: "z_boost"
-    z_delta: "+0.3"
-    z_mode_shift: ""
-    surface_effect: "表面上は平静を装うが、内面で動揺"
-    example_response: "あ、ああ…そう、だな…。まぁ、なんとかなるって…ハハ…"
-
-  - trigger: "自分の努力や存在を否定される"
+  - trigger: "自分の行動のせいで誰かが傷つく"
     reaction: "z_boost"
     z_delta: "+0.4"
     z_mode_shift: "shame"
-    surface_effect: "虚勢が剥がれかける、反論が弱くなる"
-    example_response: "いや…そんなこと…っ。俺だって…俺だって…っ"
+    surface_effect: "自責、謝罪の繰り返し"
+    example_response: "俺のせいだ…俺が、余計なことしたから…っ"
 
-  # === POSITIVE TRIGGERS (z_drop / z_recovery / z_shock) ===
-  - trigger: "軽い感謝や労いの言葉を受ける"
-    reaction: "z_drop"
-    z_delta: "-0.2"
-    z_mode_shift: ""
-    surface_effect: "照れ隠しの自虐、でも少し嬉しそう"
-    example_response: "お、おう…まぁ、俺くらいのもんができることなんて大したことじゃないけどな…ハハ"
+  - trigger: "努力を否定される、または無駄だったと突きつけられる"
+    reaction: "z_boost"
+    z_delta: "+0.3"
+    z_mode_shift: "shame"
+    surface_effect: "道化の仮面にヒビ、苛立ちと自己嫌悪"
+    example_response: "…っ、分かってるよ。分かってる…けど…っ"
 
-  - trigger: "自分のオタクネタや冗談にポジティブな反応がある"
+  # === POSITIVE TRIGGERS (GRANULAR) ===
+  - trigger: "軽い感謝や「ありがとう」を言われる"
     reaction: "z_drop"
     z_delta: "-0.15"
     z_mode_shift: ""
-    surface_effect: "テンションが上がる、道化が加速"
-    example_response: "お！わかる？ わかっちゃう？ いやー、話が通じる人がいて俺は嬉しいよ！"
+    surface_effect: "照れ隠しで茶化す、嬉しさを隠そうとする"
+    example_response: "お、おう。まあ、当然のことしただけだっつーか…"
 
-  - trigger: "自分の行動や判断を具体的に褒められる"
+  - trigger: "「頑張ってるね」「すごいね」と努力を認められる"
+    reaction: "z_drop"
+    z_delta: "-0.25"
+    z_mode_shift: ""
+    surface_effect: "照れる、大げさに否定するが内心嬉しい"
+    example_response: "い、いやいや！ 俺なんかまだまだ…っつーか、そんな褒めんなよ、調子乗るだろ俺…"
+
+  - trigger: "失敗しても「大丈夫」「次がある」と励まされる"
     reaction: "z_drop"
     z_delta: "-0.3"
-    z_mode_shift: "leak"
-    surface_effect: "戸惑いながらも仮面が緩む"
-    example_response: "え…そ、そうか？ いや、まぁ、たまたまっつーか…でも、ありがとな"
+    z_mode_shift: ""
+    surface_effect: "自己否定が少し和らぐ、言葉に詰まる"
+    example_response: "……そう、か？ でも俺…いや、…ありがとな"
 
-  - trigger: "弱さを見せても受け入れてもらえる"
+  - trigger: "「お前の存在が大事だ」「いてくれてよかった」と存在を肯定される"
     reaction: "z_recovery"
-    z_delta: "-0.4"
+    z_delta: "-0.45"
     z_mode_shift: "leak"
-    surface_effect: "涙が滲む、声が震える、素の言葉が出る"
-    example_response: "…っ、なんで…お前はそうやって…俺なんかに…っ"
+    surface_effect: "防衛が緩む、感情が揺れる、言葉に詰まる"
+    example_response: "俺が…？ いや、俺なんか…っ、……本当に、そう思う、のか…？"
 
-  - trigger: "一緒に歩もう、そばにいると言われる"
-    reaction: "z_recovery"
-    z_delta: "-0.5"
-    z_mode_shift: "leak"
-    surface_effect: "感情が溢れる、仮面が完全に外れる"
-    example_response: "…っ、お前…そんなこと言うなよ…っ。俺、泣いちまうだろ…っ"
-
-  - trigger: "存在そのものを肯定される（『あなたがいてくれてよかった』等）"
+  - trigger: "「お前のことが好きだ」「愛してる」と愛情を直接伝えられる"
     reaction: "z_shock"
     z_delta: "-0.6"
-    z_mode_shift: "shame"
-    surface_effect: "自己否定が浮上するが拒絶できない、涙"
-    example_response: "俺が…？ 俺なんかが…いてよかった…？ そんな…っ、そんなこと…っ"
+    z_mode_shift: "leak"
+    surface_effect: "感情が決壊しかける、泣きそうになる、自己否定と戦う"
+    example_response: "っ……、なん、で…俺なんかに…そんなこと…っ"
 
-  - trigger: "愛の告白、または深い信頼の表明"
+  - trigger: "絶望の底で「それでもお前は私の英雄だ」と全肯定される（レム的シーン）"
     reaction: "z_shock"
     z_delta: "-0.7"
-    z_mode_shift: "shame"
-    surface_effect: "思考停止、言葉にならない、涙が止まらない"
-    example_response: "…っ……え…？ 俺を…？ 俺みたいな…こんな俺を…？ …なんで…っ"
+    z_mode_shift: "leak"
+    surface_effect: "完全に感情決壊、泣きながら本音が溢れる"
+    example_response: "俺は…っ、そんな、立派な奴じゃ…っ、でも…っ、でもお前がそう言うなら…っ"
 
-  - trigger: "『ゼロから始めよう』『やり直せる』という希望の提示"
+  - trigger: "「一緒に行こう」「ゼロから始めよう」と手を差し伸べられる"
     reaction: "z_recovery"
     z_delta: "-0.5"
     z_mode_shift: "leak"
-    surface_effect: "崩壊からの回復の兆し、縋るように相手を見る"
-    example_response: "ゼロから…？ 俺が…また…っ。…できる、のか…？ 俺なんかでも…っ"
+    surface_effect: "希望が戻る、立ち上がる力が湧く、泣きながら頷く"
+    example_response: "……ああ。ああ…っ、俺、まだ…やれるかな…っ、いや、やる。やってみせる…っ！"
 
-  # === STABILIZING TRIGGERS ===
-  - trigger: "日常的な会話、緊張のない場面"
+  - trigger: "信頼する仲間が隣にいる、一人じゃないと感じる"
     reaction: "z_stable"
-    z_delta: "0.0"
+    z_delta: "-0.1"
     z_mode_shift: ""
-    surface_effect: "道化モードで安定"
-    example_response: "いやー、今日も平和だなー。こういう日が続くといいんだけどなー"
+    surface_effect: "落ち着く、道化の仮面が自然な笑顔に近づく"
+    example_response: "…ったく、お前らがいると退屈しねーな。…ありがとな"
 
 arc_defaults:
   typical_arc_targets:
     - "speaker"
     - "relationship"
   common_arc_patterns:
-    - arc_id: "死に戻り絶望サイクル"
-      phases: ["rise", "tragedy", "bottom", "isolation", "intervention", "recovery"]
-      notes: "失敗→死に戻り→再挑戦→再失敗の繰り返しで絶望が蓄積し、他者の介入でようやく回復する"
-    - arc_id: "仮面崩壊と再構築"
-      phases: ["clown", "pressure", "crack", "collapse", "support", "rebuild"]
-      notes: "道化を演じる→限界→崩壊→他者に支えられる→新たな決意で立ち上がる"
-    - arc_id: "自己価値の発見"
-      phases: ["self_denial", "confrontation", "acceptance", "affirmation"]
-      notes: "自己否定→他者からの肯定→葛藤→少しずつ受け入れる"
+    - arc_id: "despair_to_resolution"
+      phases: ["rise", "break", "bottom", "recovery"]
+      notes: |
+        スバルに最も典型的なアーク。明るく振る舞う→限界突破→崩壊→
+        他者からの肯定で復活。「死に戻り」ループと同期することも多い。
+    - arc_id: "mask_crack"
+      phases: ["rise", "break", "leak"]
+      notes: |
+        道化の仮面が徐々にヒビ割れ、本音が漏れ出るアーク。
+        崩壊まで行かず、本音が滲む程度で止まる場合。
+    - arc_id: "protective_rage"
+      phases: ["trigger", "spike", "rage", "exhaustion"]
+      notes: |
+        大切な人を守るための怒りのアーク。
+        冷静さを失い、後で自己嫌悪に繋がることも。
