@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Z-Axis Dialogue Translation System v3.1
+Z-Axis Dialogue Translation System v3.2
 Operation: Babel Inverse — 対話シーン翻訳（多言語対応）
 
 複数のペルソナ間の対話を、Z軸（感情・葛藤構造）を保存しながら翻訳する。
 z_axis_translate.py v3.0 をベースに、対話特有の機能を追加。
+
+v3.2 Changes:
+- LLM-based trigger detection (replaces hardcoded keyword matching)
+- Removed extract_keywords() and check_triggers_v3()
+- New llm_check_triggers() delegates trigger judgment to LLM
+- Trigger accumulation now driven by LLM analysis, not regex
+- All persona triggers work regardless of language or character
 
 v3.1 Changes:
 - Multi-language support (--source-lang / --target-lang)
@@ -33,7 +40,7 @@ YAML形式:
     A_to_B: "信頼、依存しつつある"
     B_to_A: "愛情、献身"
   
-  source_lang: "ja"  # NEW in v3.1 (optional, default: ja)
+  source_lang: "ja"  # (optional, default: ja)
   target_lang: "en"
   
   dialogue:
@@ -62,6 +69,7 @@ try:
         OpenAIResponsesClient,
         DEFAULT_MODEL,
         extract_v3_features,
+        format_trigger_info,
     )
 except ImportError:
     import sys
@@ -71,6 +79,7 @@ except ImportError:
         OpenAIResponsesClient,
         DEFAULT_MODEL,
         extract_v3_features,
+        format_trigger_info,
     )
 
 load_dotenv()
@@ -100,7 +109,193 @@ def get_lang_display(lang_code: str) -> str:
 
 
 # =============================================================================
-# DIALOGUE-SPECIFIC FUNCTIONS v3.1
+# LLM-BASED TRIGGER DETECTION v3.2
+# =============================================================================
+
+TRIGGER_CHECK_SCHEMA: Dict[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "properties": {
+        "triggered": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "properties": {
+                    "trigger_index": {
+                        "type": "integer",
+                        "description": "0-based index of the triggered item in the trigger list",
+                    },
+                    "trigger_text": {
+                        "type": "string",
+                        "description": "The trigger description that was activated",
+                    },
+                    "z_delta": {
+                        "type": "number",
+                        "description": "Z-delta value for this trigger (from persona definition)",
+                    },
+                    "z_mode_shift": {
+                        "type": "string",
+                        "enum": ["collapse", "rage", "numb", "plea", "shame", "leak", "none", ""],
+                        "description": "Z-mode shift caused by this trigger",
+                    },
+                    "confidence": {
+                        "type": "number",
+                        "minimum": 0.0,
+                        "maximum": 1.0,
+                        "description": "How confident the trigger activation is",
+                    },
+                    "reasoning": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "Brief explanation of why this trigger activated",
+                    },
+                },
+                "required": ["trigger_index", "trigger_text", "z_delta", "z_mode_shift", "confidence", "reasoning"],
+            },
+        },
+        "total_z_delta": {
+            "type": "number",
+            "description": "Sum of all triggered z_deltas",
+        },
+        "final_z_mode_shift": {
+            "type": "string",
+            "enum": ["collapse", "rage", "numb", "plea", "shame", "leak", "none", ""],
+            "description": "The dominant z_mode_shift (last high-confidence trigger wins)",
+        },
+    },
+    "required": ["triggered", "total_z_delta", "final_z_mode_shift"],
+}
+
+
+def format_triggers_for_llm(persona_data: Dict[str, Any]) -> Tuple[str, List[Dict[str, Any]]]:
+    """
+    ペルソナのtrigger情報をLLM判定用にフォーマット。
+    
+    Returns:
+        (formatted_text, triggers_list)
+    """
+    triggers = persona_data.get('triggers', [])
+    if not triggers:
+        return "(No triggers defined)", []
+    
+    lines = []
+    for i, t in enumerate(triggers):
+        trigger = t.get('trigger', '')
+        reaction = t.get('reaction', '')
+        z_delta = t.get('z_delta', '+0.0')
+        z_mode_shift = t.get('z_mode_shift', '')
+        surface_effect = t.get('surface_effect', '')
+        example = t.get('example_response', '')
+        
+        lines.append(
+            f"[{i}] trigger: \"{trigger}\"\n"
+            f"    reaction: {reaction}\n"
+            f"    z_delta: {z_delta}\n"
+            f"    z_mode_shift: {z_mode_shift or 'none'}\n"
+            f"    surface_effect: {surface_effect}\n"
+            f"    example_response: {example}"
+        )
+    
+    return "\n".join(lines), triggers
+
+
+def llm_check_triggers(
+    *,
+    client: OpenAIResponsesClient,
+    model: str,
+    line: str,
+    speaker_name: str,
+    listener_name: str,
+    listener_persona_data: Dict[str, Any],
+    scene: str = "",
+    context_lines: List[str] = None,
+    dry_run: bool = False,
+) -> Dict[str, Any]:
+    """
+    v3.2: LLMベースのトリガー判定。
+    
+    発話内容がリスナーのtriggerに該当するかをLLMが判断する。
+    ハードコードされたキーワードマッチングではなく、
+    文脈・意味・ニュアンスを考慮した判定が可能。
+    
+    Returns:
+        {
+            "triggered": [...],
+            "total_z_delta": float,
+            "final_z_mode_shift": str,
+        }
+    """
+    triggers_text, triggers_list = format_triggers_for_llm(listener_persona_data)
+    
+    # トリガーが定義されてなければスキップ
+    if not triggers_list:
+        return {
+            "triggered": [],
+            "total_z_delta": 0.0,
+            "final_z_mode_shift": "",
+        }
+    
+    # コンテキスト構築
+    context_block = ""
+    if context_lines:
+        context_block = f"[Recent dialogue]\n" + "\n".join(context_lines[-5:])
+    
+    system_prompt = f"""You are a trigger detection system for Z-Axis Translation v3.2.
+
+Task: Determine whether the SPEAKER's line activates any of the LISTENER's emotional triggers.
+
+## IMPORTANT
+- Judge by MEANING and CONTEXT, not just keyword matching.
+- A trigger can activate even if the exact words don't appear, as long as the 
+  semantic content or emotional impact matches the trigger condition.
+- Consider the scene context and conversation flow.
+- Only mark triggers with confidence >= 0.5 as activated.
+- Use the z_delta values from the trigger definitions (parse the +/- number).
+
+## LISTENER'S TRIGGER DEFINITIONS
+{triggers_text}
+
+Output MUST follow the provided JSON schema. Do NOT include chain-of-thought."""
+
+    user_prompt = f"""[Scene] {scene}
+
+{context_block}
+
+[Speaker] {speaker_name}
+[Listener] {listener_name}
+[Line] {line}
+
+Which of {listener_name}'s triggers (if any) are activated by this line?"""
+
+    messages = [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt},
+    ]
+    
+    if dry_run:
+        return {
+            "triggered": [],
+            "total_z_delta": 0.0,
+            "final_z_mode_shift": "",
+            "_dry_run": True,
+        }
+    
+    _, result = client.create_structured(
+        model=model,
+        name="trigger_check_v32",
+        schema=TRIGGER_CHECK_SCHEMA,
+        messages=messages,
+        max_output_tokens=500,
+        temperature=0.2,
+        dry_run=False,
+    )
+    
+    return result
+
+
+# =============================================================================
+# DIALOGUE-SPECIFIC FUNCTIONS v3.2
 # =============================================================================
 
 def load_dialogue_config(config_path: str) -> Dict[str, Any]:
@@ -135,11 +330,6 @@ def load_dialogue_config(config_path: str) -> Dict[str, Any]:
     return config
 
 
-def extract_triggers_v3(persona_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """ペルソナからtrigger情報を抽出（v3.0: z_mode_shift対応）"""
-    return persona_data.get('triggers', [])
-
-
 def extract_original_speech_patterns(persona_data: Dict[str, Any]) -> Dict[str, Any]:
     """
     ペルソナから original_speech_patterns を抽出（v3.1）。
@@ -156,64 +346,6 @@ def extract_translation_compensations(persona_data: Dict[str, Any]) -> Dict[str,
     """
     language = persona_data.get('language', {})
     return language.get('translation_compensations', {})
-
-
-def check_triggers_v3(
-    line: str, 
-    listener_persona_data: Dict[str, Any],
-    speaker_name: str,
-) -> Tuple[float, str, List[str]]:
-    """
-    発話内容が聞き手のtriggerに該当するかチェック（v3.0）。
-    
-    Returns:
-        (z_delta_total, z_mode_shift, triggered_list)
-    """
-    triggers = extract_triggers_v3(listener_persona_data)
-    z_delta_total = 0.0
-    z_mode_shift = ""
-    triggered_list = []
-    
-    for t in triggers:
-        trigger_text = t.get('trigger', '')
-        
-        keywords = extract_keywords(trigger_text)
-        
-        if any(kw.lower() in line.lower() for kw in keywords):
-            z_delta_str = t.get('z_delta', '+0.0')
-            z_delta = float(z_delta_str.replace('+', ''))
-            z_delta_total += z_delta
-            triggered_list.append(trigger_text)
-            
-            # v3.0: z_mode_shift を取得（最後にマッチしたものを使用）
-            if t.get('z_mode_shift'):
-                z_mode_shift = t.get('z_mode_shift')
-    
-    return z_delta_total, z_mode_shift, triggered_list
-
-
-def extract_keywords(trigger_text: str) -> List[str]:
-    """トリガーテキストからキーワードを抽出"""
-    keywords = []
-    
-    match = re.search(r'[「『](.+?)[」』]', trigger_text)
-    if match:
-        keywords.append(match.group(1))
-    
-    english_words = re.findall(r'[a-zA-Z]+', trigger_text)
-    keywords.extend(english_words)
-    
-    # v3.0: より多くのキーワードを追加
-    important_ja = [
-        '助手', '好き', '危険', '危機', '指摘', 'クリスティーナ', 'ゾンビ',
-        '死', '失敗', '無力', '嫌い', '助け', '信じ', '期待', '大嫌い',
-        '味方', '愛して', '頼む', '救え',
-    ]
-    for word in important_ja:
-        if word in trigger_text:
-            keywords.append(word)
-    
-    return keywords
 
 
 def build_dialogue_context_v3(
@@ -249,6 +381,30 @@ def build_dialogue_context_v3(
             context_lines.append(f"[{speaker} ({target_code})] {translated}")
     
     return "\n".join(context_lines)
+
+
+def build_context_lines_for_trigger(
+    translated_turns: List[Dict[str, Any]],
+    current_index: int,
+    max_lines: int = 5,
+) -> List[str]:
+    """
+    v3.2: トリガー判定用のコンテキスト行を構築。
+    LLMが文脈を理解するための直近の対話行。
+    """
+    if not translated_turns:
+        return []
+    
+    start = max(0, current_index - max_lines)
+    relevant = translated_turns[start:current_index]
+    
+    lines = []
+    for turn in relevant:
+        speaker = turn.get('speaker_name', turn.get('speaker', '???'))
+        original = turn.get('original_line', '')
+        lines.append(f"[{speaker}] {original}")
+    
+    return lines
 
 
 def estimate_z_intensity_v3(
@@ -368,7 +524,7 @@ def build_compensation_context(
 
 
 # =============================================================================
-# MAIN DIALOGUE TRANSLATION v3.1
+# MAIN DIALOGUE TRANSLATION v3.2
 # =============================================================================
 
 def z_axis_dialogue_translate(
@@ -382,7 +538,12 @@ def z_axis_dialogue_translate(
     verbose: bool = True,
 ) -> Dict[str, Any]:
     """
-    対話シーン全体を翻訳する（v3.1）。
+    対話シーン全体を翻訳する（v3.2）。
+    
+    v3.2 changes:
+    - LLM-based trigger detection (no more hardcoded keywords)
+    - Trigger judgment considers meaning, context, and nuance
+    - All persona triggers work regardless of character
     
     v3.1 changes:
     - source_lang / target_lang support
@@ -418,13 +579,13 @@ def z_axis_dialogue_translate(
     
     results = []
     accumulated_z = {role: 0.0 for role in personas_yaml.keys()}
-    current_z_mode = {role: "none" for role in personas_yaml.keys()}  # v3.0: z_mode追跡
+    current_z_mode = {role: "none" for role in personas_yaml.keys()}  # z_mode追跡
     
     for i, turn in enumerate(dialogue):
         speaker_role = turn.get('speaker', 'A')
         line = turn.get('line', '')
         turn_z_override = turn.get('z_axis_intensity')
-        turn_z_mode_override = turn.get('z_mode')  # v3.0: ターン単位の z_mode 上書き
+        turn_z_mode_override = turn.get('z_mode')
         
         speaker_name = speaker_names.get(speaker_role, speaker_role)
         persona_yaml = personas_yaml.get(speaker_role, '')
@@ -438,18 +599,37 @@ def z_axis_dialogue_translate(
         # 相手役を特定
         other_roles = [r for r in personas_yaml.keys() if r != speaker_role]
         
-        # v3.0: Trigger検出（z_mode_shift対応）
+        # v3.2: LLMベースのトリガー検出
+        context_lines = build_context_lines_for_trigger(results, i)
+        
         for other_role in other_roles:
-            z_delta, z_mode_shift, triggered = check_triggers_v3(
-                line, 
-                persona_data[other_role],
-                speaker_name,
+            trigger_result = llm_check_triggers(
+                client=client,
+                model=model,
+                line=line,
+                speaker_name=speaker_name,
+                listener_name=speaker_names[other_role],
+                listener_persona_data=persona_data[other_role],
+                scene=scene,
+                context_lines=context_lines,
+                dry_run=dry_run,
             )
-            if triggered and verbose:
-                print(f"  → Triggers for {speaker_names[other_role]}: {triggered}")
+            
+            z_delta = trigger_result.get('total_z_delta', 0.0)
+            z_mode_shift = trigger_result.get('final_z_mode_shift', '')
+            triggered_items = trigger_result.get('triggered', [])
+            
+            if triggered_items and verbose:
+                triggered_texts = [t.get('trigger_text', '') for t in triggered_items]
+                print(f"  → Triggers for {speaker_names[other_role]}:")
+                for t_item in triggered_items:
+                    conf = t_item.get('confidence', 0)
+                    reason = t_item.get('reasoning', '')
+                    print(f"     [{conf:.2f}] {t_item.get('trigger_text', '')} — {reason}")
                 print(f"     Δz={z_delta:+.2f}, mode_shift={z_mode_shift or 'none'}")
+            
             accumulated_z[other_role] += z_delta
-            if z_mode_shift:
+            if z_mode_shift and z_mode_shift != "none" and z_mode_shift != "":
                 current_z_mode[other_role] = z_mode_shift
         
         # この話者のz_intensity/z_modeを計算
@@ -522,7 +702,7 @@ def z_axis_dialogue_translate(
             translation = translate_result['step3'].get('translation', '')
             turn_result['translation'] = translation
             
-            # v3.0: z_mode を更新（次のターンに影響）
+            # z_mode を更新（次のターンに影響）
             actual_z_mode = z_info.get('z_mode', 'none')
             current_z_mode[speaker_role] = actual_z_mode
             
@@ -533,7 +713,7 @@ def z_axis_dialogue_translate(
         results.append(turn_result)
     
     return {
-        'version': '3.1',
+        'version': '3.2',
         'source_lang': source_lang,
         'target_lang': target_lang,
         'scene': scene,
@@ -550,7 +730,7 @@ def print_dialogue_summary_v3(result: Dict[str, Any]) -> None:
     target_code = get_lang_display(target_lang)
     
     print("\n" + "=" * 70)
-    print("📖 DIALOGUE TRANSLATION SUMMARY v3.1")
+    print(f"📖 DIALOGUE TRANSLATION SUMMARY v{result.get('version', '3.2')}")
     print("=" * 70)
     print(f"Scene: {result.get('scene', 'N/A')}")
     print(f"Translation: {source_code} → {target_code}")
@@ -568,7 +748,6 @@ def print_dialogue_summary_v3(result: Dict[str, Any]) -> None:
         z_leak = turn.get('z_leak', [])
         arc_phase = turn.get('arc_phase', '?')
         
-        # v3.0: より詳細な表示
         print(f"[{speaker}] (z={z:.2f}, mode={z_mode}, arc={arc_phase})")
         print(f"  z_leak: {', '.join(z_leak) if z_leak else 'none'}")
         print(f"  {source_code}: {original}")
@@ -591,7 +770,7 @@ def list_languages():
 
 def main() -> None:
     ap = argparse.ArgumentParser(
-        description="Z-Axis Dialogue Translation System v3.1 (Multi-language)",
+        description="Z-Axis Dialogue Translation System v3.2 (LLM-driven triggers)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
