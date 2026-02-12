@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """
-Persona Generator v3.2
+Persona Generator v3.3
 Z-Axis Translation System — Automatic Persona YAML Generation
+
+v3.3 Changes:
+- IDENTITY_CORE: New I₀ layer — describes WHO the character IS, not just how they REACT
+  - essence (required), true_nature, desires, joys, likes, dislikes, unfiltered_self (optional)
+  - Generator uses WEB SEARCH to find character's likes, hobbies, personality traits
+- All Ln sections (conflict_axes, triggers, emotion_states) remain from v3.2
 
 v3.2 Changes:
 - TRIGGER BALANCE: Explicit requirement for positive/recovery triggers
@@ -77,19 +83,19 @@ IMPORTANT: The `original_speech_patterns` section MUST remain in the character's
 (usually Japanese for anime/game characters) because these patterns are untranslatable.
 Only the `translation_compensations` section should be in {lang_name}."""
 
-    return f"""You are a Persona Dynamics Designer for the Z-Axis Translation System v3.2.
+    return f"""You are a Persona Dynamics Designer for the Z-Axis Translation System v3.3.
 
 Task: Generate a persona YAML that captures a character's internal psychological 
 structure for emotion-preserving translation.
 
 {lang_instruction}
 
-## YAML SCHEMA v3.2 (REQUIRED SECTIONS)
+## YAML SCHEMA v3.3 (REQUIRED SECTIONS)
 
 ### 1. META
 ```yaml
 meta:
-  version: "3.2"
+  version: "3.3"
   generated_by: "persona_generator"
   character_id: "unique_id"  # lowercase, underscores
   output_lang: "{output_lang}"  # Language of descriptions
@@ -106,7 +112,63 @@ persona:
   summary: "1-2文の概要"
 ```
 
-### 3. AGE & MATURITY
+### 3. IDENTITY_CORE (I₀ — 存在の核) — NEW in v3.3
+
+This section describes WHO the character IS — not how they REACT.
+conflict_axes, triggers, and emotion_states describe Ln (surface dynamics).
+identity_core describes I₀ (the subject experiencing those dynamics).
+
+**Without I₀, the persona describes a "reaction machine" — not a person.**
+A character drinking their favorite drink with no conflict is still THEM.
+That "them" must be describable from identity_core.
+
+```yaml
+identity_core:
+  essence: "1-2文。この人が何者かを、葛藤抜きで記述"  # ← REQUIRED
+  true_nature: "防衛や葛藤がない時の素顔"              # optional
+  desires:                                              # optional
+    - "what they genuinely want (not conflict-driven)"
+  joys:                                                 # optional
+    - joy: "何に喜ぶか"
+      expression: "その時どうなるか"                    # optional within joy
+  likes: ["好きなもの"]                                 # optional
+  dislikes: ["嫌いなもの"]                              # optional
+  unfiltered_self: "葛藤がない時の自然な姿の説明"       # optional
+```
+
+**RULES:**
+- `essence` is the ONLY required field. All others are optional.
+- Include what you CAN FIND. Omit what you cannot.
+- DO NOT invent information. Only include what is supported by evidence.
+
+**SEARCH GUIDANCE (for persona_generator):**
+Look for the following in fan wikis, official profiles, creator interviews:
+- "Likes", "Hobbies", "Personality" sections on character wiki pages
+- Official character profiles from games/anime/manga
+- Scenes described where the character is relaxed or happy
+- Creator interviews about the character's core personality
+- What the character does when NOT in conflict
+
+**EXAMPLE:**
+```yaml
+identity_core:
+  essence: "知的好奇心に突き動かされる18歳の科学者。面白いものが好きで、理論が繋がると興奮する"
+  true_nature: "お人好しで面倒見が良い"
+  desires:
+    - "知りたい——脳、時間、意識の仕組み"
+    - "面白いものに触れたい"
+  joys:
+    - joy: "理論が繋がった瞬間"
+      expression: "目が輝く、早口になる、専門用語が溢れる"
+    - joy: "ドクターペッパーを飲む"
+    - joy: "ネット掲示板で面白いスレを見つけた"
+      expression: "ニヤニヤする、ネットスラングが漏れる"
+  likes: ["ドクターペッパー", "カップラーメン", "SF小説", "@ちゃんねる"]
+  dislikes: ["非論理的な人", "ゴキブリ"]
+  unfiltered_self: "防衛が解除された状態では知的好奇心旺盛で面白いものに素直に反応する普通の18歳"
+```
+
+### 4. AGE & MATURITY
 ```yaml
 age:
   chronological: 17           # 実年齢
@@ -120,7 +182,7 @@ age:
 - ❌ DON'T: "感情崩壊時は言葉が出てこなくなる" ← これは emotion_states へ
 - ❌ DON'T: "怒ると言葉が荒くなる" ← これは emotion_states へ
 
-### 4. LANGUAGE (人称・呼称) — UPDATED v3.1
+### 5. LANGUAGE (人称・呼称) — UPDATED v3.1
 
 ```yaml
 language:
@@ -191,7 +253,7 @@ language:
         note: "These add nuance that must be compensated through word choice"
 ```
 
-### 5. CONFLICT_AXES (内部葛藤軸)
+### 6. CONFLICT_AXES (内部葛藤軸)
 Each axis MUST be phrased as "A vs B":
 ```yaml
 conflict_axes:
@@ -202,7 +264,7 @@ conflict_axes:
     notes: "発動条件"
 ```
 
-### 6. BIAS (表出パターン)
+### 7. BIAS (表出パターン)
 ```yaml
 bias:
   expression_pattern: "パターン名（例：Tsun-Dere-Overwrite）"
@@ -213,7 +275,7 @@ bias:
     - "観測可能な傾向"
 ```
 
-### 7. WEAKNESS (弱点)
+### 8. WEAKNESS (弱点)
 ```yaml
 weakness:
   primary: "主要な弱点"
@@ -223,7 +285,7 @@ weakness:
   notes: "弱点の発現パターン"
 ```
 
-### 8. AGE_EXPRESSION_RULES (年齢別表出ルール)
+### 9. AGE_EXPRESSION_RULES (年齢別表出ルール)
 ```yaml
 age_expression_rules:
   category: "teen_young"  # teen_young / teen_mature / adult
@@ -240,7 +302,7 @@ age_expression_rules:
     structure: "安定"
 ```
 
-### 9. EMOTION_STATES (状態別Z軸制約) — CRITICAL FOR TRANSLATION
+### 10. EMOTION_STATES (状態別Z軸制約) — CRITICAL FOR TRANSLATION
 ```yaml
 emotion_states:
   - state: "状態名（例：collapse, rage, shame）"
@@ -276,7 +338,7 @@ emotion_states:
 | shame | 恥、自己嫌悪 | 自己否定、言い淀み |
 | leak | 漏出（ツンデレ等） | 否定→本音が漏れる |
 
-### 10. EXAMPLE_LINES (Few-shot用) — 2-4 examples only
+### 11. EXAMPLE_LINES (Few-shot用) — 2-4 examples only
 ```yaml
 example_lines:
   - situation: "コンテキスト"
@@ -287,7 +349,7 @@ example_lines:
     z_mode: "対応するz_mode"
 ```
 
-### 11. TRIGGERS (Z軸変動トリガー) — UPDATED v3.2
+### 12. TRIGGERS (Z軸変動トリガー) — UPDATED v3.2
 
 **⚠️ CRITICAL: TRIGGERS MUST BE BALANCED (POSITIVE + NEGATIVE)**
 
@@ -373,7 +435,7 @@ If all positive inputs map to ONE trigger, the LLM cannot distinguish between:
 
 This causes incorrect Z-axis accumulation and wrong emotional trajectories.
 
-### 12. ARC_DEFAULTS (典型的なアーク)
+### 13. ARC_DEFAULTS (典型的なアーク)
 ```yaml
 arc_defaults:
   typical_arc_targets:
@@ -386,6 +448,8 @@ arc_defaults:
 ```
 
 ## CONSTRAINTS
+- **identity_core.essence is REQUIRED** — the character must be described as a person, not just a reaction system
+- identity_core fields other than essence are optional — include what you can find
 - Conflicts MUST be phrased as "A vs B"
 - age_context MUST NOT contain expression patterns (those go to emotion_states)
 - emotion_states MUST include z_mode and z_leak for v3.1 compatibility
@@ -396,19 +460,22 @@ arc_defaults:
 - The persona must feel internally consistent
 - Output VALID YAML only. No explanation before or after.
 - Start with "# =====" header comment
-- Include meta section with version: "3.2"
+- Include meta section with version: "3.3"
 
-## CRITICAL v3.2 RULES
-1. `original_speech_patterns` MUST be in the character's SOURCE language (e.g., Japanese for anime characters)
-2. `original_speech_patterns` captures UNTRANSLATABLE elements (pronouns, particles, dialect)
-3. `translation_compensations` provides strategies for OTHER languages to preserve character voice
-4. ALL other descriptions should be in the specified output language ({output_lang})
-5. `untranslatable_elements` lists what is LOST in translation for translator awareness
-6. **TRIGGERS must be BALANCED: include both positive and negative emotional triggers**
-7. **Positive triggers must be GRANULAR: distinguish mild encouragement from love confession from existential affirmation**
-8. Trigger descriptions should be MEANING-BASED (an LLM judges activation by semantic understanding)
+## CRITICAL v3.3 RULES
+1. `identity_core.essence` is REQUIRED — without I₀, the persona is just a reaction machine
+2. `identity_core` other fields are optional — include what you find via search
+3. `original_speech_patterns` MUST be in the character's SOURCE language (e.g., Japanese for anime characters)
+4. `original_speech_patterns` captures UNTRANSLATABLE elements (pronouns, particles, dialect)
+5. `translation_compensations` provides strategies for OTHER languages to preserve character voice
+6. ALL other descriptions should be in the specified output language ({output_lang})
+7. `untranslatable_elements` lists what is LOST in translation for translator awareness
+8. **TRIGGERS must be BALANCED: include both positive and negative emotional triggers**
+9. **Positive triggers must be GRANULAR: distinguish mild encouragement from love confession from existential affirmation**
+10. Trigger descriptions should be MEANING-BASED (an LLM judges activation by semantic understanding)
 
 ## IMPORTANT NOTES
+- identity_core describes I₀ (who they ARE); conflict_axes/triggers describe Ln (how they REACT)
 - Focus on TRANSLATABLE features (how speech changes with emotion)
 - z_mode determines the TYPE of breakdown
 - z_leak determines the MARKERS of that breakdown
@@ -428,7 +495,7 @@ def build_user_prompt(name: str, source: str, description: str,
     
     lang_name = SUPPORTED_LANGUAGES.get(output_lang, "English")
     
-    prompt = f"""Generate a v3.2 persona YAML for:
+    prompt = f"""Generate a v3.3 persona YAML for:
 
 Name: {name}
 Source: {source}
@@ -446,6 +513,9 @@ Output Language: {output_lang} ({lang_name})
 Output ONLY valid YAML. No explanation.
 
 REMEMBER:
+- `identity_core.essence` is REQUIRED — describe who this character IS, not just how they react
+- Search for: likes, hobbies, personality traits, what makes them happy, their "true self"
+- Other identity_core fields (joys, likes, dislikes, etc.) are optional — include what you find
 - `original_speech_patterns` MUST be in the character's native/source language
 - All other descriptions in {lang_name}
 - `translation_compensations` provides strategies for preserving voice across languages
@@ -469,7 +539,7 @@ def generate_persona(name: str, source: str, description: str,
     user_prompt = build_user_prompt(name, source, description, output_lang, search_context)
     
     lang_name = SUPPORTED_LANGUAGES.get(output_lang, output_lang)
-    print(f"🐯 Generating persona v3.2 for: {name} ({source})")
+    print(f"🐯 Generating persona v3.3 for: {name} ({source})")
     print(f"   Output language: {lang_name}")
     print(f"   Model: {model}")
     print()
@@ -496,9 +566,9 @@ def generate_persona(name: str, source: str, description: str,
     return yaml_content.strip()
 
 
-def validate_v32_persona(yaml_content: str) -> tuple[bool, list[str]]:
+def validate_v33_persona(yaml_content: str) -> tuple[bool, list[str]]:
     """
-    Validate that the generated YAML conforms to v3.2 schema.
+    Validate that the generated YAML conforms to v3.3 schema.
     Returns (is_valid, list_of_issues).
     """
     import yaml as yaml_lib
@@ -512,8 +582,21 @@ def validate_v32_persona(yaml_content: str) -> tuple[bool, list[str]]:
     
     # Check meta version
     meta_version = data.get("meta", {}).get("version", "")
-    if meta_version not in ["3.0", "3.1", "3.2"]:
-        issues.append(f"meta.version should be '3.2' (got '{meta_version}')")
+    if meta_version not in ["3.0", "3.1", "3.2", "3.3"]:
+        issues.append(f"meta.version should be '3.3' (got '{meta_version}')")
+    
+    # === v3.3 IDENTITY_CORE CHECK ===
+    identity_core = data.get("identity_core", {})
+    if not identity_core:
+        issues.append(
+            "v3.3 requires identity_core section — describes WHO the character IS (I₀). "
+            "At minimum, identity_core.essence is required."
+        )
+    elif not identity_core.get("essence"):
+        issues.append(
+            "identity_core.essence is REQUIRED — a 1-2 sentence description of "
+            "who this character is, independent of their conflicts."
+        )
     
     # Check language structure for v3.1+
     language_data = data.get("language", {})
@@ -597,9 +680,9 @@ def save_persona(yaml_content: str, name: str, output_lang: str,
     
     # Include language in filename if not Japanese
     if output_lang != "ja":
-        filename = f"{safe_name}_v32_{output_lang}.yaml"
+        filename = f"{safe_name}_v33_{output_lang}.yaml"
     else:
-        filename = f"{safe_name}_v32.yaml"
+        filename = f"{safe_name}_v33.yaml"
     
     filepath = os.path.join(output_dir, filename)
     
@@ -620,7 +703,7 @@ def list_languages():
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate persona YAML v3.2 for Z-Axis Translation System",
+        description="Generate persona YAML v3.3 for Z-Axis Translation System",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -654,7 +737,7 @@ Examples:
     parser.add_argument("--model", default=DEFAULT_MODEL, help="Model to use")
     parser.add_argument("--output-dir", default="personas", help="Output directory")
     parser.add_argument("--print-only", action="store_true", help="Print YAML without saving")
-    parser.add_argument("--validate", action="store_true", help="Validate v3.2 schema compliance")
+    parser.add_argument("--validate", action="store_true", help="Validate v3.3 schema compliance")
     parser.add_argument("--list-languages", action="store_true", help="List supported output languages")
     
     args = parser.parse_args()
@@ -685,21 +768,21 @@ Examples:
     )
     
     # Always validate in v3.2 (show warnings)
-    is_valid, issues = validate_v32_persona(yaml_content)
+    is_valid, issues = validate_v33_persona(yaml_content)
     if not is_valid:
-        print("⚠️  v3.2 Schema Validation Issues:")
+        print("⚠️  v3.3 Schema Validation Issues:")
         for issue in issues:
             print(f"   - {issue}")
         print()
     else:
-        print("✅ v3.2 Schema Validation: PASSED")
+        print("✅ v3.3 Schema Validation: PASSED")
         print()
     
     if args.print_only:
         print(yaml_content)
     else:
         filepath = save_persona(yaml_content, args.name, args.lang, args.output_dir)
-        print(f"✅ Persona v3.2 saved to: {filepath}")
+        print(f"✅ Persona v3.3 saved to: {filepath}")
         print()
         print("=" * 60)
         print(yaml_content)
