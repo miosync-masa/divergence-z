@@ -579,38 +579,60 @@ def _research_character(client, name: str, source: str, description: str,
     Uses tool_choice to FORCE the model to perform web searches.
     """
     
-    research_prompt = f"""You MUST use the web_search tool to research this character. 
-Do NOT answer from memory. Your task is ONLY to search and report findings.
+    research_prompt = f"""You are researching a character to build a high-resolution persona YAML 
+for Z-axis translation. Web search is essential here for a specific reason:
+
+**WHY SEARCH MATTERS:**
+The persona YAML includes `example_response` fields that serve as ground truth for translation.
+If these are generated from your memory alone, they become "plausible fabrications" — lines the 
+character MIGHT say but never actually said. When a translator uses these as reference points, 
+they end up matching a fictional version of the character, not the canonical one.
+
+Web search lets you ground these in actual dialogue, wiki-documented speech patterns, and 
+verified character details. The difference is:
+- Without search: example_response = "sounds like them" (your creative guess)  
+- With search: example_response = "IS them" (grounded in canon)
+
+Similarly, fine details like exact first-person pronoun variants, specific catchphrases and their 
+frequency, likes/dislikes, and relationship dynamics are often subtly wrong in LLM memory. 
+A wiki or fan database will have the precise, verified version.
+
+**YOUR TASK:**
+Research this character via web search and report your findings.
 
 Character: {name}
 Source: {source}
 Description: {description}
 
-Execute these searches IN ORDER:
-1. Search: "{name} {source} wiki"
-2. Search: "{name} 一人称 speech patterns"  
-3. Search: "{name} {source} personality hobbies likes"
+Execute these searches:
+1. Search: "{name} {source} wiki" — background, personality, relationships
+2. Search: "{name} 一人称 speech patterns" — first-person pronoun variants (ALL of them, including rare/extreme-state ones), sentence endings, catchphrases
+3. Search: "{name} {source} personality hobbies likes" — identity details, what they enjoy
 
-After ALL searches are complete, compile your findings into this format:
+After searching, compile findings into this format:
 
 ## Background
-(from search results)
+(from search results — history, role, key events)
 
 ## Speech Patterns  
-(first-person pronoun and ALL variants with contexts, sentence endings, catchphrases)
+(first-person pronoun and ALL variants with contexts, sentence endings, catchphrases, actual dialogue quotes when available)
 
 ## Personality & Identity
-(likes, dislikes, hobbies, joys, personality traits)
+(likes, dislikes, hobbies, joys, personality traits — with specific details from sources)
 
 ## Key Relationships
-(important relationships and dynamics)
+(important relationships and dynamics — with specific examples)
 
 ## Emotional Patterns
-(how they react under stress, what triggers them)
+(how they react under stress, what triggers them positively/negatively)
+
+## Notable Quotes
+(actual canonical dialogue lines that capture the character's voice — these will be used for example_response grounding)
 
 IMPORTANT: For first_person_variants, find ALL variants including ones used only in 
 extreme emotional states. Characters who use third-person self-reference may revert 
-to standard first-person pronouns under emotional extremity.
+to standard first-person pronouns under emotional extremity — this switch is a critical 
+translation signal.
 
 Only include information you actually found in search results. Do NOT invent details."""
 
@@ -620,9 +642,13 @@ Only include information you actually found in search results. Do NOT invent det
     api_kwargs = {
         "model": model,
         "max_tokens": 4000,
-        "system": "You are a research assistant. You MUST use the web_search tool for EVERY request. "
-                  "NEVER answer from your own knowledge alone. Always search first, then summarize findings. "
-                  "Perform at least 2 separate searches before answering.",
+        "system": "You are a research assistant for anime/manga persona generation. "
+                  "Your research will be used to build persona YAMLs for Z-axis translation, "
+                  "where example_response fields must be grounded in canonical dialogue, not fabricated. "
+                  "Web search is essential because even well-known characters have subtle details "
+                  "(pronoun variants, specific catchphrase frequency, exact relationship dynamics) "
+                  "that LLM training data often gets slightly wrong. "
+                  "Always search first, then compile verified findings.",
         "tools": [
             {
                 "type": "web_search_20250305",
