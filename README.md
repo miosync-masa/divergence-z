@@ -193,7 +193,7 @@ python persona_generator.py \
   --output-dir ./personas
 
 # Translate with Z-axis preservation
-python z_axis_translate.py --config requests/rem_test.yaml
+python z_axis_translate.py --config requests/rem_test_a_suki.yaml
 
 # Evaluate
 python iap_evaluator.py -o "スバルくんが良いんです" -t "You're the one I choose, Subaru-kun"
