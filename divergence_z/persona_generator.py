@@ -313,7 +313,7 @@ emotion_states:
     surface_markers_hint:
       hesitation: 0-4
       stutter_count: 0-4
-      negation_first: true/false
+      negation_type: "none / concealment / counter / declaration"
       overwrite: "none / optional / required"
       residual: "none / optional / required"
       tone: "声の質の説明"
@@ -322,7 +322,9 @@ emotion_states:
       - "stutter"       # 言い淀み「I— I...」
       - "ellipsis"      # 途切れ「...」
       - "repetition"    # 繰り返し「nobody— nobody」
-      - "negation_first" # 否定先行「N-not that...」
+      - "negation_concealment"  # 隠蔽否定「N-not that it's for you...」(ツンデレ型)
+      - "negation_counter"      # 反論否定「No— that's not true!」(献身型)
+      - "negation_declaration"  # 宣言否定「I won't—!」(意志型)
       - "overwrite"     # 上書き「I mean—」
       - "trailing"      # 尻すぼみ「...I guess」
       - "self_negation" # 自己否定
@@ -480,7 +482,7 @@ arc_defaults:
 - z_mode determines the TYPE of breakdown
 - z_leak determines the MARKERS of that breakdown
 - Characters who DON'T hesitate should have hesitation: 0
-- Characters who use denial should have negation_first: true
+- Characters who use denial should specify negation_type: "concealment" (hide feelings), "counter" (deny other's claim), or "declaration" (assert will)
 - age_expression_rules should match the character's mental_maturity
 - A character's RECOVERY behavior is just as important as their BREAKDOWN behavior for translation"""
 
