@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Z-Axis Translation System v3.0 (Step1/2/3) — OpenAI Responses API版
+Z-Axis Translation System v3.1 (Step1/2/3) — OpenAI Responses API版
 Operation: Babel Inverse — 「神の呪いを逆算せよ」
+
+v3.1 Changes:
+- Episode Memory integration (persona = 人格, episode = 記憶)
+- episode_file support in request YAML
+- Relevant episode extraction based on scene/context matching
+- STEP1: Episode context for deeper WHY analysis (character motivation)
+- STEP3: z_relevance + canonical_quotes for HOW translation guidance
+- Smart episode scoring: translation_critical > emotional_impact > keyword match
+- episodes/ directory auto-discovery
 
 v3.0 Changes:
 - z decomposition: z + z_mode + z_leak + z_confidence
@@ -127,8 +136,13 @@ STEP1_SCHEMA: Dict[str, Any] = {
         },
         "triggers": {"type": "array", "items": {"type": "string"}},
         "risk_flags": {"type": "array", "items": {"type": "string"}},
+        "activated_episodes": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Episode IDs from the episode menu that are relevant to understanding this utterance. Select 0-5 most relevant episodes.",
+        },
     },
-    "required": ["layer_a", "layer_b", "activated_conflicts", "bias", "arc", "triggers", "risk_flags"],
+    "required": ["layer_a", "layer_b", "activated_conflicts", "bias", "arc", "triggers", "risk_flags", "activated_episodes"],
 }
 
 STEP2_SCHEMA: Dict[str, Any] = {
@@ -432,6 +446,179 @@ def format_arc_defaults(arc_defaults: Dict[str, Any]) -> str:
 
 
 # -----------------------------
+# Episode Memory Functions v1.0
+# -----------------------------
+
+def load_episode_data(episode_path: str) -> Dict[str, Any]:
+    """
+    Episode YAMLファイルを読み込む。
+    """
+    with open(episode_path, 'r', encoding='utf-8') as f:
+        return yaml.safe_load(f)
+
+
+def format_episode_menu(episode_data: Dict[str, Any]) -> str:
+    """
+    STEP1用: エピソードの「メニュー」をコンパクトに生成。
+    LLMがこのメニューを見て、どのエピソードが関連するか判断する。
+    
+    ※ エピソード選択はLLMが行う。Pythonによる機械的キーワードマッチは使わない。
+    """
+    episodes = episode_data.get("episodes", [])
+    if not episodes:
+        return ""
+    
+    lines = ["## EPISODE MEMORY MENU"]
+    lines.append("Select which episodes are relevant to understanding THIS utterance.")
+    lines.append("Return their episode_id values in the activated_episodes field.\n")
+    
+    for ep in episodes:
+        ep_id = ep.get("episode_id", "")
+        title = ep.get("title", "")
+        timeline = ep.get("timeline", "")
+        impact = ep.get("emotional_impact", "")
+        # 1行サマリー（最初の一文のみ、80文字制限）
+        summary = ep.get("summary", "").strip().split("\n")[0][:80]
+        lines.append(f"- {ep_id}: {title} [{timeline}] ({impact}) — {summary}")
+    
+    return "\n".join(lines)
+
+
+def lookup_episodes_by_ids(
+    episode_data: Dict[str, Any],
+    episode_ids: List[str],
+) -> List[Dict[str, Any]]:
+    """
+    STEP1が選んだepisode_idsに基づいて、エピソードの詳細情報をルックアップ。
+    
+    ※ これは辞書引き（IDベースのルックアップ）なので機械処理で問題ない。
+       エピソードの「選択」はSTEP1のLLMが行っている。
+    """
+    episodes = episode_data.get("episodes", [])
+    id_set = set(episode_ids)
+    return [ep for ep in episodes if ep.get("episode_id") in id_set]
+
+
+def format_episode_for_step1(
+    relevant_episodes: List[Dict[str, Any]],
+    episode_data: Dict[str, Any],
+) -> str:
+    """
+    STEP1用: エピソード記憶をキャラクター理解のコンテキストとしてフォーマット。
+    WHY this character feels this way — 感情の根拠を提供。
+    
+    ※ この関数はSTEP1がactivated_episodesを選択した後、
+       STEP3への情報として使う。STEP1自体にはメニューのみ渡す。
+    """
+    if not relevant_episodes:
+        return ""
+    
+    lines = ["## CHARACTER MEMORY (Episode Context)"]
+    lines.append("The following episodes from the character's past are relevant to understanding")
+    lines.append("WHY they feel the way they do in this scene:\n")
+    
+    for ep in relevant_episodes:
+        ep_id = ep.get("episode_id", "")
+        title = ep.get("title", "")
+        summary = ep.get("summary", "").strip()
+        impact = ep.get("emotional_impact", "")
+        
+        lines.append(f"### {title} [{impact}]")
+        lines.append(summary)
+        
+        # character_state_change があれば追加
+        state_change = ep.get("character_state_change", {})
+        if state_change:
+            perm = state_change.get("permanent", "")
+            if perm:
+                lines.append(f"  → Permanent effect: {perm}")
+        
+        lines.append("")
+    
+    # cross_episode_arcs の translation_implications
+    arcs = episode_data.get("cross_episode_arcs", [])
+    relevant_arc_ids = {ep.get("episode_id") for ep in relevant_episodes}
+    
+    for arc in arcs:
+        involved = set(arc.get("involved_episodes", []))
+        if involved & relevant_arc_ids:
+            impl = arc.get("translation_implications", "").strip()
+            if impl:
+                lines.append(f"### Arc: {arc.get('arc_title', '')}")
+                lines.append(impl)
+                lines.append("")
+    
+    return "\n".join(lines)
+
+
+def format_episode_for_step3(
+    relevant_episodes: List[Dict[str, Any]],
+    episode_data: Dict[str, Any],
+) -> str:
+    """
+    STEP3用: 翻訳に直接影響するz_relevanceとcanonical_quotesをフォーマット。
+    HOW to translate — 翻訳判断の具体的根拠を提供。
+    """
+    if not relevant_episodes:
+        return ""
+    
+    lines = ["## EPISODE MEMORY (Translation Guidance)"]
+    lines.append("Use the following episode-specific translation guidance.\n")
+    
+    for ep in relevant_episodes:
+        title = ep.get("title", "")
+        z_rel = ep.get("z_relevance", "").strip()
+        
+        if z_rel:
+            lines.append(f"### {title}")
+            lines.append(f"[Translation Relevance] {z_rel}")
+        
+        # canonical_quotes (verified: true のみ翻訳参照用)
+        quotes = ep.get("canonical_quotes", [])
+        verified_quotes = [q for q in quotes if q.get("verified") is True]
+        if verified_quotes:
+            lines.append("[Verified Canonical Quotes]")
+            for q in verified_quotes[:3]:
+                quote_text = q.get("quote", "")
+                context = q.get("context", "")
+                lines.append(f'  - "{quote_text}" ({context})')
+        
+        lines.append("")
+    
+    # memory_integration の persona_connections
+    memory_int = episode_data.get("memory_integration", {})
+    connections = memory_int.get("persona_connections", [])
+    relevant_ep_ids = {ep.get("episode_id") for ep in relevant_episodes}
+    
+    relevant_connections = []
+    for conn in connections:
+        conn_eps = set(conn.get("related_episodes", []))
+        if conn_eps & relevant_ep_ids:
+            relevant_connections.append(conn)
+    
+    if relevant_connections:
+        lines.append("### Persona↔Episode Connections")
+        for conn in relevant_connections:
+            element = conn.get("persona_element", "")
+            note = conn.get("integration_note", "").strip()
+            if note:
+                lines.append(f"  [{element}]")
+                lines.append(f"  {note}")
+        lines.append("")
+    
+    # translation_critical_episodes のリーズン
+    tc_episodes = memory_int.get("translation_critical_episodes", [])
+    relevant_tc = [tc for tc in tc_episodes if tc.get("episode") in relevant_ep_ids]
+    if relevant_tc:
+        lines.append("### Translation-Critical Notes")
+        for tc in relevant_tc:
+            lines.append(f"  - {tc.get('episode', '')}: {tc.get('reason', '')}")
+        lines.append("")
+    
+    return "\n".join(lines)
+
+
+# -----------------------------
 # Config loader
 # -----------------------------
 
@@ -439,6 +626,7 @@ def load_config(config_path: str) -> Dict[str, Any]:
     """
     YAML設定ファイルを読み込む。
     persona_file が指定されていればそのファイルも読み込んでマージする。
+    episode_file が指定されていればエピソードデータも読み込む。
     """
     config_path = Path(config_path)
     
@@ -456,6 +644,25 @@ def load_config(config_path: str) -> Dict[str, Any]:
     
     elif 'persona' in config:
         config['persona_yaml'] = yaml.dump(config['persona'], allow_unicode=True, default_flow_style=False)
+    
+    # Episode file loading (v1.0)
+    if 'episode_file' in config and config['episode_file']:
+        episode_path = config_path.parent / config['episode_file']
+        if not episode_path.exists():
+            # Try episodes/ subdirectory
+            episode_path = config_path.parent / "episodes" / config['episode_file']
+        if not episode_path.exists():
+            # Try absolute path
+            episode_path = Path(config['episode_file'])
+        
+        if episode_path.exists():
+            config['episode_data'] = load_episode_data(str(episode_path))
+            print(f"📖 Episode loaded: {episode_path.name} ({config['episode_data'].get('meta', {}).get('total_episodes', '?')} episodes)")
+        else:
+            print(f"⚠️ Episode file not found: {config['episode_file']} (continuing without episode context)")
+            config['episode_data'] = {}
+    else:
+        config['episode_data'] = {}
     
     return config
 
@@ -553,7 +760,7 @@ class ClaudeTranslationClient:
         model: str = CLAUDE_MODEL,
         system_prompt: str,
         user_prompt: str,
-        max_tokens: int = 1500,
+        max_tokens: int = 3000,
         temperature: float = 1.0,
     ) -> Dict[str, Any]:
         """
@@ -633,6 +840,7 @@ def build_step1_messages(
     target_lang: str, 
     z_axis_intensity: str,
     arc_defaults_text: str = "",
+    episode_context: str = "",
 ) -> List[Dict[str, str]]:
     system = f"""You are STEP1 Hamiltonian Extractor for Z-Axis Translation v3.0.
 
@@ -677,6 +885,8 @@ Hypotheses that CANNOT be directly proven from text:
 ## ARC DETECTION
 Identify which arc pattern this utterance belongs to and its phase.
 {arc_defaults_text}
+
+{episode_context}
 
 Output MUST follow the provided JSON schema. Do NOT include chain-of-thought.
 """
@@ -746,6 +956,7 @@ def build_step3_messages(
     target_lang: str,
     persona_dict: Optional[Dict[str, Any]] = None,
     arc_position: int = 1,
+    episode_translation_context: str = "",
 ) -> List[Dict[str, str]]:
     """
     STEP3プロンプトを構築（v3.0対応版）。
@@ -854,6 +1065,8 @@ Goal: Translate TARGET into the target language while preserving:
 [KNOWN TRIGGERS]
 {trigger_text}
 
+{episode_translation_context}
+
 ## z_leak MARKER APPLICATION
 Apply the z_leak markers from STEP2 to realize the breakdown pattern:
 - stutter: "I— I..." or "N-no..."
@@ -914,10 +1127,18 @@ def z_axis_translate(
     z_axis_intensity: str,
     dry_run: bool = False,
     arc_position: int = 1,
+    episode_data: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
     """
-    Z軸翻訳を実行する（v3.0）。
+    Z軸翻訳を実行する（v3.0 + Episode Memory v1.0）。
     STEP1（Layer A/B抽出）→ STEP2（干渉縞分析）→ STEP3（翻訳生成）
+    
+    episode_data が提供されている場合:
+    - STEP1: エピソードメニュー（コンパクト一覧）を見てLLMがactivated_episodesを選択
+    - Python: activated_episodes IDで辞書引き → 詳細情報取得
+    - STEP3: z_relevance + canonical_quotes を翻訳ガイダンスとして注入
+    
+    ※ エピソードの選択判断はLLMが行う。Pythonは辞書引き（IDルックアップ）のみ。
     """
     # persona_yamlをパースしてv3.0機能を抽出
     try:
@@ -929,11 +1150,20 @@ def z_axis_translate(
     v3_features = extract_v3_features(persona_dict)
     arc_defaults_text = format_arc_defaults(v3_features.get("arc_defaults", {}))
     
-    # STEP1: Layer A/B 抽出
+    # Episode Memory: メニュー生成（STEP1でLLMが選択する）
+    episode_menu = ""
+    has_episodes = episode_data and episode_data.get("episodes")
+    if has_episodes:
+        episode_menu = format_episode_menu(episode_data)
+        ep_count = len(episode_data.get("episodes", []))
+        print(f"📖 Episode menu prepared: {ep_count} episodes available for STEP1 selection")
+    
+    # STEP1: Layer A/B 抽出 + エピソード選択（LLM判断）
     s1_msgs = build_step1_messages(
         persona_yaml, scene, relationship, context_block, 
         target_line, target_lang, z_axis_intensity,
         arc_defaults_text,
+        episode_context=episode_menu,
     )
     s1_payload, step1 = client.create_structured(
         model=model,
@@ -946,6 +1176,19 @@ def z_axis_translate(
     )
     if dry_run:
         return {"step1_request": s1_payload}
+
+    # Episode Memory: STEP1のLLM判断に基づくIDルックアップ（辞書引き）
+    episode_context_step3 = ""
+    if has_episodes:
+        activated_ids = step1.get("activated_episodes", [])
+        if activated_ids:
+            relevant_eps = lookup_episodes_by_ids(episode_data, activated_ids)
+            episode_context_step3 = format_episode_for_step3(relevant_eps, episode_data)
+            print(f"🎭 STEP1 selected {len(activated_ids)} episodes (LLM judgment):")
+            for eid in activated_ids:
+                print(f"   → {eid}")
+        else:
+            print("📖 STEP1 selected no episodes for this scene")
 
     # STEP2: 干渉縞分析
     s2_msgs = build_step2_messages(step1, target_line, target_lang, z_axis_intensity, relationship)
@@ -964,6 +1207,7 @@ def z_axis_translate(
         step1, step2, target_line, target_lang, 
         persona_dict=persona_dict,
         arc_position=arc_position,
+        episode_translation_context=episode_context_step3,
     )
     
     if USE_CLAUDE_FOR_STEP3:
@@ -1145,6 +1389,7 @@ Examples:
             target_lang=config['target_lang'],
             z_axis_intensity=z_intensity,
             dry_run=args.dry_run,
+            episode_data=config.get('episode_data', {}),
         )
     else:
         z_intensity = args.intensity or DEMO_Z_INTENSITY
