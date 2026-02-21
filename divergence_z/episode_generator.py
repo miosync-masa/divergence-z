@@ -27,7 +27,7 @@ Options:
   --no-search     Skip web search (LLM knowledge only)
   --no-wait       Skip rate limit sleep (Tier 2+ API)
   --sequel        Include sequel/spinoff episodes
-  --max-episodes N  Maximum episodes to generate (default: 15)
+  --max-episodes N  Maximum episodes to generate (default: 20, max: 30)
   --persona FILE  Path to existing persona YAML for context
 """
 
@@ -198,7 +198,7 @@ USE this context to ensure episode accuracy and canonical quote fidelity.
 def build_user_prompt(name: str, source: str, description: str, 
                       output_lang: str, search_context: str = "",
                       persona_context: str = "",
-                      max_episodes: int = 15,
+                      max_episodes: int = 20,
                       include_sequel: bool = False) -> str:
     """Build user prompt for episode generation."""
     lang_name = SUPPORTED_LANGUAGES.get(output_lang, output_lang)
@@ -356,7 +356,7 @@ Only include information you actually found in search results."""
     # (Same triple-force pattern that solved persona_generator search 0 problem)
     api_kwargs = {
         "model": model,
-        "max_tokens": 7000,
+        "max_tokens": 10000,
         "system": "You are a research assistant. You MUST use the web_search tool for EVERY request. "
                   "NEVER answer from your own knowledge alone. Always search first, then summarize findings. "
                   "Perform at least 2 separate searches before answering.",
@@ -412,7 +412,7 @@ def generate_episodes(name: str, source: str, description: str,
                       no_search: bool = False,
                       no_wait: bool = False,
                       include_sequel: bool = False,
-                      max_episodes: int = 25,
+                      max_episodes: int = 20,
                       persona_path: str = "") -> str:
     """Generate Episode Memory YAML using Claude API.
     
@@ -434,7 +434,7 @@ def generate_episodes(name: str, source: str, description: str,
         persona_path: Path to companion persona YAML for context
     """
     
-    client = Anthropic()
+    client = Anthropic(timeout=600.0)  # 10 minutes
     
     lang_name = SUPPORTED_LANGUAGES.get(output_lang, output_lang)
     print(f"📖 Generating Episode Memory v1.0 for: {name} ({source})")
@@ -492,7 +492,7 @@ def generate_episodes(name: str, source: str, description: str,
     
     api_kwargs = {
         "model": model,
-        "max_tokens": 16000 if thinking_budget > 0 else 8000,
+        "max_tokens": 32000 if thinking_budget > 0 else 16000,
         "system": system_prompt,
         "messages": [
             {"role": "user", "content": user_prompt}
@@ -505,11 +505,14 @@ def generate_episodes(name: str, source: str, description: str,
             "budget_tokens": thinking_budget
         }
     
-    response = client.messages.create(**api_kwargs)
+    # Use streaming for long operations (required when >10min)
+    yaml_content = ""
+    
+    with client.messages.stream(**api_kwargs) as stream:
+        full_response = stream.get_final_message()
     
     # Extract YAML from response (skip thinking blocks)
-    yaml_content = ""
-    for block in response.content:
+    for block in full_response.content:
         if block.type == "text":
             yaml_content = block.text  # Last text block wins
     
@@ -608,11 +611,17 @@ def validate_episode_yaml(yaml_content: str) -> tuple:
     
     if "timelines" in data:
         for tl in data["timelines"]:
+            if not isinstance(tl, dict):
+                issues.append(f"Timeline entry is not a dict (got {type(tl).__name__})")
+                continue
             if "episodes" in tl and tl["episodes"]:
                 has_episodes = True
                 episode_count += len(tl["episodes"])
                 
                 for ep in tl["episodes"]:
+                    if not isinstance(ep, dict):
+                        issues.append(f"Episode entry is not a dict (got {type(ep).__name__})")
+                        continue
                     ep_id = ep.get("episode_id", "unknown")
                     
                     # Check required fields
@@ -628,6 +637,9 @@ def validate_episode_yaml(yaml_content: str) -> tuple:
                     # Check canonical quotes format
                     if "canonical_quotes" in ep:
                         for q in ep["canonical_quotes"]:
+                            if not isinstance(q, dict):
+                                issues.append(f"Episode '{ep_id}': quote is not a dict")
+                                continue
                             if "quote" not in q:
                                 issues.append(f"Episode '{ep_id}': quote missing 'quote' field")
     
@@ -641,6 +653,9 @@ def validate_episode_yaml(yaml_content: str) -> tuple:
     # Check arcs
     if "arcs" in data and data["arcs"]:
         for arc in data["arcs"]:
+            if not isinstance(arc, dict):
+                issues.append(f"Arc entry is not a dict (got {type(arc).__name__}: {str(arc)[:50]})")
+                continue
             if "arc_id" not in arc:
                 issues.append("Arc missing arc_id")
             if "episodes" not in arc:
@@ -697,8 +712,8 @@ Examples:
                         help="Skip rate limit sleep (Tier 2+)")
     parser.add_argument("--sequel", action="store_true",
                         help="Include sequel/spinoff episodes")
-    parser.add_argument("--max-episodes", type=int, default=25,
-                        help="Maximum episodes to generate (default: 25)")
+    parser.add_argument("--max-episodes", type=int, default=20,
+                        help="Maximum episodes to generate (default: 20, max: 30)")
     parser.add_argument("--persona", default="",
                         help="Path to companion persona YAML")
     parser.add_argument("--output", "-o", default="",
@@ -717,7 +732,7 @@ Examples:
         no_search=args.no_search,
         no_wait=args.no_wait,
         include_sequel=args.sequel,
-        max_episodes=args.max_episodes,
+        max_episodes=min(args.max_episodes, 30),
         persona_path=args.persona,
     )
     
@@ -744,6 +759,18 @@ Examples:
             output_path = f"{safe_name}_Episode.yaml"
     
     # Write output
+    has_parse_error = any("YAML parse error" in issue for issue in issues)
+    
+    if has_parse_error:
+        # パースエラー = Context限界で切れた可能性大
+        broken_path = output_path.replace(".yaml", "_BROKEN.yaml")
+        with open(broken_path, 'w', encoding='utf-8') as f:
+            f.write(yaml_content)
+        print(f"\n❌ YAML parse error detected — file may be truncated (context limit?)")
+        print(f"   Broken file saved as: {broken_path}")
+        print(f"   ↳ Fix manually or re-run with fewer episodes (--max-episodes)")
+        return 1
+    
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(yaml_content)
     

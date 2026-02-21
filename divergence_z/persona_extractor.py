@@ -584,7 +584,7 @@ Output ONLY valid YAML."""
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt},
             ],
-            "max_output_tokens": 16000,
+            "max_output_tokens": 65536,
         }
         
         # reasoning対応モデルの場合
@@ -654,7 +654,7 @@ Output ONLY valid YAML."""
             "input_characters": len(source_text),
         }
     
-    def _poll_background(self, response_id: str, max_wait: int = 600) -> Dict[str, Any]:
+    def _poll_background(self, response_id: str, max_wait: int = 1800) -> Dict[str, Any]:
         """バックグラウンドジョブをポーリング"""
         import requests
         
