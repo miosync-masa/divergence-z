@@ -10,8 +10,8 @@ v1.1 Changes:
 - Trigger granularity guidance for extraction
 - Evidence-based trigger extraction from source text
 
-2026年Style: RAG? Chunking? I don't know.
-400K context ALL input!
+2025年スタイル: RAG? チャンク分割? 知らない子ですね。
+400K context に全部ドーン！！
 
 Usage:
     # 基本
@@ -240,17 +240,7 @@ persona:
   name_native: "原語での名前"
   source: "作品名"
   type: "キャラクタータイプ"
-  profile:
-    background: |
-      生い立ち、環境、経歴（{lang_name}）。
-      conflict_axesの「なぜ」が理解できるレベルで。
-    personality_core: |
-      性格の核。biasパターンの根拠（{lang_name}）。
-    key_relationships:
-      - target: "相手名"
-        dynamic: "関係性の力学"
-    narrative_role: |
-      物語上の機能・成長の方向性（{lang_name}）。
+  summary: "1-2文の概要（{lang_name}）"
 ```
 
 ### IDENTITY_CORE (I₀ — 存在の核) — NEW in v3.3
@@ -363,7 +353,7 @@ emotion_states:
     surface_markers_hint:
       hesitation: 0-4
       stutter_count: 0-4
-      negation_type: "none / concealment / counter / declaration"
+      negation_first: true/false
       overwrite: "none/optional/required"
       residual: "none/optional/required"
       tone: "声の質"
@@ -486,7 +476,7 @@ For the line: 「べ、別にあんたのためじゃないわよ」
 1. **Observe**: Stutter on べ, denial pattern, わよ ending
 2. **Classify**: tsundere_denial state, z_mode=leak
 3. **Context**: Said when caught showing care
-4. **Pattern**: negation_type="concealment", stutter_count=1
+4. **Pattern**: negation_first=true, stutter_count=1
 5. **Document**: Add to emotion_states and example_lines
 
 For positive trigger extraction:
@@ -745,21 +735,7 @@ def validate_v33_persona(yaml_text: str) -> tuple[bool, list[str]]:
             "identity_core.essence is REQUIRED — a 1-2 sentence description of "
             "who this character is, independent of their conflicts."
         )
-        
-    # === PROFILE CHECK ===
-    persona_info = data.get("persona", {})
-    profile = persona_info.get("profile", {})
-    if not profile:
-        if persona_info.get("summary"):
-            issues.append(
-                "v3.3 prefers persona.profile over persona.summary. "
-                "profile should include: background, personality_core, key_relationships, narrative_role"
-            )
-        else:
-            issues.append("persona.profile is required in v3.3")
-    elif not profile.get("background"):
-        issues.append("persona.profile.background is required")
-        
+    
     # Check language structure
     language_data = data.get("language", {})
     osp = language_data.get("original_speech_patterns", {})
