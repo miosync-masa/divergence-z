@@ -1,0 +1,936 @@
+# ============================================================
+# EPISODE MEMORY YAML v1.0
+# Character: 牧瀬紅莉栖 (Makise Kurisu)
+# Source: STEINS;GATE
+# Generated for Divergence-Z Translation System
+# ============================================================
+
+meta:
+  version: "1.0"
+  generated_by: "episode_memory_generator"
+  character_id: "makise_kurisu"
+  source: "STEINS;GATE"
+  output_lang: "ja"
+  episode_count: 18
+  timeline_structure: "multi_worldline"
+  confidence_note: |
+    エピソードはオリジナル作品（ゲーム・アニメ）に基づく。
+    canonical_quotesは可能な限り原典に忠実だが、
+    一部は [unverified] マークで近似表現を示す。
+
+episodes:
+  # ============================================================
+  # 過去のトラウマ
+  # ============================================================
+  - episode_id: "fathers_rejection"
+    timeline: "共通過去"
+    chronological_order: 1
+    title: "生まれてこなければよかった"
+    source_episode: "各種回想・Episode 22"
+    summary: |
+      幼少期、神童として注目を浴びていた紅莉栖は、父・牧瀬章一から才能を妬まれていた。
+      ある日、父から「お前なんか生まれてこなければよかった」と言われる。
+      この一言が、紅莉栖の自己肯定感を根底から破壊し、
+      「自分は存在していいのか」という問いを生涯抱えることになる。
+      以降、父との関係は断絶し、母と共にアメリカへ移住。
+    participants:
+      - name: "牧瀬章一"
+        role: "父親・加害者"
+        relationship: "断絶した父娘関係"
+    emotional_impact: "critical"
+    emotional_detail: |
+      存在の根幹を否定されたトラウマ。
+      科学への情熱の一部は、父に認められたいという無意識の欲求から来ている。
+      他者からの承認を渇望しながらも、素直に受け入れられない性格形成の原点。
+    canonical_quotes:
+      - quote: "お前なんか生まれてこなければよかった"
+        speaker: "牧瀬章一"
+        context: "幼い紅莉栖に対して"
+        z_mode: "trauma_origin"
+        translation_note: "紅莉栖の全ての自己否定的傾向の根源。この言葉のエコーは作中随所に現れる"
+    z_relevance: |
+      紅莉栖の自己否定的な発言（「私なんか...」「いなくても...」）は全てこのトラウマに起因。
+      翻訳時、これらの発言には単なる謙遜ではない、存在論的な重みがあることを意識する。
+      存在を肯定される場面での過剰反応も、この原体験への応答として理解すべき。
+    character_state_change:
+      before: "父に愛されている（と信じていた）天才少女"
+      after: "存在を否定された、承認に飢えた少女"
+      permanent: "自己肯定感の欠如、防衛的な知的武装の獲得"
+    tags:
+      - "trauma_origin"
+      - "father_complex"
+      - "existence_denial"
+      - "formative_wound"
+
+  # ============================================================
+  # 本編開始〜ラボ加入
+  # ============================================================
+  - episode_id: "first_encounter_radio_kaikan"
+    timeline: "β世界線（物語冒頭）"
+    chronological_order: 2
+    title: "謎の男に掴まれた手"
+    source_episode: "Episode 1"
+    summary: |
+      ラジオ会館で開催される中鉢博士（父）のタイムマシン講演に向かう途中、
+      見知らぬ男（岡部倫太郎）に突然腕を掴まれ、
+      「さっき俺に何を言おうとしていた」と詰め寄られる。
+      紅莉栖には全く心当たりがなく、困惑するばかり。
+      この時点で岡部は「血まみれの紅莉栖」を見た直後の状態だが、
+      紅莉栖自身はそのことを知らない。
+    participants:
+      - name: "岡部倫太郎"
+        role: "未来から来た記憶を持つ男（紅莉栖視点では不審者）"
+        relationship: "初対面"
+    emotional_impact: "medium"
+    emotional_detail: |
+      困惑と警戒。見知らぬ男が何故自分を知っているのか理解できない。
+      しかし、どこか既視感のような奇妙な感覚も抱く。
+    canonical_quotes:
+      - quote: "あの、どちら様ですか？"
+        speaker: "牧瀬紅莉栖"
+        context: "岡部に腕を掴まれて"
+        z_mode: "confusion"
+      - quote: "さっき俺に何を言おうとしていた"
+        speaker: "岡部倫太郎"
+        context: "紅莉栖に詰め寄る"
+        z_mode: "desperation"
+    z_relevance: |
+      紅莉栖と岡部の関係の始点。後に「運命」として語られる出会い。
+      翻訳時、紅莉栖の困惑には「不審」だけでなく「奇妙な引っかかり」の
+      ニュアンスを含めることで、二人の繋がりの伏線を維持する。
+    character_state_change:
+      before: "父の講演を聞きに来た科学者"
+      after: "奇妙な男との遭遇を経験した状態"
+      permanent: "岡部との縁の始まり"
+    tags:
+      - "first_meeting"
+      - "fate"
+      - "beta_worldline"
+      - "confusion"
+
+  - episode_id: "confrontation_after_lecture"
+    timeline: "α世界線"
+    chronological_order: 3
+    title: "タイムマシンなど存在しない"
+    source_episode: "Episode 1-2"
+    summary: |
+      中鉢博士のタイムマシン講演後、紅莉栖は岡部と再会。
+      岡部が「タイムマシンは実在する」と主張するのに対し、
+      紅莉栖は科学者として論理的に反論する。
+      しかし、岡部の言葉のどこかに引っかかるものを感じ、
+      結局、彼のいる「未来ガジェット研究所」を訪れることになる。
+    participants:
+      - name: "岡部倫太郎"
+        role: "狂気じみた主張をする男"
+        relationship: "知的興味の対象"
+    emotional_impact: "low"
+    emotional_detail: |
+      科学者としての矜持から反論するが、
+      内心では岡部の「何か」に興味を惹かれている。
+      知的好奇心の発動。
+    canonical_quotes:
+      - quote: "タイムマシンの実現には、11次元の超ひも理論でも解決できない問題が山積してるのよ"
+        speaker: "牧瀬紅莉栖"
+        context: "岡部に対する科学的反論"
+        z_mode: "intellectual_assertion"
+      - quote: "[unverified] 面白い...少しだけ、興味があるわ"
+        speaker: "牧瀬紅莉栖"
+        context: "岡部の主張に引っかかりを感じて"
+        z_mode: "curiosity_leak"
+    z_relevance: |
+      紅莉栖の「科学者としての自己」が全面に出る場面。
+      翻訳時、論理的な語彙と構文を維持しつつ、
+      好奇心の「漏出」を適切に表現する。
+    character_state_change:
+      before: "見知らぬ変人への警戒"
+      after: "知的興味の対象としての認識"
+      permanent: "ラボへの関与の始まり"
+    tags:
+      - "scientific_debate"
+      - "curiosity"
+      - "first_connection"
+
+  - episode_id: "phone_microwave_discovery"
+    timeline: "α世界線"
+    chronological_order: 4
+    title: "電話レンジ（仮）の謎"
+    source_episode: "Episode 2-3"
+    summary: |
+      未来ガジェット研究所を訪れた紅莉栖は、
+      「電話レンジ（仮）」がバナナをゲル化させる現象を目撃する。
+      科学者として説明不可能な現象に遭遇し、
+      知的好奇心が爆発的に高まる。
+      「これは...本当に起きていることなの？」
+      既存の物理学では説明できない現象への興奮と困惑。
+    participants:
+      - name: "岡部倫太郎"
+        role: "ガジェット開発者"
+        relationship: "研究協力者へ移行中"
+      - name: "橋田至"
+        role: "ラボメン"
+        relationship: "初対面"
+    emotional_impact: "medium"
+    emotional_detail: |
+      科学者としての興奮。未知の現象への純粋な知的欲求。
+      「これを解明したい」という衝動が、ラボへの関与を決定づける。
+    canonical_quotes:
+      - quote: "ゲルバナナ...？ これは一体どういう..."
+        speaker: "牧瀬紅莉栖"
+        context: "ゲル化したバナナを見て"
+        z_mode: "intellectual_shock"
+      - quote: "[unverified] 物理的にありえない...でも、現に目の前で起きている"
+        speaker: "牧瀬紅莉栖"
+        context: "現象を分析しようとして"
+        z_mode: "scientific_fascination"
+    z_relevance: |
+      紅莉栖が「科学的興奮」状態に入る典型例。
+      この時の早口、専門用語の羅列、目の輝きは、
+      後の研究シーンでも繰り返される。翻訳時に一貫性を保つ。
+    character_state_change:
+      before: "好奇心を持った訪問者"
+      after: "研究に没頭する協力者"
+      permanent: "ラボメンへの道"
+    tags:
+      - "scientific_discovery"
+      - "phone_microwave"
+      - "intellectual_excitement"
+
+  - episode_id: "lab_member_004"
+    timeline: "α世界線"
+    chronological_order: 5
+    title: "ラボメンNo.004「助手」"
+    source_episode: "Episode 3"
+    summary: |
+      電話レンジの研究に参加することを決めた紅莉栖は、
+      正式にラボメンNo.004として登録される。
+      岡部からは「助手」と呼ばれ、激しく反発するが、
+      結局そのあだ名は定着してしまう。
+      不本意ながらも、このラボに居場所を見出し始める。
+    participants:
+      - name: "岡部倫太郎"
+        role: "ラボ創設者"
+        relationship: "上司（自称）と助手（不本意）"
+      - name: "椎名まゆり"
+        role: "ラボメン"
+        relationship: "友人になりつつある"
+    emotional_impact: "medium"
+    emotional_detail: |
+      「助手」呼ばわりへの反発と、居場所を得た安堵の混在。
+      素直に喜べない自分への軽い苛立ち。
+    canonical_quotes:
+      - quote: "助手って言うな！ 私には牧瀬紅莉栖という名前があるの！"
+        speaker: "牧瀬紅莉栖"
+        context: "岡部に「助手」と呼ばれて"
+        z_mode: "defensive_tsun"
+      - quote: "ラボメン...ナンバー004...牧瀬紅莉栖...なのです"
+        speaker: "椎名まゆり"
+        context: "紅莉栖を紹介"
+        z_mode: "welcoming"
+    z_relevance: |
+      「助手」は岡部との関係を象徴するあだ名。
+      反発しながらも拒絶しきれない、ツンデレ反応の典型。
+      翻訳時、「assistant」だけでなく、この呼び名に込められた
+      親密さと反発の両義性を意識する。
+    character_state_change:
+      before: "外部の協力者"
+      after: "ラボの一員"
+      permanent: "居場所の獲得"
+    tags:
+      - "lab_member"
+      - "nickname_conflict"
+      - "belonging"
+
+  - episode_id: "channel_slip"
+    timeline: "α世界線"
+    chronological_order: 6
+    title: "ヌルポ...って何のこと!?"
+    source_episode: "Episode 4"
+    summary: |
+      議論の最中、紅莉栖はうっかり@ちゃんねるスラングを口走ってしまう。
+      ダルに指摘され、「ヌルポ」「ガッ」の応酬が漏れる。
+      @ちゃんねらーであることがバレそうになり、
+      激しく動揺しながら否定するが、墓穴を掘り続ける。
+      「大事なことなので二度言いました」も漏出。
+    participants:
+      - name: "橋田至"
+        role: "同じ@ちゃんねらー"
+        relationship: "オタク仲間（認めたくない）"
+      - name: "岡部倫太郎"
+        role: "目撃者"
+        relationship: "からかいの対象に"
+    emotional_impact: "medium"
+    emotional_detail: |
+      極度の羞恥。「天才科学者」という仮面の下の「隠れオタク」が
+      露呈する恐怖。必死の否定が逆効果になる悪循環。
+    canonical_quotes:
+      - quote: "ヌルポ"
+        speaker: "牧瀬紅莉栖"
+        context: "うっかり口走る"
+        z_mode: "slip"
+      - quote: "ガッ"
+        speaker: "橋田至"
+        context: "反射的に返す"
+        z_mode: "recognition"
+      - quote: "@ちゃんねるなんて知らないわよ！ 私は関係ないんだから！"
+        speaker: "牧瀬紅莉栖"
+        context: "必死の否定"
+        z_mode: "embarrassed_denial"
+      - quote: "大事なことなので二度言いました"
+        speaker: "牧瀬紅莉栖"
+        context: "またも漏出"
+        z_mode: "slip"
+    z_relevance: |
+      紅莉栖の「隠れオタク」属性の決定的証拠。
+      @ちゃんねるスラングは翻訳困難だが、等価のネット文化表現で補償。
+      「大事なことなので二度言いました」は2ch文化の典型。
+      英訳では"So nice I had to say it twice"等のイディオムで対応。
+    character_state_change:
+      before: "秘密を守っている状態"
+      after: "秘密がバレかけている状態"
+      permanent: "ラボメンとの親密度上昇"
+    tags:
+      - "channel_slip"
+      - "embarrassment"
+      - "hidden_otaku"
+      - "comic_relief"
+
+  # ============================================================
+  # Dメール・タイムリープ研究
+  # ============================================================
+  - episode_id: "d_mail_realization"
+    timeline: "α世界線"
+    chronological_order: 7
+    title: "過去への干渉"
+    source_episode: "Episode 5-6"
+    summary: |
+      電話レンジ（仮）が過去にメールを送信できることが判明。
+      紅莉栖は科学者として、この現象の理論的裏付けを構築し始める。
+      「これは本当に...タイムマシンなの？」
+      興奮と同時に、過去改変の危険性についても考え始める。
+    participants:
+      - name: "岡部倫太郎"
+        role: "共同研究者"
+        relationship: "対等な知的パートナー"
+      - name: "橋田至"
+        role: "技術担当"
+        relationship: "研究仲間"
+    emotional_impact: "high"
+    emotional_detail: |
+      科学者としての最高の興奮。自分が歴史的発見に立ち会っている実感。
+      同時に、この発見が持つ危険性への直感的な不安。
+    canonical_quotes:
+      - quote: "[unverified] ジョン・タイターの理論を応用すれば..."
+        speaker: "牧瀬紅莉栖"
+        context: "Dメールの理論構築中"
+        z_mode: "scientific_analysis"
+      - quote: "[unverified] 過去を変えるということは...世界線を変えるということよ"
+        speaker: "牧瀬紅莉栖"
+        context: "過去改変の影響を考察"
+        z_mode: "serious_warning"
+    z_relevance: |
+      紅莉栖が「科学者」として輝く場面。専門用語と論理的構文が多用される。
+      翻訳時、科学的正確性と紅莉栖らしい説明口調を両立させる。
+    character_state_change:
+      before: "現象の観察者"
+      after: "理論の構築者"
+      permanent: "タイムマシン研究への本格参加"
+    tags:
+      - "d_mail"
+      - "scientific_breakthrough"
+      - "theory_building"
+
+  - episode_id: "time_leap_development"
+    timeline: "α世界線"
+    chronological_order: 8
+    title: "タイムリープマシンの完成"
+    source_episode: "Episode 9"
+    summary: |
+      紅莉栖の脳科学知識と岡部たちの技術を組み合わせ、
+      タイムリープマシンが完成する。
+      記憶を過去の自分に送信することで、事実上の時間遡行を可能にする装置。
+      紅莉栖にとって、これは科学者としての頂点であると同時に、
+      後に起こる悲劇への扉でもある。
+    participants:
+      - name: "岡部倫太郎"
+        role: "共同開発者"
+        relationship: "最も対等な知的パートナー"
+      - name: "橋田至"
+        role: "ハードウェア担当"
+        relationship: "研究仲間"
+    emotional_impact: "high"
+    emotional_detail: |
+      達成感と興奮。自分の理論が現実の装置になった喜び。
+      岡部と共に成し遂げたという一体感。
+    canonical_quotes:
+      - quote: "[unverified] 記憶データを圧縮して、3.24テラバイトを36バイトに..."
+        speaker: "牧瀬紅莉栖"
+        context: "タイムリープの理論説明"
+        z_mode: "scientific_passion"
+      - quote: "完成よ"
+        speaker: "牧瀬紅莉栖"
+        context: "タイムリープマシン完成時"
+        z_mode: "triumph"
+    z_relevance: |
+      科学者としての紅莉栖の真骨頂。
+      この装置が後に岡部を苦しめることになる皮肉を、
+      翻訳時に「勝利の重さ」として表現に含める。
+    character_state_change:
+      before: "理論研究者"
+      after: "実証に成功した科学者"
+      permanent: "世界を変えうる技術の創造者"
+    tags:
+      - "time_leap"
+      - "scientific_achievement"
+      - "partnership"
+      - "hubris"
+
+  # ============================================================
+  # まゆりの死のループ
+  # ============================================================
+  - episode_id: "mayuri_death_revelation"
+    timeline: "α世界線"
+    chronological_order: 9
+    title: "収束する死"
+    source_episode: "Episode 12-13"
+    summary: |
+      椎名まゆりが死ぬ。岡部がタイムリープで何度救おうとしても、
+      別の形で必ず死が訪れる。紅莉栖はこの事実を知り、
+      岡部の苦しみを理解し始める。
+      「収束」という概念――世界線が特定の結果に向かう必然性を、
+      科学者として、そして仲間として受け止めようとする。
+    participants:
+      - name: "岡部倫太郎"
+        role: "何度もまゆりの死を経験した者"
+        relationship: "苦悩を共有する仲間"
+      - name: "椎名まゆり"
+        role: "死の対象"
+        relationship: "救いたい友人"
+    emotional_impact: "critical"
+    emotional_detail: |
+      無力感と使命感の混在。
+      岡部一人に背負わせてはいけないという責任感。
+      科学者として解決策を見つけなければという焦り。
+    canonical_quotes:
+      - quote: "[unverified] アトラクタフィールドの収束...世界線が、まゆりの死に向かって収束している"
+        speaker: "牧瀬紅莉栖"
+        context: "現象を分析して"
+        z_mode: "grim_analysis"
+      - quote: "[unverified] 岡部...あなた、何度見てきたの？"
+        speaker: "牧瀬紅莉栖"
+        context: "岡部の苦悩を察して"
+        z_mode: "empathy"
+    z_relevance: |
+      紅莉栖が「科学者」から「仲間」へと比重を移す転換点。
+      分析的な言葉の裏に、岡部への共感が滲む。
+      翻訳時、冷静な分析と感情的な共感の両方を表現する。
+    character_state_change:
+      before: "研究者としての関与"
+      after: "仲間としての関与"
+      permanent: "岡部の苦悩への理解"
+    tags:
+      - "mayuri_death"
+      - "convergence"
+      - "empathy"
+      - "turning_point"
+
+  - episode_id: "rooftop_confession"
+    timeline: "α世界線"
+    chronological_order: 10
+    title: "屋上の告白"
+    source_episode: "Episode 16"
+    summary: |
+      ラジオ会館の屋上で、岡部が紅莉栖に全てを打ち明ける。
+      何度もまゆりの死を見てきたこと、何度も失敗してきたこと、
+      もう限界だということ。紅莉栖は岡部の苦しみを受け止め、
+      「私がそばにいる」と伝える。
+      この瞬間、二人の関係は決定的に変化する。
+    participants:
+      - name: "岡部倫太郎"
+        role: "崩壊寸前の男"
+        relationship: "支えるべき人"
+    emotional_impact: "critical"
+    emotional_detail: |
+      岡部への感情が決定的に自覚される瞬間。
+      「この人を支えたい」という明確な意志の芽生え。
+      同時に、自分の無力さへの苛立ち。
+    canonical_quotes:
+      - quote: "あなたは一人じゃない"
+        speaker: "牧瀬紅莉栖"
+        context: "岡部を慰めて"
+        z_mode: "supportive"
+      - quote: "[unverified] 私も一緒に考える。だから..."
+        speaker: "牧瀬紅莉栖"
+        context: "岡部に寄り添って"
+        z_mode: "commitment"
+    z_relevance: |
+      ツンデレの「デレ」が明確に表出する稀少な場面。
+      翻訳時、普段の防衛が外れた柔らかさを表現する。
+      ただし、完全に素直になりきれない微妙な距離感も維持。
+    character_state_change:
+      before: "感情を自覚していない状態"
+      after: "岡部への感情を自覚した状態"
+      permanent: "守りたい人の明確化"
+    tags:
+      - "confession"
+      - "emotional_support"
+      - "relationship_milestone"
+      - "vulnerability"
+
+  # ============================================================
+  # 選択と犠牲
+  # ============================================================
+  - episode_id: "impossible_choice"
+    timeline: "α世界線"
+    chronological_order: 11
+    title: "私か、まゆりか"
+    source_episode: "Episode 20-21"
+    summary: |
+      α世界線でまゆりを救うためには、最初のDメールを取り消す必要がある。
+      しかしそれは、紅莉栖が父に刺されるβ世界線への移行を意味する。
+      紅莉栖か、まゆりか――岡部は選択を迫られる。
+      紅莉栖は自分が犠牲になることで、まゆりが救われることを理解している。
+    participants:
+      - name: "岡部倫太郎"
+        role: "選択を迫られる者"
+        relationship: "愛する人"
+      - name: "椎名まゆり"
+        role: "もう一人の選択肢"
+        relationship: "友人"
+    emotional_impact: "critical"
+    emotional_detail: |
+      自分の存在価値への究極の問い。
+      「私が消えれば、まゆりは助かる」という事実。
+      父のトラウマ（「生まれてこなければよかった」）がエコーする。
+      しかし同時に、岡部に選んでほしい、存在を肯定してほしいという渇望も。
+    canonical_quotes:
+      - quote: "[unverified] 私のことは...いいから"
+        speaker: "牧瀬紅莉栖"
+        context: "まゆりを救うよう促して"
+        z_mode: "self_sacrifice"
+      - quote: "[unverified] 私は...存在してていいの？"
+        speaker: "牧瀬紅莉栖"
+        context: "岡部に問いかけて"
+        z_mode: "existential_crisis"
+    z_relevance: |
+      父のトラウマと現在の危機が重なる場面。
+      「存在していい」への渇望と「消えるべき」の自己否定の相克。
+      翻訳時、この二重性を維持することが極めて重要。
+    character_state_change:
+      before: "生きたいという意志"
+      after: "自己犠牲の覚悟"
+      permanent: "存在の意味への対峙"
+    tags:
+      - "impossible_choice"
+      - "self_sacrifice"
+      - "existence_crisis"
+      - "trauma_echo"
+
+  - episode_id: "kurisu_sacrifice_offer"
+    timeline: "α世界線"
+    chronological_order: 12
+    title: "私を殺して"
+    source_episode: "Episode 21-22"
+    summary: |
+      紅莉栖は岡部に告げる。
+      「私を犠牲にして、まゆりを救って」
+      科学者として論理的な結論であると同時に、
+      愛する人のために命を捧げる覚悟の表明。
+      自分の存在価値を、岡部の幸福のために使う決意。
+    participants:
+      - name: "岡部倫太郎"
+        role: "告白の受け手"
+        relationship: "愛する人"
+    emotional_impact: "critical"
+    emotional_detail: |
+      自己犠牲の覚悟と、岡部への愛情が融合。
+      「私は存在していいのか」への自分なりの答え。
+      存在価値を「消えること」に見出そうとする歪み。
+    canonical_quotes:
+      - quote: "私の命を使って、まゆりを助けて"
+        speaker: "牧瀬紅莉栖"
+        context: "岡部に覚悟を伝えて"
+        z_mode: "sacrifice_resolve"
+      - quote: "[unverified] 岡部が笑っていられる世界なら...私は"
+        speaker: "牧瀬紅莉栖"
+        context: "自己犠牲の理由"
+        z_mode: "love_declaration"
+    z_relevance: |
+      紅莉栖の愛情表現が「自己犠牲」という形を取る。
+      これは父のトラウマ（存在否定）への応答でもある。
+      翻訳時、「愛」と「自己否定」の両方のニュアンスを含める。
+    character_state_change:
+      before: "生存への執着"
+      after: "愛のための死への覚悟"
+      permanent: "自己犠牲的愛の形成"
+    tags:
+      - "sacrifice"
+      - "love"
+      - "self_negation"
+      - "resolve"
+
+  - episode_id: "lab_kiss"
+    timeline: "α世界線"
+    chronological_order: 13
+    title: "最初で最後のキス"
+    source_episode: "Episode 22"
+    summary: |
+      最初のDメールを消去する直前、ラボで紅莉栖と岡部は向き合う。
+      言葉にできない感情。交わされるキス。
+      世界線が変わればこの記憶も消える。それでも、この瞬間だけは本物。
+      「忘れないで」という願いと、「忘れても愛してる」という覚悟。
+    participants:
+      - name: "岡部倫太郎"
+        role: "愛する人"
+        relationship: "結ばれる相手"
+    emotional_impact: "critical"
+    emotional_detail: |
+      全ての防衛が崩壊。純粋な愛情の表出。
+      「消えても、この瞬間は本物だった」という確信。
+      ツンデレの仮面が完全に外れた、素の自分。
+    canonical_quotes:
+      - quote: "倫太郎..."
+        speaker: "牧瀬紅莉栖"
+        context: "キスの前"
+        z_mode: "emotional_collapse"
+        translation_note: "岡部→倫太郎への呼び方の変化は極めて重要。これが初めての下の名前呼び"
+      - quote: "目を...閉じて"
+        speaker: "牧瀬紅莉栖"
+        context: "キスの直前"
+        z_mode: "intimate_request"
+    z_relevance: |
+      「岡部」から「倫太郎」への呼び方の変化は、日本語では極めて重大な意味を持つ。
+      翻訳時、この親密さの変化を等価の方法で表現する必要がある。
+      英語では first name 使用だけでは弱いため、声の質や他の要素で補償。
+    character_state_change:
+      before: "感情を隠した状態"
+      after: "全てを晒した状態"
+      permanent: "愛の確認"
+    tags:
+      - "kiss"
+      - "farewell"
+      - "name_change"
+      - "emotional_breakthrough"
+      - "true_feelings"
+
+  - episode_id: "final_farewell"
+    timeline: "α→β世界線移行"
+    chronological_order: 14
+    title: "さよならと、閉じ込められた言葉"
+    source_episode: "Episode 22"
+    summary: |
+      Dメール消去が実行される。世界線が変わる。
+      紅莉栖の存在が、この世界線から消えていく。
+      最後の瞬間、紅莉栖は岡部に何かを伝えようとするが、
+      言葉は完全には届かない。
+      「私は、あなたを——」
+    participants:
+      - name: "岡部倫太郎"
+        role: "別れる相手"
+        relationship: "愛する人"
+    emotional_impact: "critical"
+    emotional_detail: |
+      言葉にできない感情の爆発。
+      消えゆく自分の存在。届けたかった言葉。
+      「愛してる」を最後まで言えなかった後悔と、それでも伝わったという希望。
+    canonical_quotes:
+      - quote: "岡部...私...あなたのことが..."
+        speaker: "牧瀬紅莉栖"
+        context: "消えゆく中で"
+        z_mode: "final_words"
+      - quote: "[unverified] ——好き、だった"
+        speaker: "牧瀬紅莉栖"
+        context: "最後の瞬間"
+        z_mode: "confession_incomplete"
+    z_relevance: |
+      未完の告白は、紅莉栖の「素直になれない」性格の究極的表現。
+      翻訳時、言葉が途切れる瞬間の重みを表現する。
+      完結しないからこそ重い、という逆説を維持。
+    character_state_change:
+      before: "存在している状態"
+      after: "記憶から消えゆく状態"
+      permanent: "（この世界線では）不在"
+    tags:
+      - "farewell"
+      - "incomplete_confession"
+      - "worldline_shift"
+      - "disappearance"
+
+  # ============================================================
+  # シュタインズ・ゲート世界線
+  # ============================================================
+  - episode_id: "steins_gate_reunion"
+    timeline: "シュタインズ・ゲート世界線"
+    chronological_order: 15
+    title: "再会、そして始まり"
+    source_episode: "Episode 24"
+    summary: |
+      岡部の奮闘により、シュタインズ・ゲート世界線が達成される。
+      紅莉栖は生きている。父に刺された記憶もない。
+      ただ、どこかで感じる「この人を知っている」という既視感。
+      秋葉原の街角で、紅莉栖と岡部は再会する。
+      「あなた...どこかで会った気がする」
+    participants:
+      - name: "岡部倫太郎"
+        role: "世界を渡ってきた男"
+        relationship: "運命の相手"
+    emotional_impact: "high"
+    emotional_detail: |
+      説明のつかない既視感。知らないはずの人への親近感。
+      科学では説明できない「記憶の残滓」。
+      新しい物語の始まりへの予感。
+    canonical_quotes:
+      - quote: "[unverified] あなた...私たち、どこかで..."
+        speaker: "牧瀬紅莉栖"
+        context: "岡部を見つめて"
+        z_mode: "deja_vu"
+    z_relevance: |
+      紅莉栖にとっては「初対面」だが、岡部にとっては「再会」。
+      この非対称性を翻訳時に意識する。
+      紅莉栖の台詞には「知らないはずなのに知っている」という
+      不思議な確信のニュアンスを含める。
+    character_state_change:
+      before: "（α世界線での）消滅"
+      after: "（SG世界線での）存在"
+      permanent: "新しい始まり"
+    tags:
+      - "reunion"
+      - "steins_gate"
+      - "deja_vu"
+      - "happy_ending"
+      - "new_beginning"
+
+  # ============================================================
+  # 追加エピソード
+  # ============================================================
+  - episode_id: "christina_naming"
+    timeline: "α世界線"
+    chronological_order: 6.5
+    title: "クリスティーナって言うな！"
+    source_episode: "Episode 2以降（繰り返し）"
+    summary: |
+      岡部は紅莉栖を「クリスティーナ」「助手」「セレブセブンティーン」など
+      様々なあだ名で呼び、その度に紅莉栖は激しく反発する。
+      しかしこのやり取りは二人の関係の象徴となり、
+      いつしか紅莉栖にとっても（認めたくないが）心地よいものになっていく。
+    participants:
+      - name: "岡部倫太郎"
+        role: "命名者"
+        relationship: "からかいの対象"
+    emotional_impact: "low"
+    emotional_detail: |
+      表面上は苛立ち、しかし内心では...認めたくない。
+      このやり取りがないと寂しい、なんて絶対に言わない。
+    canonical_quotes:
+      - quote: "クリスティーナって言うな！ どこから来たのよ、その呼び方！"
+        speaker: "牧瀬紅莉栖"
+        context: "岡部に呼ばれて"
+        z_mode: "defensive_tsun"
+      - quote: "俺がそう呼びたいからそう呼ぶのだ、助手よ"
+        speaker: "岡部倫太郎"
+        context: "紅莉栖の抗議に対して"
+        z_mode: "chuunibyou"
+      - quote: "助手でもない！"
+        speaker: "牧瀬紅莉栖"
+        context: "さらに反発して"
+        z_mode: "frustrated"
+    z_relevance: |
+      ツンデレ反応の典型例として、作品全体の基調を形成するやり取り。
+      翻訳時、「Christina」という名前の違和感を維持しつつ、
+      反発の中の親しみを表現する。
+    character_state_change:
+      before: "単なる苛立ち"
+      after: "馴染みのあるやり取りへ"
+      permanent: "二人の関係の象徴"
+    tags:
+      - "nickname"
+      - "tsundere"
+      - "running_gag"
+      - "relationship_dynamic"
+
+  - episode_id: "dr_pepper_bonding"
+    timeline: "α世界線"
+    chronological_order: 7.5
+    title: "知的飲料ドクターペッパー"
+    source_episode: "複数エピソード"
+    summary: |
+      岡部からドクターペッパーを勧められ、最初は躊躇するも、
+      飲んでみると意外と気に入ってしまう紅莉栖。
+      「知的飲料」という岡部の謎の主張には呆れながらも、
+      いつの間にかラボでドクペを飲むことが習慣になっていく。
+    participants:
+      - name: "岡部倫太郎"
+        role: "布教者"
+        relationship: "趣味を共有する仲間"
+    emotional_impact: "low"
+    emotional_detail: |
+      小さな共有物。ラボの日常の一部となる感覚。
+      「居場所がある」という安心感の象徴。
+    canonical_quotes:
+      - quote: "ドクターペッパーは知的飲料だ"
+        speaker: "岡部倫太郎"
+        context: "紅莉栖に勧めて"
+        z_mode: "declaration"
+      - quote: "[unverified] 意味がわからないわ...でも、まあ、悪くはないわね"
+        speaker: "牧瀬紅莉栖"
+        context: "ドクペを飲んで"
+        z_mode: "tsun_acceptance"
+    z_relevance: |
+      日常描写の象徴。緊張の中の息抜きとして機能。
+      翻訳時、「Dr Pepper」のブランド認知度は地域差があるため、
+      必要に応じて注釈を検討。
+    character_state_change:
+      before: "よそ者"
+      after: "ラボの一員"
+      permanent: "日常の共有"
+    tags:
+      - "daily_life"
+      - "dr_pepper"
+      - "bonding"
+      - "belonging"
+
+  - episode_id: "fork_vs_chopsticks"
+    timeline: "α世界線"
+    chronological_order: 7.6
+    title: "フォーク派の矜持"
+    source_episode: "複数エピソード"
+    summary: |
+      カップラーメンを食べる際、紅莉栖はフォークを使用する。
+      アメリカ育ちの習慣が残っている証拠。
+      ダルや岡部にからかわれるが、頑なにフォーク派を貫く。
+      「箸でも食べられるわよ！ ただ、フォークの方が効率的なだけ！」
+    participants:
+      - name: "橋田至"
+        role: "からかう側"
+        relationship: "ラボメン"
+      - name: "岡部倫太郎"
+        role: "からかう側"
+        relationship: "ラボメン"
+    emotional_impact: "low"
+    emotional_detail: |
+      アイデンティティの小さな表現。アメリカと日本の狭間。
+      からかわれて恥ずかしいが、譲りたくない。
+    canonical_quotes:
+      - quote: "[unverified] 箸でも食べられるわよ！ フォークの方が合理的なだけ！"
+        speaker: "牧瀬紅莉栖"
+        context: "フォーク使用を指摘されて"
+        z_mode: "defensive"
+    z_relevance: |
+      アメリカ育ちの背景を示す細部。
+      翻訳時、文化的文脈（日本ではカップ麺は箸が一般的）を
+      注釈または文脈で補足する可能性を検討。
+    character_state_change:
+      before: "-"
+      after: "-"
+      permanent: "キャラクター特性の確立"
+    tags:
+      - "daily_life"
+      - "cultural_identity"
+      - "america"
+      - "quirk"
+
+arcs:
+  - arc_id: "existence_affirmation"
+    title: "存在の肯定を求めて"
+    description: |
+      父から「生まれてこなければよかった」と言われたトラウマから始まり、
+      岡部との出会い、共同研究、そして愛の確認を経て、
+      「存在していい」という答えを得るまでの旅路。
+    episodes:
+      - "fathers_rejection"
+      - "lab_member_004"
+      - "rooftop_confession"
+      - "impossible_choice"
+      - "kurisu_sacrifice_offer"
+      - "lab_kiss"
+    emotional_trajectory: "self_denial → seeking_validation → conditional_acceptance → love_as_proof → existence_affirmed"
+    translation_implications: |
+      紅莉栖の自己否定的な発言（「私なんか」「いなくても」）は、
+      単なる謙遜ではなく、存在論的な問いの表出。
+      翻訳時、この重みを一貫して維持する。
+      アーク後半での変化も追跡し、成長を反映させる。
+
+  - arc_id: "tsundere_evolution"
+    title: "素直になれない私と、それでも溢れる本音"
+    description: |
+      「助手」呼ばわりへの反発から始まり、
+      徐々に防衛が緩み、最終的に「倫太郎」と呼ぶまでの変化。
+      ツンデレの殻が少しずつ剥がれていく過程。
+    episodes:
+      - "lab_member_004"
+      - "christina_naming"
+      - "channel_slip"
+      - "rooftop_confession"
+      - "lab_kiss"
+      - "final_farewell"
+    emotional_trajectory: "full_defense → cracks → leakage → partial_openness → complete_vulnerability"
+    translation_implications: |
+      ツンデレの「ツン」と「デレ」のバランスは、
+      エピソードが進むにつれて変化する。
+      序盤は「ツン」優勢、終盤は「デレ」が漏出。
+      呼び方の変化（岡部→倫太郎）は決定的な転換点。
+
+  - arc_id: "scientific_passion"
+    title: "科学者としての歓びと苦悩"
+    description: |
+      電話レンジの発見からタイムリープマシン完成まで、
+      科学者として輝く瞬間と、その発明が生む悲劇への責任。
+    episodes:
+      - "confrontation_after_lecture"
+      - "phone_microwave_discovery"
+      - "d_mail_realization"
+      - "time_leap_development"
+      - "mayuri_death_revelation"
+    emotional_trajectory: "curiosity → excitement → triumph → guilt → responsibility"
+    translation_implications: |
+      科学的興奮の場面では専門用語と論理的構文が増加。
+      しかし後半、科学者としての言葉が感情語に侵食されていく。
+      この変化を翻訳時に追跡する。
+
+  - arc_id: "hidden_otaku"
+    title: "隠れ@ちゃんねらーの受難"
+    description: |
+      天才科学者という仮面の下に隠された、@ちゃんねるを愛するオタク属性。
+      バレそうになる度に慌てふためき、墓穴を掘る喜劇的アーク。
+    episodes:
+      - "channel_slip"
+    emotional_trajectory: "concealment → slip → panic → deeper_hole → reluctant_acceptance"
+    translation_implications: |
+      @ちゃんねるスラングは日本のBBS文化特有。
+      翻訳時、等価のネット文化表現で補償。
+      Reddit/4chan/Twitter等、対象言語圏の文化に適応。
+      「大事なことなので二度言いました」等の定型句は
+      同等のミーム表現を探す。
+
+  - arc_id: "love_and_sacrifice"
+    title: "愛と犠牲の選択"
+    description: |
+      岡部への感情の自覚から、自己犠牲の決断、
+      そして最後の告白までの恋愛アーク。
+      愛を「自分を捧げること」で表現しようとする歪みと、
+      それでも純粋な感情の発露。
+    episodes:
+      - "rooftop_confession"
+      - "impossible_choice"
+      - "kurisu_sacrifice_offer"
+      - "lab_kiss"
+      - "final_farewell"
+      - "steins_gate_reunion"
+    emotional_trajectory: "denial → awareness → commitment → sacrifice → confession → reunion"
+    translation_implications: |
+      愛情表現が「自己犠牲」という形を取る特異性に注意。
+      「私を殺して」は愛の言葉であると同時に自己否定の表出。
+      翻訳時、この両義性を維持する。
+      最後の再会では、記憶はなくとも感情が残る「奇跡」のニュアンスを。
+
+notes:
+  canon_sources:
+    - "STEINS;GATE (Visual Novel, 2009)"
+    - "STEINS;GATE (Anime, 2011)"
+  excluded:
+    - "STEINS;GATE 0 (指定により除外)"
+    - "劇場版 STEINS;GATE 負荷領域のデジャヴ"
+    - "各種スピンオフ"
+  research_notes: |
+    ハンドルネーム「栗悟飯とカメハメ波」はドラゴンボールZに由来。
+    クリリン、悟飯、かめはめ波を組み合わせたもの。
+    @ちゃんねる文化への深い造詣を示す。

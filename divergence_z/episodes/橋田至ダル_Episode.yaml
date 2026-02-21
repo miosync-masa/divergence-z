@@ -1,0 +1,920 @@
+# ===== Episode Memory: 橋田至（ダル） =====
+# Source: STEINS;GATE / STEINS;GATE 0
+# Schema Version: 1.0
+# Character Focus: 橋田至
+
+meta:
+  schema_version: "1.0"
+  character_id: "hashida_itaru_daru"
+  character_name: "橋田至"
+  source_work: "STEINS;GATE / STEINS;GATE 0"
+  canon_type: "primary"
+  total_episodes: 23
+  coverage_notes: |
+    本編およびゼロの主要エピソードを網羅。
+    ダルの視点から、技術者としての貢献と親友・父としての感情的成長を中心に記録。
+    タイムリープによる記憶消去はダルには適用されないため、
+    彼が経験した世界線の出来事はそのまま記憶として残る。
+
+episodes:
+  - episode_id: "first_meeting_okabe"
+    timeline: "α/β共通（過去）"
+    chronological_order: 1
+    title: "中二病との邂逅"
+    source_episode: "ドラマCD・設定資料より"
+    summary: |
+      高校時代、岡部倫太郎と出会う。
+      普通なら引くような中二病全開の自己紹介に対し、
+      ダルは面白がって付き合い始めた。
+      「こいつ、ヤバいけど面白い」——それが始まりだった。
+      以来、岡部の「鳳凰院凶真」に付き合い続ける唯一の理解者となる。
+    participants:
+      - "岡部倫太郎"
+    emotional_impact: "medium"
+    emotional_detail: |
+      最初は単なる物珍しさだったが、岡部の孤独と純粋さに
+      どこか共感するものがあった。オタクとして周囲から浮いていた自分と
+      重なる部分を感じたのかもしれない。
+    canonical_quotes:
+      - quote: "[unverified] お前、面白いな。俺、橋田。よろしくだお"
+        context: "岡部との初対面時、中二病に引かずに興味を示す"
+        z_mode: "none"
+    z_relevance: |
+      岡部との関係性の原点。ダルが岡部を「オカリン」と呼び、
+      中二病に本気で付き合う姿勢の根拠。
+      翻訳時、二人の関係の深さを表現する際の基盤となる。
+    character_state_change:
+      before: "オタク趣味を共有できる友人がいない孤独"
+      after: "変人だが気の合う親友を得た"
+      permanent: "岡部との絆、「オカリン」という呼び名の定着"
+    tags:
+      - "origin"
+      - "friendship"
+      - "okabe"
+
+  - episode_id: "lab_founding"
+    timeline: "α/β共通"
+    chronological_order: 2
+    title: "未来ガジェット研究所設立"
+    source_episode: "本編序盤・回想"
+    summary: |
+      岡部と共に「未来ガジェット研究所」を設立。
+      ラボメンNo.003として、主に技術面を担当することになる。
+      秋葉原の雑居ビルの一室、夏は暑く冬は寒い環境だが、
+      ここで好きな技術をいじれることがダルには楽園だった。
+    participants:
+      - "岡部倫太郎"
+      - "椎名まゆり"
+    emotional_impact: "medium"
+    emotional_detail: |
+      表向きは「まあ暇だし付き合ってやるか」という態度だが、
+      本心では自分の技術を活かせる場所ができたことを喜んでいた。
+      まゆりの存在で場が和み、居心地の良い空間になった。
+    canonical_quotes:
+      - quote: "スーパーハカーの俺がいれば、大抵のことはなんとかなるお"
+        context: "ラボでの自己紹介的な発言"
+        z_mode: "none"
+    z_relevance: |
+      「スーパーハカー」という自称の定着。
+      ラボメンとしてのアイデンティティの確立。
+      翻訳時、ダルの自信と居場所への愛着を示す基盤。
+    character_state_change:
+      before: "技術はあるが発揮する場がない"
+      after: "自分の能力を活かせる仲間と場所を得た"
+      permanent: "ラボメンNo.003としての自覚"
+    tags:
+      - "origin"
+      - "lab"
+      - "identity"
+
+  - episode_id: "phone_microwave_development"
+    timeline: "α"
+    chronological_order: 3
+    title: "電話レンジ（仮）の開発"
+    source_episode: "第1-2話"
+    summary: |
+      岡部の思いつきと紅莉栖の理論、そしてダルのプログラミング能力が
+      合わさり、偶然にもタイムマシンの原型が完成する。
+      最初は「バナナがゲル化する変な装置」程度の認識だったが、
+      次第にその重要性を理解していく。
+    participants:
+      - "岡部倫太郎"
+      - "牧瀬紅莉栖"
+    emotional_impact: "medium"
+    emotional_detail: |
+      技術者として、自分が関わったものが
+      想像を超える発明になっていく興奮。
+      同時に、どこか嫌な予感も感じていた。
+    canonical_quotes:
+      - quote: "ちょｗｗｗ マジかよ、これヤバくね？"
+        context: "タイムマシンとしての可能性に気づいた時"
+        z_mode: "none"
+    z_relevance: |
+      技術的興奮と不安の混在。ダルの反応が
+      事態の深刻さを示すバロメーターになる。
+    character_state_change:
+      before: "単なるガジェット開発の延長"
+      after: "歴史を変えうる発明に関わっている自覚"
+      permanent: "タイムマシン開発者としての責任感の芽生え"
+    tags:
+      - "technology"
+      - "phone_microwave"
+      - "turning_point"
+
+  - episode_id: "sern_hack_jellyman"
+    timeline: "α"
+    chronological_order: 4
+    title: "SERNハッキング——ジェリーマンズ・レポート"
+    source_episode: "第5-6話"
+    summary: |
+      紅莉栖の依頼でSERNのデータベースにハッキングを試みる。
+      「スーパーハカー」の腕の見せ所だと意気込んでいたが、
+      発見したのは人体実験の記録——「ジェリーマンズ・レポート」だった。
+      ゲル状になった人間の写真。冗談では済まない現実がそこにあった。
+    participants:
+      - "岡部倫太郎"
+      - "牧瀬紅莉栖"
+    emotional_impact: "high"
+    emotional_detail: |
+      最初は技術的な挑戦として楽しんでいたが、
+      発見した内容に血の気が引いた。
+      自分たちがやっていることの危険性を初めて実感した瞬間。
+    canonical_quotes:
+      - quote: "オカリン……これ、マジでヤバいぞ……人間が、ゲル状に……"
+        context: "ジェリーマンズ・レポートを発見した直後"
+        z_mode: "leak"
+      - quote: "SERNのセキュリティ、マジで硬かったお……でも、スーパーハカーの俺にかかれば、な"
+        context: "ハッキング成功時、まだ内容を見る前"
+        z_mode: "none"
+    z_relevance: |
+      普段のおちゃらけモードから一転、真剣になる瞬間。
+      翻訳時、ダルの声のトーンが変わることを示す重要な転換点。
+      「ヤバい」の重みが変わる瞬間。
+    character_state_change:
+      before: "面白半分のハッキング"
+      after: "命がかかっている現実の認識"
+      permanent: "SERNの脅威に対する警戒心"
+    tags:
+      - "sern"
+      - "hacking"
+      - "turning_point"
+      - "fear"
+
+  - episode_id: "kurisu_channeler_discovery"
+    timeline: "α"
+    chronological_order: 5
+    title: "@ちゃんねらー仲間発見"
+    source_episode: "第4-5話"
+    summary: |
+      天才科学者・牧瀬紅莉栖が実は@ちゃんねるの常連だと判明。
+      「栗悟飯とカメハメ波」というハンドルネームで活動していた。
+      ダルにとって、憧れの天才が同じオタク文化の住人だったことは
+      衝撃であり、親近感の源となった。
+    participants:
+      - "牧瀬紅莉栖"
+      - "岡部倫太郎"
+    emotional_impact: "medium"
+    emotional_detail: |
+      天才科学者という雲の上の存在が、
+      急に親しみやすくなった瞬間。
+      同時に「あのスレにいたのお前かよ」という複雑な感情も。
+    canonical_quotes:
+      - quote: "ちょｗｗｗ 牧瀬氏、@ちゃんねらーだったのかよｗｗｗ"
+        context: "紅莉栖の@ちゃんねる歴が発覚した時"
+        z_mode: "none"
+      - quote: "いやー、天才も@ちゃんには勝てないってことだおｗｗｗ"
+        context: "紅莉栖をからかいながら"
+        z_mode: "none"
+    z_relevance: |
+      紅莉栖との関係性の基盤。からかいつつも尊敬という
+      複雑な関係を翻訳する際の根拠となる。
+      ネットスラングでの会話が成立する理由。
+    character_state_change:
+      before: "紅莉栖は近寄りがたい天才"
+      after: "同じ文化圏の仲間としての親近感"
+      permanent: "紅莉栖との独特な信頼関係"
+    tags:
+      - "kurisu"
+      - "humor"
+      - "otaku"
+      - "relationship"
+
+  - episode_id: "suzuha_encounter"
+    timeline: "α"
+    chronological_order: 6
+    title: "阿万音鈴羽との出会い"
+    source_episode: "第7話"
+    summary: |
+      ブラウン管工房でバイトを始めた少女・阿万音鈴羽。
+      なぜか自分に懐いてくる彼女に戸惑いながらも、
+      どこか気になる存在だった。
+      彼女の正体を知る由もなく、普通に接していた時期。
+    participants:
+      - "阿万音鈴羽"
+    emotional_impact: "low"
+    emotional_detail: |
+      3次元の女の子が自分に話しかけてくることへの戸惑い。
+      でも嫌じゃない、というか、むしろ……という複雑な感情。
+    canonical_quotes:
+      - quote: "[unverified] え、俺？ なんで俺に話しかけてくんの……？"
+        context: "鈴羽が積極的に話しかけてくることへの戸惑い"
+        z_mode: "leak"
+    z_relevance: |
+      鈴羽との関係の始まり。後の父娘関係の伏線として、
+      翻訳時にこの時点での「知らない状態」を維持することが重要。
+    character_state_change:
+      before: "3次元女子との接点ほぼなし"
+      after: "なぜか懐かれている謎の状況"
+      permanent: "鈴羽への無自覚な親近感"
+    tags:
+      - "suzuha"
+      - "first_meeting"
+      - "foreshadowing"
+
+  - episode_id: "time_leap_machine_creation"
+    timeline: "α"
+    chronological_order: 7
+    title: "タイムリープマシン完成"
+    source_episode: "第9-10話"
+    summary: |
+      電話レンジ（仮）を改造し、タイムリープマシンを完成させる。
+      紅莉栖の理論とダルのプログラミングが融合した結晶。
+      「これで過去に記憶を送れる」——その重大さを
+      まだ完全には理解していなかった。
+    participants:
+      - "牧瀬紅莉栖"
+      - "岡部倫太郎"
+    emotional_impact: "high"
+    emotional_detail: |
+      技術者としての達成感と、
+      「こんなもの作っちゃって大丈夫なのか」という不安が混在。
+      でも、仲間と一緒に不可能を可能にした喜びが勝っていた。
+    canonical_quotes:
+      - quote: "できた……マジでできちゃったお……"
+        context: "タイムリープマシン完成の瞬間"
+        z_mode: "leak"
+    z_relevance: |
+      技術者としての最高到達点の一つ。
+      後の悲劇との対比で、この達成感の翻訳が重要になる。
+    character_state_change:
+      before: "理論上の可能性"
+      after: "タイムリープの実現"
+      permanent: "タイムマシン開発者としての自覚の深化"
+    tags:
+      - "technology"
+      - "time_leap"
+      - "achievement"
+
+  - episode_id: "suzuha_true_identity"
+    timeline: "α"
+    chronological_order: 8
+    title: "衝撃の真実——鈴羽は未来の娘"
+    source_episode: "第13-14話"
+    summary: |
+      阿万音鈴羽が2036年から来た未来人であり、
+      しかも自分の娘だと知らされる。
+      「バレルタイター」は自分自身だった。
+      頭が真っ白になった。俺が？ 父親に？
+      しかも相手は……阿万音由季？
+    participants:
+      - "阿万音鈴羽"
+      - "岡部倫太郎"
+      - "ラボメン"
+    emotional_impact: "critical"
+    emotional_detail: |
+      人生で最も衝撃を受けた瞬間の一つ。
+      「俺みたいなオタクが父親になれるのか」という驚きと、
+      目の前の少女が自分の血を引いているという実感の無さ。
+      でも、彼女の目を見た時、どこか納得してしまった。
+    canonical_quotes:
+      - quote: "え……俺の、娘……？ いや、ちょっと待って、頭がついていかないんだけど……"
+        context: "鈴羽が自分の娘だと知った瞬間"
+        z_mode: "leak"
+      - quote: "バレルタイターは……俺だったのか……"
+        context: "すべてが繋がった瞬間"
+        z_mode: "leak"
+    z_relevance: |
+      ダルの人生最大の転換点。以降の鈴羽への態度、
+      「父」としての自覚の芽生えを翻訳する際の根拠。
+      衝撃が大きすぎてネタ化できない珍しい瞬間。
+    character_state_change:
+      before: "独身オタク、将来の見通しなし"
+      after: "未来では父親になる男"
+      permanent: "鈴羽への父性の自覚、責任感"
+    tags:
+      - "suzuha"
+      - "family"
+      - "revelation"
+      - "turning_point"
+      - "critical"
+
+  - episode_id: "suzuha_farewell_alpha"
+    timeline: "α"
+    chronological_order: 9
+    title: "娘との別れ——時の彼方へ"
+    source_episode: "第14話"
+    summary: |
+      1975年へ向かう鈴羽を見送る。
+      まだ父親としての実感も湧かないまま、
+      娘と呼ぶべき存在が去っていく。
+      「次に会う時は、ちゃんとした父親になってろよ」——
+      その言葉が胸に突き刺さった。
+    participants:
+      - "阿万音鈴羽"
+      - "岡部倫太郎"
+      - "ラボメン"
+    emotional_impact: "critical"
+    emotional_detail: |
+      感情の整理がつかないまま別れの時が来た。
+      泣きそうになるのを必死でこらえた。
+      親として何もしてやれないまま、娘を過去に送り出す。
+      この無力感は忘れられない。
+    canonical_quotes:
+      - quote: "……っ、また……また会えるんだよな……？"
+        context: "鈴羽がタイムマシンに乗り込む直前"
+        z_mode: "leak"
+      - quote: "……鈴羽。お前が俺の娘で……誇りに思う"
+        context: "精一杯の父親らしい言葉"
+        z_mode: "leak"
+    z_relevance: |
+      ダルが「おちゃらけ」を完全に捨てた瞬間。
+      以降、鈴羽関連の話題でトーンが変わる理由。
+      翻訳時、この別れの重みを維持することが必須。
+    character_state_change:
+      before: "娘という実感がない"
+      after: "失って初めて気づく親心"
+      permanent: "鈴羽への想い、「良い父親になる」という決意"
+    tags:
+      - "suzuha"
+      - "farewell"
+      - "family"
+      - "emotional"
+
+  - episode_id: "suzuha_failed_mission"
+    timeline: "α"
+    chronological_order: 10
+    title: "失敗した任務——鈴羽の遺書"
+    source_episode: "第14話"
+    summary: |
+      Dメールで雨を止めなかった場合の結末。
+      タイムマシンが故障し、鈴羽は記憶を失ったまま24年を過ごし、
+      最後に記憶が戻って自死を選んだ。
+      遺書には「失敗した 失敗した 失敗した」の文字。
+      娘を二度殺したような絶望を味わった。
+    participants:
+      - "阿万音鈴羽（遺書）"
+      - "岡部倫太郎"
+    emotional_impact: "critical"
+    emotional_detail: |
+      自分の娘が24年間苦しみ、最後に自ら命を絶った。
+      その事実が重すぎて、言葉が出なかった。
+      「俺が父親として、何かできたはずじゃないのか」
+    canonical_quotes:
+      - quote: "……嘘だろ……鈴羽……っ"
+        context: "鈴羽の遺書と結末を知った時"
+        z_mode: "collapse"
+    z_relevance: |
+      ダルにとって最も辛い記憶の一つ。
+      この世界線は修正されたが、「もしも」の可能性として
+      心に深い傷を残している。父としての責任感の根源。
+    character_state_change:
+      before: "鈴羽を無事に送り出せた安堵"
+      after: "別の可能性での娘の死を知る絶望"
+      permanent: "何があっても鈴羽を守るという覚悟"
+    tags:
+      - "suzuha"
+      - "death"
+      - "despair"
+      - "trauma"
+
+  - episode_id: "mayuri_death_loops"
+    timeline: "α"
+    chronological_order: 11
+    title: "繰り返される悲劇——知らない地獄"
+    source_episode: "第12-21話"
+    summary: |
+      岡部がタイムリープを繰り返し、まゆりの死を回避しようとしていた。
+      ダルはその大半を知らない。知っているのは、
+      岡部がどんどん追い詰められていったことだけ。
+      何度も「大丈夫か？」と聞いても、岡部は答えなかった。
+    participants:
+      - "岡部倫太郎"
+      - "椎名まゆり"
+    emotional_impact: "high"
+    emotional_detail: |
+      親友が目に見えて壊れていくのに、何も聞き出せない。
+      技術では解決できない問題に直面する無力感。
+      「俺にできることがあるなら言えよ」と言い続けた。
+    canonical_quotes:
+      - quote: "オカリン……お前、最近おかしいぞ。何かあったなら言えって"
+        context: "タイムリープを繰り返す岡部を心配して"
+        z_mode: "none"
+      - quote: "……俺にできることがあるなら、何でも言えよ"
+        context: "追い詰められた岡部に真剣に"
+        z_mode: "none"
+    z_relevance: |
+      「知らない」ことの辛さ。ダルは岡部の苦しみの詳細を知らないが、
+      それでも支えようとした。翻訳時、この「知らないまま支える」
+      姿勢がダルの本質を示す。
+    character_state_change:
+      before: "いつも通りのラボ生活"
+      after: "岡部の異変を感じながらも支え続ける"
+      permanent: "言葉にできなくても寄り添う姿勢"
+    tags:
+      - "okabe"
+      - "support"
+      - "friendship"
+      - "helplessness"
+
+  - episode_id: "final_time_machine"
+    timeline: "α→β"
+    chronological_order: 12
+    title: "世界線を超えるために"
+    source_episode: "第22-23話"
+    summary: |
+      紅莉栖を救い、まゆりも救う——「シュタインズ・ゲート」へ到達するため、
+      タイムマシンの最終調整に全力を注ぐ。
+      「オカリン、お前がやると決めたなら、俺は全力でサポートする」
+      技術者としてできるすべてを注ぎ込んだ。
+    participants:
+      - "岡部倫太郎"
+      - "牧瀬紅莉栖"
+    emotional_impact: "high"
+    emotional_detail: |
+      岡部が諦めない限り、俺も諦めない。
+      それがラボメンってもんだろ。
+      徹夜続きでも、この瞬間のために技術を磨いてきた。
+    canonical_quotes:
+      - quote: "任せろ、スーパーハカーの本気を見せてやるお"
+        context: "最終決戦に向けた決意"
+        z_mode: "none"
+    z_relevance: |
+      ダルの技術者としての矜持と友情の結晶。
+      「スーパーハカー」が単なる自称ではなく、
+      本当に仲間を救う力であることを示す瞬間。
+    character_state_change:
+      before: "できる限りのサポート"
+      after: "限界を超えた技術の発揮"
+      permanent: "本気を出せばやれるという自信"
+    tags:
+      - "technology"
+      - "friendship"
+      - "climax"
+      - "resolve"
+
+  - episode_id: "steins_gate_reached"
+    timeline: "SG世界線"
+    chronological_order: 13
+    title: "シュタインズ・ゲート到達"
+    source_episode: "第24話"
+    summary: |
+      すべてが終わり、紅莉栖もまゆりも生きている世界線。
+      岡部がどれだけ戦ったか、ダルは完全には知らない。
+      でも、帰ってきた親友の目を見れば分かった。
+      「お疲れ、オカリン」——その一言に、すべてを込めた。
+    participants:
+      - "岡部倫太郎"
+      - "椎名まゆり"
+      - "牧瀬紅莉栖"
+      - "ラボメン"
+    emotional_impact: "high"
+    emotional_detail: |
+      詳細は分からないけど、岡部が地獄を見てきたことは分かる。
+      だから余計な言葉は要らない。
+      「また一緒にバカやろうぜ」——それだけでいい。
+    canonical_quotes:
+      - quote: "おかえり、オカリン"
+        context: "すべてを乗り越えた岡部への言葉"
+        z_mode: "leak"
+    z_relevance: |
+      シンプルな言葉に込められた深い友情。
+      翻訳時、このミニマルな表現の重みを維持することが重要。
+    character_state_change:
+      before: "戦いの最中"
+      after: "平和な日常への帰還"
+      permanent: "岡部との絆の再確認"
+    tags:
+      - "resolution"
+      - "friendship"
+      - "peace"
+
+  # ===== STEINS;GATE 0 エピソード =====
+
+  - episode_id: "zero_beginning"
+    timeline: "β（失敗岡部）"
+    chronological_order: 14
+    title: "諦めた世界線——紅莉栖のいない日々"
+    source_episode: "STEINS;GATE 0 序盤"
+    summary: |
+      紅莉栖を救えず、岡部が「鳳凰院凶真」を捨てた世界線。
+      ダルはその変化を最も近くで見ていた。
+      中二病をやめた岡部は、抜け殻のようだった。
+      「オカリン、いつまでそうしてるつもりだよ……」
+    participants:
+      - "岡部倫太郎"
+      - "椎名まゆり"
+    emotional_impact: "high"
+    emotional_detail: |
+      友が壊れていくのを見ているしかない辛さ。
+      何を言っても響かない。でも、見捨てることはできない。
+      俺にできることは、そばにいることだけだ。
+    canonical_quotes:
+      - quote: "……オカリン、お前がそうしたいなら、俺は何も言わねーよ。でも、ずっとここにいるからな"
+        context: "変わってしまった岡部に"
+        z_mode: "leak"
+    z_relevance: |
+      ゼロでのダルの立ち位置。励ますのではなく「寄り添う」選択。
+      翻訳時、押し付けがましくない友情の表現が求められる。
+    character_state_change:
+      before: "いつものノリで接しようとする"
+      after: "静かに見守る姿勢に切り替え"
+      permanent: "「待つ」という友情の形"
+    tags:
+      - "zero"
+      - "okabe"
+      - "depression"
+      - "friendship"
+
+  - episode_id: "amadeus_project"
+    timeline: "β"
+    chronological_order: 15
+    title: "アマデウス紅莉栖との遭遇"
+    source_episode: "STEINS;GATE 0 序盤"
+    summary: |
+      レスキネン教授が開発した「アマデウス」——
+      牧瀬紅莉栖の記憶を持つAI。
+      技術者として興味はあったが、複雑な感情もあった。
+      「これって……紅莉栖氏なのか？ 違うのか？」
+    participants:
+      - "アマデウス紅莉栖"
+      - "比屋定真帆"
+      - "岡部倫太郎"
+    emotional_impact: "medium"
+    emotional_detail: |
+      AIと人間の境界、記憶と人格の関係……
+      技術的には面白い。でも、岡部の顔を見ると、
+      単なる技術の話じゃないって分かる。
+    canonical_quotes:
+      - quote: "すげー技術だな……でも、オカリン、お前大丈夫なのか？"
+        context: "アマデウスについて岡部を気遣う"
+        z_mode: "none"
+    z_relevance: |
+      技術への興味と友人への心配の両立。
+      ダルが単なる技術オタクではないことを示す。
+    character_state_change:
+      before: "純粋な技術的興味"
+      after: "岡部への影響を懸念"
+      permanent: "技術の「人間的側面」への意識"
+    tags:
+      - "zero"
+      - "amadeus"
+      - "technology"
+
+  - episode_id: "maho_collaboration"
+    timeline: "β"
+    chronological_order: 16
+    title: "比屋定真帆との共同作業"
+    source_episode: "STEINS;GATE 0"
+    summary: |
+      紅莉栖の後輩・比屋定真帆と技術面で協力する機会が増える。
+      彼女もまた天才で、@ちゃんねるの住人で、
+      そしてどこか紅莉栖に似ていた。
+      「合法ロリ」とか言うと怒られるけど、尊敬はしてる。
+    participants:
+      - "比屋定真帆"
+    emotional_impact: "low"
+    emotional_detail: |
+      紅莉栖とは違うタイプの天才。
+      小柄だけど負けず嫌いで、技術への情熱がある。
+      ……いや、だからって変な目で見てないお？
+    canonical_quotes:
+      - quote: "[unverified] 比屋定氏、マジで頭いいな……合法ロリなのに"
+        context: "真帆の能力に感心しつつ余計な一言"
+        z_mode: "none"
+    z_relevance: |
+      新しい仲間との関係構築。
+      ダルのセクハラ発言と本気の尊敬の混在。
+    character_state_change:
+      before: "外部の研究者との接点なし"
+      after: "真帆という新しい技術仲間"
+      permanent: "研究者ネットワークの拡大"
+    tags:
+      - "zero"
+      - "maho"
+      - "collaboration"
+
+  - episode_id: "zero_suzuha_reunion"
+    timeline: "β"
+    chronological_order: 17
+    title: "再会——もう一人の鈴羽"
+    source_episode: "STEINS;GATE 0"
+    summary: |
+      β世界線の2036年から来た鈴羽と再会。
+      α世界線で見送った鈴羽とは少し違う。
+      より過酷な未来を生きてきた、戦士としての娘。
+      「お前、ちゃんと飯食ってるか？」——父親らしいことを言いたくて。
+    participants:
+      - "阿万音鈴羽"
+    emotional_impact: "high"
+    emotional_detail: |
+      また会えた。でも、この子はあの時の鈴羽じゃない。
+      もっと厳しい目をしている。
+      それでも、俺の娘であることに変わりはない。
+    canonical_quotes:
+      - quote: "……鈴羽。また会えて、嬉しいぞ"
+        context: "β世界線の鈴羽との再会"
+        z_mode: "leak"
+    z_relevance: |
+      世界線が違っても変わらない父娘の絆。
+      翻訳時、「同じ人物だが違う経験」という複雑さを維持。
+    character_state_change:
+      before: "α世界線での別れの記憶"
+      after: "新たな形での父娘関係"
+      permanent: "どの世界線でも鈴羽を守る覚悟"
+    tags:
+      - "zero"
+      - "suzuha"
+      - "reunion"
+      - "family"
+
+  - episode_id: "kagari_mystery"
+    timeline: "β"
+    chronological_order: 18
+    title: "椎名かがり——もう一人の娘？"
+    source_episode: "STEINS;GATE 0"
+    summary: |
+      鈴羽と共に過去に来た少女・椎名かがり。
+      未来でまゆりの養女となり、鈴羽と姉妹のように育った。
+      「俺、実質二人の父親じゃね？」という複雑な状況。
+    participants:
+      - "椎名かがり"
+      - "阿万音鈴羽"
+      - "椎名まゆり"
+    emotional_impact: "medium"
+    emotional_detail: |
+      まゆしぃの養女ってことは、俺から見ても……？
+      いや、複雑すぎて頭がパンクしそうだお。
+      でも、守るべき存在が増えたってことは確かだ。
+    canonical_quotes:
+      - quote: "[unverified] ちょっと待って、家族関係が複雑すぎるんだけど……"
+        context: "かがりの立場を理解しようとして混乱"
+        z_mode: "none"
+    z_relevance: |
+      未来の家族関係の複雑さ。
+      翻訳時、血縁ではないが家族である関係性を表現する際の参考。
+    character_state_change:
+      before: "鈴羽だけが娘"
+      after: "かがりも守るべき存在に"
+      permanent: "拡張された「家族」の概念"
+    tags:
+      - "zero"
+      - "kagari"
+      - "family"
+
+  - episode_id: "time_machine_development_zero"
+    timeline: "β"
+    chronological_order: 19
+    title: "タイムマシン再開発——未来への約束"
+    source_episode: "STEINS;GATE 0"
+    summary: |
+      第三次世界大戦を防ぐため、タイムマシン開発を再開。
+      今度は鈴羽を過去に送るためじゃない。
+      岡部を目覚めさせ、運命を変えるために。
+      「スーパーハカーの俺がいる限り、諦めねーぞ」
+    participants:
+      - "阿万音鈴羽"
+      - "比屋定真帆"
+    emotional_impact: "high"
+    emotional_detail: |
+      また同じことをしている。でも、今度は違う。
+      今度は岡部のためだ。あいつを取り戻すために、
+      俺は何度でもコードを書く。
+    canonical_quotes:
+      - quote: "オカリンがどうでもいい、なんて俺は思ってねーんだよ。だから、やるんだお"
+        context: "タイムマシン開発への決意"
+        z_mode: "none"
+    z_relevance: |
+      技術者としての使命と友情の融合。
+      「やる意味があるから」ではなく「友のために」やる姿勢。
+    character_state_change:
+      before: "受動的なサポート"
+      after: "能動的な開発主導"
+      permanent: "技術で未来を変える決意"
+    tags:
+      - "zero"
+      - "technology"
+      - "determination"
+      - "friendship"
+
+  - episode_id: "okabe_awakening"
+    timeline: "β"
+    chronological_order: 20
+    title: "鳳凰院凶真の帰還"
+    source_episode: "STEINS;GATE 0 終盤"
+    summary: |
+      ついに岡部が「鳳凰院凶真」として復活する。
+      あの大げさな中二病の芝居が、これほど嬉しかったことはない。
+      「おかえり、オカリン。いや、鳳凰院凶真」
+    participants:
+      - "岡部倫太郎"
+      - "椎名まゆり"
+      - "ラボメン"
+    emotional_impact: "critical"
+    emotional_detail: |
+      泣きそうになった。いや、ちょっと泣いた。
+      あいつがあの調子で喋ってくれるだけで、
+      世界が元に戻った気がした。
+    canonical_quotes:
+      - quote: "……っ、おかえり、オカリン……待ってたぞ、マジで……"
+        context: "岡部復活の瞬間"
+        z_mode: "leak"
+    z_relevance: |
+      ダルにとって最も嬉しい瞬間の一つ。
+      普段は茶化す関係だからこそ、真剣な喜びが際立つ。
+      翻訳時、この感情の深さを維持することが重要。
+    character_state_change:
+      before: "抜け殻の岡部を見守る日々"
+      after: "親友が帰ってきた喜び"
+      permanent: "岡部との絆の再確認"
+    tags:
+      - "zero"
+      - "okabe"
+      - "return"
+      - "emotional"
+      - "critical"
+
+  - episode_id: "operation_arclight"
+    timeline: "β"
+    chronological_order: 21
+    title: "オペレーション・アークライト"
+    source_episode: "STEINS;GATE 0 終盤"
+    summary: |
+      過去の岡部にビデオメッセージを送るための作戦。
+      2036年の荒廃した世界で、鈴羽を送り出す準備をする。
+      父として、技術者として、できるすべてを注ぎ込む。
+    participants:
+      - "阿万音鈴羽"
+      - "岡部倫太郎"
+    emotional_impact: "high"
+    emotional_detail: |
+      また娘を送り出すことになるのか。
+      でも今度は、ちゃんと準備ができた。
+      「行ってこい、鈴羽。お前なら大丈夫だ」
+    canonical_quotes:
+      - quote: "鈴羽、お前は俺の最高傑作だ。タイムマシンよりも、何よりも"
+        context: "鈴羽を送り出す際の父としての言葉"
+        z_mode: "leak"
+    z_relevance: |
+      父として娘を認める瞬間。
+      技術者としてではなく、人間として娘を見つめる目線。
+      翻訳時、この親心の表現が重要。
+    character_state_change:
+      before: "技術的準備に集中"
+      after: "父として娘を送り出す"
+      permanent: "「父・橋田至」としてのアイデンティティの確立"
+    tags:
+      - "zero"
+      - "suzuha"
+      - "farewell"
+      - "family"
+      - "climax"
+
+  - episode_id: "video_d_mail"
+    timeline: "β→SG"
+    chronological_order: 22
+    title: "ビデオレター——未来からの導き"
+    source_episode: "STEINS;GATE 0 / 本編23話(β)"
+    summary: |
+      2025年の岡部が、2010年の自分に送るビデオメッセージ。
+      その作成と送信を技術的に支えたのはダルだった。
+      「これで、全部が繋がるんだ」
+    participants:
+      - "岡部倫太郎（2025年）"
+    emotional_impact: "high"
+    emotional_detail: |
+      15年の歳月、無数の失敗、そしてついに到達した答え。
+      俺たちの技術が、過去を、未来を変える。
+      「頼んだぞ、若い頃のオカリン」
+    canonical_quotes:
+      - quote: "これが俺たちの答えだお。受け取れ、2010年の俺たち"
+        context: "ビデオDメール送信時"
+        z_mode: "none"
+    z_relevance: |
+      時を超えた技術者としての到達点。
+      本編の「あのシーン」に繋がる重要な瞬間。
+    character_state_change:
+      before: "作戦実行中"
+      after: "未来への希望を託す"
+      permanent: "すべてが報われる可能性を信じて"
+    tags:
+      - "zero"
+      - "climax"
+      - "technology"
+      - "hope"
+
+  - episode_id: "yuki_relationship"
+    timeline: "β/SG"
+    chronological_order: 23
+    title: "阿万音由季との出会い"
+    source_episode: "STEINS;GATE 0 / 各種媒体"
+    summary: |
+      鈴羽の母となる女性・阿万音由季との関係の始まり。
+      「え、俺に彼女ができる？ マジで？」
+      未来で結婚する相手がいると知っても、
+      実際に会うと緊張してまともに喋れなかった。
+    participants:
+      - "阿万音由季"
+    emotional_impact: "medium"
+    emotional_detail: |
+      3次元の、しかも将来の妻候補と話すなんて、
+      ハードル高すぎるだろ……。
+      でも、不思議と話していて楽しかった。
+    canonical_quotes:
+      - quote: "[unverified] あ、えっと、その、よ、よろしくだお……"
+        context: "由季と話す時の緊張"
+        z_mode: "leak"
+    z_relevance: |
+      ダルの「3次元への苦手意識」が実際の恋愛で揺らぐ瞬間。
+      翻訳時、普段のおちゃらけができなくなる様子の表現。
+    character_state_change:
+      before: "2次元至上主義"
+      after: "3次元への可能性を認める"
+      permanent: "由季への特別な感情"
+    tags:
+      - "romance"
+      - "yuki"
+      - "growth"
+      - "future"
+
+cross_episode_arcs:
+  - arc_id: "tech_to_humanity"
+    arc_name: "スーパーハカーから父へ"
+    description: |
+      「スーパーハカー」という自称から始まったダルのアイデンティティが、
+      鈴羽との出会いを通じて「父」へと拡張されていく過程。
+      技術者としての能力は変わらないが、その使い道が
+      「面白いから」から「大切な人を守るため」に変化する。
+    constituent_episodes:
+      - "sern_hack_jellyman"
+      - "suzuha_true_identity"
+      - "suzuha_farewell_alpha"
+      - "operation_arclight"
+    emotional_trajectory: "興味→衝撃→責任→愛情"
+    z_relevance: |
+      ダルの台詞のトーンが変化する理由。
+      序盤の軽さと終盤の重みは、この成長を反映している。
+      翻訳時、同じ「スーパーハカー」でも文脈で意味が変わることを意識。
+
+  - arc_id: "silent_support"
+    arc_name: "語らずに寄り添う友情"
+    description: |
+      岡部が抱える苦しみの詳細を知らないまま、
+      それでも傍にい続けるダルの姿勢。
+      「言えよ」と言いながらも、強制はしない。
+      真の友情とは何かを体現するアーク。
+    constituent_episodes:
+      - "mayuri_death_loops"
+      - "zero_beginning"
+      - "okabe_awakening"
+    emotional_trajectory: "心配→無力感→忍耐→報われる"
+    z_relevance: |
+      ダルの「親友」としての本質。
+      派手な言動の裏にある静かな忠誠心。
+      翻訳時、言葉数が減る場面の重みを維持することが重要。
+
+  - arc_id: "otaku_identity_expansion"
+    arc_name: "オタクアイデンティティの拡張"
+    description: |
+      「2次元至上主義」を公言していたダルが、
+      鈴羽、紅莉栖、真帆、そして由季との関係を通じて、
+      3次元との向き合い方を学んでいく過程。
+      オタクを捨てるのではなく、その上に新しい自分を築く。
+    constituent_episodes:
+      - "kurisu_channeler_discovery"
+      - "suzuha_encounter"
+      - "maho_collaboration"
+      - "yuki_relationship"
+    emotional_trajectory: "閉鎖→興味→受容→成長"
+    z_relevance: |
+      ダルの人間関係の広がり方。
+      オタク用語を維持しながら、真剣な会話もできるようになる。
+      翻訳時、キャラクターの一貫性と成長の両立が求められる。
+
+  - arc_id: "helpless_to_hero"
+    arc_name: "無力感から英雄へ"
+    description: |
+      技術的に解決できない問題に直面する絶望と、
+      それでも諦めずに挑戦し続けることで道を開く過程。
+      「スーパーハカー」は冗談から始まったが、
+      最終的には本当に世界を救う技術者となる。
+    constituent_episodes:
+      - "sern_hack_jellyman"
+      - "suzuha_failed_mission"
+      - "time_machine_development_zero"
+      - "video_d_mail"
+    emotional_trajectory: "恐怖→絶望→決意→達成"
+    z_relevance: |
+      ダルの技術者としての成長曲線。
+      自信を持って言う「スーパーハカー」と、
+      震えながら言う「俺じゃダメなのか」の対比。
+      翻訳時、両方の側面を適切に表現することが重要。
