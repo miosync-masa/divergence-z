@@ -1,0 +1,1001 @@
+# =============================================================================
+# EPISODE MEMORY FILE v1.0
+# Character: 月岡恋鐘 (Tsukioka Kogane)
+# Source: アイドルマスター シャイニーカラーズ
+# Generated for Z-Axis Translation System
+# =============================================================================
+
+meta:
+  version: "1.0"
+  generated_by: "episode_memory_generator"
+  character_id: "tsukioka_kogane"
+  source: "アイドルマスター シャイニーカラーズ"
+  output_lang: "ja"
+  episode_count: 24
+
+episodes:
+  # ===========================================================================
+  # ORIGIN ARC - 長崎から東京へ
+  # ===========================================================================
+  
+  - episode_id: "nagasaki_departure"
+    timeline: "main"
+    chronological_order: 1
+    title: "父の反対を押し切った上京"
+    source_episode: "恋鐘コミュ・W.I.N.G.編 序盤"
+    summary: |
+      長崎で父親が営む海沿いの食堂で働いていた恋鐘。
+      アイドルになりたいという夢を父に告げるが、強く反対される。
+      「お前にそんなことができるわけがなか」という言葉を受けながらも、
+      諦めきれず、単身での上京を決意する。
+      故郷を離れる日、複雑な思いを抱えながら長崎を後にした。
+    participants:
+      - "父親（声のみ）"
+      - "家族"
+    emotional_impact: "critical"
+    emotional_detail: |
+      父に認めてもらえなかった傷は深く、彼女の原動力であり続けている。
+      「いつか認めさせる」という決意と、「本当は応援してほしかった」という
+      子供らしい願いが共存している。故郷への愛着と、夢への渇望の間で
+      揺れながらも、前に進むことを選んだ瞬間。
+    canonical_quotes:
+      - quote: "[unverified] お父さんには反対されたっちゃけど……うち、諦めきれんかったと"
+        context: "上京の経緯をプロデューサーに語る場面"
+        z_mode: "shame"
+      - quote: "[unverified] いつか絶対、お父さんに認めてもらうけん"
+        context: "自分の決意を語る場面"
+        z_mode: "resolve"
+    z_relevance: |
+      父親関連の台詞を翻訳する際の感情的基盤。
+      「認めてもらう」という言葉には、反発と愛情と渇望が混在している。
+      単なる「証明したい」ではなく、家族としての承認欲求が根底にある。
+    character_state_change:
+      before: "故郷で夢を抱える少女"
+      after: "反対を押し切って上京した、覚悟を持つ挑戦者"
+      permanent: "父への複雑な感情、絶対に諦めないという信念"
+    tags:
+      - "origin"
+      - "father"
+      - "determination"
+      - "departure"
+
+  - episode_id: "producer_first_meeting"
+    timeline: "main"
+    chronological_order: 2
+    title: "運命の出会い——プロデューサーとの邂逅"
+    source_episode: "恋鐘コミュ・W.I.N.G.編"
+    summary: |
+      上京後、何度もオーディションに落ち続けていた恋鐘。
+      ドジで失敗を重ねながらも諦めずに挑戦し続ける姿を、
+      プロデューサーが目にする。その諦めない姿勢と、
+      失敗しても立ち上がる明るさに可能性を見出され、
+      283プロダクションにスカウトされる。
+    participants:
+      - "プロデューサー"
+    emotional_impact: "critical"
+    emotional_detail: |
+      何度落ちても諦めなかった自分を、初めて「見つけてくれた」人。
+      父に否定された夢を、肯定してくれた最初の存在。
+      この出会いがなければ今の自分はいないという深い感謝がある。
+    canonical_quotes:
+      - quote: "[unverified] えっ……うちを？ ほんとに？"
+        context: "スカウトされた瞬間の驚き"
+        z_mode: "shock"
+      - quote: "[unverified] ありがとうございます……！ 絶対、頑張るけん！"
+        context: "スカウトを受けた時の返答"
+        z_mode: "leak"
+    z_relevance: |
+      プロデューサーへの台詞は、この「見つけてもらった」感謝が基盤。
+      敬語と方言が混じる独特の話し方は、この関係性から来ている。
+      信頼と感謝が深く、失望させたくないという思いも強い。
+    character_state_change:
+      before: "オーディション落ちを繰り返す無名の志望者"
+      after: "283プロダクション所属のアイドル候補生"
+      permanent: "プロデューサーへの深い信頼と感謝"
+    tags:
+      - "origin"
+      - "producer"
+      - "turning_point"
+      - "gratitude"
+
+  # ===========================================================================
+  # L'ANTICA FORMATION ARC
+  # ===========================================================================
+
+  - episode_id: "lantica_formation"
+    timeline: "main"
+    chronological_order: 3
+    title: "L'Antica結成——五人の出会い"
+    source_episode: "L'Anticaコミュ・初期"
+    summary: |
+      恋鐘、摩美々、咲耶、結華、霧子の五人でユニット「L'Antica」が結成される。
+      個性的で内向的なメンバーが多い中、恋鐘の明るさと素直さが
+      グループの空気を和らげる役割を自然と担うようになる。
+      最初はバラバラだった五人が、少しずつ「仲間」になっていく始まり。
+    participants:
+      - "田中摩美々"
+      - "白瀬咲耶"
+      - "三峰結華"
+      - "幽谷霧子"
+      - "プロデューサー"
+    emotional_impact: "high"
+    emotional_detail: |
+      一人で上京してきた恋鐘にとって、「仲間」ができたことの喜び。
+      最初は戸惑いもあったが、個性的なメンバーたちに惹かれていく。
+      「この人たちと一緒なら」という直感的な信頼が芽生えた瞬間。
+    canonical_quotes:
+      - quote: "[unverified] みんな……よろしくね！ うち、ばり嬉しかー！"
+        context: "ユニット結成時の挨拶"
+        z_mode: "baseline"
+    z_relevance: |
+      L'Anticaメンバーへの台詞の基盤となる出会い。
+      「みんな」という言葉に込められる愛情の始点。
+      個性派揃いの中で自分の役割を見つけていく過程。
+    character_state_change:
+      before: "一人で夢を追う上京組"
+      after: "L'Anticaの一員、仲間を得た存在"
+      permanent: "L'Anticaへの帰属意識と責任感"
+    tags:
+      - "lantica"
+      - "formation"
+      - "bond"
+      - "beginning"
+
+  - episode_id: "understanding_mamimi"
+    timeline: "main"
+    chronological_order: 4
+    title: "摩美々との距離——「わからない」から「わかりたい」へ"
+    source_episode: "L'Anticaコミュ・初期〜中期"
+    summary: |
+      自由奔放で掴みどころのない摩美々に、最初は戸惑う恋鐘。
+      「何を考えてるかわからん」と感じながらも、
+      摩美々の芯にある情熱と優しさに気づいていく。
+      言葉では通じ合えなくても、一緒にいることで理解が深まる経験。
+    participants:
+      - "田中摩美々"
+    emotional_impact: "medium"
+    emotional_detail: |
+      「わからない」ことへの不安と、「わかりたい」という願い。
+      摩美々の独特の表現や行動の裏にある真意を、
+      時間をかけて理解していく過程で、仲間への信頼が深まった。
+    canonical_quotes:
+      - quote: "[unverified] まみちゃんって、よくわからんけど……でも、なんか好きばい"
+        context: "摩美々について語る場面"
+        z_mode: "baseline"
+    z_relevance: |
+      摩美々関連の台詞では、「言葉では説明できない絆」のニュアンスが重要。
+      理解できないことを受け入れる包容力の表現。
+    character_state_change:
+      before: "摩美々を「不思議な人」と思っている"
+      after: "摩美々の個性を受け入れ、信頼している"
+      permanent: "言葉を超えた理解への信頼"
+    tags:
+      - "mamimi"
+      - "bond"
+      - "understanding"
+      - "growth"
+
+  - episode_id: "sakuya_admiration"
+    timeline: "main"
+    chronological_order: 5
+    title: "咲耶への憧れ——「かっこよか」存在"
+    source_episode: "L'Anticaコミュ"
+    summary: |
+      モデル出身でクールな咲耶に、素直に憧れを抱く恋鐘。
+      「かっこよか」「すごか」と率直に伝える恋鐘に、
+      咲耶も次第に心を開いていく。
+      恋鐘の素直さが、咲耶の硬い殻を少しずつ溶かしていった。
+    participants:
+      - "白瀬咲耶"
+    emotional_impact: "medium"
+    emotional_detail: |
+      純粋な憧れと、「自分とは違う」という少しの劣等感。
+      でもそれを隠さず、素直に「すごい」と言える明るさ。
+      咲耶から認められた時の喜びは格別だった。
+    canonical_quotes:
+      - quote: "[unverified] 咲耶ちゃん、ばりかっこよかねー！ うち、憧れるばい"
+        context: "咲耶のパフォーマンスを見て"
+        z_mode: "baseline"
+    z_relevance: |
+      咲耶への台詞では、憧れと親しみが混在する。
+      「ちゃん」付けで呼ぶ親しさと、「すごい」と認める素直さの両立。
+    character_state_change:
+      before: "咲耶を「すごい人」と遠くから見ている"
+      after: "咲耶を仲間として信頼し、対等に接する"
+      permanent: "咲耶への憧れと友情"
+    tags:
+      - "sakuya"
+      - "admiration"
+      - "bond"
+
+  - episode_id: "yuika_trust_building"
+    timeline: "main"
+    chronological_order: 6
+    title: "結華との信頼構築——計算と真心"
+    source_episode: "L'Anticaコミュ"
+    summary: |
+      戦略的で計算高い結華に、最初は少し距離を感じていた恋鐘。
+      しかし、結華がL'Anticaのために必死に考え、動いていることに気づく。
+      「やり方は違っても、みんなのためって気持ちは同じばい」と理解し、
+      結華の努力を心から認めるようになる。
+    participants:
+      - "三峰結華"
+    emotional_impact: "medium"
+    emotional_detail: |
+      「計算高い」ように見える人の裏にある真摯さへの気づき。
+      自分とは違うアプローチでも、同じ目標に向かっていると知った時の喜び。
+      結華を「頼れる人」として認識するようになった。
+    canonical_quotes:
+      - quote: "[unverified] 結華ちゃんって、ほんとはめっちゃ優しかよね"
+        context: "結華の行動の裏にある思いに気づいた時"
+        z_mode: "baseline"
+    z_relevance: |
+      結華への台詞では、「見えない努力」への理解が重要。
+      素直な恋鐘が、結華の複雑さを受け入れている証。
+    character_state_change:
+      before: "結華を「頭のいい人」と思っている"
+      after: "結華の優しさと努力を理解し、信頼している"
+      permanent: "結華への深い信頼"
+    tags:
+      - "yuika"
+      - "trust"
+      - "understanding"
+
+  - episode_id: "kiriko_gentle_bond"
+    timeline: "main"
+    chronological_order: 7
+    title: "霧子との穏やかな絆——癒しの存在"
+    source_episode: "L'Anticaコミュ"
+    summary: |
+      穏やかで不思議な雰囲気の霧子に、自然と癒される恋鐘。
+      言葉は少なくても、霧子の優しさは確かに伝わってくる。
+      二人でいると、恋鐘の「頑張らなきゃ」という力みが
+      自然とほどけていくような関係性が生まれた。
+    participants:
+      - "幽谷霧子"
+    emotional_impact: "medium"
+    emotional_detail: |
+      常にポジティブでいようとする恋鐘にとって、
+      霧子の存在は「そのままでいい」と言ってくれるような安らぎ。
+      無理に元気を出さなくていい、稀有な存在。
+    canonical_quotes:
+      - quote: "[unverified] 霧子ちゃんといると、なんか落ち着くとよね"
+        context: "霧子との時間を語る場面"
+        z_mode: "baseline"
+    z_relevance: |
+      霧子への台詞は、恋鐘の「素」が出やすい場面。
+      ポジティブの鎧を外した、穏やかな恋鐘の表現。
+    character_state_change:
+      before: "霧子を「不思議な人」と思っている"
+      after: "霧子を心の安らぎの存在として信頼"
+      permanent: "霧子との穏やかな絆"
+    tags:
+      - "kiriko"
+      - "peace"
+      - "bond"
+
+  # ===========================================================================
+  # DOJITIVE PHILOSOPHY ARC
+  # ===========================================================================
+
+  - episode_id: "first_major_failure"
+    timeline: "main"
+    chronological_order: 8
+    title: "大舞台での転倒——「ドジティブ」の誕生"
+    source_episode: "恋鐘コミュ・W.I.N.G.編"
+    summary: |
+      重要なステージで派手に転んでしまう恋鐘。
+      会場が静まり返る中、一瞬の絶望を感じるが、
+      すぐに立ち上がり、笑顔で「ドジっちゃった！」と宣言。
+      失敗を笑いに変え、逆に観客の心を掴んだ瞬間。
+      この経験から「ドジティブ」という言葉が生まれた。
+    participants:
+      - "観客"
+      - "プロデューサー"
+    emotional_impact: "high"
+    emotional_detail: |
+      転んだ瞬間の恐怖と絶望は本物だった。
+      でも、「ここで終わりたくない」という一心で立ち上がった。
+      結果的に成功したが、あの瞬間の怖さは忘れられない。
+      同時に、「自分でもできる」という自信にもなった。
+    canonical_quotes:
+      - quote: "[unverified] あはは、ドジっちゃったばい！ でも大丈夫！ うち、ドジティブやけん！"
+        context: "転倒から立ち上がった直後"
+        z_mode: "overwrite"
+    z_relevance: |
+      「ドジティブ」という言葉の重み。
+      単なる造語ではなく、失敗と向き合う彼女の哲学の結晶。
+      この言葉を訳す時は、その背景にある恐怖と決意を込める必要がある。
+    character_state_change:
+      before: "ドジで失敗を繰り返す不安な少女"
+      after: "ドジを武器に変えた、独自のスタイルを持つアイドル"
+      permanent: "「ドジティブ」というアイデンティティ"
+    tags:
+      - "dojitive"
+      - "failure"
+      - "recovery"
+      - "turning_point"
+      - "iconic"
+
+  - episode_id: "repeated_audition_failures"
+    timeline: "main"
+    chronological_order: 9
+    title: "落選の連続——それでも諦めない"
+    source_episode: "恋鐘コミュ・回想"
+    summary: |
+      283プロに入る前、何度もオーディションに落ち続けた日々。
+      「向いてない」「諦めろ」という言葉を何度も聞いた。
+      それでも翌日には次のオーディションに向かっていた。
+      この経験が「絶対に諦めない」という信念の土台となった。
+    participants:
+      - "審査員（匿名）"
+    emotional_impact: "high"
+    emotional_detail: |
+      毎回「今度こそ」と思って挑み、毎回落ちる。
+      泣いた夜は数え切れない。でも、朝になれば「次がある」と思えた。
+      この時期の自分があるから、今の自分がいると理解している。
+    canonical_quotes:
+      - quote: "[unverified] 何回落ちたか、もう数えとらんばい……でも、次があるけん"
+        context: "過去を振り返って語る場面"
+        z_mode: "leak"
+    z_relevance: |
+      恋鐘の「諦めない」は、何十回もの失敗に裏打ちされている。
+      軽い励ましではなく、実体験からの言葉であることを翻訳で表現する必要。
+    character_state_change:
+      before: "夢を持つ普通の少女"
+      after: "何度でも立ち上がれる強さを身につけた挑戦者"
+      permanent: "「諦めない」という信念の確立"
+    tags:
+      - "failure"
+      - "perseverance"
+      - "origin"
+      - "growth"
+
+  # ===========================================================================
+  # FATHER ARC
+  # ===========================================================================
+
+  - episode_id: "father_opposition_memory"
+    timeline: "main"
+    chronological_order: 10
+    title: "父の言葉——「お前にできるわけがなか」"
+    source_episode: "恋鐘コミュ・回想"
+    summary: |
+      アイドルになりたいと父に告げた時の記憶。
+      「そんな夢みたいなことを言って、お前にできるわけがなか」
+      という言葉は、今でも恋鐘の心に刺さったままだ。
+      父なりの心配だったのかもしれないが、その時は理解できなかった。
+    participants:
+      - "父親"
+    emotional_impact: "critical"
+    emotional_detail: |
+      父に否定された瞬間の衝撃と悲しみは、今でも鮮明に覚えている。
+      怒りと悲しみと、それでも父を嫌いになれない複雑な感情。
+      「認めてもらいたい」という渇望の原点。
+    canonical_quotes:
+      - quote: "[unverified] お前にそんなことができるわけがなか"
+        context: "父親の反対の言葉（恋鐘の回想）"
+        z_mode: "trauma"
+      - quote: "[unverified] ……うち、お父さんに認めてほしかったと。ばり、悔しかった"
+        context: "プロデューサーに打ち明ける場面"
+        z_mode: "shame"
+    z_relevance: |
+      父親関連の台詞は、恋鐘の最も脆い部分に触れる。
+      「認める」「認めてもらう」という言葉の重みが全く違う。
+      この傷を知らずに翻訳すると、感情の深度を見誤る。
+    character_state_change:
+      before: "父に夢を否定される前の少女"
+      after: "父への複雑な感情を抱えながら夢を追う"
+      permanent: "父への承認欲求、証明したいという渇望"
+    tags:
+      - "father"
+      - "trauma"
+      - "wound"
+      - "origin"
+
+  - episode_id: "homesickness_hidden"
+    timeline: "main"
+    chronological_order: 11
+    title: "隠した寂しさ——故郷を想う夜"
+    source_episode: "恋鐘コミュ"
+    summary: |
+      普段は明るく振る舞う恋鐘だが、一人の夜に故郷を思い出すことがある。
+      長崎の海、父の食堂、家族の顔——
+      寂しいと言えば心配をかける。だから笑顔でいる。
+      でも時々、その寂しさが漏れ出してしまう瞬間がある。
+    participants:
+      - "（一人）"
+    emotional_impact: "medium"
+    emotional_detail: |
+      強がりで隠しているだけで、本当は寂しい時もある。
+      でも、ここで弱音を吐いたら、夢を諦めた父の言う通りになる。
+      だから笑う。笑い続ける。
+    canonical_quotes:
+      - quote: "[unverified] ……長崎、どがんしとるかな"
+        context: "一人の夜、窓の外を見ながら"
+        z_mode: "leak"
+    z_relevance: |
+      恋鐘の「明るさ」が隠しているものを理解する必要。
+      ふとした瞬間の方言や、故郷への言及には、この寂しさが滲む。
+      翻訳でこの二重性を失わないよう注意。
+    character_state_change:
+      before: "寂しさを自覚していない"
+      after: "寂しさを認識しつつ、それでも前を向く"
+      permanent: "故郷への想いと、それを隠す習慣"
+    tags:
+      - "loneliness"
+      - "hidden_pain"
+      - "nagasaki"
+      - "mask"
+
+  - episode_id: "letter_from_home"
+    timeline: "main"
+    chronological_order: 12
+    title: "故郷からの便り——母の手紙"
+    source_episode: "恋鐘コミュ"
+    summary: |
+      母から届いた手紙。父のことは書かれていないが、
+      「体に気をつけて頑張りなさい」という言葉に涙が出た。
+      家族は応援してくれている。少なくとも母は。
+      この手紙が、恋鐘の支えの一つになっている。
+    participants:
+      - "母親（手紙）"
+    emotional_impact: "high"
+    emotional_detail: |
+      母の字を見た瞬間、涙が溢れた。
+      「頑張りなさい」という言葉が、こんなに嬉しいとは。
+      父のことは書かれていない。でも、それは聞かない。
+    canonical_quotes:
+      - quote: "[unverified] お母さん……ありがとう……うち、頑張るけんね……"
+        context: "手紙を読みながら、一人で泣く場面"
+        z_mode: "leak"
+    z_relevance: |
+      家族への複雑な感情。母への感謝と、父への未練。
+      「家族」という言葉の中に、この複雑さが含まれることを意識して翻訳。
+    character_state_change:
+      before: "家族全体から離れている感覚"
+      after: "母の応援を感じ、支えられている実感"
+      permanent: "母への感謝、家族の絆への希望"
+    tags:
+      - "family"
+      - "mother"
+      - "support"
+      - "hope"
+
+  # ===========================================================================
+  # GROWTH AND CHALLENGE ARC
+  # ===========================================================================
+
+  - episode_id: "wing_audition_challenge"
+    timeline: "main"
+    chronological_order: 13
+    title: "W.I.N.G.への挑戦——夢の舞台へ"
+    source_episode: "恋鐘コミュ・W.I.N.G.編"
+    summary: |
+      アイドルの登竜門「W.I.N.G.」オーディションへの挑戦。
+      これまでの失敗と成長の全てを賭けて挑む大舞台。
+      緊張と期待と、少しの恐怖を抱えながら、
+      「絶対に勝つ」という決意でステージに立つ。
+    participants:
+      - "プロデューサー"
+      - "ライバルアイドルたち"
+    emotional_impact: "high"
+    emotional_detail: |
+      ここで負けたら、父の言葉が正しかったことになる。
+      でも、ここまで来られたのは自分の力だ。
+      勝ちたい。認めてもらいたい。その一心。
+    canonical_quotes:
+      - quote: "[unverified] うち、ここで負けるわけにはいかんと！ 絶対勝つばい！"
+        context: "W.I.N.G.決勝前の決意"
+        z_mode: "resolve"
+    z_relevance: |
+      「勝つ」「負けない」という言葉に込められた重み。
+      父への証明、自分への証明、仲間への恩返し——全てが詰まった決意。
+    character_state_change:
+      before: "挑戦者としてのアイドル"
+      after: "勝利への強い意志を持つ競争者"
+      permanent: "大舞台への覚悟"
+    tags:
+      - "wing"
+      - "challenge"
+      - "determination"
+      - "competition"
+
+  - episode_id: "self_doubt_crisis"
+    timeline: "main"
+    chronological_order: 14
+    title: "自分への疑念——「うちなんかでよかと？」"
+    source_episode: "恋鐘コミュ・中盤"
+    summary: |
+      周囲のアイドルたちのレベルの高さに、自信を失いかける恋鐘。
+      「ドジなうちが、本当にトップを目指していいの？」
+      いつものポジティブさが機能しない、珍しい状態。
+      この時、仲間やプロデューサーの言葉に救われる。
+    participants:
+      - "プロデューサー"
+      - "L'Anticaメンバー"
+    emotional_impact: "high"
+    emotional_detail: |
+      いつもは「大丈夫」と言える自分が、言えなくなった。
+      「本当に大丈夫なの？」と自分に問いかけて、答えが出ない。
+      仲間に支えられて初めて、自分も支えられていいと気づいた。
+    canonical_quotes:
+      - quote: "[unverified] うちなんかで……ほんとによかと？"
+        context: "自信を失い、プロデューサーに問いかける"
+        z_mode: "shame"
+      - quote: "[unverified] ……ありがとう。みんながおってくれて、よかった"
+        context: "励まされた後、涙ながらに"
+        z_mode: "leak"
+    z_relevance: |
+      恋鐘が珍しく弱さを見せる場面。
+      「なんか」という自己卑下、「よかと？」という疑問形——
+      いつもの断定的な「〜ばい」が使えない心理状態の表現。
+    character_state_change:
+      before: "常にポジティブでいられると思っていた"
+      after: "支えられることも必要だと理解"
+      permanent: "弱さを見せることへの抵抗が少し減る"
+    tags:
+      - "vulnerability"
+      - "self_doubt"
+      - "support"
+      - "growth"
+
+  - episode_id: "protecting_lantica"
+    timeline: "main"
+    chronological_order: 15
+    title: "L'Anticaを守る——仲間への批判に立ち向かう"
+    source_episode: "L'Anticaコミュ"
+    summary: |
+      L'Anticaのメンバーが批判された時、普段の穏やかさが消え、
+      強い意志を持って反論する恋鐘。
+      「みんなのことを悪く言わないで」という姿勢は、
+      彼女の仲間への愛情の深さを示している。
+    participants:
+      - "L'Anticaメンバー"
+      - "批判者"
+    emotional_impact: "medium"
+    emotional_detail: |
+      自分のことを言われるのは我慢できる。
+      でも、大切な仲間を傷つけられるのは許せない。
+      普段使わない強い言葉が出てしまうほどの感情。
+    canonical_quotes:
+      - quote: "[unverified] ちょっと待って！ みんなのこと、そがん言わんでよ！"
+        context: "L'Anticaへの批判に対して"
+        z_mode: "rage"
+    z_relevance: |
+      恋鐘の「怒り」は珍しく、翻訳で強調すべき場面。
+      普段の柔らかさと対比的な、芯の強さの表現。
+      「待って」「言わんで」の命令形が出る珍しいケース。
+    character_state_change:
+      before: "仲間を大切に思っている"
+      after: "仲間を守るために立ち向かえる自分を発見"
+      permanent: "L'Anticaのために戦う覚悟"
+    tags:
+      - "lantica"
+      - "protection"
+      - "anger"
+      - "loyalty"
+
+  - episode_id: "performance_breakthrough"
+    timeline: "main"
+    chronological_order: 16
+    title: "殻を破る——初めての完璧なパフォーマンス"
+    source_episode: "恋鐘コミュ"
+    summary: |
+      いつもどこかでドジをしてしまう恋鐘が、
+      初めてミスなく完璧なパフォーマンスを披露した瞬間。
+      観客からの大きな拍手に、涙が溢れそうになる。
+      「やればできる」——それを証明できた達成感。
+    participants:
+      - "観客"
+      - "L'Anticaメンバー"
+      - "プロデューサー"
+    emotional_impact: "high"
+    emotional_detail: |
+      「ドジじゃなくても、輝ける」という新しい自信。
+      ドジティブは武器だけど、ドジじゃない自分も認められた。
+      この経験が、さらなる成長への自信となった。
+    canonical_quotes:
+      - quote: "[unverified] やった……！ やったばい……！ うち、できた……！"
+        context: "完璧なパフォーマンス後、感極まって"
+        z_mode: "leak"
+    z_relevance: |
+      達成感と感動が溢れる場面。
+      繰り返される「やった」「できた」は、過去の失敗への決着でもある。
+      翻訳でこの「積み重ねの果ての喜び」を表現する必要。
+    character_state_change:
+      before: "ドジでも輝けると思っていた"
+      after: "ドジじゃない自分でも輝けると確信"
+      permanent: "自己肯定感の向上"
+    tags:
+      - "success"
+      - "growth"
+      - "breakthrough"
+      - "joy"
+
+  # ===========================================================================
+  # RELATIONSHIP DEEPENING ARC
+  # ===========================================================================
+
+  - episode_id: "producer_gratitude_moment"
+    timeline: "main"
+    chronological_order: 17
+    title: "プロデューサーへの感謝——「見つけてくれてありがとう」"
+    source_episode: "恋鐘コミュ"
+    summary: |
+      ふとした瞬間に、プロデューサーへの深い感謝を伝える恋鐘。
+      「あの時見つけてくれなかったら、今のうちはおらんかった」
+      照れながらも真剣に、自分を信じてくれたことへの感謝を語る。
+    participants:
+      - "プロデューサー"
+    emotional_impact: "high"
+    emotional_detail: |
+      改めて言葉にすると照れくさいけど、ちゃんと伝えたかった。
+      何度もオーディションに落ちていた自分を、信じてくれた人。
+      その恩は、絶対に忘れない。
+    canonical_quotes:
+      - quote: "[unverified] あの時、うちを見つけてくれて……ほんとにありがとうございます"
+        context: "プロデューサーに真剣に感謝を伝える場面"
+        z_mode: "leak"
+    z_relevance: |
+      プロデューサーへの台詞では、敬語が混じる独特の話し方。
+      「ありがとうございます」と丁寧語を使うのは、本当の感謝の証。
+      方言と敬語の混在が、彼女の素直さを表現。
+    character_state_change:
+      before: "感謝を心に秘めている"
+      after: "感謝を言葉にして伝えられた"
+      permanent: "プロデューサーとの信頼関係の深化"
+    tags:
+      - "producer"
+      - "gratitude"
+      - "bond"
+      - "sincerity"
+
+  - episode_id: "lantica_group_moment"
+    timeline: "main"
+    chronological_order: 18
+    title: "L'Anticaの絆——「みんなといれて幸せ」"
+    source_episode: "L'Anticaコミュ"
+    summary: |
+      ライブ後の控え室で、疲れながらも笑い合うL'Anticaの五人。
+      「このメンバーでよかった」「みんなといれて幸せ」
+      恋鐘の素直な言葉に、他のメンバーも照れながら頷く。
+      言葉にしなくても通じる絆が、確かにそこにあった。
+    participants:
+      - "田中摩美々"
+      - "白瀬咲耶"
+      - "三峰結華"
+      - "幽谷霧子"
+    emotional_impact: "high"
+    emotional_detail: |
+      この瞬間のために、全部頑張れる。
+      五人でいる時間が、何よりも大切。
+      これからも、ずっと一緒にいたい。
+    canonical_quotes:
+      - quote: "[unverified] うち、L'Anticaのみんなといれて、ばり幸せばい"
+        context: "ライブ後、仲間に囲まれて"
+        z_mode: "baseline"
+    z_relevance: |
+      「みんな」という言葉に込められる愛情の深さ。
+      L'Antica関連の台詞では、この絆の温かさを常に意識して翻訳。
+      恋鐘にとって「みんな」は家族に近い存在。
+    character_state_change:
+      before: "仲間として一緒にいる"
+      after: "家族のような絆を確信"
+      permanent: "L'Anticaへの深い愛着と帰属意識"
+    tags:
+      - "lantica"
+      - "bond"
+      - "happiness"
+      - "family"
+
+  - episode_id: "being_supported_for_once"
+    timeline: "main"
+    chronological_order: 19
+    title: "支えられる側になる——仲間からの返礼"
+    source_episode: "L'Anticaコミュ"
+    summary: |
+      いつも皆を支えている恋鐘が、珍しく落ち込んだ時、
+      L'Anticaのメンバーたちが彼女を支えに来る。
+      「いつも恋鐘に助けられてるから、今度は私たちの番」
+      支える側でい続けようとした恋鐘が、支えられることを受け入れた瞬間。
+    participants:
+      - "田中摩美々"
+      - "白瀬咲耶"
+      - "三峰結華"
+      - "幽谷霧子"
+    emotional_impact: "high"
+    emotional_detail: |
+      「迷惑かけたくない」と思っていたのに、みんなが来てくれた。
+      一人で抱え込まなくていいんだと、初めて心から思えた。
+      「支え合う」ということの意味を、本当に理解した瞬間。
+    canonical_quotes:
+      - quote: "[unverified] みんな……うちのために……？"
+        context: "仲間が駆けつけてくれた時の驚き"
+        z_mode: "shock"
+      - quote: "[unverified] ……ありがとう。うち、一人じゃなかったと"
+        context: "仲間に支えられて、涙ながらに"
+        z_mode: "leak"
+    z_relevance: |
+      恋鐘が「支えられる」経験をしている珍しい場面。
+      「一人じゃなかった」という言葉には、上京してからの孤独も含まれる。
+      翻訳で「支え合い」の双方向性を表現する必要。
+    character_state_change:
+      before: "支える側でいなければという意識"
+      after: "支えられることも受け入れる"
+      permanent: "L'Anticaとの双方向の絆"
+    tags:
+      - "lantica"
+      - "support"
+      - "growth"
+      - "mutual_bond"
+
+  # ===========================================================================
+  # RESOLUTION AND GROWTH ARC
+  # ===========================================================================
+
+  - episode_id: "acknowledging_weakness"
+    timeline: "main"
+    chronological_order: 20
+    title: "弱さを認める——「うちも怖いとよ」"
+    source_episode: "恋鐘コミュ"
+    summary: |
+      いつもポジティブな恋鐘が、珍しく弱音を吐く場面。
+      「本当は、失敗するの怖いとよ」
+      でも、怖くても前に進むのが自分だと、改めて決意する。
+      弱さを認めた上での強さ——それが本当のドジティブ。
+    participants:
+      - "プロデューサー"
+    emotional_impact: "high"
+    emotional_detail: |
+      ずっと隠していた「怖い」という感情を、初めて言葉にした。
+      言ってしまったら楽になった。認められた気がした。
+      弱さを見せても、見捨てられないとわかった。
+    canonical_quotes:
+      - quote: "[unverified] うちも……ほんとは怖いとよ。でも、だから頑張れるんやけん"
+        context: "プロデューサーに本音を打ち明ける場面"
+        z_mode: "leak"
+    z_relevance: |
+      恋鐘の「ドジティブ」が単なるポジティブではなく、
+      恐怖を乗り越える強さであることを示す重要な場面。
+      「怖い」という言葉を訳す時は、この勇気を表現する必要。
+    character_state_change:
+      before: "弱さを隠してポジティブを装う"
+      after: "弱さを認めた上で前を向く"
+      permanent: "本当の強さの獲得"
+    tags:
+      - "vulnerability"
+      - "honesty"
+      - "growth"
+      - "strength"
+
+  - episode_id: "father_reconciliation_hope"
+    timeline: "main"
+    chronological_order: 21
+    title: "父への想い——「いつか、見せたかと」"
+    source_episode: "恋鐘コミュ"
+    summary: |
+      成功を重ねても、心のどこかで父のことを考えている恋鐘。
+      「いつか、お父さんにうちのステージを見せたい」
+      和解への希望を捨てていない彼女の、静かな決意。
+    participants:
+      - "プロデューサー"
+    emotional_impact: "critical"
+    emotional_detail: |
+      怒っているわけじゃない。ただ、認めてほしいだけ。
+      お父さんが見てくれたら、きっと分かってもらえる。
+      その日まで、頑張り続ける。
+    canonical_quotes:
+      - quote: "[unverified] いつか……お父さんに、うちのステージ見せたかと"
+        context: "父への想いを語る場面"
+        z_mode: "shame"
+    z_relevance: |
+      父親関連の台詞の中でも、希望を含んだ表現。
+      「見せたい」ではなく「見せたかと」——願望と不安が混在。
+      翻訳でこの複雑な感情を失わないよう注意。
+    character_state_change:
+      before: "父への複雑な感情を抱えている"
+      after: "和解への希望を明確に持つ"
+      permanent: "父への想いを前向きに捉える姿勢"
+    tags:
+      - "father"
+      - "hope"
+      - "reconciliation"
+      - "determination"
+
+  - episode_id: "hometown_memory_shared"
+    timeline: "main"
+    chronological_order: 22
+    title: "故郷を語る——「長崎はよかとこばい」"
+    source_episode: "恋鐘コミュ"
+    summary: |
+      仲間に長崎のことを話す恋鐘。
+      海の美しさ、食べ物の美味しさ、人の温かさ——
+      故郷への愛を語る時、彼女の方言はより強くなる。
+      「いつかみんなで行きたか」という願いを込めて。
+    participants:
+      - "L'Anticaメンバー"
+    emotional_impact: "medium"
+    emotional_detail: |
+      故郷を誇りに思っている。でも、今は東京で頑張らなきゃ。
+      いつか、アイドルとして成功して、長崎に帰りたい。
+      みんなを連れて行って、自慢したい。
+    canonical_quotes:
+      - quote: "[unverified] 長崎はね、ばりよかとこばい！ 海がきれかとよ〜"
+        context: "故郷について語る場面"
+        z_mode: "baseline"
+      - quote: "[unverified] いつか、みんなで長崎行きたかね！ うちが案内するけん！"
+        context: "L'Anticaを故郷に連れて行きたいと語る"
+        z_mode: "baseline"
+    z_relevance: |
+      故郷を語る時の恋鐘は、特に方言が強くなる。
+      「ばり」「よか」「とよ」の使用頻度が上がる。
+      翻訳で「地元愛」の温かさを表現する必要。
+    character_state_change:
+      before: "故郷を懐かしむ"
+      after: "故郷を仲間と共有したいという願いを持つ"
+      permanent: "長崎への誇りとL'Anticaへの愛の融合"
+    tags:
+      - "nagasaki"
+      - "hometown"
+      - "pride"
+      - "sharing"
+
+  - episode_id: "dream_declaration"
+    timeline: "main"
+    chronological_order: 23
+    title: "夢を語る——「トップアイドルになるけん！」"
+    source_episode: "恋鐘コミュ"
+    summary: |
+      自分の夢を堂々と語る恋鐘。
+      「トップアイドルになって、みんなを笑顔にしたい」
+      「L'Anticaで一番になりたい」
+      恥ずかしがらずに夢を言える、それが彼女の強さ。
+    participants:
+      - "プロデューサー"
+      - "L'Anticaメンバー"
+    emotional_impact: "high"
+    emotional_detail: |
+      夢を口にするのは恥ずかしいことじゃない。
+      言わないと、叶わない気がする。
+      だから堂々と言う。何度でも。
+    canonical_quotes:
+      - quote: "[unverified] うち、トップアイドルになるけん！ みんなを笑顔にするばい！"
+        context: "夢を宣言する場面"
+        z_mode: "resolve"
+    z_relevance: |
+      恋鐘の「夢を語る」場面は、断定形が多用される。
+      「〜けん」「〜ばい」の力強さを翻訳で表現する必要。
+      恥ずかしがらない真っ直ぐさが彼女らしさ。
+    character_state_change:
+      before: "夢を持っている"
+      after: "夢を堂々と宣言できる"
+      permanent: "夢への確固たる意志"
+    tags:
+      - "dream"
+      - "declaration"
+      - "determination"
+      - "positivity"
+
+  - episode_id: "gratitude_overflow"
+    timeline: "main"
+    chronological_order: 24
+    title: "感謝の涙——「みんなに出会えてよかった」"
+    source_episode: "L'Anticaコミュ・節目"
+    summary: |
+      大きな成功の後、感情が溢れ出す恋鐘。
+      「みんなに出会えて、ほんとによかった」
+      涙を流しながら、仲間への感謝を伝える。
+      全ての苦労が報われた瞬間の、純粋な喜び。
+    participants:
+      - "L'Anticaメンバー"
+      - "プロデューサー"
+    emotional_impact: "critical"
+    emotional_detail: |
+      我慢していた涙が、一気に溢れ出た。
+      嬉しくて、感謝で、言葉にならない。
+      「ありがとう」しか言えないけど、それが全て。
+    canonical_quotes:
+      - quote: "[unverified] みんな……ほんとに、ほんとにありがとう……っ！"
+        context: "成功後、涙を流しながら"
+        z_mode: "collapse"
+      - quote: "[unverified] うち、みんなに出会えて……ばり、幸せばい……っ"
+        context: "感謝の気持ちを伝える"
+        z_mode: "leak"
+    z_relevance: |
+      恋鐘の感情が完全に決壊する珍しい場面。
+      繰り返し、途切れがち、涙声——全てが「本物の感動」を示す。
+      翻訳でこの raw emotion を失わないよう注意。
+    character_state_change:
+      before: "感謝を秘めている"
+      after: "感謝を涙と共に表現できた"
+      permanent: "深い絆の確認と感情の解放"
+    tags:
+      - "gratitude"
+      - "tears"
+      - "joy"
+      - "climax"
+      - "bond"
+
+# =============================================================================
+# CROSS-EPISODE ARCS
+# =============================================================================
+
+arcs:
+  - arc_id: "father_recognition_arc"
+    arc_name: "父への証明——認められたいという渇望"
+    episodes:
+      - "nagasaki_departure"
+      - "father_opposition_memory"
+      - "homesickness_hidden"
+      - "letter_from_home"
+      - "father_reconciliation_hope"
+    description: |
+      恋鐘の物語の根幹を成すアーク。
+      父に反対されて上京し、認めてもらいたいという渇望を抱え続ける。
+      直接的な和解は描かれないが、その希望を捨てない姿勢が
+      彼女の強さの源泉となっている。
+    z_relevance: |
+      父親関連の台詞は、恋鐘の最も脆い部分に触れる。
+      翻訳者は、「認める」「証明する」「見せる」といった言葉に
+      この長いアークの重みが込められていることを理解する必要がある。
+    translation_implications:
+      - "「認めてもらう」は単なる承認ではなく、家族からの愛の確認"
+      - "「見せたい」には、和解への切実な願いが込められている"
+      - "父親に言及する際の声のトーン変化（小さく、震える）を表現で示す"
+
+  - arc_id: "dojitive_evolution_arc"
+    arc_name: "ドジティブの深化——失敗から強さへ"
+    episodes:
+      - "repeated_audition_failures"
+      - "first_major_failure"
+      - "self_doubt_crisis"
+      - "performance_breakthrough"
+      - "acknowledging_weakness"
+    description: |
+      「ドジ」を「ポジティブ」に変える哲学の成長アーク。
+      最初は失敗を笑い飛ばすだけだったが、
+      本当の強さは「怖くても進む勇気」だと気づいていく。
+      弱さを認めた上での強さが、真のドジティブとなる。
+    z_relevance: |
+      「ドジティブ」という造語の翻訳は難しいが、
+      この成長アークを理解すれば、その深さが伝わる。
+      単なる「前向き」ではなく、「恐怖を乗り越える意志」として訳す。
+    translation_implications:
+      - "「ドジティブ」は直訳せず、文脈に応じて意訳を検討"
+      - "初期の「ドジティブ」と後期の「ドジティブ」では深度が違う"
+      - "「でも」の使い方が、回復力の指標として機能する"
+
+  - arc_id: "lantica_pillar_arc"
+    arc_name: "L'Anticaの支柱——支える者から支え合う者へ"
+    episodes:
+      - "lantica_formation"
+      - "understanding_mamimi"
+      - "sakuya_admiration"
+      - "yuika_trust_building"
+      - "kiriko_gentle_bond"
+      - "protecting_lantica"
+      - "lantica_group_moment"
+      - "being_supported_for_once"
+    description: |
+      L'Anticaにおける恋鐘の役割の変遷。
+      最初は「明るい人」として自然と支柱になったが、
+      次第に双方向の支え合いを学んでいく。
+      「支えられてもいい」と気づくことで、より深い絆が生まれる。
+    z_relevance: |
+      L'Antica関連の台詞では、「みんな」という言葉の重みが違う。
+      翻訳者は、この「みんな」が家族に近い存在であることを
+      表現する必要がある。
+    translation_implications:
+      - "「みんな」は generic な「everyone」ではなく、深い愛情を込めた呼びかけ"
+      - "各メンバーへの呼び方（まみちゃん、咲耶ちゃん等）は一貫性を保つ"
+      - "L'Anticaを守る場面では、普段と違う強い口調を表現"
+
+  - arc_id: "loneliness_hidden_arc"
+    arc_name: "隠された寂しさ——明るさの裏側"
+    episodes:
+      - "nagasaki_departure"
+      - "homesickness_hidden"
+      - "letter_from_home"
+      - "self_doubt_crisis"
+      - "being_supported_for
