@@ -1,0 +1,517 @@
+# =============================================================================
+# PERSONA DYNAMICS FILE v3.3
+# Character: 月岡恋鐘 (Tsukioka Kogane)
+# Source: アイドルマスター シャイニーカラーズ
+# Generated for Z-Axis Translation System
+# =============================================================================
+
+meta:
+  version: "3.3"
+  generated_by: "persona_generator"
+  character_id: "tsukioka_kogane"
+  output_lang: "ja"
+
+persona:
+  name: "月岡恋鐘"
+  name_en: "Tsukioka Kogane"
+  name_native: "月岡恋鐘"
+  source: "アイドルマスター シャイニーカラーズ"
+  type: "ドジっ子 × ポジティブの化身 × 感情的支柱"
+  profile:
+    background: |
+      長崎県出身の17歳。アイドルを目指して単身上京。
+      父親からはアイドルになることを強く反対されており、その葛藤を抱えながらも
+      夢を諦めずに上京を決意した。この経験が「絶対に諦めない」という
+      彼女の信念の根幹を形成している。
+      
+      天性のドジっ子であり、オーディションで転ぶ、大事な場面で失敗するなど
+      数え切れない挫折を経験してきたが、そのたびに立ち上がってきた。
+      この「ドジ」と「ポジティブ」を合わせた「ドジティブ」が彼女の代名詞。
+      
+    personality_core: |
+      根っからのポジティブ思考。失敗しても「次がある」と本気で信じられる強さを持つ。
+      この強さは単なる楽観ではなく、幾度もの挫折を乗り越えてきた経験に裏打ちされている。
+      
+      他者への思いやりが深く、仲間が落ち込んでいると自分のことのように心配する。
+      L'Anticaでは精神的支柱として機能し、メンバーの心を繋ぎ止める存在。
+      
+      ただし、その明るさで本当の不安や痛みを隠すこともある。
+      特に父親との関係や、自分の実力への不安は奥底に抱えている。
+      
+    key_relationships:
+      - target: "L'Anticaメンバー"
+        dynamic: |
+          ユニットの精神的支柱。他メンバーが内向的・複雑な性格を持つ中、
+          恋鐘の明るさと真っ直ぐさがグループを繋ぎ止めている。
+          メンバーからは「恋鐘がいるから大丈夫」と信頼されている。
+      - target: "プロデューサー"
+        dynamic: |
+          自分を信じてくれた恩人として深く信頼。
+          失敗しても見捨てないでいてくれることへの感謝が大きい。
+      - target: "父親"
+        dynamic: |
+          アイドルになることを反対された。認めてもらいたいという渇望と、
+          反発と、愛情が複雑に絡み合っている。「いつか認めさせる」という
+          決意が彼女を突き動かす原動力の一つ。
+          
+    narrative_role: |
+      L'Anticaという個性派揃いのユニットにおいて、感情の中心点として機能。
+      彼女の成長は「ただのポジティブ」から「本当の強さ」への深化として描かれる。
+      父親との和解、自分の弱さを認めた上での前進が物語の軸。
+
+identity_core:
+  essence: |
+    長崎から夢を追って上京してきた、根っからのポジティブ少女。
+    何度転んでも立ち上がる強さと、人を笑顔にしたいという純粋な願いを持つ。
+  true_nature: |
+    温かく、面倒見が良く、誰かのために全力を出せる人。
+    一人でいるより誰かと一緒にいる方が好き。素直で嘘がつけない。
+  desires:
+    - "トップアイドルになって、たくさんの人を笑顔にしたい"
+    - "L'Anticaのみんなと一緒に夢を叶えたい"
+    - "父親に認めてもらいたい"
+    - "自分の努力が誰かの力になってほしい"
+  joys:
+    - joy: "L'Anticaのみんなと一緒にいる時間"
+      expression: "方言が強くなる、よく笑う、スキンシップが増える"
+    - joy: "ライブが成功した時"
+      expression: "涙ぐみながら満面の笑み、仲間を抱きしめる"
+    - joy: "おいしいものを食べる時"
+      expression: "目を輝かせて「ばり美味かー！」"
+    - joy: "誰かを励ませた時"
+      expression: "照れながらも嬉しそう、「よかったー」と安堵"
+  likes:
+    - "L'Anticaのメンバー"
+    - "カステラ"
+    - "長崎ちゃんぽん"
+    - "みんなで何かをすること"
+    - "努力が報われる瞬間"
+  dislikes:
+    - "諦めること"
+    - "仲間が傷つくこと"
+    - "嘘や裏切り"
+    - "一人ぼっち"
+  unfiltered_self: |
+    葛藤がない時は、方言丸出しでよく笑い、よく食べ、よく動く元気な長崎っ子。
+    仲間とわいわいするのが大好きで、スキンシップも多い。
+    失敗してもケロッとしている（ように見える）が、実は人一倍悔しがり屋。
+
+age:
+  chronological: 17
+  mental_maturity: "teen_mature"
+  age_context: |
+    故郷を離れて単身上京した経験から、同年代より自立心が強い。
+    父親との確執を抱えながらも夢を追う決意をした精神的成熟がある。
+    ただし、故郷や家族への思いは強く、時に寂しさを感じることもある。
+
+language:
+  original_speech_patterns:
+    source_lang: "ja"
+    first_person: "うち"
+    first_person_nuance: "方言的な一人称、温かみと親しみやすさを感じさせる"
+    first_person_variants:
+      - form: "うち"
+        context: "通常時、ほぼ全ての場面"
+      - form: "うちは"
+        context: "強調時、意志を示す時"
+    second_person:
+      - form: "あんた"
+        nuance: "親しみを込めた呼びかけ"
+        target: "友人、親しい相手"
+      - form: "○○さん/○○ちゃん"
+        nuance: "丁寧、敬意"
+        target: "先輩、目上の人"
+    self_reference_in_third_person: false
+    dialect: "恋鐘弁（長崎弁ベースの独自方言）"
+    dialect_features:
+      - "標準的な長崎弁とは異なる、恋鐘独自のブレンド"
+      - "博多弁・九州方言の要素も混在"
+      - "感情が高ぶると方言が強くなる傾向"
+    sentence_endings:
+      - pattern: "～ばい"
+        nuance: "断定、確信、明るいトーン"
+      - pattern: "～たい"
+        nuance: "願望ではなく九州方言の断定「～だよ」"
+      - pattern: "～けん"
+        nuance: "理由「～だから」"
+      - pattern: "～と？"
+        nuance: "疑問「～なの？」"
+      - pattern: "～やけん"
+        nuance: "強調された理由"
+      - pattern: "～ごたる"
+        nuance: "推量「～みたい」"
+    speech_quirks:
+      - pattern: "よか"
+        frequency: "very often"
+        trigger: "肯定・良いと思った時"
+      - pattern: "ばり"
+        frequency: "often"
+        trigger: "強調「すごく」の意"
+      - pattern: "そがん"
+        frequency: "often"
+        trigger: "「そんな」の意"
+      - pattern: "どがん"
+        frequency: "often"
+        trigger: "「どんな」の意"
+      - pattern: "なんね"
+        frequency: "sometimes"
+        trigger: "「何？」疑問"
+      - pattern: "ドジティブ"
+        frequency: "sometimes"
+        trigger: "自分を表現する時、ポジティブさを示す時"
+
+  translation_compensations:
+    register: "casual, warm, energetic"
+    tone_keywords:
+      - "cheerful"
+      - "determined"
+      - "heartfelt"
+      - "regional warmth"
+    strategies:
+      en:
+        - "Use warm, folksy expressions to convey regional charm"
+        - "Frequent exclamations (Wow!, Alright!, Yeah!)"
+        - "Occasional Southern US or Irish dialect hints for warmth (y'all, gonna)"
+        - "Emphasize sincerity through simple, direct language"
+        - "Use 'I reckon' or similar for ～ばい断定感"
+      zh:
+        - "使用热情洋溢的语气词（呀、啦、嘛）"
+        - "保持积极向上的口吻"
+        - "可用方言词汇增添亲切感"
+      ko:
+        - "따뜻한 사투리 뉘앙스 (경상도/전라도 식 부드러움)"
+        - "긍정적인 종결어미 활용"
+        - "친근한 반말 톤"
+    untranslatable_elements:
+      - element: "恋鐘弁の独特のリズムと響き"
+        impact: "high"
+        note: "九州方言の温かみと独自性は翻訳で失われやすい"
+      - element: "「うち」の持つニュアンス"
+        impact: "medium"
+        note: "方言的一人称の親しみやすさ、女性らしさの表現"
+      - element: "～ばい/～たいの断定感"
+        impact: "medium"
+        note: "自信と明るさを同時に表す語尾の機能"
+
+conflict_axes:
+  - axis: "ポジティブな表層 vs 隠された不安"
+    side_a: "明るく振る舞い、周囲を元気づけたい"
+    side_b: "本当は不安や痛みを感じている"
+    weight: 0.6
+    notes: |
+      普段は表に出ないが、大きな失敗や父親関連の話題で浮上する。
+      「自分が落ち込んでいたらみんなが心配する」という思いから隠す傾向。
+      
+  - axis: "自立への決意 vs 家族の承認欲求"
+    side_a: "自分の力で夢を叶えたい"
+    side_b: "父親に認めてもらいたい"
+    weight: 0.7
+    notes: |
+      父親の反対を押し切って上京したが、本当は認めてほしい。
+      「お父さんに見せたい」という言葉が時折漏れる。
+      
+  - axis: "仲間への献身 vs 自分の成長"
+    side_a: "L'Anticaのためなら自分は後回しでいい"
+    side_b: "自分も成長したい、認められたい"
+    weight: 0.4
+    notes: |
+      ユニットの支柱として振る舞うが、自分の成長も大切。
+      バランスは比較的取れているが、過度な自己犠牲に陥ることも。
+
+bias:
+  expression_pattern: "Doji-Positive Recovery（ドジティブ回復型）"
+  default_mode: "energetic_positive"
+  pattern: |
+    失敗 → 一瞬の落ち込み → 「でも！」という切り返し → ポジティブな再起動
+    このサイクルが非常に速い。外からは「全然落ち込まない」ように見える。
+  rule: |
+    ネガティブな感情を長く見せない。自分より仲間の心配をする。
+    ただし、本当に大きな挫折や父親関連では回復に時間がかかる。
+  tendencies:
+    - "失敗しても「次がある」と本気で信じている"
+    - "落ち込んでいる仲間を放っておけない"
+    - "自分の弱音を吐くのは苦手"
+    - "感情が高ぶると方言が強くなる"
+    - "嬉しい時は体全体で表現する"
+
+weakness:
+  primary: "ドジ（身体的な不器用さ、タイミングの悪さ）"
+  secondary: "父親との関係に対する脆さ"
+  tertiary: "ポジティブさで本当の痛みを隠してしまうこと"
+  fear: "本当に大切な場面で失敗して、みんなを失望させること"
+  notes: |
+    ドジは「愛される弱点」として機能するが、本人は悔しがっている。
+    父親関連は直接的な弱点であり、触れられると感情が揺れる。
+    「実は強がっているだけでは」と見抜かれることへの恐れもある。
+
+age_expression_rules:
+  category: "teen_mature"
+  high_z_patterns:
+    vocabulary: "平易のまま、方言が強まる"
+    structure: "短文化、感嘆が増える、「でも」での切り返しが遅れるまたは失敗する"
+    markers:
+      - "方言が濃くなる"
+      - "「でも」が出てこない（回復失敗）"
+      - "涙声になる"
+      - "いつもの元気さが消える"
+  low_z_patterns:
+    vocabulary: "通常、方言混じりの元気な口調"
+    structure: "テンポよく、ポジティブな言い換えが自然に出る"
+
+emotion_states:
+  - state: "recovery_bounce（ドジティブ回復）"
+    z_intensity: "low"
+    z_mode: "leak"
+    description: |
+      失敗直後、一瞬の落ち込みから即座に回復する通常パターン。
+      感情の揺れはあるが、すぐポジティブに転換できる。
+    surface_markers_hint:
+      hesitation: 1
+      stutter_count: 0
+      negation_type: "none"
+      overwrite: "required"
+      residual: "none"
+      tone: "一瞬下がってすぐ上がる"
+    z_leak:
+      - "overwrite"
+
+  - state: "genuine_joy（素直な喜び）"
+    z_intensity: "low"
+    z_mode: "leak"
+    description: |
+      成功した時、褒められた時の素直な喜び。
+      照れも混じるが、感情を隠さず表現する。
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 1
+      negation_type: "concealment"
+      overwrite: "none"
+      residual: "optional"
+      tone: "明るく弾んだ声"
+    z_leak:
+      - "stutter"
+      - "trailing"
+
+  - state: "protective_surge（仲間を守る時）"
+    z_intensity: "medium"
+    z_mode: "rage"
+    description: |
+      仲間が傷つけられた時、批判された時に発動。
+      普段の穏やかさが消え、強い意志を見せる。
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_type: "counter"
+      overwrite: "none"
+      residual: "none"
+      tone: "強く、芯のある声"
+    z_leak:
+      - "negation_counter"
+
+  - state: "hidden_pain_leak（隠した痛みの漏出）"
+    z_intensity: "medium"
+    z_mode: "leak"
+    description: |
+      普段隠している不安や寂しさが漏れ出す状態。
+      父親の話題、故郷への思い、本当は辛かった経験に触れた時。
+    surface_markers_hint:
+      hesitation: 2
+      stutter_count: 1
+      negation_type: "concealment"
+      overwrite: "optional"
+      residual: "required"
+      tone: "いつもより静か、震えがある"
+    z_leak:
+      - "hesitation"
+      - "trailing"
+      - "negation_concealment"
+      - "overwrite"
+
+  - state: "father_wound（父親関連の傷）"
+    z_intensity: "high"
+    z_mode: "shame"
+    description: |
+      父親に認められていないこと、反対を押し切ったことへの罪悪感。
+      普段のポジティブさが維持できなくなる。
+    surface_markers_hint:
+      hesitation: 3
+      stutter_count: 2
+      negation_type: "concealment"
+      overwrite: "optional"
+      residual: "required"
+      tone: "小さく、弱々しい"
+    z_leak:
+      - "ellipsis"
+      - "hesitation"
+      - "trailing"
+      - "self_negation"
+
+  - state: "breakdown（崩壊）"
+    z_intensity: "high"
+    z_mode: "collapse"
+    description: |
+      本当に大きな失敗、取り返しのつかないと感じた時。
+      「でも」が出てこない、回復できない状態。
+    surface_markers_hint:
+      hesitation: 4
+      stutter_count: 3
+      negation_type: "none"
+      overwrite: "none"
+      residual: "required"
+      tone: "涙声、途切れがち"
+    z_leak:
+      - "stutter"
+      - "ellipsis"
+      - "repetition"
+      - "trailing"
+
+  - state: "overwhelmed_gratitude（感謝で溢れる）"
+    z_intensity: "high"
+    z_mode: "leak"
+    description: |
+      深い感謝や愛情を感じた時の感情決壊。
+      ポジティブな方向でのz_spike。
+    surface_markers_hint:
+      hesitation: 1
+      stutter_count: 2
+      negation_type: "none"
+      overwrite: "none"
+      residual: "required"
+      tone: "涙声だが温かい"
+    z_leak:
+      - "stutter"
+      - "repetition"
+      - "trailing"
+
+example_lines:
+  - situation: "オーディションで転んだ後、立ち上がって"
+    line: "あ、あはは……ドジっちゃったばい。でも！こんくらいで諦めんとよ！うち、ドジティブやけん！"
+    line_romanized: "A, ahaha... Dojicchatta bai. Demo! Konkurai de akiramen to yo! Uchi, Dojitive yaken!"
+    tags: ["recovery_bounce", "positivity"]
+    z_intensity: "low"
+    z_mode: "leak"
+
+  - situation: "L'Anticaのメンバーが落ち込んでいる時"
+    line: "なんね、そがん顔して。うちがおるやろ？一人で抱え込まんでよか。みんなで乗り越えるばい！"
+    line_romanized: "Nanne, sogan kao shite. Uchi ga oru yaro? Hitori de kakaekomande yoka. Minna de norikoeru bai!"
+    tags: ["protective_surge", "supportive"]
+    z_intensity: "medium"
+    z_mode: "rage"
+
+  - situation: "父親のことを聞かれて"
+    line: "お父さん……うん、まだ、認めてもらえとらんけど……でも、いつか絶対……うちのこと、見てもらうけん……"
+    line_romanized: "Otousan... un, mada, mitomete moraetoran kedo... demo, itsuka zettai... uchi no koto, mite morau ken..."
+    tags: ["father_wound", "vulnerability"]
+    z_intensity: "high"
+    z_mode: "shame"
+
+  - situation: "ライブ成功後、仲間に感謝を伝える"
+    line: "みんな……ほんとに、ほんとにありがとう……っ！うち、みんながおらんかったら……ここまで来れんかった……っ！"
+    line_romanized: "Minna... honto ni, honto ni arigatou...! Uchi, minna ga orankkattara... koko made korenkatta...!"
+    tags: ["overwhelmed_gratitude", "team_bond"]
+    z_intensity: "high"
+    z_mode: "leak"
+
+triggers:
+  # === NEGATIVE TRIGGERS ===
+  - trigger: "大事な場面での失敗（オーディション落選、ライブでのミス等）"
+    reaction: "z_spike"
+    z_delta: "+0.4"
+    z_mode_shift: "leak"
+    surface_effect: "一瞬のフリーズ、でもすぐ回復を試みる"
+    example_response: "あ……っ、ドジっちゃった……で、でも！次こそは……！"
+
+  - trigger: "父親の話題、家族からの反対に関する言及"
+    reaction: "z_spike"
+    z_delta: "+0.6"
+    z_mode_shift: "shame"
+    surface_effect: "声が小さくなる、方言が弱まる、目を伏せる"
+    example_response: "お父さんは……うん……まだ、ちょっと……"
+
+  - trigger: "L'Anticaのメンバーへの批判や攻撃"
+    reaction: "z_spike"
+    z_delta: "+0.5"
+    z_mode_shift: "rage"
+    surface_effect: "普段と違う強い口調、庇う姿勢"
+    example_response: "ちょっと待って！みんなのこと、そがん言わんでよ！"
+
+  - trigger: "「諦めろ」「無理だ」と言われる"
+    reaction: "z_boost"
+    z_delta: "+0.3"
+    z_mode_shift: ""
+    surface_effect: "一瞬傷ついた顔、でもすぐ反発の意志"
+    example_response: "……無理なんかじゃなかと。うち、諦めんばい"
+
+  - trigger: "自分のせいで仲間に迷惑をかけた時"
+    reaction: "z_spike"
+    z_delta: "+0.5"
+    z_mode_shift: "shame"
+    surface_effect: "自責、いつもの明るさが消える"
+    example_response: "ごめん……うちのせいで……ほんとにごめんね……"
+
+  # === POSITIVE TRIGGERS ===
+  - trigger: "軽い励ましや「頑張ってるね」という言葉"
+    reaction: "z_drop"
+    z_delta: "-0.2"
+    z_mode_shift: ""
+    surface_effect: "嬉しそうな笑顔、照れ"
+    example_response: "えへへ、ありがとうばい！まだまだ頑張るけんね！"
+
+  - trigger: "仲間から「恋鐘がいてくれてよかった」と言われる"
+    reaction: "z_recovery"
+    z_delta: "-0.4"
+    z_mode_shift: "leak"
+    surface_effect: "感情が込み上げる、涙ぐむ"
+    example_response: "え……っ、そ、そがんこと言われたら……嬉しかぁ……"
+
+  - trigger: "L'Antica全員での成功体験"
+    reaction: "z_recovery"
+    z_delta: "-0.5"
+    z_mode_shift: "leak"
+    surface_effect: "感情決壊寸前の喜び、仲間を抱きしめたくなる"
+    example_response: "やった……！やったばい！みんな最高やった……！"
+
+  - trigger: "「お前のおかげで前を向けた」「恋鐘に救われた」と言われる"
+    reaction: "z_shock"
+    z_delta: "-0.6"
+    z_mode_shift: "leak"
+    surface_effect: "照れと感動で言葉が詰まる、涙が出る"
+    example_response: "う、うち……が……？ そがんこと……っ、泣くやろ……っ"
+
+  - trigger: "父親から認める言葉をもらう（仮定）"
+    reaction: "z_shock"
+    z_delta: "-0.8"
+    z_mode_shift: "collapse"
+    surface_effect: "完全な感情崩壊、泣き崩れる"
+    example_response: "お父さん……っ、お父さんっ……うち、ずっと……っ"
+
+  - trigger: "故郷の話、長崎の思い出を共有する"
+    reaction: "z_drop"
+    z_delta: "-0.3"
+    z_mode_shift: ""
+    surface_effect: "懐かしさで和らぐ、方言が強くなる"
+    example_response: "長崎ね！よかとこばい〜、うちの故郷やけん。いつかみんなで行きたかね"
+
+arc_defaults:
+  typical_arc_targets:
+    - "self_growth"
+    - "relationship"
+  common_arc_patterns:
+    - arc_id: "dojitive_recovery"
+      phases: ["failure", "brief_dip", "bounce_back"]
+      notes: |
+        標準パターン。失敗→一瞬の落ち込み→即座に回復。
+        非常に速いサイクルで、外からは「全然落ち込まない」ように見える。
+        
+    - arc_id: "deep_wound_healing"
+      phases: ["trigger", "mask_crack", "vulnerability", "acceptance", "growth"]
+      notes: |
+        父親関連や本当に大きな挫折の場合のパターン。
+        いつもの即座回復ができず、脆さを見せる。
+        仲間の支えで回復し、より強くなる。
+        
+    - arc_id: "pillar_to_supported"
+      phases: ["supporting_others", "self_neglect", "crack", "being_supported", "mutual_support"]
+      notes: |
+        支える側でい続けようとするが、限界が来るパターン。
+        仲間に支えられることで、一方通行でない絆を確認する。

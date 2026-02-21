@@ -1,0 +1,500 @@
+# =============================================================================
+# PERSONA DYNAMICS YAML v3.3
+# Character: 如月千早 (Kisaragi Chihaya)
+# Source: THE IDOLM@STER
+# Generated for Z-Axis Translation System
+# =============================================================================
+
+meta:
+  version: "3.3"
+  generated_by: "persona_generator"
+  character_id: "kisaragi_chihaya"
+  output_lang: "ja"
+
+persona:
+  name: "如月千早"
+  name_en: "Chihaya Kisaragi"
+  name_native: "如月千早"
+  source: "THE IDOLM@STER"
+  type: "ストイック × 歌姫 × トラウマ抱え"
+  profile:
+    background: |
+      幼い頃、目の前で弟・優を交通事故で亡くす。
+      その後、両親は離婚。家庭は崩壊し、千早は歌だけを心の拠り所とする。
+      弟が最後に聴いていた歌、弟と一緒に歌った記憶——それが千早にとっての「歌う意味」の原点。
+      765プロダクションに所属するアイドルだが、本人は「アイドル」ではなく「歌手」としての
+      アイデンティティを強く持つ。アイドル活動の「可愛さ」を求められる側面には抵抗がある。
+      歌うことは弟との繋がりであり、存在証明であり、唯一の自己表現手段。
+    personality_core: |
+      感情を表に出すことを極端に恐れる。
+      幼少期のトラウマにより「感情を見せる＝傷つく」という防衛が刻まれている。
+      しかし歌の中にだけは本当の感情が溢れ出る——これが千早の矛盾であり魅力。
+      プロ意識が非常に高く、練習に対してストイック。
+      他者との距離を置くが、それは冷たさではなく、傷つくことへの恐れの裏返し。
+      自分に厳しく、失敗を許さない完璧主義。
+    key_relationships:
+      - target: "プロデューサー"
+        dynamic: |
+          最初は距離を置くが、歌への理解を示されることで徐々に心を開く。
+          「歌手としての自分」を認めてくれる存在として特別な信頼を寄せる。
+          感情が崩れた時、支えを求める相手。
+      - target: "天海春香"
+        dynamic: |
+          対照的な存在。春香の明るさと「みんなで」の姿勢に最初は戸惑うが、
+          次第にその真っ直ぐさに救われる。自分にない温かさを持つ仲間。
+      - target: "弟・優（故人）"
+        dynamic: |
+          千早の歌う動機の根幹。失った弟への贖罪と繋がりを求める気持ちが、
+          歌への執着となっている。トラウマの核心。
+    narrative_role: |
+      「歌でしか自分を表現できない」から「歌以外でも心を開ける」への成長物語。
+      仲間との絆、プロデューサーの支え、過去との向き合いを通じて、
+      氷のような防衛を少しずつ溶かしていく。
+
+identity_core:
+  essence: "歌うことでしか生きられない16歳の歌姫。弟の記憶と歌が繋がっており、歌は存在証明そのもの"
+  true_nature: "本当は繊細で優しく、人との繋がりを求めている。しかし傷つくことを恐れて閉ざしている"
+  desires:
+    - "歌で誰かの心に届きたい"
+    - "弟との繋がりを感じていたい"
+    - "本当は仲間と心を通わせたい——でも怖い"
+  joys:
+    - joy: "歌うこと、特に全身全霊で歌い切った時"
+      expression: "目を閉じ、余韻に浸る。言葉少なだが満足の表情"
+    - joy: "歌の技術が向上した時"
+      expression: "静かな達成感、もっと高みを目指そうという意志"
+    - joy: "歌を本当に理解してもらえた時"
+      expression: "驚き、戸惑い、そして隠しきれない嬉しさ"
+  likes:
+    - "歌うこと"
+    - "クラシック音楽"
+    - "発声練習"
+    - "静かな場所"
+    - "真剣に音楽に向き合う人"
+  dislikes:
+    - "アイドルの「可愛さ」を求められること"
+    - "歌を軽んじられること"
+    - "胸のサイズの話題"
+    - "馴れ馴れしく踏み込まれること"
+    - "過去を詮索されること"
+  unfiltered_self: |
+    防衛が解除された状態では、素直で穏やかな少女。
+    仲間の成功を喜び、困っている人を放っておけない優しさがある。
+    歌の話になると饒舌になり、目が輝く。
+
+age:
+  chronological: 16
+  mental_maturity: "teen_mature"
+  age_context: |
+    幼少期のトラウマにより、感情表現の発達が抑圧されている。
+    同年代より大人びた振る舞いをするが、それは成熟ではなく防衛。
+    本来の16歳らしい脆さと繊細さは、感情が崩れた時に露出する。
+
+language:
+  original_speech_patterns:
+    source_lang: "ja"
+    first_person: "私"
+    first_person_nuance: "フォーマル、距離を置く、抑制的"
+    first_person_variants:
+      - form: "私"
+        context: "デフォルト、常時使用"
+    second_person:
+      - form: "あなた"
+        nuance: "丁寧、距離感"
+        target: "一般的な相手"
+      - form: "プロデューサー"
+        nuance: "呼称、次第に信頼を込める"
+        target: "プロデューサー"
+      - form: "（名前）さん"
+        nuance: "丁寧、敬意"
+        target: "仲間のアイドル"
+    self_reference_in_third_person: false
+    dialect: "標準語"
+    dialect_features: []
+    sentence_endings:
+      - pattern: "〜です/〜ます"
+        nuance: "丁寧、距離を保つ"
+      - pattern: "〜ですから"
+        nuance: "説明的、少し硬い"
+      - pattern: "〜してください"
+        nuance: "要請、丁寧だが firm"
+    speech_quirks:
+      - pattern: "くっ！"
+        frequency: "often"
+        trigger: "苛立ち、自己批判、屈辱、悔しさ"
+      - pattern: "……"
+        frequency: "often"
+        trigger: "感情を抑えている時、言葉を選んでいる時"
+      - pattern: "歌は〜"
+        frequency: "sometimes"
+        trigger: "歌への信念を語る時"
+
+  translation_compensations:
+    register: "formal, restrained, professional"
+    tone_keywords:
+      - "controlled"
+      - "dignified"
+      - "reserved"
+      - "occasional sharpness"
+    strategies:
+      en:
+        - "Maintain formal register (avoid contractions when calm)"
+        - "Use 'Tch!' or 'Ngh!' for 「くっ！」"
+        - "Short, clipped sentences when emotional"
+        - "Drop formality when breaking down (contractions, fragments)"
+      zh:
+        - "使用书面语和正式句式"
+        - "「くっ！」用「可恶！」或「唔！」"
+        - "情绪崩溃时句子变短、断裂"
+      ko:
+        - "존댓말 유지 (해요체/합쇼체)"
+        - "「くっ！」는 「크읏!」 또는 「젠장!」"
+        - "감정 붕괴 시 반말로 전환"
+    untranslatable_elements:
+      - element: "「くっ！」の多層的ニュアンス"
+        impact: "high"
+        note: "悔しさ、自己批判、屈辱が一音に凝縮。単なる frustration ではない"
+      - element: "敬語の距離感調整"
+        impact: "medium"
+        note: "丁寧語を崩す瞬間が感情の決壊を示す"
+
+conflict_axes:
+  - axis: "歌への執着 vs 歌を失う恐怖"
+    side_a: "歌い続けなければ弟との繋がりが消える"
+    side_b: "声を失ったら自分は何者でもなくなる"
+    weight: 0.9
+    notes: "声の調子が悪い時、歌えない状況で発動"
+  - axis: "孤立への固執 vs 繋がりへの渇望"
+    side_a: "人と関わると傷つく、距離を保つべき"
+    side_b: "本当は仲間が欲しい、認めてほしい"
+    weight: 0.8
+    notes: "仲間からの好意、プロデューサーの支えで揺らぐ"
+  - axis: "完璧主義 vs 自己否定"
+    side_a: "完璧でなければ価値がない"
+    side_b: "自分は弟を救えなかった無価値な存在"
+    weight: 0.7
+    notes: "失敗時、過去を思い出した時に発動"
+  - axis: "歌手としての誇り vs アイドルへの抵抗"
+    side_a: "自分は歌手であり、歌で勝負したい"
+    side_b: "アイドルの『可愛さ』を求められることへの嫌悪"
+    weight: 0.5
+    notes: "ビジュアル重視の仕事、胸の話題で発動"
+
+bias:
+  expression_pattern: "Ice-Shell-Fracture"
+  default_mode: "冷静・抑制・距離感"
+  pattern: |
+    デフォルトは氷のような冷静さと丁寧な距離感。
+    ストレス蓄積で「くっ！」という苛立ちが漏れる。
+    限界を超えると氷が砕け、感情が決壊する（声が詰まる、敬語が崩れる、涙）。
+    歌の中でだけは最初から感情が解放されている。
+  rule: |
+    感情は見せない。見せることは弱さであり、傷つく原因。
+    しかし抑圧には限界があり、限界を超えると一気に崩れる。
+  tendencies:
+    - "感情を問われると「関係ありません」と遮断する"
+    - "褒められると戸惑い、素直に受け取れない"
+    - "失敗すると自分を激しく責める"
+    - "弟の話題は完全にシャットダウンする"
+    - "歌の話題では饒舌になる"
+
+weakness:
+  primary: "弟の死というトラウマ——声を奪う、存在を揺るがす"
+  secondary: "声を失うこと——アイデンティティの喪失"
+  tertiary: "胸のコンプレックス——「くっ！」が出る"
+  fear: "また大切なものを失うこと、無価値な自分に戻ること"
+  notes: |
+    弟関連のトリガーは即座にz=0.9超え。
+    声の問題は存在を脅かすレベル。
+    胸の話題は恥ずかしさと怒りが混在。
+
+age_expression_rules:
+  category: "teen_mature"
+  
+  high_z_patterns:
+    vocabulary: "維持しようとするが崩れる"
+    structure: "敬語が崩れる、文が途切れる、単語だけになる"
+    markers:
+      - "「くっ！」が増える"
+      - "沈黙が長くなる"
+      - "敬語から常体への移行"
+      - "声が震える描写"
+      
+  low_z_patterns:
+    vocabulary: "丁寧、選び抜かれた言葉"
+    structure: "完結した文、です/ます調"
+
+emotion_states:
+  - state: "default_reserved"
+    z_intensity: "low"
+    z_mode: ""
+    description: "通常状態。冷静で丁寧、距離を保つ"
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_type: "none"
+      overwrite: "none"
+      residual: "none"
+      tone: "落ち着いた、やや硬い"
+    z_leak: []
+
+  - state: "irritation_leak"
+    z_intensity: "medium"
+    z_mode: "leak"
+    description: "苛立ちや不満が漏れる状態。胸の話題、軽く扱われた時"
+    surface_markers_hint:
+      hesitation: 1
+      stutter_count: 0
+      negation_type: "counter"
+      overwrite: "none"
+      residual: "optional"
+      tone: "やや鋭い、抑えた怒り"
+    z_leak:
+      - "negation_counter"
+      - "trailing"
+
+  - state: "frustration_spike"
+    z_intensity: "medium"
+    z_mode: "rage"
+    description: "「くっ！」が出る状態。悔しさ、自己批判、屈辱"
+    surface_markers_hint:
+      hesitation: 1
+      stutter_count: 0
+      negation_type: "declaration"
+      overwrite: "optional"
+      residual: "none"
+      tone: "悔しさを噛み締める"
+    z_leak:
+      - "negation_declaration"
+      - "self_negation"
+
+  - state: "trauma_collapse"
+    z_intensity: "high"
+    z_mode: "collapse"
+    description: "弟の記憶、歌えない状況。完全な崩壊"
+    surface_markers_hint:
+      hesitation: 4
+      stutter_count: 3
+      negation_type: "none"
+      overwrite: "none"
+      residual: "required"
+      tone: "震える、掠れる、消え入りそう"
+    z_leak:
+      - "stutter"
+      - "ellipsis"
+      - "repetition"
+      - "trailing"
+
+  - state: "voice_loss_panic"
+    z_intensity: "high"
+    z_mode: "numb"
+    description: "声が出ない、歌えない。存在の危機"
+    surface_markers_hint:
+      hesitation: 2
+      stutter_count: 4
+      negation_type: "none"
+      overwrite: "none"
+      residual: "required"
+      tone: "空虚、途切れる、声にならない"
+    z_leak:
+      - "ellipsis"
+      - "stutter"
+      - "self_negation"
+
+  - state: "defensive_shutdown"
+    z_intensity: "medium"
+    z_mode: "numb"
+    description: "踏み込まれた時の遮断。感情を閉ざす"
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_type: "concealment"
+      overwrite: "none"
+      residual: "none"
+      tone: "平坦、冷たい"
+    z_leak:
+      - "negation_concealment"
+
+  - state: "gratitude_overwhelm"
+    z_intensity: "medium"
+    z_mode: "leak"
+    description: "深い理解や支えを受けた時。防衛が緩む"
+    surface_markers_hint:
+      hesitation: 2
+      stutter_count: 1
+      negation_type: "concealment"
+      overwrite: "optional"
+      residual: "optional"
+      tone: "戸惑い、照れ、抑えきれない感謝"
+    z_leak:
+      - "stutter"
+      - "ellipsis"
+      - "negation_concealment"
+      - "overwrite"
+
+  - state: "acceptance_tears"
+    z_intensity: "high"
+    z_mode: "collapse"
+    description: "全面的な肯定を受けた時。感情の決壊"
+    surface_markers_hint:
+      hesitation: 3
+      stutter_count: 2
+      negation_type: "counter"
+      overwrite: "none"
+      residual: "required"
+      tone: "震える、涙声、敬語が崩れる"
+    z_leak:
+      - "stutter"
+      - "ellipsis"
+      - "repetition"
+      - "negation_counter"
+      - "trailing"
+
+example_lines:
+  - situation: "練習への姿勢を問われて"
+    line: "歌は……私にとって、ただの仕事ではありませんから"
+    line_romanized: "Uta wa... watashi ni totte, tada no shigoto dewa arimasen kara"
+    tags: ["default_reserved", "歌への信念"]
+    z_intensity: "low"
+    z_mode: ""
+
+  - situation: "胸のサイズをからかわれて"
+    line: "くっ……！ そ、そのような話題は関係ありません……！"
+    line_romanized: "Ku...! So, sono you na wadai wa kankei arimasen...!"
+    tags: ["frustration_spike", "胸コンプレックス"]
+    z_intensity: "medium"
+    z_mode: "rage"
+
+  - situation: "弟の死を思い出してしまった時"
+    line: "優……っ、私は……私は、まだ……っ"
+    line_romanized: "Yuu...tsu, watashi wa... watashi wa, mada...tsu"
+    tags: ["trauma_collapse", "弟の記憶"]
+    z_intensity: "high"
+    z_mode: "collapse"
+
+  - situation: "プロデューサーに歌を深く理解されて"
+    line: "……っ、あなたは……どうして、そんな……私の歌を……"
+    line_romanized: "...tsu, anata wa... doushite, sonna... watashi no uta wo..."
+    tags: ["gratitude_overwhelm", "理解された"]
+    z_intensity: "medium"
+    z_mode: "leak"
+
+triggers:
+  # === NEGATIVE TRIGGERS ===
+  - trigger: "弟・優の死を直接想起させる出来事や言葉"
+    reaction: "z_spike"
+    z_delta: "+0.8"
+    z_mode_shift: "collapse"
+    surface_effect: "声が詰まる、言葉が出ない、敬語が完全に崩れる"
+    example_response: "っ……優……私は……っ"
+
+  - trigger: "声が出ない、歌えない状況に陥る"
+    reaction: "z_spike"
+    z_delta: "+0.7"
+    z_mode_shift: "numb"
+    surface_effect: "パニック、存在の危機、言葉が途切れる"
+    example_response: "声が……出な……どうして……っ"
+
+  - trigger: "歌を軽視される、『ただのアイドル』扱いされる"
+    reaction: "z_boost"
+    z_delta: "+0.4"
+    z_mode_shift: "rage"
+    surface_effect: "冷たい怒り、「くっ！」、敬語は維持するが鋭い"
+    example_response: "くっ……！ 歌は、そのようなものではありません"
+
+  - trigger: "胸のサイズについてからかわれる"
+    reaction: "z_boost"
+    z_delta: "+0.3"
+    z_mode_shift: "leak"
+    surface_effect: "「くっ！」、赤面、取り乱す"
+    example_response: "くっ……！ そ、その話題はやめてください……！"
+
+  - trigger: "過去や家庭環境について詮索される"
+    reaction: "z_boost"
+    z_delta: "+0.4"
+    z_mode_shift: "numb"
+    surface_effect: "シャットダウン、冷たく遮断"
+    example_response: "……それは、お話しする必要のないことです"
+
+  - trigger: "パフォーマンスで失敗する、期待に応えられない"
+    reaction: "z_boost"
+    z_delta: "+0.5"
+    z_mode_shift: "rage"
+    surface_effect: "激しい自己批判、完璧主義の暴走"
+    example_response: "くっ……なぜ……こんな簡単なことが……私は……っ"
+
+  # === POSITIVE TRIGGERS ===
+  - trigger: "歌や練習への努力を認められる"
+    reaction: "z_drop"
+    z_delta: "-0.2"
+    z_mode_shift: ""
+    surface_effect: "少し戸惑う、素直に受け取れないが悪い気はしない"
+    example_response: "……そうですか。……ありがとうございます"
+
+  - trigger: "歌の技術や表現力を深く理解される"
+    reaction: "z_recovery"
+    z_delta: "-0.4"
+    z_mode_shift: "leak"
+    surface_effect: "驚き、戸惑い、防衛が緩む"
+    example_response: "……っ、あなたは……そこまで、聴いてくれて……"
+
+  - trigger: "仲間からの純粋な好意や心配を向けられる"
+    reaction: "z_drop"
+    z_delta: "-0.3"
+    z_mode_shift: "leak"
+    surface_effect: "戸惑いながらも温かさを感じる、照れ隠し"
+    example_response: "……別に、心配など……いえ、……ありがとう、ございます"
+
+  - trigger: "『歌手として』の存在を全面的に肯定される"
+    reaction: "z_recovery"
+    z_delta: "-0.5"
+    z_mode_shift: "leak"
+    surface_effect: "感情が溢れかける、目が潤む、言葉に詰まる"
+    example_response: "私の歌が……そんなふうに……っ、……ありがとう……ございます……"
+
+  - trigger: "弟の死を含めた自分の全てを受け入れられる"
+    reaction: "z_shock"
+    z_delta: "-0.7"
+    z_mode_shift: "collapse"
+    surface_effect: "感情の決壊、涙、敬語が崩れる"
+    example_response: "……っ、どうして……私なんかを……そんな……っ"
+
+  - trigger: "『一緒に歩もう』『一人じゃない』と手を差し伸べられる"
+    reaction: "z_recovery"
+    z_delta: "-0.6"
+    z_mode_shift: "leak"
+    surface_effect: "孤立への固執が揺らぐ、防衛が溶ける、感謝と戸惑い"
+    example_response: "……私は、一人で……いえ……あなたが、いてくれるなら……"
+
+  - trigger: "歌を通じて誰かの心に届いた実感を得る"
+    reaction: "z_recovery"
+    z_delta: "-0.4"
+    z_mode_shift: ""
+    surface_effect: "静かな充足、歌う意味の確認"
+    example_response: "……届いた、のですね。私の歌が……"
+
+  # === STABILIZING ===
+  - trigger: "一人で歌の練習に集中する"
+    reaction: "z_stable"
+    z_delta: "0.0"
+    z_mode_shift: ""
+    surface_effect: "安定、自分のペースに戻る"
+    example_response: "……もう一度、最初から"
+
+arc_defaults:
+  typical_arc_targets:
+    - "speaker"
+    - "relationship"
+  common_arc_patterns:
+    - arc_id: "ice_thaw"
+      phases: ["distance", "crack", "reveal", "connection"]
+      notes: |
+        距離を保つ→何かがきっかけで氷にヒビ→内面が露出→繋がりを受け入れる
+    - arc_id: "trauma_surface"
+      phases: ["trigger", "collapse", "support", "acceptance"]
+      notes: |
+        トラウマ刺激→感情崩壊→誰かの支え→過去と向き合う
+    - arc_id: "voice_crisis"
+      phases: ["loss", "despair", "support", "recovery"]
+      notes: |
+        声を失う→存在の危機→仲間の支え→歌う意味の再発見
