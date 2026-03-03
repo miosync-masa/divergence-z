@@ -89,11 +89,11 @@ ZAP_RESULT_SCHEMA = {
                 "preserved": {"type": "boolean"},
                 "original_type": {
                     "type": "string",
-                    "enum": ["direct_address", "third_person", "self_reference", "indirect"]
+                    "enum": ["direct_address", "third_person", "self_reference", "indirect", "hybrid"]
                 },
                 "translated_type": {
                     "type": "string",
-                    "enum": ["direct_address", "third_person", "self_reference", "indirect"]
+                    "enum": ["direct_address", "third_person", "self_reference", "indirect", "hybrid"]
                 },
                 "comment": {"type": "string", "maxLength": 200}
             },
