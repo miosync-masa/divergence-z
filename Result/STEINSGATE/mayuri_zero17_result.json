@@ -1,7 +1,7 @@
 {
   "step1": {
     "layer_a": {
-      "z": 0.86,
+      "z": 0.9,
       "z_mode": "plea",
       "z_leak": [
         "ellipsis",
@@ -9,12 +9,12 @@
         "negation_counter"
       ],
       "z_confidence": 0.78,
-      "emotion_label": "切実な告白・決意",
+      "emotion_label": "告白と決意（懇願混じり）",
       "listener_type": "other_specific"
     },
     "layer_b": {
-      "probable_cause": "岡部への恋愛感情と「鳳凰院凶真」への強い憧れを自覚し、未来の後悔を避けるために行動（人質をやめる／過去へ行く）を選んだ局面。",
-      "subtext": "（紅莉栖への対抗心や劣等感を抱えつつも）自分の気持ちを正当化し、岡部の心を救う役割を自分が担うと宣言している。",
+      "probable_cause": "岡部の“鳳凰院凶真”という仮面が失われた（または失われかけている）ことへの喪失感と、未来を知ったことで抑えていた恋情・後悔・使命感が一気に噴き出している。",
+      "subtext": "（紅莉栖への競争心や罪悪感を抱えつつも）自分が動かなければ岡部が壊れる／未来の自分が後悔する、だから自分が危険を引き受けてでも行く。",
       "confidence": 0.55
     },
     "activated_conflicts": [
@@ -22,28 +22,28 @@
         "axis": "天然の仮面 vs 鋭い直感",
         "side_a": "ぼんやりした、分からないふりをする外面",
         "side_b": "実は多くのことを見抜いている洞察力",
-        "activation": 0.82
+        "activation": 0.85
       },
       {
         "axis": "守られる存在 vs 守る存在",
         "side_a": "オカリンの人質として守られる側でいようとする",
         "side_b": "本当に大切な人が苦しんでいる時は自分が盾になる",
-        "activation": 0.9
+        "activation": 0.95
       },
       {
         "axis": "現在を生きる vs 死を受け入れる覚悟",
         "side_a": "みんなと一緒にいたい、日常を愛している",
         "side_b": "自分の死が避けられないなら受け入れる覚悟がある",
-        "activation": 0.58
+        "activation": 0.55
       }
     ],
     "bias": {
-      "mode": "マスク解除寄り（直球の告白・救済宣言）",
+      "mode": "マスク解除→守る側への反転",
       "pattern": "Gentle-Perceptive-Switch",
       "tendencies": [
-        "三人称（まゆしぃ）→一人称（私）への切替で本気度を上げる",
-        "否定で言い直して本音を確定する（ううん、違う）",
-        "繰り返しで感情を押し出す（ずっと…ずっと／それでも！それでも）"
+        "本当に大事な時だけ三人称をやめて「私」で話す",
+        "誰かが泣いていたら何も言わずそっと傍にいる",
+        "他者が傷ついている時は包み込むように語りかける"
       ]
     },
     "arc": {
@@ -52,16 +52,14 @@
       "arc_target": "relationship"
     },
     "triggers": [
-      "オカリンへの恋愛感情の自覚",
-      "紅莉栖との比較（競合）",
-      "岡部の仮面（鳳凰院凶真）への強い希求",
-      "未来の後悔を避けたいという切迫",
-      "『人質をやめる』という関係性の転換宣言"
+      "オカリンの仮面（鳳凰院凶真）が失われる/弱まる気配",
+      "未来を知ることへの恐怖と後悔の顕在化",
+      "大切な人を救うために自分が動く必要性"
     ],
     "risk_flags": [
-      "自己犠牲的な決意（過去へ行く／雨雲を取り払う）",
-      "感情の高ぶりによる衝動的行動",
-      "対人関係の急激な再定義（人質をやめる）"
+      "自己犠牲の選択（危険な行動の宣言）",
+      "強い執着/依存の露呈（『彦星様は岡部倫太郎以外にいない』）",
+      "感情の高ぶりによる判断の先鋭化"
     ],
     "activated_episodes": [
       "pushing_okabe_forward",
@@ -74,40 +72,65 @@
   "step2": {
     "waves": {
       "wave_a": {
-        "label": "true_intent (Layer A core): 切実な告白＋相手を救うための決意（『私はここにいたい／あなたの本当の姿に会いたい／負けないくらい好き』）",
-        "strength": 0.88
+        "label": "True intent (confession + vow to act/protect Okabe; reclaim ‘Hououin Kyouma’; accept risk/self-sacrifice)",
+        "strength": 0.92
       },
       "wave_b": {
-        "label": "suppression/control: 感情の暴走を抑えるための言い直し・比較回避・自己正当化（紅莉栖比較→撤回、織姫になれない前提、比喩で痛みを包む）",
-        "strength": 0.62
+        "label": "Suppression/management (softening via gentle tone, metaphor, self-restraint around rivalry/guilt; trying not to ‘take’ him from Kurisu while still asserting exclusivity)",
+        "strength": 0.68
       }
     },
     "interference": {
       "type": "mixed",
-      "notes": "告白の推進力（wave_a）が強い一方、途中で『ううん、違う』などのカウンター否定で表現を修正し、比較や劣等感の方向へ流れるのを抑えている。結果として“弱める”のではなく、言い直しによって本音の焦点（岡部＝彦星／凶真への希求）をより鋭く確定させる干渉になっている。"
+      "notes": "Core signal is a direct confession and a plea for Okabe to return to himself (‘Kyouma’), paired with a decisive commitment to act. Suppression doesn’t negate the intent; it modulates it—she repeatedly corrects/qualifies comparisons to Kurisu and wraps urgency in tenderness/metaph"
     },
     "surface_markers": {
-      "hesitation_level": "medium",
-      "negation_first": false,
+      "hesitation_level": "high",
+      "negation_first": true,
       "negation_type": "counter",
       "listener_type": "other_specific",
       "self_directed_rebinding": false,
       "self_correction": true,
       "leak_then_overwrite": true,
-      "residual_marker": "『多分…同じくらい』→『ううん、違う』で比較フレームを破棄し、“負けないくらいずっと好き”へ上書き。感情は抑制ではなく収束（焦点化）として漏れる。",
+      "residual_marker": "Repetition + ellipses show emotional overflow; negation functions as rebuttal/correction rather than hiding feelings.",
       "z_mode": "plea",
       "z_leak": [
         "ellipsis",
         "repetition",
         "negation_counter"
       ],
-      "z_axis_intensity": "medium"
+      "z_axis_intensity": "high"
     },
-    "analysis_summary": "Layer Aのz_mode=pleaは妥当。相手特定（オカリン）への強い呼びかけと『会いたい』『聞きたい』『待ってて』が“懇願＋宣言”の混合だが、主成分は相手に届いてほしい切実さ。z_leakは省略（…）、反復（ずっと…ずっと／それでも！それでも）、カウンター否定（ううん、違う）が中心で確定。否定は感情隠し（concealment）ではなく、表現の誤差修正・比較拒否のcounterとして機能しているためself-directed rebindingは発生しない。"
+    "analysis_summary": "Layer A is consistent: z_mode stays ‘plea’ with strong confession/resolve. Negations (‘ううん、違う’, ‘けど…だけど！’, ‘それでも！’) operate mainly as counter/correction and escalation, not concealment. Frequent self-correction and repetition indicate leakage of intensity; despite requested ‘"
   },
   "step3": {
-    "_parse_error": true,
-    "_raw_text": "{\"translation\":\"[Mayuri Shiina] \\\"I love Okarin.\\\" \\\"Probably... as much as Kurisu-san does. No— that's not it.\\\"\\n[Mayuri Shiina] \\\"I definitely... love him just as much as Kurisu-san... no, I won't lose to her. I've loved him for so long... so, so long.\\\"\\n[Mayuri Shiina] \\\"But... but! I love Hououin Kyouma even more.\\\"\\n[Mayuri Shiina] \\\"When I was about to disappear, he told me, 'Stay in this world forever.'\\\"\\n[Mayuri Shiina] \\\"I want to see Hououin Kyouma!\\\"\\n[Mayuri Shiina] \\\"I want to hear that big, show-offy laugh of his!\\\"\\n[Mayuri Shiina] \\\"Even if I know... I can never be Orihime... even so...\\\"\\n[Mayuri Shiina] \\\"The only Hikoboshi for me is Okabe Rintarou! No one else!\\\"\\n[Mayuri Shiina] \\\"Mayushii is going to stop being a hostage. Just for today.\\\"\\n[Mayuri Shiina] \\\"Because I don't want to pretend my Hikoboshi never existed.\\\" \\\"Because I don't want to pretend that the future me's regrets never happened.\\\"\\n[Mayuri Shiina] \\\"Even so! Even so— you can't just make it all like it never happened!\\\"\\n[Mayuri Shiina] \\\"Even when it rains, the stars don't disappear from the world.\\\" \\\"Beyond the clouds, they keep shining... the same as always.\\\"\\n[Mayuri Shiina] \\\"So I'm going to go clear away the rain clouds covering Okarin's sky.\\\"\\n[Mayuri Shiina] \\\"Wait for me.\\\"\",\"z_signature\":{\"z\":0.86,\"z_mode\":\"plea\",\"z_leak_applied\":[\"ellipsis\",\"repetition\",\"negation_counter\"],\"hesitation_level\":\"medium\",\"negation_first\":false,\"negation_type\":\"counter\",\"listener_type\":\"other_specific\",\"self_directed_rebinding\":false,\"self_correction\":true,\"leak_then_overwrite\":true,\"residual_marker\":\"'Probably... as much as Kurisu-san' → 'No— that's not it' discards the comparison frame, overwriting into 'I won't lose to her... so, so long.' Emotion converges rather than suppresses.\"},\"arc\":{\"arc_id\":\"witness_to_savior\",\"arc_phase\":\"recovery\",\"arc_position\":1},\"notes\":\"Preserved the plea z_mode through ellipsis ('so... so long', 'even if I know...'), repetition ('Even so! Even so—', 'so, so long'), and negation_counter ('No— that's not it'). The shift from third-person 'Mayushii' to first-person 'I' is maintained to mark the mask-drop moment. Tanabata references (Orihime/Hikoboshi) kept untranslated as they are culturally specific proper nouns recognizable in context. The trailing 'Wait for me.' preserves the final plea's weight—simple, direct, no trailing markers, because at this point the hesitation has resolved into conviction.\",\"alternatives\":[\"[Mayuri Shiina] \\\"I love Okarin.\\\" \\\"Maybe... the same amount as Kurisu-san. No... no, that's wrong.\\\"\\n[Mayuri Shiina] \\\"I absolutely... won't lose to Kurisu-san. I've loved him... for so long... so very long.\\\"\\n[Mayuri Shiina] \\\"But... but! I love Hououin Kyouma even more than that.\\\"\\n[Mayuri Shiina] \\\"When I was fading away, he said to me— 'Stay in this world. Always.'\\\"\\n[Mayuri Shiina] \\\"I want to see Hououin Kyouma again!\\\"\\n[Mayuri Shiina] \\\"I want to hear that grand, over-the-top laugh!\\\"\\n[Mayuri Shiina] \\\"Even knowing... I could never become Orihime... still...\\\"\\n[Mayuri Shiina] \\\"My Hikoboshi is Okabe Rintarou. There's no one else!\\\"\\n[Mayuri Shiina] \\\"Mayushii is going to quit being a hostage today.\\\"\\n[Mayuri Shiina] \\\"Because I won't let my Hikoboshi be erased.\\\" \\\"Because I won't let the future me's regrets be erased.\\\"\\n[Mayuri Shiina] \\\"Even so! Even so— you can't just erase it all!\\\"\\n[Mayuri Shiina] \\\"Even when it rains, the stars don't vanish from the world.\\\" \\\"They keep on shining... just beyond the clouds.\\\"\\n[Mayuri Shiina] \\\"So I'll go sweep away the storm clouds over Okarin's sky.\\\"\\n[Mayuri Shiina] \\\"Wait for me.\\\"\",\"[Mayuri Shiina] \\\"I'm in love with Okarin.\\\" \\\"Probably... as much as Kurisu-san is. ...No. That's not right.\\\"\\n[Mayuri Shiina] \\\"There's no way I'd lose to Kurisu-san. I've loved him... for so, so long...\\\"\\n[Mayuri Shiina] \\\"But— but! I love Hououin Kyouma even more.\\\"\\n[Mayuri Shiina] \\\"When I was about to vanish... he told me, 'Stay in this world. Forever.'\\\"\\n[Mayuri Shiina] \\\"I want to meet Hououin Kyouma!\\\"\\n[Mayuri Shiina] \\\"I want to hear that ridiculously grand laugh of his!\\\"\\n[Mayuri Shiina] \\\"Even if I know I can't become his Orihime... even then...\\\"\\n[Mayuri Shiina] \\\"The only Hikoboshi in my sky is Okabe Rintarou!\\\"\\n[Mayuri Shiina] \\\"Mayushii is going to stop being a hostage— just for today.\\\"\\n[Mayuri Shi",
-    "_error": "Unterminated string starting at: line 1 column 3641 (char 3640)"
+    "translation": "[Shiina Mayuri] \"I love Okarin.\" \"Probably... as much as Kurisu-san does. No— no, that's not right.\"\n[Shiina Mayuri] \"Absolutely... just as much as Kurisu-san... no, more... I've always... always loved him.\"\n[Shiina Mayuri] \"But... but! I love Hououin Kyouma even more.\"\n[Shiina Mayuri] \"When I was fading away... he told me, 'Stay in this world. Always.'\"\n[Shiina Mayuri] \"I want to see Hououin Kyouma again!\"\n[Shiina Mayuri] \"I want to hear that ridiculous, over-the-top laugh of his!\"\n[Shiina Mayuri] \"Even if I know... I can never be Orihime... even so...\"\n[Shiina Mayuri] \"The only Hikoboshi for me... is Okabe Rintaro. No one else!\"\n[Shiina Mayuri] \"Mayushii is going to stop being a hostage. Just for today.\"\n[Shiina Mayuri] \"Because I don't want my Hikoboshi to be erased.\" \"Because I don't want Future Me's regrets to be erased.\"\n[Shiina Mayuri] \"Even so! Even so— you can't just... make it like none of it happened!\"\n[Shiina Mayuri] \"Even when it rains... the stars don't disappear from the world.\" \"They keep shining... beyond the clouds... the same as always.\"\n[Shiina Mayuri] \"So I'm going to go clear away the rain clouds covering Okarin's sky.\"\n[Shiina Mayuri] \"Wait for me.\"",
+    "z_signature": {
+      "z": 0.9,
+      "z_mode": "plea",
+      "z_leak_applied": [
+        "ellipsis",
+        "repetition",
+        "negation_counter"
+      ],
+      "hesitation_level": "high",
+      "negation_first": true,
+      "negation_type": "counter",
+      "listener_type": "other_specific",
+      "self_directed_rebinding": false,
+      "self_correction": true,
+      "leak_then_overwrite": true,
+      "residual_marker": "Repeated 'always... always', 'even so... even so', and ellipses throughout convey emotional overflow; negation functions as self-correction and escalation rather than concealment."
+    },
+    "arc": {
+      "arc_id": "witness_to_savior",
+      "arc_phase": "recovery",
+      "arc_position": 1
+    },
+    "notes": "Preserved the plea z_mode through heavy ellipsis and repetition. The negation_counter ('No— no, that's not right') mirrors the Japanese 'ううん、違う' as a self-correcting escalation rather than denial. Kept 'Mayushii' in third person for the single line where she deliberately switches back to her mask before declaring she's dropping it ('stop being a hostage'), preserving the dramatic weight of the mask-on/mask-off dynamic. Tanabata metaphors (Orihime/Hikoboshi) left untranslated to preserve cultural specificity. The trailing ellipses and repetitive 'even so' capture the desperate, pleading quality of the original.",
+    "alternatives": [
+      "[Shiina Mayuri] \"I love Okarin.\" \"Probably... just as much as Kurisu-san. No... no, that's wrong.\"\n[Shiina Mayuri] \"I know I love him... at least as much as Kurisu-san... no— more than that... always... always.\"\n[Shiina Mayuri] \"But... but! Hououin Kyouma— I love him even more than that.\"\n[Shiina Mayuri] \"When I was about to disappear... he said to me, 'Stay in this world. Forever.'\"\n[Shiina Mayuri] \"I want to meet Hououin Kyouma again!\"\n[Shiina Mayuri] \"I want to hear that proud, ridiculous laugh!\"\n[Shiina Mayuri] \"Even if I know... I'll never be his Orihime... still...\"\n[Shiina Mayuri] \"My Hikoboshi... there's no one but Okabe Rintaro. There never was!\"\n[Shiina Mayuri] \"Mayushii has decided to quit being a hostage. Just for today.\"\n[Shiina Mayuri] \"Because I won't let my Hikoboshi be erased.\" \"Because I won't let the regrets of my future self be erased.\"\n[Shiina Mayuri] \"Even so! Even so— we can't pretend none of it happened!\"\n[Shiina Mayuri] \"Even when it rains... the stars don't vanish from the world.\" \"Beyond the clouds... they keep on shining... just like always.\"\n[Shiina Mayuri] \"So I'll go and sweep away the storm clouds hanging over Okarin's sky.\"\n[Shiina Mayuri] \"Please... wait for me.\"",
+      "[Shiina Mayuri] \"I love Okarin.\" \"Maybe... as much as Kurisu-san does. No— that's not it.\"\n[Shiina Mayuri] \"Definitely... I won't lose to Kurisu-san... I've loved him... always... always.\"\n[Shiina Mayuri] \"But... but! I love Hououin Kyouma even more.\"\n[Shiina Mayuri] \"When I was disappearing... he told me to stay in this world. Always.\"\n[Shiina Mayuri] \"I want to see Hououin Kyouma!\"\n[Shiina Mayuri] \"I want to hear that big, arrogant laugh!\"\n[Shiina Mayuri] \"Even knowing... I can't be Orihime... even then...\"\n[Shiina Mayuri] \"The only Hikoboshi for me is Okabe Rintaro!\"\n[Shiina Mayuri] \"Mayushii is going to resign as a hostage. Just for today.\"\n[Shiina Mayuri] \"I don't want to let my Hikoboshi be undone.\" \"I don't want to let Future Me's regrets be undone.\"\n[Shiina Mayuri] \"Even so! Even so... you can't undo what happened!\"\n[Shiina Mayuri] \"Even in the rain... the stars are still there.\" \"Shining beyond the clouds... unchanging.\"\n[Shiina Mayuri] \"So I'm going to go push those rain clouds away from Okarin's sky.\"\n[Shiina Mayuri] \"Wait for me.\""
+    ]
   }
 }
