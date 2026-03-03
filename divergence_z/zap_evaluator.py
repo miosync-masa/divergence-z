@@ -331,8 +331,8 @@ def evaluate_zap(
                 "schema": ZAP_RESULT_SCHEMA,
             }
         },
-        temperature=0.2,
-        max_completion_tokens=1200,
+        temperature=0.3,
+        max_completion_tokens=5000,
     )
     
     result = json.loads(resp.choices[0].message.content)
