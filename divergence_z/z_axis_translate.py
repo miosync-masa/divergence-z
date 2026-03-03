@@ -797,16 +797,37 @@ You MUST output valid JSON matching this structure:
 
 Output ONLY the JSON. No markdown code blocks. No explanation before or after."""
 
-        response = self.client.messages.create(
-            model=model,
-            max_tokens=max_tokens,
-            temperature=temperature,
-            system=json_system,
-            messages=[
-                {"role": "user", "content": user_prompt}
-            ]
-        )
-        
+        # Retry logic for transient errors (529 Overloaded, 5xx)
+        max_retries = 5
+        for attempt in range(max_retries):
+            try:
+                response = self.client.messages.create(
+                    model=model,
+                    max_tokens=max_tokens,
+                    temperature=temperature,
+                    system=json_system,
+                    messages=[
+                        {"role": "user", "content": user_prompt}
+                    ]
+                )
+                break  # Success
+            except Exception as e:
+                error_str = str(e)
+                is_retryable = (
+                    "overloaded" in error_str.lower() or
+                    "529" in error_str or
+                    "500" in error_str or
+                    "502" in error_str or
+                    "503" in error_str
+                )
+                if is_retryable and attempt < max_retries - 1:
+                    sleep_s = (2 ** attempt) + (0.5 * attempt)
+                    print(f"   ⚠️  STEP3 retry ({attempt+1}/{max_retries}): {error_str[:80]}")
+                    print(f"   ⏳ Retrying in {sleep_s:.1f}s...")
+                    time.sleep(sleep_s)
+                    continue
+                raise
+
         raw_text = response.content[0].text.strip()
         
         # Clean up potential markdown
