@@ -34,6 +34,7 @@ Options:
 import argparse
 import json
 import os
+import re
 import sys
 import time
 import yaml
@@ -279,7 +280,24 @@ After listing episodes, identify 2-5 cross-episode arcs that span
 multiple episodes. These help translators understand how dialogue
 in later scenes carries weight from earlier events.
 
-Output ONLY valid YAML. No explanation text before or after."""
+Output ONLY valid YAML. No explanation text before or after.
+
+## YAML QUOTING RULES (CRITICAL)
+
+When a YAML value contains double quotes, you MUST wrap the entire value in single quotes:
+
+WRONG (will break YAML parser):
+  translation: "From zero"を維持、対比を意識
+
+CORRECT:
+  translation: '"From zero"を維持、対比を意識'
+
+ALSO CORRECT:
+  translation: |
+    "From zero"を維持、対比を意識
+
+This applies to ALL fields, not just translation. Any value containing " must be
+either single-quoted or use block scalar (|)."""
     
     return prompt
 
@@ -519,6 +537,9 @@ def generate_episodes(name: str, source: str, description: str,
     # === ROBUST YAML EXTRACTION ===
     yaml_content = _extract_yaml(yaml_content)
     
+    # === YAML QUOTE REPAIR (v1.1) ===
+    yaml_content = _fix_yaml_quoting(yaml_content)
+    
     return yaml_content.strip()
 
 
@@ -572,6 +593,111 @@ def _extract_yaml(raw: str) -> str:
     # Method 5: Last resort
     print("   ⚠️  Could not reliably extract YAML from model output")
     return raw
+
+
+# ============================================================
+# YAML Quote Repair v1.1
+# ============================================================
+
+def _fix_yaml_quoting(yaml_content: str) -> str:
+    """Fix broken YAML quoting caused by LLM-generated values containing double quotes.
+    
+    Common failure pattern (LLM output):
+        translation: "From zero"を維持、「一からではなく」との対比を意識
+    
+    YAML parser sees "From zero" as a complete quoted string, then chokes on を維持...
+    
+    Fix strategy:
+    1. Try yaml.safe_load() — if it works, no fix needed
+    2. If parse fails, scan lines for the broken pattern:
+       key: "..."extra_text  (where extra_text follows a closing quote)
+    3. Re-wrap the entire value in single quotes (escaping internal single quotes)
+    4. Retry yaml.safe_load() to confirm fix
+    
+    This handles the most common LLM quoting error without modifying valid YAML.
+    """
+    # Step 1: Check if YAML is already valid
+    try:
+        yaml.safe_load(yaml_content)
+        return yaml_content  # Already valid, no fix needed
+    except yaml.YAMLError as initial_error:
+        print(f"   🔧 YAML parse error detected, attempting auto-repair...")
+    
+    # Step 2: Scan and fix broken lines
+    lines = yaml_content.split('\n')
+    fixed_lines = []
+    fix_count = 0
+    
+    # Pattern: key: "quoted_part"remaining_text
+    # Matches lines where a double-quoted string is followed by non-whitespace text
+    # Example: translation: "From zero"を維持
+    broken_pattern = re.compile(
+        r'^(\s+\w[\w_]*:\s+)'    # indent + key + colon + space(s)
+        r'"([^"]*)"'              # double-quoted string
+        r'(.+)$'                  # remaining text after the closing quote
+    )
+    
+    # Pattern: key: text with "quoted" in middle
+    # Example: translation: 「一からではなく」"From zero"の重みを
+    mid_quote_pattern = re.compile(
+        r'^(\s+\w[\w_]*:\s+)'    # indent + key + colon + space(s)  
+        r'([^"]*"[^"]*"[^"]*)'   # value containing quotes
+        r'$'
+    )
+    
+    for line in lines:
+        # Check for broken pattern (quotes at start of value)
+        m = broken_pattern.match(line)
+        if m:
+            prefix = m.group(1)    # "        translation: "
+            quoted = m.group(2)    # "From zero"
+            rest = m.group(3)      # "を維持、「一からではなく」との対比を意識"
+            
+            # Reconstruct: wrap entire value in single quotes
+            full_value = f'"{quoted}"{rest}'
+            # Escape any single quotes in the value
+            full_value_escaped = full_value.replace("'", "''")
+            fixed_line = f"{prefix}'{full_value_escaped}'"
+            fixed_lines.append(fixed_line)
+            fix_count += 1
+            continue
+        
+        # Check for mid-quote pattern (quotes embedded in value)
+        m2 = mid_quote_pattern.match(line)
+        if m2:
+            prefix = m2.group(1)
+            value = m2.group(2)
+            # Only fix if the value would cause a YAML parse error
+            # Test by trying to parse just this line
+            test_yaml = f"test: {value}"
+            try:
+                yaml.safe_load(test_yaml)
+                fixed_lines.append(line)  # Valid, keep as-is
+            except yaml.YAMLError:
+                value_escaped = value.replace("'", "''")
+                fixed_line = f"{prefix}'{value_escaped}'"
+                fixed_lines.append(fixed_line)
+                fix_count += 1
+            continue
+        
+        fixed_lines.append(line)
+    
+    if fix_count == 0:
+        print(f"   ⚠️  No fixable quoting patterns found (error may be elsewhere)")
+        return yaml_content
+    
+    fixed_content = '\n'.join(fixed_lines)
+    
+    # Step 3: Verify fix worked
+    try:
+        yaml.safe_load(fixed_content)
+        print(f"   ✅ Auto-repaired {fix_count} broken YAML quote(s)")
+        return fixed_content
+    except yaml.YAMLError as e:
+        print(f"   ⚠️  Auto-repair fixed {fix_count} lines but YAML still invalid")
+        print(f"   ⚠️  Remaining error: {str(e)[:200]}")
+        # Return partially fixed version (better than nothing)
+        return fixed_content
 
 
 # ============================================================
