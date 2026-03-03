@@ -1,0 +1,1590 @@
+# Episode Memory YAML v1.0
+# Character: ナツキ・スバル (Natsuki Subaru)
+# Source: Re:ゼロから始める異世界生活
+# Generated for: Divergence-Z Translation System
+
+meta:
+  schema_version: "1.0"
+  character_id: "natsuki_subaru"
+  character_name: "ナツキ・スバル"
+  source_work: "Re:ゼロから始める異世界生活"
+  canon_scope:
+    - "Web版"
+    - "ライトノベル版"
+    - "アニメ版"
+  episode_count: 30
+  includes_sequels: true
+  generated_date: "2025-01-19"
+  notes: |
+    死に戻りの能力を持つスバルは、客観的な時間軸では存在しない「死んだ世界線」の
+    記憶を全て保持している。そのため、周囲の人間が知らない死と絶望の記憶が
+    彼の言動の重さを形成している。翻訳においては、「軽口の裏にある重さ」を
+    常に意識する必要がある。
+
+episodes:
+  # ===== ARC 1: 王都編 =====
+  
+  - episode_id: "summoning_and_first_encounter"
+    timeline: "main"
+    chronological_order: 1
+    title: "異世界召喚と銀髪の少女"
+    source_episode: "第1章・1話〜2話 / アニメ1話"
+    summary: |
+      コンビニ帰りの深夜、突如として異世界に召喚される。
+      何の前触れもなく、何の説明もなく、見知らぬ世界に放り出された。
+      路地裏でチンピラに絡まれたところを銀髪のハーフエルフ——エミリアに助けられる。
+      彼女が「徽章」を盗まれたことを知り、恩返しのために協力を申し出る。
+      この時点ではまだ「異世界転生」を楽しめる余裕があった。
+    participants:
+      - name: "エミリア"
+        role: "助けてくれた恩人、一目惚れの対象"
+      - name: "パック"
+        role: "エミリアの契約精霊"
+    emotional_impact: "medium"
+    emotional_detail: |
+      困惑と興奮が入り混じった状態。「異世界転生キター！」というオタク的な
+      高揚感と、状況を把握できない不安。エミリアへの一目惚れという
+      純粋な感情が、後の全てを決定づける。
+    canonical_quotes:
+      - quote: "俺は君に名乗れるような大層な名前は持ってない。だから——"
+        context: "エミリアに名前を聞かれて"
+        z_mode: "theatrical_confident"
+        translation_note: "虚勢交じりの照れ隠し。後の「ナツキ・スバル」の名乗りへ繋がる"
+      - quote: "俺はナツキ・スバル！ 無知蒙昧にして天下不滅の無一文だ！"
+        context: "自己紹介のセリフ"
+        z_mode: "theatrical_confident"
+        translation_note: "大げさな自己紹介はスバルの特徴。韻を踏む言葉遊びを維持"
+    z_relevance: |
+      この時点のスバルは「異世界転生もの」の主人公を自認しており、
+      軽口と虚勢が純粋な楽しさから来ている。
+      後の崩壊との対比を意識し、この時期の台詞は明るく訳すべき。
+    character_state_change:
+      before: "引きこもりの日本人高校生"
+      after: "異世界に興味津々の少年、エミリアへの恋心の芽生え"
+      permanent: "エミリアへの想いの原点"
+    tags:
+      - "origin"
+      - "emilia_first_meeting"
+      - "isekai_arrival"
+      - "arc1"
+
+  - episode_id: "first_death_elsa"
+    timeline: "main"
+    chronological_order: 2
+    title: "初めての死——腸狩りエルザ"
+    source_episode: "第1章 / アニメ1話〜2話"
+    summary: |
+      盗品蔵でフェルトと交渉中、「腸狩り」の異名を持つ暗殺者エルザに襲撃される。
+      腹を切り裂かれ、腸を引きずり出される——文字通りの「腸狩り」を体験。
+      エミリアを庇おうとするが、目の前で彼女も殺される。
+      死の瞬間、時間が巻き戻る。これが「死に戻り」との最初の遭遇。
+      何が起きたか理解できないまま、同じ場所で目覚める。
+    participants:
+      - name: "エルザ・グランヒルテ"
+        role: "暗殺者、最初の殺害者"
+      - name: "エミリア"
+        role: "目の前で殺された恩人"
+      - name: "フェルト"
+        role: "盗品蔵の少女"
+      - name: "ロム爺"
+        role: "盗品蔵の主"
+    emotional_impact: "critical"
+    emotional_detail: |
+      人生で初めての「死」の体験。しかも最も残虐な形で。
+      内臓を引きずり出される感覚、死への恐怖、そしてエミリアが殺される
+      絶望——これらが全て記憶に刻まれた。
+      二度目の人生で目覚めた時、最初は「悪夢だった」と信じようとした。
+    canonical_quotes:
+      - quote: "あ……れ……？ お腹、から……"
+        context: "初めて腹を切り裂かれた瞬間"
+        z_mode: "collapse"
+        translation_note: "途切れ途切れの台詞。現実を認識できない混乱を表現"
+      - quote: "死んだ……俺、死んだはずだ……っ！"
+        context: "二度目の目覚め直後"
+        z_mode: "collapse"
+        translation_note: "パニック状態。死を「はずだ」と確認形で言う不条理さ"
+    z_relevance: |
+      「死に戻り」の原体験。以降の全ての死の記憶の基準点。
+      翻訳時、スバルが死について語る台詞には常にこの記憶の重さがある。
+      「死んだ」という言葉を彼が使う時、それは比喩ではなく実体験。
+    character_state_change:
+      before: "死を知らない少年"
+      after: "死の恐怖と不条理を体験した者"
+      permanent: "エルザへのトラウマ、「死」の重さの実感"
+    tags:
+      - "first_death"
+      - "return_by_death"
+      - "elsa"
+      - "trauma_origin"
+      - "arc1"
+
+  - episode_id: "loot_house_resolution"
+    timeline: "main"
+    chronological_order: 3
+    title: "盗品蔵の決着——ラインハルトの介入"
+    source_episode: "第1章 / アニメ3話"
+    summary: |
+      複数回の死に戻りを経て、ようやく最善のルートを見つける。
+      「剣聖」ラインハルトを巻き込むことでエルザを退け、
+      エミリアの徽章を取り戻すことに成功。
+      しかしこの「成功」は、語れない死の繰り返しの上に成り立っている。
+      エミリアに「スバル」として覚えてもらえた——それだけが報酬だった。
+    participants:
+      - name: "ラインハルト・ヴァン・アストレア"
+        role: "救援者、剣聖"
+      - name: "エミリア"
+        role: "救出対象"
+      - name: "パック"
+        role: "戦闘支援"
+    emotional_impact: "high"
+    emotional_detail: |
+      「やれば成功する」という経験。死に戻りを使えば、
+      何度失敗しても最終的には成功できる——この「成功体験」が
+      後の傲慢に繋がる両刃の剣となった。
+      エミリアに「スバル」と名前で呼ばれた喜びは本物だった。
+    canonical_quotes:
+      - quote: "俺の名前はナツキ・スバル！ 覚えといてくれよ！"
+        context: "エミリアに名前を覚えてもらうために"
+        z_mode: "theatrical_confident"
+        translation_note: "後に何度も繰り返す自己紹介。「覚えていてほしい」という切実さが根底に"
+    z_relevance: |
+      「成功体験」が後の「思い上がり」の種となる重要な転換点。
+      この時のスバルの軽口には、達成感と安堵が混じっている。
+      翻訳時は「勝利の高揚感」を表現すべきだが、
+      視聴者には「この成功は何度もの死の上にある」という暗さも感じさせる。
+    character_state_change:
+      before: "死に戻りに困惑している状態"
+      after: "死に戻りを「攻略ツール」として認識し始める"
+      permanent: "「やれば成功する」という自信の萌芽"
+    tags:
+      - "first_success"
+      - "reinhard"
+      - "emilia_name"
+      - "arc1_conclusion"
+
+  # ===== ARC 2: 屋敷編 =====
+
+  - episode_id: "mansion_first_loop"
+    timeline: "main"
+    chronological_order: 4
+    title: "ロズワール邸——招かれた客人"
+    source_episode: "第2章 / アニメ4話〜5話"
+    summary: |
+      エミリアに誘われ、ロズワール邸で働くことになる。
+      メイドのレムとラム、禁書庫の司書ベアトリス、主人のロズワールと出会う。
+      幸せな日常が始まった——と思った矢先、
+      四日目の朝、自分が死んでいることに気づかないまま死んでいた。
+      目覚めると、また初日に戻っていた。
+    participants:
+      - name: "レム"
+        role: "メイド、後に最も信頼する存在"
+      - name: "ラム"
+        role: "メイド、レムの姉"
+      - name: "ベアトリス"
+        role: "禁書庫の司書"
+      - name: "ロズワール・L・メイザース"
+        role: "屋敷の主、エミリアの後見人"
+    emotional_impact: "medium"
+    emotional_detail: |
+      エルザとの戦いを乗り越え、ようやく手に入れた「日常」。
+      メイドたちとの掛け合い、エミリアとの時間。
+      それが突然「死」で終わる理不尽さへの困惑と怒り。
+    canonical_quotes:
+      - quote: "俺って呪われてんのか……？"
+        context: "原因不明の死が続く中で"
+        z_mode: "leak"
+        translation_note: "軽口に見えて、実際に自分が呪われている可能性を疑っている"
+    z_relevance: |
+      「安全だと思った場所で死ぬ」という経験。
+      信頼と疑心の間で揺れる状態が始まる。
+      翻訳時、この時期の軽口には「不安を隠している」ニュアンスを加える。
+    character_state_change:
+      before: "エミリアの近くで平和に暮らせると思っていた"
+      after: "この屋敷にも危険があると認識"
+      permanent: "「安全な場所などない」という認識"
+    tags:
+      - "mansion_arc"
+      - "rem_first_meeting"
+      - "mystery_death"
+      - "arc2"
+
+  - episode_id: "killed_by_rem"
+    timeline: "main"
+    chronological_order: 5
+    title: "鬼の少女——レムに殺される"
+    source_episode: "第2章 / アニメ5話〜7話"
+    summary: |
+      死の原因を探るうち、自分を殺しているのがレムだと気づく。
+      彼女はスバルから「魔女の残り香」を感じ取り、
+      村の子供たちを守るために「魔女教の手先」を排除しようとしていた。
+      森の中で鬼化したレムに追い詰められ、無残に殺される。
+      「信頼していた人に殺される」——その絶望を味わった。
+    participants:
+      - name: "レム"
+        role: "殺害者——しかし彼女にも理由があった"
+    emotional_impact: "critical"
+    emotional_detail: |
+      笑顔で接してくれていた少女が、自分を殺しに来る。
+      その目に宿る憎悪と殺意。自分が「敵」として見られている現実。
+      しかし後にレムの過去を知り、彼女の行動の理由を理解することになる。
+    canonical_quotes:
+      - quote: "なんで……なんでお前が……っ！"
+        context: "レムが自分を殺そうとしていると理解した瞬間"
+        z_mode: "collapse"
+        translation_note: "裏切りへの衝撃と困惑。「お前」という二人称が重要"
+    z_relevance: |
+      後のレムとの関係を考える上で決定的に重要なエピソード。
+      レムが「私の英雄」と呼ぶ相手は、かつて自分が殺した相手。
+      翻訳時、レムへの台詞には「彼女に殺された」記憶が常に存在することを意識。
+      しかしスバルはそれを恨みではなく理解として昇華している。
+    character_state_change:
+      before: "レムを「優しいメイド」として信頼"
+      after: "レムに殺された記憶、しかしその理由への理解"
+      permanent: "「魔女の残り香」が自分の呪いであるという認識"
+    tags:
+      - "rem_kills_subaru"
+      - "betrayal_trauma"
+      - "witch_scent"
+      - "arc2"
+
+  - episode_id: "curse_and_mabeast"
+    timeline: "main"
+    chronological_order: 6
+    title: "呪術師と魔獣——全員を救うために"
+    source_episode: "第2章 / アニメ8話〜9話"
+    summary: |
+      死の原因が「呪い」であると判明。村の子供が呪術師に呪われ、
+      その呪いがスバルにも移っていた。魔獣の群れと呪術師との戦い。
+      レムと協力して魔獣を倒し、子供たちを救う。
+      この過程でレムの過去——鬼族の村を滅ぼした魔女教への憎悪——を知る。
+      「だから俺はレムを、鬼がかったメイドを、英雄だと思ったんだ」
+    participants:
+      - name: "レム"
+        role: "共闘者、過去を共有した相手"
+      - name: "ラム"
+        role: "姉として支援"
+      - name: "村の子供たち"
+        role: "救出対象"
+    emotional_impact: "high"
+    emotional_detail: |
+      自分を殺した相手と共に戦い、その過去を知り、
+      「敵」だった相手が「味方」になる体験。
+      レムの抱える罪悪感と自己否定を見て、自分と重ねる。
+    canonical_quotes:
+      - quote: "レムは俺の英雄だ"
+        context: "魔獣との戦いでレムを鼓舞するシーン"
+        z_mode: "resolution"
+        translation_note: |
+          後にレムが「スバルくんは私の英雄です」と返す伏線。
+          "hero"の翻訳だが、日本語の「英雄」が持つ重さを維持。
+    z_relevance: |
+      「レムは俺の英雄だ」→「スバルくんは私の英雄です」という
+      対称構造は物語の核心。翻訳時、この対応関係を崩してはならない。
+      スバルがレムに向ける台詞には、「彼女に殺された」過去と
+      「それでも彼女を英雄だと思った」現在の両方が重なる。
+    character_state_change:
+      before: "レムを「自分を殺した相手」として記憶"
+      after: "レムを「英雄」として認識、信頼関係の構築"
+      permanent: "レムとの絆の原点"
+    tags:
+      - "rem_hero"
+      - "mabeast_battle"
+      - "rem_past"
+      - "arc2_resolution"
+
+  # ===== ARC 3: 王選編 =====
+
+  - episode_id: "royal_selection_disgrace"
+    timeline: "main"
+    chronological_order: 7
+    title: "王選会議——取り返しのつかない失態"
+    source_episode: "第3章 / アニメ12話〜13話"
+    summary: |
+      王選会議にエミリアの同行を許されず、それでも押しかける。
+      会議の場で身分もわきまえず騒ぎ立て、エミリアを困惑させる。
+      彼女を「守る」つもりが、彼女の足を引っ張り、恥をかかせた。
+      エミリアから「もう関わらないで」と拒絶される。
+      自分が「彼女のため」と思っていた行動が、
+      全て自分のエゴだったと突きつけられた。
+    participants:
+      - name: "エミリア"
+        role: "拒絶者、守りたかった相手"
+      - name: "ユリウス・ユークリウス"
+        role: "騎士、スバルを諫めた者"
+      - name: "フェリス"
+        role: "騎士、治療者"
+      - name: "王選候補者たち"
+        role: "目撃者"
+    emotional_impact: "critical"
+    emotional_detail: |
+      「俺がいないとエミリアを守れない」という思い上がり。
+      それを全て否定された時の絶望と怒り。
+      エミリアが自分を拒絶した時、世界が崩壊する音が聞こえた。
+      ユリウスに負けた屈辱よりも、エミリアを失う恐怖の方が大きかった。
+    canonical_quotes:
+      - quote: "俺はっ！ エミリアのためにっ！"
+        context: "会議の場で叫ぶシーン"
+        z_mode: "rage"
+        translation_note: "自分でも何を言っているか分からなくなっている状態"
+      - quote: "スバルは私の騎士じゃないもの"
+        context: "エミリアからの拒絶"
+        z_mode: "n/a"
+        speaker: "エミリア"
+        translation_note: "この一言がスバルを崩壊させる引き金。シンプルだが致命的"
+      - quote: "君は、私に何をしてもらったの？"
+        context: "エミリアの問い"
+        z_mode: "n/a"
+        speaker: "エミリア"
+        translation_note: "スバルの「してやった」という傲慢を突く質問"
+    z_relevance: |
+      スバルの「傲慢」が崩壊する決定的瞬間。
+      翻訳時、この前後でスバルの台詞のトーンが劇的に変わる。
+      「エミリアのために」という台詞は、以降「本当に彼女のためか」
+      という問いと常に対になる。
+    character_state_change:
+      before: "「自分がいれば大丈夫」という傲慢"
+      after: "全てを失った絶望、自己否定の始まり"
+      permanent: "「相手の意志を尊重する」ことの重要性"
+    tags:
+      - "royal_selection"
+      - "emilia_rejection"
+      - "julius_defeat"
+      - "disgrace"
+      - "arc3"
+
+  - episode_id: "rem_who"
+    timeline: "main"
+    chronological_order: 8
+    title: "「レムって誰のこと？」"
+    source_episode: "第3章 / アニメ14話"
+    summary: |
+      死に戻りを繰り返す中で、ある周回でレムが「存在しなかった」ことになる。
+      白鯨に襲われ、レムの「存在」そのものが世界から消し去られた。
+      エミリアに「レムは？」と聞いても、「レムって誰？」と返される。
+      自分だけがレムを覚えている——あの優しい少女が、誰にも覚えられていない。
+      世界から存在を消される恐怖を、他者を通じて体験した。
+    participants:
+      - name: "レム"
+        role: "消失した存在"
+      - name: "エミリア"
+        role: "レムを覚えていない"
+      - name: "白鯨"
+        role: "「存在の消失」を引き起こす魔獣"
+    emotional_impact: "critical"
+    emotional_detail: |
+      死よりも恐ろしいもの——「存在の消滅」。
+      殺されるだけでなく、存在したこと自体を消される。
+      レムを覚えているのは自分だけ。その孤独と恐怖。
+      「俺も消えたら、誰にも覚えてもらえないのか」という恐怖。
+    canonical_quotes:
+      - quote: "レムって、誰のこと？"
+        context: "エミリアの返答"
+        z_mode: "n/a"
+        speaker: "エミリア"
+        translation_note: "最も有名な台詞の一つ。純粋な疑問として訳す"
+      - quote: "レムはっ！ レムは俺のっ……！ 俺の大切な……っ！"
+        context: "レムの存在を必死に主張するスバル"
+        z_mode: "collapse"
+        translation_note: "言葉にならない悲痛さ。途切れと繰り返しを維持"
+    z_relevance: |
+      「存在の消失」というテーマの導入。
+      翻訳時、この後スバルが「覚えていてくれ」と言う時には
+      この恐怖が背景にある。「名前を呼ぶ」「覚えている」という
+      行為の重さを意識した訳語選択が必要。
+    character_state_change:
+      before: "死は恐ろしいが、少なくとも存在は残ると思っていた"
+      after: "存在そのものが消える恐怖を知った"
+      permanent: "「覚えていてもらえること」の価値への認識"
+    tags:
+      - "rem_who"
+      - "white_whale"
+      - "existence_erasure"
+      - "iconic_scene"
+      - "arc3"
+
+  - episode_id: "death_loop_breakdown"
+    timeline: "main"
+    chronological_order: 9
+    title: "無限の死——心が壊れる"
+    source_episode: "第3章 / アニメ15話"
+    summary: |
+      何度死んでも、何度やり直しても、誰も救えない。
+      エミリアが死ぬ。レムが消える。村が滅びる。
+      どのルートを選んでも、誰かが死ぬ。全員を救う方法が見つからない。
+      繰り返す死の中で、スバルの心は少しずつ壊れていく。
+      ペテルギウスとの遭遇、エミリアの死体を抱く絶望。
+    participants:
+      - name: "ペテルギウス・ロマネコンティ"
+        role: "怠惰の大罪司教、最悪の敵"
+      - name: "魔女教徒たち"
+        role: "村を襲う者たち"
+      - name: "エミリア"
+        role: "死亡（複数周回で目撃）"
+      - name: "村人たち"
+        role: "虐殺される"
+    emotional_impact: "critical"
+    emotional_detail: |
+      「もう無理だ」と心の底から思った。
+      何をしても誰かが死ぬ。自分には何もできない。
+      死に戻りは「やり直せる能力」だが、
+      「何度失敗しても記憶だけは残る呪い」でもあった。
+      精神が限界を迎え、逃げ出したくなった。
+    canonical_quotes:
+      - quote: "脳が……っ、震える……！"
+        context: "ペテルギウスの狂気を前に"
+        z_mode: "collapse"
+        speaker: "ペテルギウス"
+        translation_note: "ペテルギウスの象徴的台詞だが、スバルのトラウマの引き金に"
+      - quote: "もう……無理だ……っ、俺には……何も……"
+        context: "心が折れかける瞬間"
+        z_mode: "collapse"
+        translation_note: "完全な崩壊状態。句読点と空白で途切れを表現"
+    z_relevance: |
+      スバルが「逃げる」という選択肢を真剣に考えた唯一の時期。
+      翻訳時、この時期の台詞には「絶望」を徹底して表現する。
+      後のレムによる救済との対比を意識。
+    character_state_change:
+      before: "「何度でもやり直せる」という希望"
+      after: "「何度やっても無駄」という絶望"
+      permanent: "死に戻りの「呪い」としての側面の認識"
+    tags:
+      - "death_loop"
+      - "petelgeuse"
+      - "breakdown"
+      - "despair"
+      - "arc3"
+
+  - episode_id: "from_zero"
+    timeline: "main"
+    chronological_order: 10
+    title: "ゼロから——レムの告白"
+    source_episode: "第3章 / アニメ18話"
+    summary: |
+      全てを諦め、レムと共に逃げようとしたスバル。
+      しかしレムは「逃げるスバルくんはスバルくんじゃない」と拒否。
+      そしてスバルの全てを肯定する告白をする。
+      「スバルくんが諦めても、レムはスバルくんを信じてます」
+      「だってレムの英雄だから」
+      その言葉に救われ、「ゼロから始める」決意をする。
+    participants:
+      - name: "レム"
+        role: "救済者、告白者"
+    emotional_impact: "critical"
+    emotional_detail: |
+      全ての虚勢が剥がれ落ちた状態で、全肯定を受けた。
+      「俺なんかが」という自己否定と、
+      「それでも信じてくれる人がいる」という救い。
+      涙が止まらなかった。初めて本当に救われた気がした。
+    canonical_quotes:
+      - quote: "俺は、空っぽだ……何も、持ってない……っ"
+        context: "自分の無価値さを吐露するスバル"
+        z_mode: "collapse"
+        translation_note: "完全な自己否定。「空っぽ」という表現を維持"
+      - quote: "レムは知ってますよ。スバルくんが誰よりも頑張り屋さんで、誰よりも諦めが悪くて——"
+        context: "レムによる肯定"
+        z_mode: "n/a"
+        speaker: "レム"
+        translation_note: "スバルの良いところを列挙。「諦めが悪い」を肯定的に訳す"
+      - quote: "スバルくんは、レムの英雄です"
+        context: "レムの最も重要な台詞"
+        z_mode: "n/a"
+        speaker: "レム"
+        translation_note: "「俺の英雄」への応答。同じ「英雄」という語を使う"
+      - quote: "ゼロから……いや、ゼロから始めよう。一から——ここから始めようぜ、レム"
+        context: "立ち上がる決意"
+        z_mode: "resolution"
+        translation_note: |
+          タイトル「Re:ゼロから始める異世界生活」に直結。
+          "From zero"の翻訳は作品全体に関わる重要な表現。
+    z_relevance: |
+      「ゼロから」は作品の核心概念。
+      翻訳時、この台詞と後の全ての「やり直し」「始める」表現は
+      意図的に統一するかどうかを検討。
+      レムの全肯定シーンは、スバルが「認められた」経験の原点。
+      以降、スバルがレムに言及する時には必ずこのシーンの重さがある。
+    character_state_change:
+      before: "全てを諦めていた"
+      after: "ゼロから始める決意、レムへの深い感謝と愛"
+      permanent: "レムの存在がスバルの支えになる"
+    tags:
+      - "from_zero"
+      - "rem_confession"
+      - "turning_point"
+      - "iconic_scene"
+      - "most_important"
+      - "arc3"
+
+  - episode_id: "white_whale_victory"
+    timeline: "main"
+    chronological_order: 11
+    title: "白鯨討伐——初めての勝利"
+    source_episode: "第3章 / アニメ20話〜21話"
+    summary: |
+      クルシュ陣営との同盟を結び、白鯨討伐戦を指揮する。
+      レムが存在を消された復讐、そして皆を守るための戦い。
+      多くの犠牲を出しながらも、ついに白鯨を倒す。
+      「死に戻り」の知識を使い、未来を変えることに初めて成功した。
+      自分の力で、自分の意志で、勝利を掴んだ。
+    participants:
+      - name: "クルシュ・カルステン"
+        role: "同盟者、指揮官"
+      - name: "ヴィルヘルム・ヴァン・アストレア"
+        role: "白鯨への復讐者、剣鬼"
+      - name: "フェリス"
+        role: "治療担当"
+      - name: "レム"
+        role: "共闘者"
+    emotional_impact: "high"
+    emotional_detail: |
+      初めての「本当の勝利」。死に戻りに頼るだけでなく、
+      仲間と協力し、戦略を立て、勝ち取った勝利。
+      ヴィルヘルムの復讐を見届けた時、「自分も誰かの力になれた」と感じた。
+    canonical_quotes:
+      - quote: "俺たちの勝ちだ……っ！"
+        context: "白鯨討伐成功の瞬間"
+        z_mode: "theatrical_confident"
+        translation_note: "「俺たちの」が重要。一人ではなく「仲間と共に」の勝利"
+    z_relevance: |
+      「仲間と共に戦う」ことを学んだエピソード。
+      翻訳時、この後のスバルが「一人で背負う」傾向と
+      「仲間を頼る」成長の間で揺れることを意識。
+      「俺たち」という言葉の使い方に注目。
+    character_state_change:
+      before: "自分一人で何とかしようとしていた"
+      after: "仲間と協力することの強さを実感"
+      permanent: "戦略家・交渉者としての自信"
+    tags:
+      - "white_whale"
+      - "first_major_victory"
+      - "alliance"
+      - "wilhelm"
+      - "arc3"
+
+  - episode_id: "petelgeuse_defeat"
+    timeline: "main"
+    chronological_order: 12
+    title: "怠惰を討つ——ペテルギウス戦"
+    source_episode: "第3章 / アニメ22話〜25話"
+    summary: |
+      魔女教怠惰の大罪司教ペテルギウスとの最終決戦。
+      何度も死に、何度もやり直し、ようやく勝利への道を見つける。
+      エミリアを「魔女の器」として狙う魔女教から、彼女を守り抜いた。
+      ペテルギウスを倒し、エミリアの元へ帰る。
+      「きっと、なんとかなるさ」——彼女の笑顔を見て、そう思えた。
+    participants:
+      - name: "ペテルギウス・ロマネコンティ"
+        role: "敵、怠惰の大罪司教"
+      - name: "エミリア"
+        role: "守る対象"
+      - name: "ユリウス"
+        role: "共闘者（かつての敵）"
+      - name: "ヴィルヘルム"
+        role: "共闘者"
+    emotional_impact: "critical"
+    emotional_detail: |
+      エミリアを守るという約束を果たした。
+      彼女の隣に立てる存在に、少しは近づけたかもしれない。
+      ユリウスと共に戦い、「騎士の心」を学んだ。
+    canonical_quotes:
+      - quote: "怠惰ですねぇ……"
+        context: "ペテルギウスの口癖"
+        z_mode: "n/a"
+        speaker: "ペテルギウス"
+        translation_note: "スバルの台詞ではないが、トラウマの引き金となる重要な表現"
+      - quote: "俺は、エミリアの騎士だ"
+        context: "ユリウスと共に戦う中で"
+        z_mode: "resolution"
+        translation_note: "王選での「騎士じゃない」を乗り越えた宣言"
+    z_relevance: |
+      「騎士」という言葉の意味がスバルの中で変化した瞬間。
+      翻訳時、王選での「騎士じゃない」とこの「騎士だ」の対比を意識。
+      同じ"knight"という語でも、文脈によって重さが違う。
+    character_state_change:
+      before: "エミリアの「騎士じゃない」存在"
+      after: "エミリアの「騎士」として自認"
+      permanent: "エミリアを守る覚悟の確立"
+    tags:
+      - "petelgeuse_defeat"
+      - "emilia_knight"
+      - "julius_alliance"
+      - "arc3_conclusion"
+
+  # ===== ARC 4: 聖域編 =====
+
+  - episode_id: "sanctuary_arrival"
+    timeline: "main"
+    chronological_order: 13
+    title: "聖域——試練の始まり"
+    source_episode: "第4章 / アニメ2期1話〜"
+    summary: |
+      エミリアとレムが行方不明になり、聖域へ向かう。
+      そこは「混血」を閉じ込める結界で、エミリアも出られなくなっていた。
+      結界を解くには「試練」に挑む必要がある。
+      ガーフィールとの出会い、リューズとの邂逅。
+      そしてレムが「眠り姫」として眠り続けていることを知る。
+    participants:
+      - name: "エミリア"
+        role: "試練挑戦者"
+      - name: "ガーフィール・ティンゼル"
+        role: "聖域の守護者、最初は敵対"
+      - name: "リューズ・メイエル"
+        role: "聖域の代表"
+    emotional_impact: "high"
+    emotional_detail: |
+      レムが目覚めない——「ゼロから」で救われた恩人が、
+      今は自分を待ってくれている。必ず起こす、と誓った。
+    canonical_quotes:
+      - quote: "レムは……必ず俺が起こす"
+        context: "眠り続けるレムを見て"
+        z_mode: "resolution"
+        translation_note: "静かだが強い決意。大げさな表現を避ける"
+    z_relevance: |
+      レムが「待っている」という状況が、スバルの行動原理に加わる。
+      翻訳時、レムへの言及には「彼女を起こす」という未完の約束がある。
+    character_state_change:
+      before: "レムと共に戦えていた"
+      after: "レムのために戦う（彼女は眠っている）"
+      permanent: "レムを起こすという新たな目標"
+    tags:
+      - "sanctuary"
+      - "rem_sleeping"
+      - "trial_begin"
+      - "arc4"
+
+  - episode_id: "first_trial_past"
+    timeline: "main"
+    chronological_order: 14
+    title: "第一の試練——過去との対峙"
+    source_episode: "第4章 / アニメ2期3話〜4話"
+    summary: |
+      試練の内容は「過去と向き合う」こと。
+      スバルが見せられたのは、引きこもりになる前の自分。
+      父・菜月賢一との関係。彼のような存在になりたかった自分。
+      でもなれなかった自分。逃げ出した自分。
+      その全てを受け入れて、試練を突破する。
+    participants:
+      - name: "菜月賢一（幻影）"
+        role: "スバルの父"
+      - name: "菜月菜穂子（幻影）"
+        role: "スバルの母"
+    emotional_impact: "critical"
+    emotional_detail: |
+      ずっと逃げていた「引きこもりだった自分」と向き合った。
+      父のようになれなかった劣等感。期待に応えられなかった罪悪感。
+      でも、あの日逃げ出したからこそ、今ここにいる。
+      「俺は俺だ」と、初めて過去を受け入れられた。
+    canonical_quotes:
+      - quote: "俺は——菜月昴だ"
+        context: "試練突破の瞬間"
+        z_mode: "resolution"
+        translation_note: |
+          フルネームでの自己肯定。「ナツキ・スバル」ではなく「菜月昴」。
+          漢字表記を維持することで、アイデンティティの受容を表現。
+    z_relevance: |
+      「父への劣等感」「引きこもりだった過去」がスバルの根底にある。
+      翻訳時、スバルの自己否定的な台詞の背景にこの過去がある。
+      「何者でもない」という感覚の原点を理解した上で訳す。
+    character_state_change:
+      before: "過去から逃げていた"
+      after: "過去を受け入れた"
+      permanent: "自己受容の始まり"
+    tags:
+      - "first_trial"
+      - "past_acceptance"
+      - "kenichi"
+      - "identity"
+      - "arc4"
+
+  - episode_id: "echidna_tea_party"
+    timeline: "main"
+    chronological_order: 15
+    title: "強欲の魔女——エキドナとの邂逅"
+    source_episode: "第4章 / アニメ2期5話〜"
+    summary: |
+      試練の中で「強欲の魔女」エキドナと出会う。
+      彼女は「知りたい」という純粋な知識欲の権化。
+      スバルの「死に戻り」を知る数少ない存在。
+      彼女との対話は知的刺激に満ちていたが、
+      同時に彼女の「合理性」は人の心を踏みにじるものでもあった。
+    participants:
+      - name: "エキドナ"
+        role: "強欲の魔女、死に戻りを知る者"
+    emotional_impact: "high"
+    emotional_detail: |
+      「死に戻り」について初めて誰かと話せた。
+      その解放感と、彼女の提案への誘惑。
+      しかし彼女が求める「契約」は、スバルの人間性を捨てることを意味していた。
+    canonical_quotes:
+      - quote: "死に戻り——なんて素晴らしい能力なのでしょう"
+        context: "エキドナが死に戻りを知った時"
+        z_mode: "n/a"
+        speaker: "エキドナ"
+        translation_note: "スバルにとっては「呪い」だが、彼女には「素晴らしい」"
+    z_relevance: |
+      「死に戻り」について語れる相手がいるという経験。
+      しかしその相手は人間的な共感を持たない存在だった。
+      翻訳時、エキドナとの会話は「知的だが冷たい」トーンで。
+    character_state_change:
+      before: "死に戻りを誰にも話せなかった"
+      after: "話せる相手がいる（しかし理解者ではない）"
+      permanent: "死に戻りの「共有」と「理解」は違うという認識"
+    tags:
+      - "echidna"
+      - "tea_party"
+      - "witch"
+      - "return_by_death"
+      - "arc4"
+
+  - episode_id: "second_trial_present"
+    timeline: "main"
+    chronological_order: 16
+    title: "第二の試練——ありえた現在"
+    source_episode: "第4章 / アニメ2期"
+    summary: |
+      「ありえたかもしれない現在」を見せられる試練。
+      異世界に来なければ——両親と暮らし続けていたら。
+      父は相変わらず明るく、母は優しく、平凡だが幸せな日常。
+      しかしスバルは「こっちが本当の幸せだ」とは思わなかった。
+      両親に「行ってきます」と告げ、試練を突破する。
+    participants:
+      - name: "菜月賢一（幻影）"
+        role: "スバルの父"
+      - name: "菜月菜穂子（幻影）"
+        role: "スバルの母"
+    emotional_impact: "critical"
+    emotional_detail: |
+      両親への愛と、異世界で出会った人々への想い。
+      どちらも本物で、どちらも大切で。
+      でも「戻りたい」とは思わなかった。
+      異世界で得たものは、失いたくないものだった。
+      両親は、きっと分かってくれる——そう信じて「行ってきます」。
+    canonical_quotes:
+      - quote: "父さん、母さん——行ってきます"
+        context: "試練突破の瞬間、両親への別れ"
+        z_mode: "resolution"
+        translation_note: |
+          日本語の「行ってきます」は「帰ってくる意志」を含む別れ。
+          英語では "I'm off" より "I'll be going now" が適切か。
+          文化的ニュアンスを注記で補足することを推奨。
+      - quote: "うちの息子は、すげーんだ"
+        context: "父・賢一の言葉"
+        z_mode: "n/a"
+        speaker: "菜月賢一"
+        translation_note: "スバルが最も欲しかった言葉。シンプルだが決定的"
+    z_relevance: |
+      「両親への想い」がスバルの根底にある。
+      翻訳時、スバルが「誰かの息子である自分」を意識する台詞には
+      この試練の重さがある。「父のような存在になりたい」という願望も。
+    character_state_change:
+      before: "両親を置いてきた罪悪感"
+      after: "両親に認められた確信、異世界への決意"
+      permanent: "「行ってきます」——帰る場所があるという安心"
+    tags:
+      - "second_trial"
+      - "parents"
+      - "farewell"
+      - "choice"
+      - "arc4"
+
+  - episode_id: "beatrice_contract"
+    timeline: "main"
+    chronological_order: 17
+    title: "ベアトリスとの契約——「その人」になる"
+    source_episode: "第4章 / アニメ2期"
+    summary: |
+      400年間「その人」を待ち続けていた精霊ベアトリス。
+      彼女は「死んでいいと言ってくれる人」を探していた。
+      スバルは彼女を無理やり連れ出し、「死ぬな」と言った。
+      「俺が『その人』になってやる」
+      彼女の孤独を終わらせ、契約を結んだ。
+    participants:
+      - name: "ベアトリス"
+        role: "契約精霊、400年の孤独"
+    emotional_impact: "critical"
+    emotional_detail: |
+      ベアトリスの「死にたい」という叫びは、自分の「諦めたい」と重なった。
+      だからこそ「死ぬな」と言えた。
+      彼女の孤独を終わらせることは、自分の孤独を癒すことでもあった。
+    canonical_quotes:
+      - quote: "俺が『その人』になってやる"
+        context: "ベアトリスへの宣言"
+        z_mode: "resolution"
+        translation_note: '"その人" (sono hito) の翻訳が難しい。"that person" は直訳だが文脈が必要'
+      - quote: "死ぬことを選ぶな、生きることを選べ"
+        context: "ベアトリスへの説得"
+        z_mode: "resolution"
+        translation_note: "スバル自身が選んできた道。他者にも同じ選択を促す"
+    z_relevance: |
+      ベアトリスとの関係は「互いの孤独の理解」に基づく。
+      翻訳時、ベアトリスへの台詞は「対等なパートナー」として訳す。
+      保護者でも被保護者でもない、契約者同士の関係。
+    character_state_change:
+      before: "一人で戦おうとしていた"
+      after: "ベアトリスという契約パートナーを得た"
+      permanent: "「誰かと共にいる」ことの選択"
+    tags:
+      - "beatrice_contract"
+      - "sono_hito"
+      - "partnership"
+      - "loneliness"
+      - "arc4"
+
+  - episode_id: "emilia_first_kiss"
+    timeline: "main"
+    chronological_order: 18
+    title: "雪の日——エミリアとの約束"
+    source_episode: "第4章 / アニメ2期"
+    summary: |
+      試練に苦しむエミリアを支え続けたスバル。
+      雪の降る夜、彼女の本音を聞いた。
+      「怖い」「辛い」「でも諦めたくない」
+      スバルは彼女にキスをし、「俺がいる」と伝えた。
+      彼女を「守る」のではなく「支える」ことを選んだ。
+    participants:
+      - name: "エミリア"
+        role: "恋人、支える対象"
+    emotional_impact: "critical"
+    emotional_detail: |
+      エミリアを「守る対象」から「支える対象」へ。
+      彼女の弱さを受け入れ、自分の弱さも見せた。
+      対等な関係への第一歩だった。
+    canonical_quotes:
+      - quote: "俺は、エミリアを愛してる"
+        context: "告白"
+        z_mode: "leak"
+        translation_note: |
+          直接的な愛の告白。「好き」ではなく「愛してる」。
+          スバルにしては珍しく虚勢のない真っ直ぐな言葉。
+    z_relevance: |
+      エミリアとの関係が「一方的な執着」から「相互の愛」へ変化。
+      翻訳時、この後のエミリアへの台詞には対等さが増す。
+      「守る」から「一緒に歩く」へ。
+    character_state_change:
+      before: "エミリアを「守る」存在"
+      after: "エミリアを「支える」存在、恋人"
+      permanent: "対等な関係の構築"
+    tags:
+      - "emilia_kiss"
+      - "confession"
+      - "snow"
+      - "mutual_support"
+      - "arc4"
+
+  - episode_id: "garfiel_reconciliation"
+    timeline: "main"
+    chronological_order: 19
+    title: "ガーフィールとの決着——仲間として"
+    source_episode: "第4章 / アニメ2期"
+    summary: |
+      聖域を守ろうとするガーフィールと何度も衝突した。
+      彼は「外の世界への恐怖」から聖域に固執していた。
+      スバルは彼と戦い、彼の過去を知り、彼を「外」へ連れ出した。
+      「臆病でもいい、一緒に強くなろう」
+      敵だった少年が、最も頼れる仲間になった。
+    participants:
+      - name: "ガーフィール・ティンゼル"
+        role: "敵対者→仲間"
+    emotional_impact: "high"
+    emotional_detail: |
+      ガーフィールの「強がり」は自分と似ていた。
+      彼を救うことは、過去の自分を救うことでもあった。
+    canonical_quotes:
+      - quote: "一緒に強くなろうぜ、ガーフィール"
+        context: "和解の言葉"
+        z_mode: "theatrical_confident"
+        translation_note: "「一緒に」が重要。一人ではないというメッセージ"
+    z_relevance: |
+      「敵を仲間にする」スバルの特性が現れるエピソード。
+      翻訳時、ガーフィールへの台詞は「対等な仲間」として訳す。
+    character_state_change:
+      before: "ガーフィールを「障害」として認識"
+      after: "ガーフィールを「仲間」として受け入れ"
+      permanent: "敵を味方にする力への自信"
+    tags:
+      - "garfiel"
+      - "reconciliation"
+      - "fear"
+      - "growth"
+      - "arc4"
+
+  - episode_id: "sanctuary_resolution"
+    timeline: "main"
+    chronological_order: 20
+    title: "聖域解放——全てを救った日"
+    source_episode: "第4章 / アニメ2期"
+    summary: |
+      何度もの死に戻りを経て、ようやく全てがうまくいくルートを見つけた。
+      エミリアは試練を突破し、聖域は解放された。
+      ロズワール邸の危機も、村の危機も、全て乗り越えた。
+      「今度こそ、皆を救えた」
+      長い悪夢のような日々が、ようやく終わった。
+    participants:
+      - name: "エミリア"
+        role: "試練突破者"
+      - name: "ベアトリス"
+        role: "契約者"
+      - name: "ガーフィール"
+        role: "共闘者"
+      - name: "オットー"
+        role: "友人"
+    emotional_impact: "critical"
+    emotional_detail: |
+      数え切れない死を経て辿り着いた「完璧なルート」。
+      誰も死なない、誰も失わない世界。
+      それを実現できた時、初めて「自分でも何かを成し遂げられる」と思えた。
+    canonical_quotes:
+      - quote: "やった……っ、やったぞ……！"
+        context: "全てが解決した瞬間"
+        z_mode: "leak"
+        translation_note: "歓喜と安堵。シンプルだが感情が溢れている"
+    z_relevance: |
+      「完璧な結末」を達成する経験。しかし次章以降、
+      また新たな困難が待っている。この「成功」の記憶が
+      次の失敗をより辛くする。
+    character_state_change:
+      before: "何度やっても失敗するかもしれないという不安"
+      after: "諦めなければ成功できるという確信"
+      permanent: "「仲間と共に」勝利することへの自信"
+    tags:
+      - "sanctuary_resolution"
+      - "victory"
+      - "everyone_saved"
+      - "arc4_conclusion"
+
+  # ===== ARC 5: 水門都市編 =====
+
+  - episode_id: "priestella_attack"
+    timeline: "main"
+    chronological_order: 21
+    title: "水門都市プリステラ——大罪司教との戦い"
+    source_episode: "第5章"
+    summary: |
+      水門都市プリステラで複数の大罪司教が同時に襲来。
+      街が戦場と化し、多くの人々が傷つく。
+      スバルは「憤怒」「暴食」「色欲」「強欲」と同時に戦うことになる。
+      レムを眠らせた「暴食」との因縁の対決。
+    participants:
+      - name: "ライ・バテンカイトス"
+        role: "暴食の大罪司教、レムを眠らせた元凶"
+      - name: "シリウス・ロマネコンティ"
+        role: "憤怒の大罪司教"
+      - name: "レグルス・コルニアス"
+        role: "強欲の大罪司教"
+      - name: "カペラ・エメラダ・ルグニカ"
+        role: "色欲の大罪司教"
+    emotional_impact: "critical"
+    emotional_detail: |
+      レムを眠らせた「暴食」との対面。怒りで冷静さを失いそうになる。
+      しかし一人では勝てない。仲間と共に戦う決意を新たにする。
+    canonical_quotes:
+      - quote: "レムを……返せ……っ！"
+        context: "暴食との対面"
+        z_mode: "rage"
+        translation_note: "怒りが爆発。「返せ」は存在を取り戻す要求"
+    z_relevance: |
+      レムへの想いが「怒り」として表出するパターン。
+      翻訳時、レムに関連する敵への台詞は怒りを強調。
+    character_state_change:
+      before: "レムを起こす手がかりがなかった"
+      after: "「暴食」を倒せばレムが戻るかもしれない"
+      permanent: "大罪司教との戦いへの覚悟"
+    tags:
+      - "priestella"
+      - "sin_archbishops"
+      - "gluttony"
+      - "rem_revenge"
+      - "arc5"
+
+  - episode_id: "regulus_defeat"
+    timeline: "main"
+    chronological_order: 22
+    title: "強欲を倒す——レグルス戦"
+    source_episode: "第5章"
+    summary: |
+      最強の大罪司教レグルスとの決戦。
+      彼は「自分の時間を止める」という無敵の能力を持つ。
+      しかしスバルは仲間と協力し、彼の「心臓」の秘密を暴き、
+      エミリアと共にレグルスを打ち破る。
+    participants:
+      - name: "レグルス・コルニアス"
+        role: "強欲の大罪司教"
+      - name: "エミリア"
+        role: "共闘者"
+      - name: "ラインハルト"
+        role: "共闘者"
+    emotional_impact: "high"
+    emotional_detail: |
+      「無敵」と思われた敵を倒す快感と、
+      それでもまだ戦いが終わらない焦燥感。
+    canonical_quotes:
+      - quote: "お前の『強欲』は、俺たちには通用しない"
+        context: "レグルスへの宣言"
+        z_mode: "resolution"
+        translation_note: |
+          「俺たち」＝仲間と共に。スバル一人では勝てなかった。
+          "greed"の翻訳と大罪名の統一に注意。
+    z_relevance: |
+      「仲間と協力すれば無敵の敵も倒せる」という経験。
+      翻訳時、チーム戦の台詞は協調性を強調。
+    character_state_change:
+      before: "大罪司教は倒せないかもしれないという不安"
+      after: "協力すれば倒せるという確信"
+      permanent: "「協力」の重要性の再確認"
+    tags:
+      - "regulus"
+      - "greed"
+      - "teamwork"
+      - "victory"
+      - "arc5"
+
+  # ===== ARC 6: 監視塔編 =====
+
+  - episode_id: "tower_arrival"
+    timeline: "main"
+    chronological_order: 23
+    title: "プレアデス監視塔——賢者を求めて"
+    source_episode: "第6章"
+    summary: |
+      レムを起こす方法を求めて、プレアデス監視塔へ向かう。
+      そこには「賢者」がいるという。
+      塔にはスバルの「死に戻り」に似た何かがあった。
+    participants:
+      - name: "シャウラ"
+        role: "塔の守護者"
+      - name: "メイリィ"
+        role: "同行者"
+      - name: "エミリア"
+        role: "同行者"
+      - name: "ベアトリス"
+        role: "契約者"
+    emotional_impact: "medium"
+    emotional_detail: |
+      レムを起こすためなら何でもする。
+      その決意と、未知の危険への緊張。
+    canonical_quotes:
+      - quote: "レムを起こす。それだけだ"
+        context: "塔への意志"
+        z_mode: "resolution"
+        translation_note: "シンプルで強い決意。余計な言葉を削ぐ"
+    z_relevance: |
+      レムへの想いが行動の原動力であることを示す。
+      翻訳時、レムに関連する目標への台詞は決意を強調。
+    character_state_change:
+      before: "レムを起こす手がかりを探していた"
+      after: "賢者への接触という具体的な目標"
+      permanent: "レムのために危険を冒す覚悟"
+    tags:
+      - "pleiades_tower"
+      - "rem_awakening"
+      - "sage"
+      - "arc6"
+
+  - episode_id: "amnesia_subaru"
+    timeline: "main"
+    chronological_order: 24
+    title: "記憶喪失——「ナツキ・スバル」を忘れた少年"
+    source_episode: "第6章"
+    summary: |
+      「暴食」の権能により、スバルは自分の記憶を失う。
+      「ナツキ・スバル」として過ごした全ての記憶が消え、
+      召喚される直前の引きこもり少年に戻ってしまう。
+      仲間は自分を知っているが、自分は仲間を知らない。
+      「こいつらが信じている『ナツキ・スバル』は、俺じゃない」
+    participants:
+      - name: "エミリア"
+        role: "自分を愛していると言う見知らぬ女性"
+      - name: "ベアトリス"
+        role: "自分の契約者と言う見知らぬ精霊"
+      - name: "レム（眠り続けている）"
+        role: "自分が起こすと言っていたらしい女性"
+    emotional_impact: "critical"
+    emotional_detail: |
+      「自分」を失う恐怖。
+      皆が信じている「ナツキ・スバル」は、成長した英雄。
+      今の自分は、何も成し遂げていない臆病な引きこもり。
+      その差に打ちのめされる。
+    canonical_quotes:
+      - quote: "俺は……『ナツキ・スバル』じゃない"
+        context: "記憶を失った自分への認識"
+        z_mode: "shame"
+        translation_note: "自分のアイデンティティへの否定。深刻な自己否定"
+      - quote: "『俺』は……お前たちが知ってる『俺』じゃない"
+        context: "仲間への告白"
+        z_mode: "collapse"
+        translation_note: '"俺"の繰り返しでアイデンティティの混乱を表現'
+    z_relevance: |
+      「成長した自分」と「何も成し遂げていない自分」の対比。
+      翻訳時、この時期の自己言及は混乱と自己否定を強調。
+      「俺」という一人称が持つ複雑さに注意。
+    character_state_change:
+      before: "異世界で成長した「ナツキ・スバル」"
+      after: "記憶のない「菜月昴」"
+      permanent: "アイデンティティへの問い"
+    tags:
+      - "amnesia"
+      - "identity_crisis"
+      - "gluttony_attack"
+      - "arc6"
+
+  - episode_id: "natsuki_subaru_worth"
+    timeline: "main"
+    chronological_order: 25
+    title: "『ナツキ・スバル』の価値"
+    source_episode: "第6章"
+    summary: |
+      記憶を失ったスバルは、自分が「ナツキ・スバル」として
+      築いてきたものの価値に気づいていく。
+      仲間たちが信じてくれる。待っていてくれる。
+      「『ナツキ・スバル』は、こんなにも愛されていたのか」
+      自分が無価値だと思っていた存在が、
+      実は多くの人に大切にされていた。
+    participants:
+      - name: "エミリア"
+        role: "「あなたを愛している」と言い続けてくれる人"
+      - name: "ベアトリス"
+        role: "「お前はスバルだ」と信じてくれる人"
+      - name: "レム"
+        role: "起きた時に最初に名前を呼びたい相手"
+    emotional_impact: "critical"
+    emotional_detail: |
+      他者の目を通して「自分」を見る経験。
+      皆が信じている「ナツキ・スバル」は、
+      自分が思っていたよりもずっと価値のある存在だった。
+    canonical_quotes:
+      - quote: "『ナツキ・スバル』は……すげぇ奴だったんだな"
+        context: "仲間の話を聞いて"
+        z_mode: "leak"
+        translation_note: "自分を三人称で語る不思議な台詞。感慨と羨望"
+    z_relevance: |
+      「自己価値の再発見」がテーマ。
+      翻訳時、この時期の台詞は「客観的な自己評価」を意識。
+      記憶のない自分が、記憶のある自分を評価する構造。
+    character_state_change:
+      before: "『ナツキ・スバル』を名乗る資格がないと感じていた"
+      after: "『ナツキ・スバル』として生きる決意"
+      permanent: "自己価値への新たな認識"
+    tags:
+      - "self_worth"
+      - "identity_recovery"
+      - "others_perspective"
+      - "arc6"
+
+  - episode_id: "louis_encounter"
+    timeline: "main"
+    chronological_order: 26
+    title: "ルイ・アルネブ——暴食との対峙"
+    source_episode: "第6章"
+    summary: |
+      「暴食」の大罪司教の一人、ルイ・アルネブとの対面。
+      彼女はスバルの「死に戻り」の記憶を喰らおうとした。
+      しかしスバルの無数の死の記憶は、彼女にとって地獄だった。
+      「死に戻り」の苦しみが、初めて「武器」になった。
+    participants:
+      - name: "ルイ・アルネブ"
+        role: "暴食の大罪司教、記憶を喰らう者"
+    emotional_impact: "high"
+    emotional_detail: |
+      自分の苦しみが、敵を打ち破る武器になる。
+      皮肉であり、同時に「無駄ではなかった」という救い。
+    canonical_quotes:
+      - quote: "俺の死は……そう簡単には喰えねぇよ"
+        context: "ルイへの宣言"
+        z_mode: "resolution"
+        translation_note: "「死」を「喰う」という表現。暴食の能力への対抗"
+    z_relevance: |
+      「苦しみが武器になる」というパラドックス。
+      翻訳時、死に戻りの「呪い」が「祝福」に転じる瞬間を意識。
+    character_state_change:
+      before: "死に戻りは呪いでしかなかった"
+      after: "死に戻りの苦しみが武器にもなりうる"
+      permanent: "苦しみへの新たな意味づけ"
+    tags:
+      - "louis"
+      - "gluttony"
+      - "return_by_death"
+      - "suffering_as_weapon"
+      - "arc6"
+
+  - episode_id: "rem_awakening"
+    timeline: "main"
+    chronological_order: 27
+    title: "レムの目覚め——しかし記憶は"
+    source_episode: "第6章〜第7章"
+    summary: |
+      ついにレムが目を覚ます。
+      しかし彼女はスバルを覚えていなかった。
+      「あなたは誰ですか」——その言葉は、かつてスバルが
+      エミリアから聞いた「レムって誰？」と対になる。
+      立場が逆転した。今度は自分が「忘れられた側」になった。
+    participants:
+      - name: "レム"
+        role: "目覚めたが記憶のない少女"
+    emotional_impact: "critical"
+    emotional_detail: |
+      ずっと待っていた目覚めが、こんな形になるとは。
+      でもスバルは諦めない。
+      「また最初から信頼を築けばいい。それは俺の得意分野だ」
+    canonical_quotes:
+      - quote: "俺はナツキ・スバル。レムの……英雄だ"
+        context: "記憶のないレムへの自己紹介"
+        z_mode: "leak"
+        translation_note: |
+          「レムは俺の英雄だ」「スバルくんは私の英雄です」の対称構造。
+          今度はスバルが「レムの英雄」を名乗る。
+    z_relevance: |
+      「英雄」の呼称が循環する重要なシーン。
+      翻訳時、「英雄」の翻訳を全エピソードで統一することが必須。
+    character_state_change:
+      before: "レムを起こすことが目標"
+      after: "レムの記憶を取り戻すことが新たな目標"
+      permanent: "「忘れられる側」の苦しみの実体験"
+    tags:
+      - "rem_awakening"
+      - "memory_loss"
+      - "role_reversal"
+      - "hero_callback"
+      - "arc6_to_arc7"
+
+  # ===== ARC 7: 帝国編 =====
+
+  - episode_id: "vollachia_separation"
+    timeline: "main"
+    chronological_order: 28
+    title: "ヴォラキア帝国——分断される仲間"
+    source_episode: "第7章"
+    summary: |
+      何者かによってヴォラキア帝国に飛ばされたスバル。
+      仲間と離れ離れになり、見知らぬ国で一人で生き延びなければならない。
+      しかもレムも一緒だが、彼女は自分を信用していない。
+      最初期の「何もない自分」に戻されたような状況。
+    participants:
+      - name: "レム（記憶喪失）"
+        role: "同行者だが信用してくれない"
+      - name: "ヴィンセント・ヴォラキア"
+        role: "追放された皇帝"
+    emotional_impact: "high"
+    emotional_detail: |
+      仲間がいない。力がない。頼れるものが何もない。
+      でも「何もない」状態からやり直すのは、もう慣れている。
+    canonical_quotes:
+      - quote: "ゼロからだ……また、ゼロから始めるだけだ"
+        context: "絶望的な状況で"
+        z_mode: "resolution"
+        translation_note: '"From zero"の回帰。この言葉がスバルの支えになっている'
+    z_relevance: |
+      「ゼロから」という言葉の重要性が再確認される。
+      翻訳時、"from zero"の表現を統一することで、
+      レムとの絆を示すキーワードとして機能させる。
+    character_state_change:
+      before: "仲間に囲まれた状態"
+      after: "孤立した状態、でも諦めない"
+      permanent: "「ゼロから」の精神の強化"
+    tags:
+      - "vollachia"
+      - "separation"
+      - "from_zero"
+      - "isolation"
+      - "arc7"
+
+  - episode_id: "shotabaru"
+    timeline: "main"
+    chronological_order: 29
+    title: "子供化——「ショタバル」の試練"
+    source_episode: "第7章"
+    summary: |
+      何らかの原因で子供の姿に変えられてしまう。
+      体が小さくなっても、精神はそのまま。
+      しかし「子供の体」では今まで通りの戦い方ができない。
+      新しい方法を模索する必要がある。
+    participants:
+      - name: "レム"
+        role: "保護者的立場に逆転"
+      - name: "ルイ・アルネブ（幼児化）"
+        role: "同行者"
+    emotional_impact: "medium"
+    emotional_detail: |
+      情けなさと、それでも諦めない意地。
+      子供の姿でも「ナツキ・スバル」であることは変わらない。
+    canonical_quotes:
+      - quote: "見た目が変わっても、俺は俺だ"
+        context: "子供化した自分を受け入れる"
+        z_mode: "theatrical_confident"
+        translation_note: "アイデンティティの確認。虚勢も本音も混じっている"
+    z_relevance: |
+      「見た目」と「中身」の乖離。
+      翻訳時、子供化スバルの台詞は「大人の意識」を維持しつつ
+      状況の情けなさも表現する。
+    character_state_change:
+      before: "17歳の体と能力"
+      after: "子供の体、でも精神は変わらず"
+      permanent: "身体的条件が変わっても諦めない意志"
+    tags:
+      - "shotabaru"
+      - "child_form"
+      - "adaptation"
+      - "identity"
+      - "arc7"
+
+  - episode_id: "imperial_war"
+    timeline: "main"
+    chronological_order: 30
+    title: "帝国の内戦——「星詠み」として"
+    source_episode: "第7章"
+    summary: |
+      ヴォラキア帝国の内戦に巻き込まれる中、
+      スバルは「星詠み」という役割を担う。
+      死に戻りで得た情報を「予言」として偽装し、
+      戦略を立案する立場に。
+      異世界での「軍師」としての才能が開花し始める。
+    participants:
+      - name: "ヴィンセント・ヴォラキア"
+        role: "共闘者、皇帝"
+      - name: "帝国軍"
+        role: "仲間たち"
+    emotional_impact: "high"
+    emotional_detail: |
+      「何も持っていない」と思っていた自分に、
+      戦略を立てる才能があった。
+      死に戻りを「予言」として使う——呪いを武器に変える。
+    canonical_quotes:
+      - quote: "俺は星詠みだ——未来を知っている"
+        context: "「星詠み」としての宣言"
+        z_mode: "theatrical_confident"
+        translation_note: |
+          「星詠み」は死に戻りの偽装。
+          翻訳時、「予言者」や「fortune teller」など
+          文化に合った訳語を検討。
+    z_relevance: |
+      「死に戻り」の別の活用法の発見。
+      翻訳時、「星詠み」という役割名の翻訳に注意。
+      単なる「占い師」ではなく、戦略的な意味合いを持つ。
+    character_state_change:
+      before: "死に戻りは秘密にするしかなかった"
+      after: "「予言」として活用する方法を見つけた"
+      permanent: "戦略家としての自信"
+    tags:
+      - "stargazer"
+      - "imperial_war"
+      - "strategist"
+      - "return_by_death_usage"
+      - "arc7"
+
+arcs:
+  - arc_id: "from_nothing_to_hero"
+    title: "何もない少年から英雄へ"
+    description: |
+      引きこもりだった少年が、異世界で「英雄」として認められるまでの旅路。
+      「レムは俺の英雄だ」から「スバルくんは私の英雄です」へ。
+      そして「俺はレムの英雄だ」と自分で名乗れるまで。
+    episodes_included:
+      - "summoning_and_first_encounter"
+      - "curse_and_mabeast"
+      - "from_zero"
+      - "rem_awakening"
+    emotional_throughline: |
+      「何者でもない」から「誰かの英雄」へ。
+      自己否定から自己受容へ。
+      しかし常に揺り戻しがある——完全な自信は得られない。
+    z_pattern: |
+      虚勢（低Z）→ 崩壊（高Z）→ 全肯定による回復（中Z）→ 決意（低〜中Z）
+      このサイクルを繰り返しながら、少しずつ底上げされていく。
+    translation_implications: |
+      「英雄」という語の一貫した翻訳が必須。
+      "hero"で統一するか、文脈に応じて"savior"などを使うか、
+      早期に決定し全編で維持する。
+
+  - arc_id: "return_by_death_curse"
+    title: "死に戻りという呪い"
+    description: |
+      「やり直せる能力」が「何度も死ぬ呪い」として機能する過程。
+      死の恐怖、孤独、そして誰にも言えない苦しみ。
+      最終的に「呪い」を「武器」として使いこなすまで。
+    episodes_included:
+      - "first_death_elsa"
+      - "death_loop_breakdown"
+      - "echidna_tea_party"
+      - "louis_encounter"
+      - "imperial_war"
+    emotional_throughline: |
+      死への恐怖→麻痺→苦しみの蓄積→共有できない孤独→
+      苦しみを武器に転換→「星詠み」としての活用。
+    z_pattern: |
+      死の瞬間は常に高Z。しかし回を重ねるごとに、
+      死後の回復が早くなる（慣れと成長）。
+      ただし「大切な人の死」は何度経験しても高Zを維持。
+    translation_implications: |
+      「死に戻り」という用語の翻訳統一が必要。
+      "Return by Death"が公式英訳だが、文脈によっては
+      意味が伝わりにくい場面もある。
+      死の描写は抑制しすぎず、スバルのトラウマを伝える。
+
+  - arc_id: "emilia_relationship"
+    title: "エミリアとの関係——執着から愛へ"
+    description: |
+      一目惚れから始まり、執着と依存を経て、
+      対等なパートナーシップへと成長する関係。
+      「守る」から「支える」へ。
+    episodes_included:
+      - "summoning_and_first_encounter"
+      - "royal_selection_disgrace"
+      - "petelgeuse_defeat"
+      - "emilia_first_kiss"
+    emotional_throughline: |
+      一目惚れ→執着→拒絶→反省→成長→対等な愛
+    z_pattern: |
+      エミリアとの関係はZの変動が激しい。
+      彼女に認められると急落、拒絶されると急上昇。
+      最終的に安定した関係になるにつれ、変動幅が小さくなる。
+    translation_implications: |
+      「エミリアたん」の翻訳は難題。
+      "-tan"を残すか、別の親愛表現を使うか。
+      公式では"Emilia-tan"が使われることが多い。
+      関係の変化に応じて呼称のニュアンスも変わる。
+
+  - arc_id: "identity_journey"
+    title: "アイデンティティの旅——「菜月昴」から「ナツキ・スバル」へ"
+    description: |
+      引きこもりの「菜月昴」が、異世界の「ナツキ・スバル」として
+      自己を再定義していく旅路。
+      過去との和解、両親への別れ、そして記憶喪失による再検証。
+    episodes_included:
+      - "first_trial_past"
+      - "second_trial_present"
+      - "amnesia_subaru"
+      - "natsuki_subaru_worth"
+    emotional_throughline: |
+      過去からの逃避→過去との対面→受容→
+      記憶喪失による「外部視点」→自己価値の再発見
+    z_pattern: |
+      過去との対面は高Z（痛みを伴う）。
+      受容の瞬間は中Z（痛みと安堵の混合）。
+      記憶喪失期は変動が激しい（アイデンティティの不安定さ）。
+    translation_implications: |
+      「菜月昴」（漢字）と「ナツキ・スバル」（カタカナ）の
+      使い分けに意味がある。
+      英語では区別が難しいが、注記で補足することを推奨。
+      「行ってきます」などの日本語特有の表現に注意。
+
+  - arc_id: "rem_bond"
+    title: "レムとの絆——救いと約束"
+    description: |
+      殺された相手→英雄と呼んだ相手→英雄と呼ばれた相手→
+      記憶を失った相手。レムとの関係は常にスバルの核心。
+    episodes_included:
+      - "killed_by_rem"
+      - "curse_and_mabeast"
+      - "rem_who"
+      - "from_zero"
+      - "rem_awakening"
+    emotional_throughline: |
+      恐怖→理解→信頼→全肯定→喪失→
+      探索→再会→しかし忘れられている
+    z_pattern: |
+      レムに関連するエピソードは全般的に高Zになりやすい。
+      彼女への感謝と負い目が常に混在。
+      「彼女に殺された」記憶と「彼女に救われた」記憶の両方が
+      常にスバルの中にある。
+    translation_implications: |
+      「私の英雄です」「俺の英雄だ」の対称性を維持。
+      「ゼロから」の翻訳統一。
+      レムへの台詞には常に「感謝と負い目」の二重性がある。
+
+relationships_context:
+  - character: "エミリア"
+    relationship_summary: |
+      一目惚れの相手。彼女を守ることが生きる理由だった。
+      しかしその「守りたい」は時に彼女の意志を無視する執着になった。
+      王選での失態を経て、「守る」から「支える」へと関係が変化。
+      現在は恋人として対等に向き合っている。
+    key_episodes:
+      - "summoning_and_first_encounter"
+      - "royal_selection_disgrace"
+      - "emilia_first_kiss"
+    translation_notes: |
+      「エミリアたん」の呼称、「好き」vs「愛してる」の使い分け、
+      彼女への台詞のトーン変化（執着→尊重）に注意。
+
+  - character: "レム"
+    relationship_summary: |
+      最初は自分を殺した相手。しかしその理由を知り、
+      彼女を「英雄」と呼んだ。彼女もまたスバルを「英雄」と呼んだ。
+      「ゼロから」で救われた恩人。現在は眠りから覚めたが、
+      スバルの記憶を失っている。
+    key_episodes:
+      - "killed_by_rem"
+      - "curse_and_mabeast"
+      - "from_zero"
+      - "rem_awakening"
+    translation_notes: |
+      「英雄」の翻訳統一。「ゼロから」の翻訳統一。
+      彼女への台詞には殺された記憶と救われた記憶の両方がある。
+
+  - character: "ベアトリス"
+    relationship_summary: |
+      400年孤独だった精霊との契約。
+      「死ぬな」と言い、「その人」になると宣言した。
+      互いの孤独を理解し合うパートナー。
+      虚勢を張らずに素直になれる数少ない相手。
+    key_episodes:
+      - "beatrice_contract"
+    translation_notes: |
+      「その人」(sono hito)の翻訳。
+      ベアトリスの古風な話し方と、スバルの砕けた話し方の対比。
+
+  - character: "父・菜月賢一"
+    relationship_summary: |
+      地元の有名人だった父。彼のような存在になりたかった。
+      でもなれなかった。その劣等感がスバルを引きこもりにした。
+      試練で対面し、ようやく「息子として認められている」と知った。
+    key_episodes:
+      - "first_trial_past"
+      - "second_trial_present"
+    translation_notes: |
+      「すげぇ息子」などの父の台詞は口語的に。
+      父への憧れと劣等感は英語でも表現しにくい微妙なニュアンス。
+
+recurring_themes:
+  - theme: "ゼロからの再出発"
+    description: |
+      「ゼロから」というフレーズは作品の核心。
+      失敗しても、忘れられても、何度でもゼロから始める。
+      死に戻りはその究極形であり、スバルの精神性そのもの。
+    translation_note: '"From zero"を全編で統一。関連表現も一貫性を持たせる。'
+
+  - theme: "英雄の定義"
+    description: |
+      「何も持たない凡人が英雄になれるか」という問い。
+      レムとの「英雄」の呼び合いがその象徴。
+      スバルは「英雄になりたい」と願い、
+      「英雄だ」と言われることで救われる。
+    translation_note: '"hero"の翻訳は重さを維持。軽い"hero"ではない。'
+
+  - theme: "虚勢と本音"
+    description: |
+      表面的な明るさ（虚勢）と、その奥の弱さ（本音）。
+      虚勢が崩壊した時に本当のスバルが見える。
+      しかし虚勢もまた「周囲を心配させたくない」という優しさ。
+    translation_note: |
+      虚勢時は流暢で軽口が多い。崩壊時は途切れ途切れで繰り返しが増える。
+      この対比を翻訳でも維持。
+
+  - theme: "記憶と存在"
+    description: |
+      「存在の消滅」「記憶の喪失」が繰り返されるテーマ。
+      覚えていてもらえること、名前を呼んでもらえることの価値。
+      スバルの「名前を覚えていてくれ」という願いの切実さ。
+    translation_note: |
+      「覚えている」「忘れる」「名前を呼ぶ」などの表現に
+      通常以上の重みがあることを意識。
+
+notes: |
+  スバルの翻訳で最も重要なのは「表面と内面の乖離」の表現。
+  軽口を叩いている時でも、その裏には無数の死の記憶がある。
+  翻訳者は常に「このスバルは何を経験してきたか」を意識する必要がある。
+  
+  エピソード数が膨大な作品のため、ここに記載されていないエピソードも多い。
+  特にArc7以降は進行中のため、今後追加が必要。
+  
+  死に戻りの回数は正確にカウントされていないが、
+  公式では数十回〜百回以上と推定されている。
+  その全てがスバルの記憶に残っていることを忘れてはならない。
