@@ -60,14 +60,14 @@ from openai import OpenAI
 
 load_dotenv()
 
-DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5-mini")
+DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5.2")
 DEFAULT_REASONING_EFFORT = os.getenv("OPENAI_REASONING_EFFORT", "medium")
 
 # Models that support reasoning parameter
-REASONING_MODELS = {"gpt-5", "gpt-5-mini", "gpt-5-nano", "o3", "o4-mini", "o3-mini"}
+REASONING_MODELS = {"gpt-5.2"}
 
 # Models that require Chat Completions API (legacy fallback)
-LEGACY_MODELS = {"gpt-4.1", "gpt-4.1-mini", "gpt-4.1-nano", "gpt-4o", "gpt-4o-mini"}
+LEGACY_MODELS = {"gpt-5.2"}
 
 
 # -----------------------------
