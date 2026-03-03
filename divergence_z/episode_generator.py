@@ -280,6 +280,16 @@ After listing episodes, identify 2-5 cross-episode arcs that span
 multiple episodes. These help translators understand how dialogue
 in later scenes carries weight from earlier events.
 
+Each arc MUST use these exact key names:
+  - arc_id: "unique_id"
+  - title: "Arc title"
+  - episodes: ["ep_id_1", "ep_id_2"]   # KEY MUST BE "episodes", NOT "episodes_included"
+  - theme: "description"
+
+Also ensure meta section uses "version" (not "schema_version"):
+  meta:
+    version: "1.0"   # NOT schema_version
+
 Output ONLY valid YAML. No explanation text before or after.
 
 ## YAML QUOTING RULES (CRITICAL)
@@ -721,13 +731,13 @@ def validate_episode_yaml(yaml_content: str) -> tuple:
     if not isinstance(data, dict):
         return False, ["Root must be a dict"]
     
-    # Check meta
+    # Check meta (accept both "version" and "schema_version")
     if "meta" not in data:
         issues.append("Missing 'meta' section")
     else:
         meta = data["meta"]
-        if "version" not in meta:
-            issues.append("Missing meta.version")
+        if "version" not in meta and "schema_version" not in meta:
+            issues.append("Missing meta.version (or meta.schema_version)")
         if "character_id" not in meta:
             issues.append("Missing meta.character_id")
     
@@ -776,7 +786,7 @@ def validate_episode_yaml(yaml_content: str) -> tuple:
     if not has_episodes:
         issues.append("No episodes found (check timelines[].episodes)")
     
-    # Check arcs
+    # Check arcs (accept both "episodes" and "episodes_included")
     if "arcs" in data and data["arcs"]:
         for arc in data["arcs"]:
             if not isinstance(arc, dict):
@@ -784,8 +794,8 @@ def validate_episode_yaml(yaml_content: str) -> tuple:
                 continue
             if "arc_id" not in arc:
                 issues.append("Arc missing arc_id")
-            if "episodes" not in arc:
-                issues.append(f"Arc '{arc.get('arc_id', 'unknown')}' missing episodes list")
+            if "episodes" not in arc and "episodes_included" not in arc:
+                issues.append(f"Arc '{arc.get('arc_id', 'unknown')}' missing episodes list (expected 'episodes' or 'episodes_included')")
     
     # Summary
     if episode_count > 0:
