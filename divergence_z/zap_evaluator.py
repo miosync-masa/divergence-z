@@ -60,14 +60,14 @@ from openai import OpenAI
 
 load_dotenv()
 
-DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5.2")
+DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5-mini")
 DEFAULT_REASONING_EFFORT = os.getenv("OPENAI_REASONING_EFFORT", "medium")
 
 # Models that support reasoning parameter
-REASONING_MODELS = {"gpt-5.2"}
+REASONING_MODELS = {"gpt-5", "gpt-5-mini", "gpt-5-nano", "o3", "o4-mini", "o3-mini"}
 
 # Models that require Chat Completions API (legacy fallback)
-LEGACY_MODELS = {"gpt-5.2"}
+LEGACY_MODELS = {"gpt-4.1", "gpt-4.1-mini", "gpt-4.1-nano", "gpt-4o", "gpt-4o-mini"}
 
 
 # -----------------------------
@@ -340,7 +340,7 @@ def evaluate_zap_responses_api(
     max_output_tokens: int = 10000,
 ) -> Dict[str, Any]:
     """
-    Evaluate using Responses API (for reasoning models: gpt-5.2, gpt-5-mini, etc.)
+    Evaluate using Responses API (for reasoning models: gpt-5, gpt-5-mini, etc.)
     
     v4.0: Uses developer role, reasoning.effort, text.format for structured output
     """
@@ -405,7 +405,13 @@ def evaluate_zap_chat_completions(
 ) -> Dict[str, Any]:
     """
     Evaluate using Chat Completions API (legacy fallback for gpt-4.1 etc.)
+    Also handles reasoning models that don't support Responses API in older SDK versions.
     """
+    # Reasoning models only support temperature=1 (default)
+    extra_kwargs = {}
+    if not _is_reasoning_model(model):
+        extra_kwargs["temperature"] = 0.2
+
     max_retries = 5
     for attempt in range(max_retries):
         try:
@@ -423,8 +429,8 @@ def evaluate_zap_chat_completions(
                         "schema": ZAP_RESULT_SCHEMA,
                     }
                 },
-                temperature=0.2,
                 max_completion_tokens=1200,
+                **extra_kwargs,
             )
             break  # Success
 
@@ -481,12 +487,21 @@ def evaluate_zap(
 
     if _is_reasoning_model(model):
         print(f"   🧠 Using Responses API ({model}, effort={reasoning_effort})")
-        return evaluate_zap_responses_api(
-            client=client,
-            user_prompt=user_prompt,
-            model=model,
-            reasoning_effort=reasoning_effort,
-        )
+        try:
+            return evaluate_zap_responses_api(
+                client=client,
+                user_prompt=user_prompt,
+                model=model,
+                reasoning_effort=reasoning_effort,
+            )
+        except AttributeError:
+            # SDK doesn't support client.responses.create() yet
+            print(f"   ⚠️  Responses API not available in this SDK version, falling back to Chat Completions")
+            return evaluate_zap_chat_completions(
+                client=client,
+                user_prompt=user_prompt,
+                model=model,
+            )
     else:
         print(f"   📝 Using Chat Completions API ({model})")
         return evaluate_zap_chat_completions(
