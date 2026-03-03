@@ -337,10 +337,10 @@ def evaluate_zap_responses_api(
     user_prompt: str,
     model: str,
     reasoning_effort: str = "medium",
-    max_output_tokens: int = 4000,
+    max_output_tokens: int = 10000,
 ) -> Dict[str, Any]:
     """
-    Evaluate using Responses API (for reasoning models: gpt-5, gpt-5-mini, etc.)
+    Evaluate using Responses API (for reasoning models: gpt-5.2, gpt-5-mini, etc.)
     
     v4.0: Uses developer role, reasoning.effort, text.format for structured output
     """
