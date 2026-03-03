@@ -70,6 +70,7 @@ try:
         DEFAULT_MODEL,
         extract_v3_features,
         format_trigger_info,
+        load_episode_data,
     )
 except ImportError:
     import sys
@@ -80,6 +81,7 @@ except ImportError:
         DEFAULT_MODEL,
         extract_v3_features,
         format_trigger_info,
+        load_episode_data,
     )
 
 load_dotenv()
@@ -302,6 +304,7 @@ def load_dialogue_config(config_path: str) -> Dict[str, Any]:
     """
     対話用YAML設定ファイルを読み込む。
     各ペルソナファイルも読み込んでマージする。
+    Episode Memoryファイルも読み込む（v3.2.1）。
     """
     config_path = Path(config_path)
     
@@ -327,7 +330,50 @@ def load_dialogue_config(config_path: str) -> Dict[str, Any]:
     config['personas_yaml'] = personas
     config['persona_data'] = persona_data
     
+    # --- Episode Memory loading (v3.2.1) ---
+    # Support both shared episode_file and per-persona episode_files
+    episode_data_map = {}
+    
+    # Pattern 1: Shared episode_file (all personas share one episode file)
+    if 'episode_file' in config and config['episode_file']:
+        shared_ep = _resolve_episode_path(config_path, config['episode_file'])
+        if shared_ep:
+            for role in personas_raw.keys():
+                episode_data_map[role] = shared_ep
+    
+    # Pattern 2: Per-persona episode_files (each persona has own episodes)
+    episode_files_raw = config.get('episode_files', {})
+    for role, ep_file in episode_files_raw.items():
+        if ep_file:
+            ep_data = _resolve_episode_path(config_path, ep_file)
+            if ep_data:
+                episode_data_map[role] = ep_data
+    
+    config['episode_data_map'] = episode_data_map
+    
     return config
+
+
+def _resolve_episode_path(config_path: Path, episode_file: str) -> Optional[Dict[str, Any]]:
+    """
+    Episode YAMLファイルのパスを解決して読み込む。
+    複数のパス候補を試行する。
+    """
+    candidates = [
+        config_path.parent / episode_file,
+        config_path.parent / "episodes" / episode_file,
+        Path(episode_file),
+    ]
+    
+    for ep_path in candidates:
+        if ep_path.exists():
+            ep_data = load_episode_data(str(ep_path))
+            total = ep_data.get('meta', {}).get('total_episodes', '?')
+            print(f"📖 Episode loaded: {ep_path.name} ({total} episodes)")
+            return ep_data
+    
+    print(f"⚠️ Episode file not found: {episode_file} (continuing without episode context)")
+    return None
 
 
 def extract_original_speech_patterns(persona_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -538,7 +584,11 @@ def z_axis_dialogue_translate(
     verbose: bool = True,
 ) -> Dict[str, Any]:
     """
-    対話シーン全体を翻訳する（v3.2）。
+    対話シーン全体を翻訳する（v3.2.1 — Episode Memory対応）。
+    
+    v3.2.1 changes:
+    - Episode Memory integration per persona
+    - episode_data passed to z_axis_translate() for STEP1/STEP3 enrichment
     
     v3.2 changes:
     - LLM-based trigger detection (no more hardcoded keywords)
@@ -556,6 +606,9 @@ def z_axis_dialogue_translate(
     dialogue = config.get('dialogue', [])
     scene = config.get('scene', '')
     relationships = config.get('relationships', {})
+    
+    # v3.2.1: Episode Memory map (role -> episode_data)
+    episode_data_map = config.get('episode_data_map', {})
     
     # v3.1: 言語設定（CLI > YAML > default）
     source_lang = source_lang or config.get('source_lang', 'ja')
@@ -576,6 +629,10 @@ def z_axis_dialogue_translate(
         print(f"\n🌐 Translation: {source_code} → {target_code}")
         print(f"   Scene: {scene}")
         print(f"   Personas: {speaker_names}")
+        if episode_data_map:
+            for role, ep_data in episode_data_map.items():
+                ep_count = len(ep_data.get('episodes', []))
+                print(f"   📖 Episodes [{role}]: {ep_count} episodes loaded")
     
     results = []
     accumulated_z = {role: 0.0 for role in personas_yaml.keys()}
@@ -662,7 +719,10 @@ def z_axis_dialogue_translate(
         if compensation_context:
             context_block = context_block + "\n\n" + compensation_context
         
-        # z_axis_translate を呼び出し（v3.0: arc_position追加）
+        # v3.2.1: この話者のepisode_dataを取得
+        speaker_episode_data = episode_data_map.get(speaker_role, {})
+        
+        # z_axis_translate を呼び出し（v3.0: arc_position追加, v3.2.1: episode_data追加）
         translate_result = z_axis_translate(
             client=client,
             model=model,
@@ -675,6 +735,7 @@ def z_axis_dialogue_translate(
             z_axis_intensity=current_z,
             dry_run=dry_run,
             arc_position=i + 1,
+            episode_data=speaker_episode_data,
         )
         
         # v3.0: z情報を抽出
@@ -713,7 +774,7 @@ def z_axis_dialogue_translate(
         results.append(turn_result)
     
     return {
-        'version': '3.2',
+        'version': '3.2.1',
         'source_lang': source_lang,
         'target_lang': target_lang,
         'scene': scene,
@@ -730,7 +791,7 @@ def print_dialogue_summary_v3(result: Dict[str, Any]) -> None:
     target_code = get_lang_display(target_lang)
     
     print("\n" + "=" * 70)
-    print(f"📖 DIALOGUE TRANSLATION SUMMARY v{result.get('version', '3.2')}")
+    print(f"📖 DIALOGUE TRANSLATION SUMMARY v{result.get('version', '3.2.1')}")
     print("=" * 70)
     print(f"Scene: {result.get('scene', 'N/A')}")
     print(f"Translation: {source_code} → {target_code}")
@@ -770,12 +831,18 @@ def list_languages():
 
 def main() -> None:
     ap = argparse.ArgumentParser(
-        description="Z-Axis Dialogue Translation System v3.2 (LLM-driven triggers)",
+        description="Z-Axis Dialogue Translation System v3.2.1 (Episode Memory + LLM triggers)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
   # Japanese → English (default)
   python z_axis_dialogue.py --config requests/subaru_rem_dialogue.yaml
+
+  # With episode memory (in YAML config)
+  # episode_file: "episodes/レム_Episode.yaml"    # shared
+  # episode_files:                                 # per-persona
+  #   A: "episodes/スバル_Episode.yaml"
+  #   B: "episodes/レム_Episode.yaml"
 
   # English → Japanese
   python z_axis_dialogue.py --config requests/dialogue_en.yaml --target-lang ja
