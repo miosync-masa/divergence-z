@@ -60,14 +60,14 @@ from openai import OpenAI
 
 load_dotenv()
 
-DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5.2")
+DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5-mini")
 DEFAULT_REASONING_EFFORT = os.getenv("OPENAI_REASONING_EFFORT", "medium")
 
-# Models that support reasoning parameter
-REASONING_MODELS = {"gpt-5.2"}
+# Models that DON'T support reasoning (legacy, Chat Completions only)
+LEGACY_MODELS = {"gpt-4.1", "gpt-4.1-mini", "gpt-4.1-nano", "gpt-4o", "gpt-4o-mini"}
 
-# Models that require Chat Completions API (legacy fallback)
-LEGACY_MODELS = {"gpt-5.2"}
+# Known reasoning model prefixes (for logging, not for gating)
+REASONING_PREFIXES = ("gpt-5", "o3", "o4")
 
 
 # -----------------------------
@@ -326,10 +326,23 @@ If episode memory is provided, use it to assess whether the translation reflects
 # -----------------------------
 
 def _is_reasoning_model(model: str) -> bool:
-    """Check if model supports Responses API with reasoning."""
-    base = model.split("-")[0:2]  # handle dated snapshots like gpt-5-mini-2025xxxx
-    base_name = "-".join(base)
-    return base_name in REASONING_MODELS or model in REASONING_MODELS
+    """
+    Check if model supports reasoning.
+    Logic: if it's NOT in the legacy list, it's a reasoning model.
+    This future-proofs against new model names (gpt-5.2, gpt-5-turbo, etc.)
+    """
+    # Strip date suffix: "gpt-5-mini-2025xxxx" → "gpt-5-mini"
+    base = model
+    parts = model.split("-")
+    if len(parts) >= 3 and parts[-1].isdigit() and len(parts[-1]) >= 8:
+        base = "-".join(parts[:-1])
+    
+    # If it's explicitly legacy → not reasoning
+    if base in LEGACY_MODELS or model in LEGACY_MODELS:
+        return False
+    
+    # Everything else is treated as reasoning-capable
+    return True
 
 
 def evaluate_zap_responses_api(
