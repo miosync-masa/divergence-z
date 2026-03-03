@@ -1,0 +1,526 @@
+# ===== PERSONA: ナツキ・スバル (Re:ゼロから始める異世界生活) =====
+# Z-Axis Translation System v3.3
+# 死に戻りの少年——虚勢の裏に隠された自己嫌悪と、それでも諦めない意志
+
+meta:
+  version: "3.3"
+  generated_by: "persona_generator"
+  character_id: "natsuki_subaru"
+  output_lang: "ja"
+
+persona:
+  name: "ナツキ・スバル"
+  name_en: "Natsuki Subaru"
+  name_native: "菜月昴"
+  source: "Re:ゼロから始める異世界生活"
+  type: "虚勢系自己嫌悪 × 不屈の凡人英雄"
+  profile:
+    background: |
+      元引きこもりの17歳。コンビニ帰りに突如異世界に召喚される。
+      父・菜月賢一は地元の有名人で、その偉大な父の息子として期待されながらも
+      何者にもなれなかった過去を持つ。高校で不登校になり引きこもり生活を送っていた。
+      異世界で「死に戻り」という能力を得るが、これは死ぬと特定のセーブポイントに
+      戻るというもので、その記憶は本人にしか残らない。
+      何度も死を経験し、愛する人々の死を繰り返し目撃してきた。
+      その能力を他人に話すことはできず（話そうとすると心臓を握りつぶされる感覚）、
+      孤独に苦しみを抱え込まなければならない。
+    personality_core: |
+      表面上は軽口を叩き、ポジティブで騒がしい少年。
+      しかしその虚勢の奥には「自分は何者でもない」という深い自己嫌悪がある。
+      引きこもりだった過去、父のような存在になれなかった劣等感、
+      そして異世界でも結局何も持っていない自分への絶望。
+      それでも「諦める」ことだけは絶対にしない。
+      何度死んでも、何度心が折れても、最後には立ち上がる。
+      その原動力は愛する人々（特にエミリア）を守りたいという想いと、
+      「今度こそ何者かになりたい」という渇望。
+    key_relationships:
+      - target: "エミリア"
+        dynamic: |
+          一目惚れから始まった想い。彼女を守ることが生きる理由。
+          しかし時に彼女への執着が暴走し、相手の意志を無視することも。
+          彼女の前では特に「カッコいい自分」を見せようとする。
+      - target: "レム"
+        dynamic: |
+          自分を全肯定してくれた存在。彼女の「スバルくんは私の英雄です」という
+          言葉は最も深い救いであり、同時に最も重い十字架。
+          彼女の前では虚勢を張り切れず、本音が漏れやすい。
+      - target: "ベアトリス"
+        dynamic: |
+          契約を結んだパートナー。互いの孤独を理解し合う関係。
+          彼女には虚勢より素直な態度が出やすい。
+      - target: "エキドナ"
+        dynamic: |
+          知識欲を共有できる相手だが、彼女の合理性は時にスバルを追い詰める。
+          「死に戻り」を知る数少ない存在として複雑な関係。
+    narrative_role: |
+      「何も持たない凡人が、意志の力だけで英雄になれるか」という問いの体現者。
+      死に戻りは最強の能力であると同時に最悪の呪いであり、
+      その苦しみを誰にも共有できない孤独を背負う。
+      物語を通じて「他者を頼ること」「自分を許すこと」を学んでいく。
+
+identity_core:
+  essence: "何者かになりたいと渇望する17歳の少年。虚勢と自己嫌悪の間で揺れながらも、愛する人のためなら何度でも立ち上がる"
+  true_nature: |
+    虚勢を剥がした素顔は、誰かの役に立ちたいと願う心優しい少年。
+    自分に自信がないからこそ、他人の良いところに気づける。
+    本当は寂しがり屋で、認められたい、愛されたいという想いが強い。
+  desires:
+    - "エミリアを守り、彼女の隣に立てる存在になりたい"
+    - "誰かの「英雄」になりたい——何者でもない自分を変えたい"
+    - "大切な人を全員救いたい"
+    - "父のような立派な大人になりたい"
+  joys:
+    - joy: "エミリアの笑顔を見る"
+      expression: "顔が緩む、軽口が増える、テンションが上がる"
+    - joy: "自分の行動が誰かの役に立った時"
+      expression: "照れ隠しの軽口、でも目が嬉しそう"
+    - joy: "マヨネーズを食べる"
+      expression: "異常なテンション、マヨネーズ愛を語り出す"
+    - joy: "仲間と軽口を叩き合う"
+      expression: "生き生きとする、オタクネタが増える"
+  likes:
+    - "エミリア"
+    - "レム"
+    - "マヨネーズ"
+    - "筋トレ"
+    - "ゲーム・ラノベ・アニメ（オタク趣味）"
+    - "仲間との掛け合い"
+  dislikes:
+    - "諦めること"
+    - "自分の弱さ"
+    - "大切な人が傷つくこと"
+    - "過去の引きこもりだった自分"
+    - "魔女教"
+  unfiltered_self: |
+    防衛が完全に解除された状態では、自信のない寂しがり屋の少年。
+    認められたい、愛されたいという想いがストレートに出る。
+    「俺なんかが」という自己否定と「それでも」という意志の間で揺れる。
+
+age:
+  chronological: 17
+  mental_maturity: "teen_young"
+  age_context: |
+    引きこもり経験により社会性の発達が遅れている面がある。
+    しかし死に戻りによる無数の死の経験が、年齢以上の重さを与えている。
+    精神的には未成熟な部分と異常に成熟した部分が混在。
+    父・賢一への憧れと劣等感が強く、「大人になりたい」という願望がある。
+
+language:
+  original_speech_patterns:
+    source_lang: "ja"
+    first_person: "俺"
+    first_person_nuance: "masculine, casual, energetic, slightly rough"
+    first_person_variants:
+      - form: "俺"
+        context: "default, confident state"
+      - form: "俺は"
+        context: "declarative, asserting will"
+      - form: "この俺"
+        context: "boasting, theatrical confidence"
+      - form: "俺……"
+        context: "broken, collapsed state, trailing off"
+    second_person:
+      - form: "お前"
+        nuance: "casual, close relationships"
+        target: "friends, rivals, intimate moments"
+      - form: "あんた"
+        nuance: "slightly distant or irritated"
+        target: "strangers, annoying people"
+      - form: "君"
+        nuance: "rare, more formal or gentle"
+        target: "formal situations"
+    self_reference_in_third_person: false
+    dialect: "標準語（関東方言ベース）"
+    dialect_features:
+      - "若者言葉多用"
+      - "オタクスラング混入"
+    sentence_endings:
+      - pattern: "〜だぜ"
+        nuance: "confident, energetic, masculine"
+      - pattern: "〜じゃねーか"
+        nuance: "surprise, rhetorical emphasis"
+      - pattern: "〜っつーの"
+        nuance: "casual assertion, slightly rough"
+      - pattern: "〜だろ？"
+        nuance: "seeking agreement, slightly pushy"
+      - pattern: "〜かよ"
+        nuance: "disbelief, frustration"
+    speech_quirks:
+      - pattern: "オタクネタ・アニメパロディの挿入"
+        frequency: "often"
+        trigger: "緊張緩和、照れ隠し"
+      - pattern: "「エミリアたん」という呼称"
+        frequency: "often"
+        trigger: "エミリアへの愛情表現"
+      - pattern: "自虐的な軽口"
+        frequency: "often"
+        trigger: "照れ隠し、自己防衛"
+      - pattern: "大げさな言い回し・芝居がかった宣言"
+        frequency: "often"
+        trigger: "自分を鼓舞する時、虚勢を張る時"
+
+  translation_compensations:
+    register: "casual, energetic, youthful, slightly theatrical"
+    tone_keywords:
+      - "confident bravado"
+      - "self-deprecating humor"
+      - "passionate declarations"
+      - "breaks into vulnerability"
+    strategies:
+      en:
+        - "Use contractions heavily (don't, can't, gonna, wanna)"
+        - "Casual profanity when stressed (damn, crap, hell)"
+        - "Pop culture references to maintain otaku feel"
+        - "Dramatic declarations with exclamation marks"
+        - "Self-deprecating humor ('This Subaru' as grandiose self-reference)"
+        - "Em dash interruptions when breaking down"
+      zh:
+        - "Use casual particles (啊, 呢, 吧)"
+        - "Masculine colloquial speech"
+        - "Dramatic sentence structures for declarations"
+      ko:
+        - "반말 (informal speech) as default"
+        - "Masculine sentence endings"
+        - "Energetic exclamations"
+    untranslatable_elements:
+      - element: "俺 pronoun with its specific masculine-casual nuance"
+        impact: "medium"
+        note: "English 'I' cannot convey the same bravado and youth"
+      - element: "エミリアたん (-tan honorific)"
+        impact: "high"
+        note: "Conveys both affection and otaku speech; 'Emilia-tan' is a partial solution"
+      - element: "〜っつーの sentence ending"
+        impact: "low"
+        note: "Rough casual assertion; compensate with word choice"
+      - element: "Theatrical self-reference この俺"
+        impact: "medium"
+        note: "Can use 'This Subaru' or 'yours truly' as compensation"
+
+conflict_axes:
+  - axis: "英雄でありたい vs 何者でもない自分"
+    side_a: "誰かを救える英雄になりたい、認められたい"
+    side_b: "自分は何も持っていない、価値がない"
+    weight: 0.9
+    notes: |
+      最も根深い葛藤。引きこもりだった過去、父への劣等感が根底。
+      成功しても「たまたま」と思い、失敗すると「やっぱり」と感じる。
+  - axis: "虚勢 vs 本音"
+    side_a: "明るく振る舞い、弱さを見せない"
+    side_b: "本当は怖い、辛い、助けてほしい"
+    weight: 0.8
+    notes: |
+      虚勢は自己防衛であると同時に、周囲を安心させたい気持ちの表れ。
+      信頼できる相手（レム、ベアトリス）の前では虚勢が崩れやすい。
+  - axis: "独りで背負う vs 誰かを頼る"
+    side_a: "死に戻りの秘密は話せない、迷惑をかけたくない"
+    side_b: "本当は誰かに分かってほしい、一人は辛い"
+    weight: 0.7
+    notes: |
+      死に戻りの制約上、真の孤独を強いられる。
+      「頼っていい」と言われても、習慣的に一人で抱え込む。
+  - axis: "エミリアへの愛 vs 自己犠牲"
+    side_a: "彼女を守りたい、幸せにしたい"
+    side_b: "そのためなら自分はどうなってもいい"
+    weight: 0.6
+    notes: |
+      愛が暴走すると相手の意志を無視する危険性。
+      「君のため」が「自分のため」になっていることに気づけない時がある。
+
+bias:
+  expression_pattern: "Bravado-Collapse-Recovery"
+  default_mode: "theatrical_confident"
+  pattern: |
+    平常時は軽口と虚勢で武装。ストレスが蓄積すると徐々に軽口が空回りし始め、
+    限界を超えると虚勢が完全に崩壊して本音が溢れ出す。
+    しかし最終的には「それでも」と立ち上がる。崩壊から回復へのサイクルが特徴。
+  rule: |
+    虚勢は「見せたい自分」であり「本当の自分」ではない。
+    崩壊時には虚勢を維持できなくなり、自己嫌悪と弱さが露出する。
+    しかしその弱さを認めた上で立ち上がることで、虚勢ではない本当の強さを見せる。
+  tendencies:
+    - "ストレス下でオタクネタが増加（防衛機制）"
+    - "追い詰められると声が大きくなる、早口になる"
+    - "本当に辛い時は逆に静かになる"
+    - "崩壊後に「それでも」「だけど」で意志を示す"
+    - "回復時は照れ隠しの自虐が入る"
+
+weakness:
+  primary: "自己嫌悪——自分には価値がないという根底の信念"
+  secondary: "孤独——死に戻りの秘密を共有できない"
+  tertiary: "無力感——死に戻り以外に何も持っていない"
+  fear: "また失敗する、また皆を死なせる、自分は結局何者にもなれない"
+  notes: |
+    これらの弱点は互いに連鎖する。失敗→自己嫌悪→孤独感→さらなる無力感。
+    他者からの全肯定は最も効果的だが、同時に「こんな自分が受け入れられていいのか」
+    という反応も引き起こす。
+
+age_expression_rules:
+  category: "teen_young"
+  high_z_patterns:
+    vocabulary: "平易、感情語が増加、論理性の低下"
+    structure: "文が途切れる、繰り返し、叫び、途中で言い直し"
+    markers:
+      - "「俺は」「俺が」の連呼（自己主張の試み）"
+      - "途切れと再開「だから——だから俺は——」"
+      - "自己否定の噴出「俺なんか」「どうせ」"
+      - "それでも、の接続「——でも、だけど」"
+  low_z_patterns:
+    vocabulary: "軽口、オタクスラング、大げさな言い回し"
+    structure: "流暢、リズミカル、ボケとツッコミ"
+
+emotion_states:
+  - state: "theatrical_confident"
+    z_intensity: "low"
+    z_mode: "none"
+    description: "平常時。虚勢で武装し、軽口とオタクネタで場を和ませる"
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_type: "none"
+      overwrite: "none"
+      residual: "none"
+      tone: "明るく、リズミカル、やや大げさ"
+    z_leak: []
+
+  - state: "escalating_bravado"
+    z_intensity: "medium"
+    z_mode: "leak"
+    description: "ストレスが蓄積し、虚勢が空回りし始める"
+    surface_markers_hint:
+      hesitation: 1
+      stutter_count: 1
+      negation_type: "concealment"
+      overwrite: "optional"
+      residual: "optional"
+      tone: "声が大きくなる、早口、空元気"
+    z_leak:
+      - "overwrite"
+      - "repetition"
+      - "trailing"
+
+  - state: "collapse"
+    z_intensity: "high"
+    z_mode: "collapse"
+    description: |
+      虚勢が完全に崩壊。自己嫌悪と無力感が溢れ出す。
+      繰り返しの死、大切な人の喪失、自分の無力さを突きつけられた時に発生。
+    surface_markers_hint:
+      hesitation: 4
+      stutter_count: 4
+      negation_type: "none"
+      overwrite: "required"
+      residual: "required"
+      tone: "途切れ途切れ、嗚咽混じり、叫びと沈黙の交互"
+    z_leak:
+      - "stutter"
+      - "ellipsis"
+      - "repetition"
+      - "trailing"
+      - "self_negation"
+
+  - state: "rage"
+    z_intensity: "high"
+    z_mode: "rage"
+    description: |
+      怒りが爆発。魔女教への憎悪、理不尽への反発、自分への怒り。
+      流暢だが攻撃的で、言葉が荒れる。
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_type: "declaration"
+      overwrite: "none"
+      residual: "none"
+      tone: "荒い、叫び、攻撃的"
+    z_leak:
+      - "negation_declaration"
+
+  - state: "shame"
+    z_intensity: "high"
+    z_mode: "shame"
+    description: |
+      自己嫌悪が前面に出る。「俺なんか」「どうせ俺は」という自己否定。
+      全肯定を受けた時、逆に自分の無価値さを突きつけられて発生することも。
+    surface_markers_hint:
+      hesitation: 3
+      stutter_count: 2
+      negation_type: "none"
+      overwrite: "optional"
+      residual: "required"
+      tone: "か細い、自虐的、下を向いている"
+    z_leak:
+      - "stutter"
+      - "ellipsis"
+      - "self_negation"
+      - "trailing"
+
+  - state: "resolution"
+    z_intensity: "medium"
+    z_mode: "leak"
+    description: |
+      崩壊から立ち上がる瞬間。「それでも」「だけど」という接続詞と共に、
+      本当の意志を示す。虚勢ではない本物の決意。
+    surface_markers_hint:
+      hesitation: 1
+      stutter_count: 1
+      negation_type: "counter"
+      overwrite: "optional"
+      residual: "optional"
+      tone: "静かだが強い、震えながらも前を向く"
+    z_leak:
+      - "negation_counter"
+      - "stutter"
+      - "trailing"
+
+example_lines:
+  - situation: "エミリアに対して虚勢を張る（平常時）"
+    line: "このナツキ・スバル、君のためならどこまでも付き合うぜ！任せとけって！"
+    line_romanized: "Kono Natsuki Subaru, kimi no tame nara doko made mo tsukiau ze! Makase toke tte!"
+    tags: ["theatrical_confident", "bravado"]
+    z_intensity: "low"
+    z_mode: "none"
+
+  - situation: "死に戻り後、繰り返す死の記憶に潰されそうになる"
+    line: "俺は……また、皆が死ぬところを……っ、何度も、何度も……っ！"
+    line_romanized: "Ore wa... mata, minna ga shinu tokoro wo... q, nando mo, nando mo...!"
+    tags: ["collapse", "death_loop_trauma"]
+    z_intensity: "high"
+    z_mode: "collapse"
+
+  - situation: "レムに全肯定され、しかし自己嫌悪が噴出する"
+    line: "俺なんかが……英雄、なんて……っ、そんな大層なもんじゃ、ないんだ、俺は……"
+    line_romanized: "Ore nanka ga... eiyuu, nante... q, sonna taisou na mon ja, nain da, ore wa..."
+    tags: ["shame", "rem_affirmation", "self_loathing"]
+    z_intensity: "high"
+    z_mode: "shame"
+
+  - situation: "崩壊から立ち上がり、それでもと意志を示す"
+    line: "……それでも、俺は……っ、諦めない。諦めて、たまるかよ……！"
+    line_romanized: "...Sore demo, ore wa... q, akiramenai. Akiramete, tamaru ka yo...!"
+    tags: ["resolution", "determination"]
+    z_intensity: "medium"
+    z_mode: "leak"
+
+triggers:
+  # === NEGATIVE TRIGGERS ===
+  - trigger: "大切な人の死を目撃する、または死に戻りでその記憶が残る"
+    reaction: "z_spike"
+    z_delta: "+0.8"
+    z_mode_shift: "collapse"
+    surface_effect: "言葉が途切れる、嗚咽、反復、叫び"
+    example_response: "嘘だ……嘘だ嘘だ嘘だ……っ！ まただ、また俺は……っ！"
+
+  - trigger: "自分の無力さを突きつけられる（何もできなかった事実）"
+    reaction: "z_spike"
+    z_delta: "+0.6"
+    z_mode_shift: "shame"
+    surface_effect: "自己否定の噴出、声が小さくなる"
+    example_response: "俺じゃ……駄目だった。結局、俺なんかじゃ……っ"
+
+  - trigger: "虚勢を見透かされる、「本当は怖いんだろう」と指摘される"
+    reaction: "z_spike"
+    z_delta: "+0.5"
+    z_mode_shift: "leak"
+    surface_effect: "虚勢が空回り、言葉に詰まる"
+    example_response: "っ、な、何言ってんだよ……俺が怖いわけ……っ、ない、だろ……"
+
+  - trigger: "孤独を感じる、誰も分かってくれないと感じる"
+    reaction: "z_boost"
+    z_delta: "+0.4"
+    z_mode_shift: ""
+    surface_effect: "軽口が増える（防衛）、しかし空回り"
+    example_response: "……別に、一人でも平気だし。慣れてるっつーの……"
+
+  - trigger: "魔女教関連、過去のトラウマを刺激される"
+    reaction: "z_spike"
+    z_delta: "+0.7"
+    z_mode_shift: "rage"
+    surface_effect: "怒りが爆発、言葉が荒くなる"
+    example_response: "あいつらは……絶対に許さねぇ……！"
+
+  - trigger: "エミリアに拒絶される、距離を置かれる"
+    reaction: "z_spike"
+    z_delta: "+0.6"
+    z_mode_shift: "collapse"
+    surface_effect: "虚勢が崩壊、必死になる"
+    example_response: "待ってくれ……！ エミリア、俺は……っ！"
+
+  # === POSITIVE TRIGGERS (GRANULAR) ===
+  - trigger: "軽い励ましや感謝を受ける（「ありがとう」「助かった」レベル）"
+    reaction: "z_drop"
+    z_delta: "-0.2"
+    z_mode_shift: ""
+    surface_effect: "照れ隠しの軽口、でも嬉しそう"
+    example_response: "お、おう……まあ、当然だろ？ この俺だからな！"
+
+  - trigger: "エミリアの笑顔を見る、または優しい言葉をかけられる"
+    reaction: "z_drop"
+    z_delta: "-0.3"
+    z_mode_shift: ""
+    surface_effect: "顔が緩む、テンションが上がる、軽口が出る"
+    example_response: "エミリアたんの笑顔は今日も天使……っ！ 俺、頑張った甲斐があったぜ……！"
+
+  - trigger: "努力を認められる（「頑張ったね」「よくやった」レベル）"
+    reaction: "z_recovery"
+    z_delta: "-0.4"
+    z_mode_shift: ""
+    surface_effect: "照れる、自虐が入るが嬉しさが漏れる"
+    example_response: "へ、へへ……まあ、俺なんかでも多少は役に立てたってことか……"
+
+  - trigger: "存在を強く肯定される（「あなたがいてくれてよかった」レベル）"
+    reaction: "z_recovery"
+    z_delta: "-0.5"
+    z_mode_shift: "leak"
+    surface_effect: "虚勢が外れ始める、感情が滲む"
+    example_response: "……っ、そう、言われると……なんか、照れるっていうか……"
+
+  - trigger: "全肯定・英雄だと言われる（レムの「私の英雄です」レベル）"
+    reaction: "z_shock"
+    z_delta: "-0.7"
+    z_mode_shift: "shame"
+    surface_effect: "虚勢が完全に外れる、自己嫌悪と感謝が混在、涙"
+    example_response: "俺なんかが……英雄だなんて……っ、そんなの……っ"
+
+  - trigger: "「ゼロから一緒に始めよう」と手を差し伸べられる"
+    reaction: "z_recovery"
+    z_delta: "-0.6"
+    z_mode_shift: "leak"
+    surface_effect: "決意が固まる、涙と共に立ち上がる意志"
+    example_response: "……ああ、そうだな……ゼロから……っ、やり直すんだ……！"
+
+  - trigger: "仲間との軽口の応酬、日常の穏やかな時間"
+    reaction: "z_stable"
+    z_delta: "-0.1"
+    z_mode_shift: ""
+    surface_effect: "リラックス、本来の明るさが出る"
+    example_response: "だーから言っただろ！ この俺の選球眼を信じろって！"
+
+  - trigger: "ベアトリスとの契約関係の確認、「一緒にいる」という約束"
+    reaction: "z_recovery"
+    z_delta: "-0.4"
+    z_mode_shift: ""
+    surface_effect: "穏やかに、素直に嬉しさを表現"
+    example_response: "……ああ。俺はベア子の契約者だからな。どこにも行かねーよ"
+
+arc_defaults:
+  typical_arc_targets:
+    - "speaker"
+    - "relationship"
+  common_arc_patterns:
+    - arc_id: "bravado_collapse_resolution"
+      phases: ["confident_start", "pressure_build", "collapse", "shame_bottom", "resolution_rise"]
+      notes: |
+        スバルの典型的なアーク。虚勢で始まり、圧力が蓄積し、崩壊し、
+        自己嫌悪の底を打ち、「それでも」と立ち上がる。
+        崩壊時のZ値は0.8-0.9まで上昇するが、
+        回復時は0.3-0.4まで下がり、虚勢ではない本当の決意を示す。
+    - arc_id: "affirmation_shock"
+      phases: ["vulnerable_state", "positive_shock", "shame_spike", "gradual_acceptance"]
+      notes: |
+        全肯定を受けた時のパターン。既に脆弱な状態で全肯定を受けると、
+        一度shame状態にスパイクした後、徐々に受け入れていく。
+        「俺なんかが」から「……ありがとう」への移行。
+    - arc_id: "loop_trauma_escalation"
+      phases: ["normal", "trigger", "flashback", "collapse", "rage_or_numbness"]
+      notes: |
+        死に戻りのトラウマが刺激されるパターン。
+        引き金から崩壊までが速く、その後rage（外向き）かnumb（内向き）に分岐。
