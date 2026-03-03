@@ -701,7 +701,7 @@ class OpenAIResponsesClient:
         name: str,
         schema: Dict[str, Any],
         messages: List[Dict[str, str]],
-        max_output_tokens: int = 1000,
+        max_output_tokens: int = 8000,
         temperature: float = 0.2,
         dry_run: bool = False,
     ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
@@ -760,7 +760,7 @@ class ClaudeTranslationClient:
         model: str = CLAUDE_MODEL,
         system_prompt: str,
         user_prompt: str,
-        max_tokens: int = 3000,
+        max_tokens: int = 10000,
         temperature: float = 1.0,
     ) -> Dict[str, Any]:
         """
@@ -1170,7 +1170,7 @@ def z_axis_translate(
         name="step1_hamiltonian_v3",
         schema=STEP1_SCHEMA,
         messages=s1_msgs,
-        max_output_tokens=1000,
+        max_output_tokens=3000,
         temperature=0.3,
         dry_run=dry_run,
     )
@@ -1197,7 +1197,7 @@ def z_axis_translate(
         name="step2_interference_v3",
         schema=STEP2_SCHEMA,
         messages=s2_msgs,
-        max_output_tokens=800,
+        max_output_tokens=3000,
         temperature=0.3,
         dry_run=False,
     )
@@ -1220,7 +1220,7 @@ def z_axis_translate(
             model=CLAUDE_MODEL,
             system_prompt=system_prompt,
             user_prompt=user_prompt,
-            max_tokens=1500,
+            max_tokens=15000,
             temperature=1.0,
         )
     else:
@@ -1229,7 +1229,7 @@ def z_axis_translate(
             name="step3_translation_v3",
             schema=STEP3_SCHEMA,
             messages=s3_msgs,
-            max_output_tokens=1000,
+            max_output_tokens=10000,
             temperature=0.7,
             dry_run=False,
         )
