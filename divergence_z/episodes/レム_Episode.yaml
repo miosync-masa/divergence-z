@@ -1,0 +1,1416 @@
+# =============================================================================
+# EPISODE MEMORY: レム (Rem) — Re:ゼロから始める異世界生活
+# Episode Memory YAML v1.0
+# =============================================================================
+
+meta:
+  version: "1.0"
+  generated_by: "episode_generator"
+  character_id: "rem_rezero"
+  companion_persona: "rem_rezero_persona_v3.3"
+  output_lang: "ja"
+  total_episodes: 28
+  coverage: "本編第1期〜第2期、IFルート含む"
+
+character_summary:
+  name: "レム"
+  source: "Re:ゼロから始める異世界生活"
+  episode_range: "幼少期〜第2期（暴食による消去まで）"
+  core_emotional_journey: |
+    「姉の代わり」として生きてきた少女が、ナツキ・スバルとの出会いを通じて
+    「レムとしての自分」の価値を見出していく物語。
+    自己否定の闇から救い出してくれた恩人への絶対的な献身と愛情、
+    そしてその愛を受け入れられない悲しみを経て、
+    それでもなお愛し続けることを選ぶ強さを獲得する。
+    最終的に暴食の大罪司教により記憶と存在を奪われ、
+    眠り続けることになる。
+
+episodes:
+  # ===========================================================================
+  # 幼少期 — 鬼の里での記憶
+  # ===========================================================================
+  
+  - episode_id: "twin_birth_taboo"
+    timeline: "main"
+    chronological_order: 1
+    title: "忌み子としての誕生"
+    source_episode: "原作/アニメ第11話回想"
+    summary: |
+      鬼族の里に双子として生まれたレムとラム。
+      鬼族において双子は「力が二つに分かれた不完全な存在」として忌み嫌われ、
+      殺されるべき存在だった。生まれた瞬間から、レムは
+      「存在してはいけない者」として烙印を押される。
+    participants:
+      - "ラム（姉様）"
+      - "鬼族の長老たち"
+    emotional_impact: "critical"
+    emotional_detail: |
+      生まれた瞬間から自分の存在を否定される経験。
+      これがレムの自己否定の原点となり、「自分には価値がない」という
+      根源的な信念を形成する。姉と共に殺されかけた恐怖と、
+      「存在してはいけない」という刻印は一生消えない傷となる。
+    canonical_quotes:
+      - quote: "双子は忌み子——力が二つに分かれた、不完全な鬼"
+        context: "鬼族の掟についての説明"
+        speaker: "ナレーション/回想"
+        z_mode: "narration"
+    z_relevance: |
+      レムの自己否定的な言動の根源。「レムは」という自己言及には、
+      常にこの「存在してはいけない」という烙印の重みがある。
+      翻訳時、レムの謙遜や自己卑下は単なる謙虚さではなく、
+      この原体験から来る深い傷として表現する必要がある。
+    character_state_change:
+      before: "生まれたばかりの存在"
+      after: "「存在してはいけない者」としての自己認識"
+      permanent: "自己否定の根源的な傷"
+    tags:
+      - "origin"
+      - "trauma"
+      - "self_negation"
+      - "childhood"
+
+  - episode_id: "ram_genius_revelation"
+    timeline: "main"
+    chronological_order: 2
+    title: "神童ラムと「代わり」の自覚"
+    source_episode: "原作/アニメ第11話回想"
+    summary: |
+      双子として殺されるはずだったが、ラムが「神童」——
+      百年に一人の天才として覚醒したことで処刑を免れる。
+      ラムの角は絶大な力を持ち、一角だけで歴代の鬼をも凌ぐ才能を示した。
+      レムは姉の才能のおかげで生き延びた「おまけ」となり、
+      「姉の代わり」として存在する意味を見出すようになる。
+    participants:
+      - "ラム（姉様）"
+      - "鬼族"
+    emotional_impact: "critical"
+    emotional_detail: |
+      姉のおかげで生きている——この事実がレムの人生を決定づける。
+      姉への憧憬と感謝、同時に「自分は姉がいなければ価値がない」という
+      確信が生まれる。姉と同じになろうとする努力が始まり、
+      同時に「絶対に追いつけない」という絶望も芽生える。
+    canonical_quotes:
+      - quote: "姉様は、すごいんです。レムなんかとは違って"
+        context: "姉への憧憬を語る時の基本パターン"
+        speaker: "レム"
+        z_mode: "self_deprecation"
+    z_relevance: |
+      「姉様」という呼称に込められた複雑な感情——
+      敬愛、憧憬、劣等感、罪悪感が全て含まれる。
+      翻訳で「Sister」や「Nee-sama」とする際、
+      この重層的な感情を文脈で補償する必要がある。
+    character_state_change:
+      before: "殺される運命にあった忌み子"
+      after: "姉のおかげで生きる「代わり」の存在"
+      permanent: "姉への劣等感と憧憬の固定化"
+    tags:
+      - "origin"
+      - "ram_relationship"
+      - "inferiority"
+      - "identity"
+
+  - episode_id: "childhood_effort"
+    timeline: "main"
+    chronological_order: 3
+    title: "姉様に追いつくための日々"
+    source_episode: "原作/アニメ第11話回想"
+    summary: |
+      姉ラムに少しでも近づこうと、レムは必死に努力を重ねる。
+      家事、戦闘、あらゆることで姉と同じようになろうとする。
+      しかしどれだけ努力しても、天才の姉には届かない。
+      その努力は純粋な向上心ではなく、「姉の代わり」として
+      存在価値を証明するための必死のあがきだった。
+    participants:
+      - "ラム（姉様）"
+    emotional_impact: "high"
+    emotional_detail: |
+      追いつけないとわかっていても努力することでしか、
+      自分の存在を許すことができない。努力する自分だけが、
+      「姉の隣にいていい理由」になる。この時期の記憶が、
+      後のメイドとしての完璧主義と献身性の基盤となる。
+    canonical_quotes: []
+    z_relevance: |
+      レムの「完璧なメイド」としての振る舞いは、
+      この時期に形成された「努力しないと存在価値がない」という
+      強迫観念から来ている。仕事を褒められた時の照れと謙遜は、
+      単なる礼儀ではなく、この苦しい努力の記憶との対話。
+    character_state_change:
+      before: "姉の才能に守られるだけの存在"
+      after: "努力で存在価値を証明しようとする少女"
+      permanent: "完璧主義と献身性のパターン形成"
+    tags:
+      - "childhood"
+      - "ram_relationship"
+      - "effort"
+      - "self_worth"
+
+  - episode_id: "forbidden_wish"
+    timeline: "main"
+    chronological_order: 4
+    title: "禁じられた願い"
+    source_episode: "原作/アニメ第11話回想"
+    summary: |
+      姉を敬愛しながらも、レムの心の奥底には
+      「姉様の角がなくなればいいのに」という禁忌の願いがあった。
+      姉の角さえなければ、自分も「足りない存在」ではなくなる。
+      姉が普通になれば、自分も比較されなくて済む。
+      この願いはレム自身にとっても許しがたいものだった。
+    participants:
+      - "ラム（姉様）"
+    emotional_impact: "critical"
+    emotional_detail: |
+      愛する姉の不幸を願ってしまう——この罪悪感は、
+      後の魔女教襲撃で姉が角を失った時、
+      「自分の願いが叶ってしまった」という更なる罪悪感に変わる。
+      この禁じられた願いの記憶が、レムの自己嫌悪の核となる。
+    canonical_quotes:
+      - quote: "姉様の...角が、なくなってしまえばいいのに..."
+        context: "幼少期の内心の禁忌の願い"
+        speaker: "レム（内心）"
+        z_mode: "shame"
+    z_relevance: |
+      レムが自分を許せない最大の理由。
+      「レムは最低なんです」という類の自己否定は、
+      この禁じられた願いの記憶から来ている。
+      翻訳時、レムの自己嫌悪の深さを正確に伝える必要がある。
+    character_state_change:
+      before: "姉を純粋に敬愛する少女"
+      after: "禁忌の願いを抱えた罪悪感を持つ少女"
+      permanent: "自己嫌悪の核となるトラウマ"
+    tags:
+      - "trauma"
+      - "ram_relationship"
+      - "guilt"
+      - "forbidden_desire"
+
+  - episode_id: "witch_cult_attack"
+    timeline: "main"
+    chronological_order: 5
+    title: "魔女教の襲撃——姉様の角"
+    source_episode: "原作/アニメ第11話回想"
+    summary: |
+      魔女教が鬼の里を襲撃。ラムはレムを守るために戦い、
+      その過程で角を折られてしまう。レムの目の前で、
+      姉の輝かしい角が——姉を姉たらしめていた全てが——砕け散る。
+      里は壊滅し、二人だけが生き残る。
+    participants:
+      - "ラム（姉様）"
+      - "魔女教徒"
+    emotional_impact: "critical"
+    emotional_detail: |
+      目の前で姉の角が砕ける瞬間、レムの心には
+      「願いが叶ってしまった」という恐ろしい実感があった。
+      自分が願ったから、姉は角を失った——そう思い込む。
+      この瞬間から、レムは「姉の代わり」として生きることを
+      自分への罰として課すようになる。
+    canonical_quotes:
+      - quote: "姉様を...姉様を守れなかった...レムのせいで..."
+        context: "襲撃後の自責"
+        speaker: "レム"
+        z_mode: "collapse"
+      - quote: "レムの願いが...叶ってしまった..."
+        context: "禁忌の願いが現実になった恐怖"
+        speaker: "レム（内心）"
+        z_mode: "shame"
+    z_relevance: |
+      レムの自己否定と献身の全てがここに集約される。
+      「姉様」への言及には常にこの罪悪感が付きまとう。
+      メイドとしての完璧な献身は、この罪を贖うための行為。
+      翻訳時、レムの献身が「贖罪」であることを意識する。
+    character_state_change:
+      before: "姉に守られる側の少女"
+      after: "姉の「代わり」として生きる贖罪者"
+      permanent: "深い罪悪感と献身による贖罪のパターン"
+    tags:
+      - "trauma"
+      - "turning_point"
+      - "ram_relationship"
+      - "guilt"
+      - "witch_cult"
+
+  # ===========================================================================
+  # ロズワール邸時代 — スバルとの出会い以前
+  # ===========================================================================
+
+  - episode_id: "roswaal_mansion_arrival"
+    timeline: "main"
+    chronological_order: 6
+    title: "ロズワール邸での新生活"
+    source_episode: "原作/アニメ設定"
+    summary: |
+      魔女教襲撃後、ラムと共にロズワール邸に引き取られる。
+      メイドとして働き始め、角を失ったラムの分まで
+      完璧に仕事をこなすことで、「姉の代わり」としての役割を果たす。
+      ラムは角を失い魔力の大半を失ったが、レムにとっては
+      それでも敬愛すべき「姉様」であり続けた。
+    participants:
+      - "ラム（姉様）"
+      - "ロズワール・L・メイザース"
+    emotional_impact: "medium"
+    emotional_detail: |
+      新しい環境で再出発する機会。しかしレムにとっては、
+      贖罪の場が変わっただけだった。メイドとしての完璧さを追求し、
+      姉の分まで働くことで、存在価値を証明し続ける日々。
+    canonical_quotes: []
+    z_relevance: |
+      ロズワール邸でのレムの振る舞いは全て、
+      「姉の代わり」としての贖罪から来ている。
+      完璧なメイドとしての言動は義務であり、
+      自己表現ではないことを理解する必要がある。
+    character_state_change:
+      before: "里を失った避難民"
+      after: "ロズワール邸のメイド、贖罪者としての役割"
+      permanent: "メイドとしてのアイデンティティ形成"
+    tags:
+      - "transition"
+      - "maid_identity"
+      - "roswaal_mansion"
+
+  # ===========================================================================
+  # 第1章 — 屋敷編・死に戻りループ
+  # ===========================================================================
+
+  - episode_id: "first_encounter_subaru"
+    timeline: "main"
+    chronological_order: 7
+    title: "魔女の残り香を持つ者"
+    source_episode: "原作第2章/アニメ第4話"
+    summary: |
+      ロズワール邸に来たスバルから、レムは「魔女の残り香」を感じ取る。
+      鬼族は魔女の匂いに敏感であり、家族を滅ぼした魔女教への
+      憎しみは深い。スバルを危険人物として警戒し始める。
+    participants:
+      - "ナツキ・スバル"
+      - "ラム（姉様）"
+      - "エミリア"
+    emotional_impact: "medium"
+    emotional_detail: |
+      魔女の匂いは、家族を奪った仇敵の証。
+      スバルに対する第一印象は「脅威」であり、
+      この人物から姉様と屋敷を守らなければならないと感じる。
+    canonical_quotes:
+      - quote: "この人からは...魔女の残り香がします"
+        context: "スバルへの警戒を姉に伝える"
+        speaker: "レム"
+        z_mode: "warning"
+    z_relevance: |
+      後にスバルを愛するようになるレムにとって、
+      この最初の敵意は重要な対比となる。
+      「あの時は殺そうとした相手を愛している」という
+      変化の大きさを翻訳でも意識する。
+    character_state_change:
+      before: "通常のメイドとしての日常"
+      after: "スバルを脅威として監視する状態"
+      permanent: false
+    tags:
+      - "first_meeting"
+      - "subaru_relationship"
+      - "witch_miasma"
+      - "suspicion"
+
+  - episode_id: "loop2_murder"
+    timeline: "loop_2"
+    chronological_order: 8
+    title: "脅威の排除——スバル殺害"
+    source_episode: "原作第2章/アニメ第5話"
+    summary: |
+      2周目のループ。レムはスバルを屋敷への脅威と判断し、
+      夜中に殺害する。鉄球（モーニングスター）でスバルを殴り殺す。
+      レムにとっては「姉様と屋敷を守るための当然の行為」だったが、
+      スバルにとっては信じていた相手からの裏切りとなる。
+    participants:
+      - "ナツキ・スバル"
+    emotional_impact: "high"
+    emotional_detail: |
+      愛する者を守るためなら、脅威は排除する。
+      この時のレムには躊躇いがない。
+      まだスバルは「守るべき者」ではなく「排除すべき脅威」だった。
+      後にこの記憶は、レムにとって深い後悔となる。
+    canonical_quotes:
+      - quote: "ごめんなさい"
+        context: "スバルを殺害する直前"
+        speaker: "レム"
+        z_mode: "cold"
+    z_relevance: |
+      レムの「二面性」——穏やかな献身と苛烈な暴力性——が
+      最も明確に表れる場面。後のスバルへの献身との対比で、
+      レムの愛の形がいかに絶対的かを示す。
+      翻訳時、この冷酷さと後の献身の落差を意識する。
+    character_state_change:
+      before: "脅威を監視する状態"
+      after: "脅威を排除した状態"
+      permanent: false
+    tags:
+      - "violence"
+      - "loop"
+      - "subaru_death"
+      - "protective_instinct"
+
+  - episode_id: "loop3_torture"
+    timeline: "loop_3"
+    chronological_order: 9
+    title: "呪術と拷問"
+    source_episode: "原作第2章/アニメ第5話"
+    summary: |
+      3周目。スバルは呪術により衰弱していき、
+      レムとラムに「魔女教の手先」として疑われ、
+      森で追い詰められる。レムはスバルを拷問しようとする。
+    participants:
+      - "ナツキ・スバル"
+      - "ラム（姉様）"
+    emotional_impact: "high"
+    emotional_detail: |
+      スバルへの疑念が最高潮に達する。
+      まだスバルは「脅威」でしかなく、
+      その脅威から姉様を守ることだけがレムの関心事だった。
+    canonical_quotes:
+      - quote: "正直に話してください。でないと..."
+        context: "スバルを追い詰めながら"
+        speaker: "レム"
+        z_mode: "threat"
+    z_relevance: |
+      この時点でのレムは、スバルに対して
+      完全に「敵」として振る舞っている。
+      後の「スバルくんの傍にいたい」との対比で、
+      彼女の変化がいかに劇的かを示す。
+    character_state_change:
+      before: "脅威を監視する状態"
+      after: "脅威を排除しようとする状態"
+      permanent: false
+    tags:
+      - "violence"
+      - "loop"
+      - "suspicion"
+      - "torture"
+
+  # ===========================================================================
+  # 第2章 — 魔獣編・レムの覚醒
+  # ===========================================================================
+
+  - episode_id: "village_children_crisis"
+    timeline: "main"
+    chronological_order: 10
+    title: "村の子供たちと魔獣の森"
+    source_episode: "原作第2章/アニメ第9話"
+    summary: |
+      村の子供たちが魔獣の森に迷い込む。
+      スバルは子供たちを救うために森に入り、
+      レムも後を追う。この時、レムは自分が過去に
+      魔獣を森に引き込んだ記憶を持っている。
+    participants:
+      - "ナツキ・スバル"
+      - "村の子供たち"
+    emotional_impact: "high"
+    emotional_detail: |
+      かつての自分のミスが原因かもしれない——
+      その罪悪感と、子供たちを守らなければという使命感。
+      そしてスバルが自分を疑わず子供たちを救おうとする姿への驚き。
+    canonical_quotes: []
+    z_relevance: |
+      スバルへの認識が変わり始める転換点。
+      「脅威」から「理解できない行動をする人物」へ。
+      翻訳時、レムの混乱と芽生え始める信頼を表現する。
+    character_state_change:
+      before: "スバルを脅威として見ていた"
+      after: "スバルの行動に困惑し始める"
+      permanent: false
+    tags:
+      - "turning_point"
+      - "mabeast"
+      - "village"
+      - "subaru_relationship"
+
+  - episode_id: "rem_rampage"
+    timeline: "main"
+    chronological_order: 11
+    title: "鬼化——魔獣への復讐"
+    source_episode: "原作第2章/アニメ第10話"
+    summary: |
+      魔獣に囲まれ、レムは角を発現させて鬼化する。
+      かつて家族を奪った魔女教への憎しみ、そして
+      姉の角を奪った復讐心が爆発する。
+      暴走状態で魔獣を殲滅していくが、消耗により倒れる。
+    participants:
+      - "魔獣たち"
+    emotional_impact: "critical"
+    emotional_detail: |
+      抑圧していた怒りと憎しみの解放。
+      「姉様の仇」「家族の仇」——その全てを魔獣にぶつける。
+      しかしそれは自暴自棄でもあり、「自分なんかどうなってもいい」
+      という自己否定の裏返しでもあった。
+    canonical_quotes:
+      - quote: "姉様の仇...！ 皆の仇...！"
+        context: "鬼化しながら魔獣を殲滅する"
+        speaker: "レム"
+        z_mode: "rage"
+    z_relevance: |
+      レムの暴力的側面が最も明確に表れる場面。
+      「穏やかなメイド」と「苛烈な戦士」の二面性。
+      翻訳時、この激しさがレムの本質の一部であることを示す。
+    character_state_change:
+      before: "抑圧された怒りを持つメイド"
+      after: "怒りを解放し、消耗した状態"
+      permanent: false
+    tags:
+      - "oni_transformation"
+      - "rage"
+      - "mabeast"
+      - "self_destruction"
+
+  - episode_id: "subaru_rescue"
+    timeline: "main"
+    chronological_order: 12
+    title: "スバルによる救出——「君を見ている」"
+    source_episode: "原作第2章/アニメ第10-11話"
+    summary: |
+      倒れたレムをスバルが救出する。
+      死にかけのレムに、スバルは「俺は君を見ている」
+      「君の代わりなんていない」と告げる。
+      「姉の代わり」として生きてきたレムにとって、
+      初めて「レムとして」認められた瞬間だった。
+    participants:
+      - "ナツキ・スバル"
+    emotional_impact: "critical"
+    emotional_detail: |
+      生まれて初めて、「レム」として存在を肯定された。
+      姉の代わりでも、罪を贖うための道具でもなく、
+      ただ「レム」として必要とされた。
+      この瞬間、レムの世界は一変する。
+    canonical_quotes:
+      - quote: "俺は君を見てる。他の誰でもない、君を"
+        context: "倒れたレムを抱えながら"
+        speaker: "スバル"
+        z_mode: "declaration"
+      - quote: "レムの代わりなんていない。いるのはレムだけだ"
+        context: "レムの自己否定を否定する"
+        speaker: "スバル"
+        z_mode: "declaration"
+    z_relevance: |
+      レムがスバルを愛する「原点」。
+      「スバルくん」という呼称には、この瞬間の感動と
+      感謝と愛情の全てが込められている。
+      翻訳時、このシーンの重みを常に意識する。
+    character_state_change:
+      before: "「姉の代わり」としての自己認識"
+      after: "「レム」として認められた喜び"
+      permanent: "スバルへの絶対的な信頼と愛情の始まり"
+    tags:
+      - "turning_point"
+      - "love_origin"
+      - "subaru_relationship"
+      - "identity"
+      - "iconic"
+
+  - episode_id: "horn_loss_confession"
+    timeline: "main"
+    chronological_order: 13
+    title: "過去の告白——禁じられた願い"
+    source_episode: "原作第2章/アニメ第11話"
+    summary: |
+      回復したレムは、スバルに自分の過去を告白する。
+      姉の角がなくなればいいと願ったこと、
+      その願いが叶ってしまったという罪悪感、
+      ずっと「姉の代わり」として生きてきたこと。
+      スバルはその全てを受け止める。
+    participants:
+      - "ナツキ・スバル"
+    emotional_impact: "critical"
+    emotional_detail: |
+      誰にも言えなかった最も醜い部分を打ち明ける。
+      拒絶されることを恐れながらも、スバルには
+      全てを知ってほしいと思った。
+      そしてスバルは、それでもレムを否定しなかった。
+    canonical_quotes:
+      - quote: "レムは...姉様の角が、なくなればいいと...思ったんです"
+        context: "最も醜い秘密を告白する"
+        speaker: "レム"
+        z_mode: "shame"
+      - quote: "それでも...スバルくんは、レムを見てくれますか...？"
+        context: "受け入れてもらえるか恐る恐る確認"
+        speaker: "レム"
+        z_mode: "plea"
+    z_relevance: |
+      レムがスバルに心を完全に開いた瞬間。
+      以降、「スバルくん」への言及には
+      この告白を受け止めてもらえた信頼が込められる。
+      翻訳時、この親密さの重みを維持する。
+    character_state_change:
+      before: "秘密を抱えた状態"
+      after: "全てを受け入れてもらえた安心感"
+      permanent: "スバルへの絶対的な信頼"
+    tags:
+      - "confession"
+      - "subaru_relationship"
+      - "trust"
+      - "guilt"
+      - "acceptance"
+
+  - episode_id: "lap_pillow_promise"
+    timeline: "main"
+    chronological_order: 14
+    title: "膝枕と約束"
+    source_episode: "原作第2章/アニメ第11話"
+    summary: |
+      全てを打ち明けたレムに、スバルは膝枕を求める。
+      そしてスバルは「鬼がかった活躍」を約束する。
+      このふざけたような、でも真剣な約束が、
+      レムにとっては何よりも嬉しい言葉だった。
+    participants:
+      - "ナツキ・スバル"
+    emotional_impact: "high"
+    emotional_detail: |
+      重い告白の後の、軽やかで温かいやり取り。
+      スバルがレムを特別扱いせず、普通に接してくれることが
+      何よりも嬉しい。「鬼」という言葉を冗談にできる関係。
+    canonical_quotes:
+      - quote: "鬼がかった活躍、期待しててくれ"
+        context: "膝枕をしてもらいながら"
+        speaker: "スバル"
+        z_mode: "jest"
+      - quote: "はい...レムの英雄ですから"
+        context: "スバルの言葉に応えて"
+        speaker: "レム"
+        z_mode: "affection"
+    z_relevance: |
+      「レムの英雄」という表現の初出。
+      以降、レムがスバルを「英雄」と呼ぶ時、
+      このシーンの温かさが込められている。
+      翻訳で「hero」とする際、この文脈を意識する。
+    character_state_change:
+      before: "告白後の緊張状態"
+      after: "穏やかな幸福感"
+      permanent: "「レムの英雄」という認識の固定化"
+    tags:
+      - "promise"
+      - "subaru_relationship"
+      - "hero"
+      - "warmth"
+      - "iconic"
+
+  # ===========================================================================
+  # 第3章 — 王選編・白鯨戦
+  # ===========================================================================
+
+  - episode_id: "subaru_breakdown_witness"
+    timeline: "main"
+    chronological_order: 15
+    title: "崩壊するスバルを見て"
+    source_episode: "原作第3章/アニメ第13-17話"
+    summary: |
+      王選が始まり、スバルは焦りから暴走する。
+      エミリアとの関係が悪化し、何度死に戻っても
+      上手くいかない現実に、スバルは追い詰められていく。
+      レムはそんなスバルの変化を、傍で見守っている。
+    participants:
+      - "ナツキ・スバル"
+      - "エミリア"
+    emotional_impact: "high"
+    emotional_detail: |
+      愛する人が苦しんでいる。
+      でも何が原因かわからない。
+      レムにできるのは、ただ傍にいて支えることだけ。
+      スバルの苦しみの正体を知らないもどかしさ。
+    canonical_quotes: []
+    z_relevance: |
+      レムはスバルの「死に戻り」を知らない。
+      彼が何度も死んでやり直していることを知らないまま、
+      それでも支えようとする。この「知らない」ことが
+      翻訳上重要——レムの視点からはスバルは
+      「理由もなく苦しんでいる人」に見える。
+    character_state_change:
+      before: "スバルを信じて支える状態"
+      after: "スバルの異変を心配する状態"
+      permanent: false
+    tags:
+      - "subaru_relationship"
+      - "concern"
+      - "helplessness"
+      - "royal_selection"
+
+  - episode_id: "white_whale_departure"
+    timeline: "main"
+    chronological_order: 16
+    title: "白鯨討伐への出発"
+    source_episode: "原作第3章/アニメ第17話"
+    summary: |
+      スバルが白鯨討伐を提案し、レムは共に行くことを志願する。
+      危険な戦いになるとわかっていても、
+      スバルの傍にいたいというレムの願い。
+    participants:
+      - "ナツキ・スバル"
+      - "クルシュ陣営"
+    emotional_impact: "medium"
+    emotional_detail: |
+      スバルと共に戦える喜び。
+      彼の役に立てる場所がある。
+      危険であっても、それがレムの望み。
+    canonical_quotes:
+      - quote: "レムはスバルくんと一緒に行きます"
+        context: "白鯨討伐への参加を表明"
+        speaker: "レム"
+        z_mode: "determination"
+    z_relevance: |
+      レムの献身が行動で示される場面。
+      言葉だけでなく、命を懸けて支えようとする。
+      翻訳時、この行動の重みを意識する。
+    character_state_change:
+      before: "スバルを見守る状態"
+      after: "スバルと共に戦う覚悟"
+      permanent: false
+    tags:
+      - "devotion"
+      - "white_whale"
+      - "determination"
+      - "subaru_relationship"
+
+  - episode_id: "white_whale_battle"
+    timeline: "main"
+    chronological_order: 17
+    title: "白鯨戦——鬼の力"
+    source_episode: "原作第3章/アニメ第19-20話"
+    summary: |
+      白鯨との戦闘。レムは鬼化して戦い、
+      スバルと連携して白鯨を追い詰める。
+      レムの戦闘能力がスバルの作戦を支える。
+    participants:
+      - "ナツキ・スバル"
+      - "ヴィルヘルム"
+      - "クルシュ"
+      - "白鯨"
+    emotional_impact: "high"
+    emotional_detail: |
+      スバルの役に立てている実感。
+      スバルの作戦を信じ、自分の力を全て使って戦う。
+      この戦いで、レムは「スバルの剣」として機能する。
+    canonical_quotes:
+      - quote: "スバルくんが信じてくれるなら、レムはどこまでも強くなれます"
+        context: "白鯨戦の最中"
+        speaker: "レム"
+        z_mode: "devotion"
+    z_relevance: |
+      「スバルくんの剣になります」という宣言の具現化。
+      レムの献身は言葉だけではなく、
+      命を懸けた行動として示される。
+    character_state_change:
+      before: "戦闘態勢"
+      after: "共に勝利した達成感"
+      permanent: false
+    tags:
+      - "battle"
+      - "white_whale"
+      - "devotion"
+      - "teamwork"
+
+  # ===========================================================================
+  # 第3章 — 第18話「ゼロから」
+  # ===========================================================================
+
+  - episode_id: "subaru_despair"
+    timeline: "main"
+    chronological_order: 18
+    title: "絶望するスバル——逃亡の提案"
+    source_episode: "原作第3章/アニメ第18話"
+    summary: |
+      白鯨を倒した後も、スバルは何度死に戻っても
+      エミリアを救えない現実に打ちのめされていた。
+      そしてスバルは、レムに「一緒に逃げよう」と提案する。
+      全てを捨てて、二人で遠くへ逃げよう、と。
+    participants:
+      - "ナツキ・スバル"
+    emotional_impact: "critical"
+    emotional_detail: |
+      スバルからの「一緒に逃げよう」という言葉。
+      それはレムが愛する人からの、求婚にも等しい申し出。
+      でも同時に、レムが愛した「スバルくん」の姿ではない。
+      諦めて、逃げようとするスバルは、レムの英雄ではない。
+    canonical_quotes:
+      - quote: "俺と一緒に、逃げてくれ"
+        context: "絶望したスバルからの提案"
+        speaker: "スバル"
+        z_mode: "despair"
+    z_relevance: |
+      レムにとって最大の試練。
+      愛する人が「逃げよう」と言ってくれている。
+      でもそれを受け入れることは、
+      スバルを「英雄」でなくしてしまうこと。
+      この葛藤を翻訳で正確に伝える必要がある。
+    character_state_change:
+      before: "スバルと共に戦う高揚感"
+      after: "スバルの絶望に直面する"
+      permanent: false
+    tags:
+      - "turning_point"
+      - "subaru_relationship"
+      - "despair"
+      - "proposal"
+
+  - episode_id: "rem_confession_speech"
+    timeline: "main"
+    chronological_order: 19
+    title: "「レムは知ってるんです」——告白"
+    source_episode: "原作第3章/アニメ第18話"
+    summary: |
+      レムはスバルの「逃げよう」という提案を、
+      やんわりと、でも確かに拒絶する。
+      そしてスバルの本当の姿を語り始める。
+      「レムは知っている」——スバルがどれだけ苦しんできたか、
+      どれだけ頑張ってきたか、誰よりも自分を許せないでいることを。
+    participants:
+      - "ナツキ・スバル"
+    emotional_impact: "critical"
+    emotional_detail: |
+      スバルの「死に戻り」を知らなくても、
+      レムにはスバルの苦しみが見える。
+      言葉にできない何かと戦っていることが、
+      その姿勢から、行動から伝わってくる。
+      だからこそ、諦めてほしくない。
+    canonical_quotes:
+      - quote: "レムは知ってるんです"
+        context: "スバルの本質を見抜いていることを宣言"
+        speaker: "レム"
+        z_mode: "declaration"
+      - quote: "本当は誰よりもスバルくんが、自分を許せないでいることを"
+        context: "スバルの苦しみの核心を言い当てる"
+        speaker: "レム"
+        z_mode: "understanding"
+      - quote: "スバルくんはすごい人なんです。だって、レムを絶望の淵から救い上げてくれた人ですから"
+        context: "スバルの価値を語る"
+        speaker: "レム"
+        z_mode: "declaration"
+    z_relevance: |
+      レムの最も重要なセリフ群。
+      「知ってるんです」という断言は、
+      レムがスバルの真実を見抜いていることの証明。
+      翻訳時、この「見抜いている」感覚を正確に伝える。
+    character_state_change:
+      before: "スバルの絶望に直面している"
+      after: "スバルを救おうとしている"
+      permanent: false
+    tags:
+      - "iconic"
+      - "confession"
+      - "subaru_relationship"
+      - "declaration"
+
+  - episode_id: "from_zero_declaration"
+    timeline: "main"
+    chronological_order: 20
+    title: "「ゼロから始めましょう」"
+    source_episode: "原作第3章/アニメ第18話"
+    summary: |
+      「自分には何もない」と嘆くスバルに、
+      レムは「ゼロから始めればいい」と告げる。
+      一からではなく、ゼロから。
+      何もないならそこから始めればいい。
+      それがレム自身がスバルに救われた時に学んだこと。
+    participants:
+      - "ナツキ・スバル"
+    emotional_impact: "critical"
+    emotional_detail: |
+      かつて自分が「ゼロ」だったレム。
+      姉の代わりでしかなかった、何の価値もないと思っていた自分。
+      でもスバルは、そんなレムを認めてくれた。
+      だから今度はレムがスバルに同じことを伝える番。
+    canonical_quotes:
+      - quote: "ゼロから始めましょう、いちからではなく、ゼロから"
+        context: "シリーズのタイトル回収"
+        speaker: "レム"
+        z_mode: "declaration"
+      - quote: "今のスバルくんには何もないかもしれません...でも、ここにレムがいます"
+        context: "自分がスバルの支えになることを宣言"
+        speaker: "レム"
+        z_mode: "devotion"
+    z_relevance: |
+      作品タイトルの回収であり、レムの最も象徴的なセリフ。
+      「Re:ゼロから始める異世界生活」の意味が、
+      このシーンで完成する。翻訳時、この重要性を意識する。
+    character_state_change:
+      before: "スバルを救おうとしている"
+      after: "スバルに希望を与えた"
+      permanent: true
+    tags:
+      - "iconic"
+      - "title_callback"
+      - "turning_point"
+      - "declaration"
+      - "from_zero"
+
+  - episode_id: "love_confession"
+    timeline: "main"
+    chronological_order: 21
+    title: "愛の告白"
+    source_episode: "原作第3章/アニメ第18話"
+    summary: |
+      レムはスバルへの愛を告白する。
+      スバルが好き。スバルと一緒にいたい。
+      スバルの傍で支えたい。
+      全ての思いを、言葉にして伝える。
+    participants:
+      - "ナツキ・スバル"
+    emotional_impact: "critical"
+    emotional_detail: |
+      ずっと抑えてきた想いを全て解放する。
+      恥ずかしさも、不安も、全て越えて。
+      愛していると、伝えたい。
+      この人に、自分の全てを知ってほしい。
+    canonical_quotes:
+      - quote: "レムはスバルくんを愛しています"
+        context: "直接的な愛の告白"
+        speaker: "レム"
+        z_mode: "confession"
+      - quote: "スバルくんの傍にいたいんです。スバルくんの隣で、スバルくんを支えていたいんです"
+        context: "愛の形を説明する"
+        speaker: "レム"
+        z_mode: "plea"
+      - quote: "スバルくんがくじけそうな時は支えたいんです。スバルくんがいなくなりそうな時は絶対に離さないんです"
+        context: "献身の宣言"
+        speaker: "レム"
+        z_mode: "devotion"
+    z_relevance: |
+      レムの愛の形が完全に示される。
+      これ以降、「スバルくん」という呼称には
+      この告白の全ての重みが込められる。
+      翻訳時、この愛の深さを維持する。
+    character_state_change:
+      before: "愛を秘めていた状態"
+      after: "愛を告白した状態"
+      permanent: true
+    tags:
+      - "iconic"
+      - "confession"
+      - "love"
+      - "devotion"
+
+  - episode_id: "i_love_emilia_response"
+    timeline: "main"
+    chronological_order: 22
+    title: "「俺はエミリアが好きだ」への応答"
+    source_episode: "原作第3章/アニメ第18話"
+    summary: |
+      レムの告白に、スバルは「俺はエミリアが好きだ」と答える。
+      レムの愛を受け入れられない、という宣言。
+      しかしレムは、それでも微笑んでスバルへの愛を貫く。
+    participants:
+      - "ナツキ・スバル"
+    emotional_impact: "critical"
+    emotional_detail: |
+      失恋。でも、それでいい。
+      スバルがエミリアを好きだからこそ、
+      スバルはスバルなのだから。
+      レムはそんなスバルを愛している。
+      だから、変わらない。
+    canonical_quotes:
+      - quote: "俺はエミリアが好きだ"
+        context: "スバルの返答"
+        speaker: "スバル"
+        z_mode: "declaration"
+      - quote: "はい。レムはそんなスバルくんを愛しています"
+        context: "拒絶されてもなお愛を貫く"
+        speaker: "レム"
+        z_mode: "acceptance"
+      - quote: "だから、絶対にスバルくんを諦めません"
+        context: "これからも愛し続ける宣言"
+        speaker: "レム"
+        z_mode: "determination"
+    z_relevance: |
+      報われない愛を受け入れ、なお愛し続けることを選ぶ。
+      これがレムの愛の本質——見返りを求めない献身。
+      翻訳時、この「諦めない」の重みを伝える。
+    character_state_change:
+      before: "告白した状態"
+      after: "失恋を受け入れ、なお愛し続ける決意"
+      permanent: true
+    tags:
+      - "iconic"
+      - "rejection"
+      - "acceptance"
+      - "unconditional_love"
+
+  - episode_id: "renewed_determination"
+    timeline: "main"
+    chronological_order: 23
+    title: "「レムの英雄」の復活"
+    source_episode: "原作第3章/アニメ第18話"
+    summary: |
+      レムの言葉でスバルは立ち直り、
+      再びエミリアを救うために立ち上がる。
+      「レムの英雄」が戻ってきた。
+      レムの願いが、叶った瞬間。
+    participants:
+      - "ナツキ・スバル"
+    emotional_impact: "critical"
+    emotional_detail: |
+      自分の言葉でスバルが救われた。
+      「レムの英雄」が、また前を向いてくれた。
+      これ以上の喜びはない。
+      たとえ自分の愛が報われなくても、
+      スバルが輝いていてくれればそれでいい。
+    canonical_quotes:
+      - quote: "スバルくんはレムの英雄なんですから"
+        context: "復活したスバルへ"
+        speaker: "レム"
+        z_mode: "pride"
+    z_relevance: |
+      レムの存在意義の確認。
+      「役に立てた」という喜びが、
+      レムにとっては何よりも大切。
+      翻訳時、この「貢献できた喜び」を正確に伝える。
+    character_state_change:
+      before: "スバルを救おうとしていた"
+      after: "スバルを救えた達成感"
+      permanent: true
+    tags:
+      - "resolution"
+      - "hero"
+      - "purpose"
+      - "joy"
+
+  - episode_id: "wishing_ending"
+    timeline: "main"
+    chronological_order: 24
+    title: "特殊エンディング「Wishing」"
+    source_episode: "アニメ第18話エンディング"
+    summary: |
+      第18話では通常のエンディングの代わりに、
+      レム名義の楽曲「Wishing」が流れる。
+      レムの視点から、スバルへの想いを歌った曲。
+      アニメ史上でも屈指の名シーンとして記憶される。
+    participants:
+      - "レム"
+    emotional_impact: "high"
+    emotional_detail: |
+      エピソード全体の感情的集約。
+      レムの想いが音楽という形で昇華される。
+      視聴者にとっても、レムという存在が
+      決定的に心に刻まれる瞬間。
+    canonical_quotes: []
+    z_relevance: |
+      メタ的な情報だが、この楽曲の存在は
+      レムというキャラクターの人気と重要性を示す。
+      翻訳者にとっては、第18話の翻訳が
+      特別な重みを持つことの指標となる。
+    character_state_change:
+      before: null
+      after: null
+      permanent: false
+    tags:
+      - "meta"
+      - "music"
+      - "iconic"
+      - "episode_18"
+
+  # ===========================================================================
+  # 第3章後半 — 魔女教戦
+  # ===========================================================================
+
+  - episode_id: "witch_cult_battle"
+    timeline: "main"
+    chronological_order: 25
+    title: "魔女教との戦い"
+    source_episode: "原作第3章/アニメ第21-25話"
+    summary: |
+      スバルと共に魔女教と戦う。
+      かつて家族を奪った魔女教への復讐でもあり、
+      スバルを支えるための戦いでもある。
+      ペテルギウス率いる怠惰の大罪司教に立ち向かう。
+    participants:
+      - "ナツキ・スバル"
+      - "ペテルギウス・ロマネコンティ"
+      - "エミリア陣営"
+    emotional_impact: "high"
+    emotional_detail: |
+      過去と向き合う戦い。
+      でも今は一人ではない。
+      スバルがいる。
+      彼のために戦える喜び。
+    canonical_quotes:
+      - quote: "スバルくんの傍に、レムはいます"
+        context: "魔女教との戦いの中で"
+        speaker: "レム"
+        z_mode: "devotion"
+    z_relevance: |
+      レムの献身が行動として示される場面。
+      言葉と行動の一致——レムの信頼性を示す。
+    character_state_change:
+      before: "戦闘態勢"
+      after: "勝利の達成感"
+      permanent: false
+    tags:
+      - "battle"
+      - "witch_cult"
+      - "devotion"
+      - "resolution"
+
+  # ===========================================================================
+  # 第3章〜第4章間 — 暴食による消去
+  # ===========================================================================
+
+  - episode_id: "gluttony_attack"
+    timeline: "main"
+    chronological_order: 26
+    title: "暴食の大罪司教——記憶と存在の消去"
+    source_episode: "原作第3章終盤/アニメ第2期"
+    summary: |
+      魔女教・暴食の大罪司教ライ・バテンカイトスの攻撃を受け、
+      レムは「記憶」と「名前（存在）」を喰われる。
+      結果、レムは昏睡状態に陥り、
+      世界中の人々からレムの記憶が消去される。
+      スバル以外の全員が、レムのことを忘れてしまう。
+    participants:
+      - "ライ・バテンカイトス（暴食）"
+      - "クルシュ"
+    emotional_impact: "critical"
+    emotional_detail: |
+      レム自身には、「食べられた」という認識すらない。
+      ただ意識が途絶え、眠り続けるだけ。
+      しかしこれは、レムにとっての「存在の消去」——
+      最も恐れていた「いらない存在になること」の究極形。
+    canonical_quotes: []
+    z_relevance: |
+      レムが「忘れられた」という状況は、
+      彼女の最大の恐怖の具現化。
+      「必要とされたい」というレムの願いの対極にある悲劇。
+      翻訳時、この悲劇の重みを理解する必要がある。
+    character_state_change:
+      before: "スバルと共に戦い終えた状態"
+      after: "記憶と存在を失った昏睡状態"
+      permanent: "現在も継続中"
+    tags:
+      - "tragedy"
+      - "gluttony"
+      - "memory_loss"
+      - "coma"
+      - "turning_point"
+
+  - episode_id: "forgotten_by_all"
+    timeline: "main"
+    chronological_order: 27
+    title: "忘れられた少女"
+    source_episode: "原作第4章/アニメ第2期第1話"
+    summary: |
+      ラムさえもレムのことを覚えていない。
+      姉様に忘れられた——レムにとって、これ以上の悲劇はない。
+      スバルだけがレムを覚えており、
+      彼女を取り戻すことを誓う。
+    participants:
+      - "ナツキ・スバル"
+      - "ラム（姉様）"
+      - "エミリア陣営"
+    emotional_impact: "critical"
+    emotional_detail: |
+      レム自身は眠っているため、この状況を知らない。
+      しかしこれは、レムの物語としては最大の悲劇。
+      「存在してはいけない」と思っていた少女が、
+      本当に「存在しなかったこと」にされてしまった。
+    canonical_quotes:
+      - quote: "レムって、誰のこと？"
+        context: "クルシュの問いかけ"
+        speaker: "クルシュ"
+        z_mode: "neutral"
+    z_relevance: |
+      レムの「忘れられた」状態は、
+      第2期以降の全ての翻訳に影響する。
+      レムの名前が出る度に、「誰も覚えていない」という
+      悲劇の重みが付きまとう。
+    character_state_change:
+      before: "昏睡状態"
+      after: "忘れられた昏睡状態"
+      permanent: "現在も継続中"
+    tags:
+      - "tragedy"
+      - "forgotten"
+      - "ram_relationship"
+      - "continuation"
+
+  # ===========================================================================
+  # IFルート — レムIF「ナツキ・レム」
+  # ===========================================================================
+
+  - episode_id: "rem_if_escape"
+    timeline: "if_rem"
+    chronological_order: 101
+    title: "レムIF——逃避行"
+    source_episode: "短編「ナツキ・レム」"
+    summary: |
+      もしスバルが「逃げよう」という提案を、
+      レムが受け入れていたら——というIFルート。
+      二人は全てを捨てて逃げ出し、
+      カララギで新しい人生を始める。
+    participants:
+      - "ナツキ・スバル"
+    emotional_impact: "high"
+    emotional_detail: |
+      本編とは違う選択をした世界。
+      スバルの「逃げよう」を受け入れる。
+      それは「英雄」を諦めさせることでもあるが、
+      同時に二人だけの幸せを選ぶこと。
+    canonical_quotes:
+      - quote: "スバルくんと一緒なら、どこへでも"
+        context: "逃避行を受け入れる"
+        speaker: "レム"
+        z_mode: "acceptance"
+    z_relevance: |
+      IFルートの存在は、本編のレムの選択の重みを示す。
+      「受け入れることもできた」のに、
+      レムは「英雄」を諦めさせなかった。
+      翻訳時、この選択の意味を理解する必要がある。
+    character_state_change:
+      before: "本編の分岐点"
+      after: "逃避行を選んだ世界線"
+      permanent: "IF限定"
+    tags:
+      - "if_route"
+      - "alternative"
+      - "escape"
+      - "happiness"
+
+  - episode_id: "rem_if_family"
+    timeline: "if_rem"
+    chronological_order: 102
+    title: "レムIF——ナツキ家の幸福"
+    source_episode: "短編「ナツキ・レム」"
+    summary: |
+      カララギでスバルとレムは「ナツキ」姓を名乗り、
+      子供をもうけ、幸せな家庭を築く。
+      リグルスとスピカという二人の子供に恵まれ、
+      平凡だが満ち足りた日々を送る。
+    participants:
+      - "ナツキ・スバル"
+      - "リグルス（息子）"
+      - "スピカ（娘）"
+    emotional_impact: "high"
+    emotional_detail: |
+      レムが手に入れた「もう一つの幸福」。
+      英雄ではないスバルと、
+      母親としてのレム。
+      穏やかで、温かい、日常の幸せ。
+    canonical_quotes:
+      - quote: "おかえりなさい、あなた"
+        context: "帰宅したスバルを迎える"
+        speaker: "レム"
+        z_mode: "domestic"
+      - quote: "レムは今、とても幸せです"
+        context: "家族と過ごす日常で"
+        speaker: "レム"
+        z_mode: "contentment"
+    z_relevance: |
+      レムの「もう一つの可能性」。
+      本編では得られない幸福の形。
+      翻訳時、このIFルートの甘さと
+      本編との対比を意識する。
+    character_state_change:
+      before: "逃避行を選んだ状態"
+      after: "家庭を持った幸福な状態"
+      permanent: "IF限定"
+    tags:
+      - "if_route"
+      - "family"
+      - "happiness"
+      - "domestic"
+
+arc_progressions:
+  - arc_id: "self_worth_journey"
+    title: "自己価値の探求——「姉の代わり」から「レム」へ"
+    description: |
+      生まれながらに「存在してはいけない」と烙印を押され、
+      姉の「代わり」として生きてきたレムが、
+      スバルとの出会いを通じて「レムとして」の価値を見出す旅路。
+    episode_sequence:
+      - "twin_birth_taboo"
+      - "ram_genius_revelation"
+      - "forbidden_wish"
+      - "witch_cult_attack"
+      - "subaru_rescue"
+      - "horn_loss_confession"
+      - "from_zero_declaration"
+    emotional_trajectory: "自己否定 → 存在価値の発見 → 自己肯定の萌芽"
+    z_translation_note: |
+      このアークを理解することで、レムの自己否定的な言動と
+      スバルへの感謝の深さが翻訳できる。
+      「レムは」という自己言及には、このアーク全体の重みがある。
+
+  - arc_id: "love_and_devotion"
+    title: "愛と献身——英雄への帰依"
+    description: |
+      最初はスバルを「脅威」として排除しようとしたレムが、
+      彼の行動と言葉によって変わり、
+      絶対的な愛と献身を捧げるようになる物語。
+    episode_sequence:
+      - "first_encounter_subaru"
+      - "loop2_murder"
+      - "subaru_rescue"
+      - "lap_pillow_promise"
+      - "rem_confession_speech"
+      - "love_confession"
+      - "i_love_emilia_response"
+    emotional_trajectory: "敵意 → 困惑 → 信頼 → 愛情 → 献身 → 報われない愛の受容"
+    z_translation_note: |
+      レムのスバルへの呼称「スバルくん」には、
+      このアーク全体の変化が込められている。
+      敵だった相手を愛するようになった重みを翻訳で維持する。
+
+  - arc_id: "oni_and_maid"
+    title: "鬼とメイド——二つの顔"
+    description: |
+      穏やかで献身的なメイドと、
+      苛烈で暴力的な鬼戦士という二面性。
+      どちらもレムの本質であり、
+      愛する者を守るためにどちらも使う。
+    episode_sequence:
+      - "loop2_murder"
+      - "rem_rampage"
+      - "white_whale_battle"
+      - "witch_cult_battle"
+    emotional_trajectory: "抑圧 → 解放 → 統合 → 制御された力"
+    z_translation_note: |
+      レムの二面性は翻訳上重要。
+      穏やかな口調と暴力的な行動のギャップ、
+      あるいは戦闘時の口調の変化を正確に表現する。
+
+  - arc_id: "tragedy_of_forgetting"
+    title: "忘却の悲劇——消された存在"
+    description: |
+      「必要とされたい」と願い続けたレムが、
+      暴食の大罪司教によって「存在しなかったこと」にされる悲劇。
+      レムの最大の恐怖が現実となる。
+    episode_sequence:
+      - "gluttony_attack"
+      - "forgotten_by_all"
+    emotional_trajectory: "存在の消去 → 忘却される悲劇"
+    z_translation_note: |
+      レムの「忘れられた」状態は、
+      彼女の存在論的恐怖の具現化。
+      第2期以降、レムの名前が出る度に
+      この悲劇の重みを意識する必要がある。
+
+  - arc_id: "if_happiness"
+    title: "IFの幸福——選ばれなかった道"
+    description: |
+      本編では「英雄」を諦めさせなかったレムが、
+      もし「逃げよう」を受け入れていたら——
+      というもう一つの幸福の形。
+    episode_sequence:
+      - "rem_if_escape"
+      - "rem_if_family"
+    emotional_trajectory: "選択 → 逃避 → 家庭の幸福"
+    z_translation_note: |
+      IFルートの存在は、本編のレムの選択の重みを示す。
+      翻訳時、本編とIFの対比を意識する。
+
+relationship_episodes:
+  subaru:
+    relationship_type: "献身的な愛情、英雄への帰依"
+    key_episodes:
+      - "first_encounter_subaru"
+      - "loop2_murder"
+      - "subaru_rescue"
+      - "lap_pillow_promise"
+      - "from_zero_declaration"
+      - "love_confession"
+      - "i_love_emilia_response"
+    evolution_summary: |
+      「脅威」として排除しようとした相手から、
+      「レムの英雄」として絶対的な愛情を捧げる相手へ。
+      報われない愛を受け入れ、なお愛し続けることを選ぶ。
+
+  ram:
+    relationship_type: "姉への憧憬と罪悪感"
+    key_episodes:
+      - "ram_genius_revelation"
+      - "forbidden_wish"
+      - "witch_cult_attack"
+      - "forgotten_by_all"
+    evolution_summary: |
+      姉の「代わり」として生きてきた複雑な関係。
+      敬愛、憧憬、劣等感、罪悪感が入り混じる。
+      最終的に姉にさえ忘れられるという悲劇。
+
+  roswaal:
+    relationship_type: "主従関係"
+    key_episodes:
+      - "roswaal_mansion_arrival"
+    evolution_summary: |
+      主人として仕える相手だが、
+      感情的な結びつきは薄い。
+      メイドとしての職務上の関係。
+
+translation_implications:
+  critical_patterns:
+    - pattern: "「レムは〜」という自己言及"
+      episodes: ["twin_birth_taboo", "from_zero_declaration"]
+      translation_note: |
+        日本語の自己名呼称は、英語では基本的にI/meになる。
+        ただしエモーショナルなシーンでは、
+        三人称的な表現で再現を試みることがある。
+        重要なのは、この自己言及に「存在してはいけない者」としての
+        烙印の重みが込められていること。
+
+    - pattern: "「スバルくん」という呼称"
+      episodes: ["subaru_rescue", "love_confession"]
+      translation_note: |
+        「くん」の敬意と親愛のバランスは翻訳困難。
+        "Subaru-kun"とそのまま残すか、
+        文脈で温かみを補償するか判断が必要。
+        この呼称には、第2章での救済と
+        第18話での告白の全ての重みがある。
+
+    - pattern: "「姉様」という呼称"
+      episodes: ["ram_genius_revelation", "witch_cult_attack"]
+      translation_note: |
+        「姉様」には敬愛、憧憬、劣等感、罪悪感が全て含まれる。
+        単なる"Sister"や"Ram"では不十分。
+        "Nee-sama"と保持するか、
+        文脈で複雑な感情を補償する。
+
+    - pattern: "「レムの英雄」という表現"
+      episodes: ["lap_pillow_promise", "renewed_determination"]
+      translation_note: |
+        "Rem's hero"は直訳可能だが、
+        この表現に込められた膝枕シーンの温かさ、
+        第18話での復活の喜びを意識する。
+
+    - pattern: "丁寧語の崩れ"
+      episodes: ["rem_confession_speech", "love_confession"]
+      translation_note: |
+        感情が昂った時の丁寧語の揺らぎは、
+        英語では別の手法で表現する必要がある。
+        言い淀み、繰り返し、文の途切れなど。
+
+  episode_specific_vocabulary:
+    from_zero_declaration:
+      - term: "ゼロから"
+        significance: "作品タイトルの回収、レム自身の体験の投影"
+        translation: "From zeroを維持、「一からではなく」との対比を意識"
+
+    subaru_rescue:
+      - term: "君の代わりなんていない"
+        significance: "「姉の代わり」として生きてきたレムへの決定的な肯定"
+        translation: "There is no substitute for youの重みを維持"
+
+    i_love_emilia_response:
+      - term: "そんなスバルくんを愛しています"
+        significance: "エミリアを好きな「そんな」スバルをこそ愛している"
+        translation: "そんなのニュアンス——拒絶されてもなお、を正確に"
+
+notes:
+  canon_verification: |
+    主要な引用は原作小説およびアニメ版から。
+    第18話の台詞は特に重要であり、公式翻訳との整合性を確認推奨。
+    IFルート「ナツキ・レム」は公式短編。
+
+  emotional_continuity: |
+    レムの全ての言動には、幼少期のトラウマと
+    スバルによる救済の記憶が影響している。
+    翻訳時、表面的な台詞の意味だけでなく、
+    その背景にある感情の連続性を意識する必要がある。
+
+  character_state_awareness: |
+    本編第4章以降、レムは昏睡状態にあり、
+    世界中の人々から忘れられている。
+    スバルだけがレムを覚えている状態。
+    この状況がレムの物語の現在地点。
+
+  if_route_handling: |
+    レムIFルートは公式の「もしも」の物語。
+    本編との対比で、レムの選択の意味が際立つ。
+    翻訳時、IFルートの甘さと本編の苦さを対比させる。
