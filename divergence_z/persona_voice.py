@@ -84,7 +84,7 @@ load_dotenv()
 # Configuration
 # =============================================================================
 
-DEFAULT_MODEL = "claude-opus-4-5-20251101"
+DEFAULT_MODEL = "claude-opus-4-6"
 DEFAULT_BUDGET_TOKENS = 10000  # Extended Thinking の budget
 
 # ─────────────────────────────────────────────
