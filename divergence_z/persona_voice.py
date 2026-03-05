@@ -424,6 +424,17 @@ def format_persona_summary(persona_data: Dict[str, Any]) -> str:
     return yaml.dump(persona_data, allow_unicode=True, default_flow_style=False)
 
 
+def safe_first_line(val) -> str:
+    """YAML値がdict/list/strどれでも安全に1行テキストを返す。"""
+    if val is None:
+        return ""
+    if isinstance(val, dict):
+        return " / ".join(str(v) for v in val.values() if v)
+    if isinstance(val, list):
+        return " / ".join(str(v) for v in val if v)
+    return str(val).strip().split("\n")[0]
+
+
 def format_episode_context(episode_data: Dict[str, Any]) -> str:
     """
     Episode YAMLをExtended Thinking用にフォーマット。
@@ -444,8 +455,8 @@ def format_episode_context(episode_data: Dict[str, Any]) -> str:
         title = ep.get("title", "")
         timeline = ep.get("timeline", "")
         impact = ep.get("emotional_impact", "")
-        summary = ep.get("summary", "").strip().split("\n")[0]  # 最初の1行
-        z_rel = ep.get("z_relevance", "").strip().split("\n")[0]  # 最初の1行
+        summary = safe_first_line(ep.get("summary", ""))
+        z_rel = safe_first_line(ep.get("z_relevance", ""))
         
         lines.append(f"### {title} [{timeline}] ({impact})")
         lines.append(f"  {summary}")
@@ -466,7 +477,7 @@ def format_episode_context(episode_data: Dict[str, Any]) -> str:
         lines.append("### 成長の軌跡（Cross-Episode Arcs）")
         for arc in arcs:
             arc_title = arc.get("arc_title", "")
-            arc_summary = arc.get("arc_summary", "").strip().split("\n")[0]
+            arc_summary = safe_first_line(arc.get("arc_summary", ""))
             lines.append(f"  - {arc_title}: {arc_summary}")
         lines.append("")
     
