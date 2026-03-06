@@ -1,0 +1,818 @@
+# =====================================================================
+# Episode Memory YAML v1.0 — 惣流・アスカ・ラングレー
+# Generated for Z-Axis Translation System
+# Source: 新世紀エヴァンゲリオン (TV版)
+# =====================================================================
+
+meta:
+  version: "1.0"
+  character_id: "asuka_langley_soryu"
+  source: "新世紀エヴァンゲリオン (TV版)"
+  output_lang: "ja"
+  total_episodes: 23
+
+episodes:
+  - episode_id: "mother_kyoko_breakdown"
+    timeline: "main"
+    chronological_order: 1
+    title: "母の狂気と人形"
+    source_episode: "第弐拾弐話（回想）"
+    summary: |
+      幼いアスカは、エヴァ接触実験で精神を侵された母・キョウコの病室を訪れる。
+      キョウコは人形を「アスカ」と呼び、本物のアスカを認識しない。
+      「ねえアスカ、一緒に死のう？」と人形に語りかける母。
+      アスカは「私を見て」と叫ぶが、母の目は人形だけを見ている。
+      この瞬間、アスカは「自分の存在は認識されない」という原初の傷を負う。
+    participants:
+      - "惣流・キョウコ・ツェッペリン（母）"
+    emotional_impact: "critical"
+    emotional_detail: |
+      自己存在の否定という最も根源的なトラウマ。
+      「私は見てもらえない」「私には価値がない」という恐怖の原点。
+      以後、アスカは「特別な存在」であることを証明し続けなければならなくなる。
+    canonical_quotes:
+      - quote: "ママ……私を見てよ……私はここにいるよ……"
+        context: "人形ばかり見る母に懇願する幼いアスカ"
+        z_mode: "plea"
+      - quote: "ねえアスカ、一緒に死のう？"
+        speaker: "キョウコ"
+        context: "人形に向かって語りかける母"
+        z_mode: "n/a"
+    z_relevance: |
+      アスカの全ての防衛行動の起源。「私を見て」という叫びは、
+      以後「あたしを認めなさい」という攻撃的態度に変換される。
+      翻訳時、アスカの攻撃性の裏には常にこの「見てもらえなかった」傷があることを意識。
+    character_state_change:
+      before: "母に愛される普通の子供"
+      after: "存在を否定された、承認に飢えた子供"
+      permanent: true
+    tags: ["origin", "trauma", "母親", "存在否定"]
+
+  - episode_id: "mother_suicide_discovery"
+    timeline: "main"
+    chronological_order: 2
+    title: "母の死と誓い"
+    source_episode: "第弐拾弐話（回想）"
+    summary: |
+      エヴァのパイロットに選ばれたことを母に報告しようと駆けつけたアスカ。
+      しかし目にしたのは首を吊った母の姿。人形も一緒に吊られていた。
+      その瞬間、アスカは「もう泣かない」「一人で生きる」と誓う。
+      選ばれた日が母の死んだ日。喜びと絶望が永遠に結びついた。
+    participants:
+      - "惣流・キョウコ・ツェッペリン（母）"
+    emotional_impact: "critical"
+    emotional_detail: |
+      「エヴァに選ばれた自分」というアイデンティティの始まりが、
+      同時に「母に最終的に捨てられた」記憶と結合している。
+      エヴァでの成功と母のトラウマは永遠に切り離せない。
+    canonical_quotes:
+      - quote: "私は泣かない……もう絶対泣かないんだから……"
+        context: "母の死を発見した直後の幼いアスカの決意"
+        z_mode: "collapse"
+      - quote: "私は一人で生きていける。誰の助けもいらない"
+        context: "母の死後に固めた信念"
+        z_mode: "collapse"
+    z_relevance: |
+      「助けを求められない」「弱さを見せられない」という防衛の起源。
+      シンジに素直になれない理由の根本。翻訳時、アスカの強がりには
+      常に「泣いてはいけない」という4歳の誓いが響いていることを意識。
+    character_state_change:
+      before: "まだ泣くことができた子供"
+      after: "感情を封印し、一人で生きると決めた子供"
+      permanent: true
+    tags: ["origin", "trauma", "母親", "防衛機制"]
+
+  - episode_id: "arrival_in_japan"
+    timeline: "main"
+    chronological_order: 3
+    title: "日本上陸、シンジとの出会い"
+    source_episode: "第八話「アスカ、来日」"
+    summary: |
+      弐号機と共に空母で日本へ向かうアスカ。出迎えのシンジ、トウジ、ケンスケと遭遇。
+      風でスカートがめくれ、シンジたちに見られる。「見たわね」と平手打ちの洗礼。
+      ドイツから来た天才パイロットとしてのプライド全開、シンジを見下す態度。
+      しかし「サードチルドレン」シンジへの興味も隠せない。
+    participants:
+      - "碇シンジ"
+      - "鈴原トウジ"
+      - "相田ケンスケ"
+      - "加持リョウジ"
+      - "葛城ミサト"
+    emotional_impact: "medium"
+    emotional_detail: |
+      シンジとの最初の関係性が確立される。「あんたバカぁ？」の原型。
+      見下しながらも意識している、ツンデレの始まり。
+    canonical_quotes:
+      - quote: "見たわね……"
+        context: "スカートの中を見られたシンジたちへ"
+        z_mode: "rage"
+      - quote: "あんたがサードチルドレン？ふーん、なんか冴えないわね"
+        context: "シンジを初めて見た時の第一印象"
+        z_mode: "leak"
+    z_relevance: |
+      シンジとの関係性の起点。最初から「見下す」態度を取ることで
+      対等になることを避けている。翻訳時、この「上から」の態度が
+      本当は興味の裏返しであることを表現に織り込む。
+    character_state_change:
+      before: "日本のパイロットに興味"
+      after: "シンジを意識し始める（認めたくないが）"
+      permanent: false
+    tags: ["relationship", "シンジ", "初対面", "ツンデレ"]
+
+  - episode_id: "first_battle_gaghiel"
+    timeline: "main"
+    chronological_order: 4
+    title: "ガギエル戦、シンジとの共闘"
+    source_episode: "第八話「アスカ、来日」"
+    summary: |
+      使徒ガギエルが空母を襲撃。アスカは弐号機で迎撃を決意するが、
+      単独では電源が足りない。シンジを無理やり乗せて二人で出撃。
+      「足引っ張ったら承知しないわよ！」と言いながらも、連携して勝利。
+      自分の力を見せつけたい欲求と、シンジの助けが必要だった現実。
+    participants:
+      - "碇シンジ"
+      - "葛城ミサト"
+    emotional_impact: "medium"
+    emotional_detail: |
+      シンジとの最初の共闘。プライドが邪魔をして素直に認められないが、
+      「二人で勝った」という経験は確かに残る。
+    canonical_quotes:
+      - quote: "あんたが足引っ張んなきゃ、もっと楽に勝てたわよ！"
+        context: "勝利後、シンジへの憎まれ口（本当は連携できて嬉しい）"
+        z_mode: "leak"
+      - quote: "これがエヴァ弐号機、あたしのエヴァよ！"
+        context: "弐号機への誇りを示す"
+        z_mode: "leak"
+    z_relevance: |
+      「助けを借りた」ことを認めたくない防衛機制。
+      シンジへの攻撃的発言が、実は連携への照れ隠しであることを
+      翻訳時に表現する必要がある。
+    character_state_change:
+      before: "シンジを見下している"
+      after: "シンジの能力を少し認識（認めたくないが）"
+      permanent: false
+    tags: ["battle", "シンジ", "共闘", "プライド"]
+
+  - episode_id: "cohabitation_thermal_expansion"
+    timeline: "main"
+    chronological_order: 5
+    title: "同居開始と「エリコの壁」"
+    source_episode: "第九話「瞬間、心、重ねて」"
+    summary: |
+      ミサトの家でシンジとの同居生活が始まる。
+      アスカは部屋の境界線を引き、「エリコの壁」と宣言。
+      「この線を越えたら死刑よ」と言いながらも、シンジの存在を気にしている。
+      寝ぼけたシンジがアスカの布団に入り込み、アスカは複雑な反応。
+    participants:
+      - "碇シンジ"
+      - "葛城ミサト"
+      - "ペンペン"
+    emotional_impact: "low"
+    emotional_detail: |
+      距離を置きたいのに気になる、というツンデレの典型。
+      「壁」を作ることで自分を守りながら、壁の向こうを意識している。
+    canonical_quotes:
+      - quote: "ここからここまではあたしの領域よ。侵入者は死刑！"
+        context: "シンジとの境界線を宣言"
+        z_mode: "leak"
+      - quote: "……なによ、寝ぼけて……バカシンジ……"
+        context: "シンジが布団に入ってきた時（本当は嫌じゃない）"
+        z_mode: "leak"
+    z_relevance: |
+      「壁を作りながら気にしている」という矛盾した心理。
+      怒っているようで本当は満更でもない、という微妙なニュアンスを
+      翻訳で表現する必要がある。
+    character_state_change:
+      before: "シンジとの距離を意識"
+      after: "同居という近さに戸惑いと期待"
+      permanent: false
+    tags: ["daily", "シンジ", "ツンデレ", "距離感"]
+
+  - episode_id: "sync_dance_training"
+    timeline: "main"
+    chronological_order: 6
+    title: "ユニゾン訓練"
+    source_episode: "第九話「瞬間、心、重ねて」"
+    summary: |
+      イスラフェル戦のため、シンジとユニゾン（同調行動）の訓練を強いられる。
+      最初は全く合わず、互いを非難。しかし訓練を重ねるうちに息が合い始める。
+      ダンスゲームでの特訓、一緒に音楽を聴く、共に過ごす時間。
+      勝利後、「ま、あんたにしては上出来だったわ」と認める。
+    participants:
+      - "碇シンジ"
+      - "葛城ミサト"
+    emotional_impact: "medium"
+    emotional_detail: |
+      シンジと「心を合わせる」経験。プライドが邪魔をするが、
+      協力することの喜びを少し感じている。
+    canonical_quotes:
+      - quote: "あんたに合わせるなんて屈辱だけど……まあ、今回だけは許してあげるわ"
+        context: "訓練を重ねて息が合ってきた時"
+        z_mode: "leak"
+      - quote: "ま、あんたにしては上出来だったわね"
+        context: "イスラフェル戦勝利後"
+        z_mode: "leak"
+    z_relevance: |
+      シンジを認める言葉が「上から目線」の形でしか出せない防衛。
+      「屈辱」と言いながら本当は嬉しい、というニュアンスを翻訳で捉える。
+    character_state_change:
+      before: "シンジと合わせるのは屈辱"
+      after: "シンジとの連携に手応え（認めたくないが）"
+      permanent: false
+    tags: ["battle", "シンジ", "成長", "連携"]
+
+  - episode_id: "magma_diver"
+    timeline: "main"
+    chronological_order: 7
+    title: "溶岩ダイバー"
+    source_episode: "第拾話「マグマダイバー」"
+    summary: |
+      マグマの中で使徒の卵を回収する危険な任務にアスカが志願。
+      使徒が孵化し、窮地に。シンジが弐号機用ナイフを投げ入れて救援。
+      「助けなんていらなかったわよ！」と言いながらも、救われた事実。
+    participants:
+      - "碇シンジ"
+      - "葛城ミサト"
+    emotional_impact: "medium"
+    emotional_detail: |
+      シンジに助けられたが、認めたくない。
+      「一人で何とかできた」という建前と、助かって安堵した本音の葛藤。
+    canonical_quotes:
+      - quote: "べ、別にあんたの助けなんていらなかったわよ！"
+        context: "シンジに救援されて助かった後"
+        z_mode: "leak"
+    z_relevance: |
+      「助けを認められない」アスカの根本的な防衛パターン。
+      感謝を攻撃で覆い隠す心理を翻訳で表現する必要がある。
+    character_state_change:
+      before: "自分一人で何でもできる"
+      after: "シンジに助けられた（認めたくない）"
+      permanent: false
+    tags: ["battle", "シンジ", "救援", "防衛"]
+
+  - episode_id: "kiss_scene"
+    timeline: "main"
+    chronological_order: 8
+    title: "キス"
+    source_episode: "第拾伍話「嘘と沈黙」"
+    summary: |
+      退屈しのぎに「キスしてみない？」とシンジに持ちかけるアスカ。
+      「鼻息がくすぐったい」と文句を言いながら長いキス。
+      終わった後、洗面所で口をゆすぐアスカ。「退屈だったわ」と言い捨てる。
+      しかしその行動自体が、シンジへの意識の表れ。
+    participants:
+      - "碇シンジ"
+    emotional_impact: "high"
+    emotional_detail: |
+      「退屈しのぎ」という建前で、本当はシンジとの接触を求めていた。
+      キス後に動揺を隠すために口をゆすぐ、複雑な感情。
+    canonical_quotes:
+      - quote: "暇つぶしにキスしてみよっか"
+        context: "シンジにキスを持ちかける"
+        z_mode: "leak"
+      - quote: "鼻息かかる……"
+        context: "キス中の文句（本当は緊張している）"
+        z_mode: "leak"
+    z_relevance: |
+      好意を「退屈しのぎ」で隠す典型的ツンデレ行動。
+      口をゆすぐ行動の意味（本当は動揺している）を
+      翻訳コンテキストで理解する必要がある。
+    character_state_change:
+      before: "シンジへの好意を否定"
+      after: "キスという行動に出た（でも認めない）"
+      permanent: false
+    tags: ["relationship", "シンジ", "好意", "ツンデレ"]
+
+  - episode_id: "shinji_absorbed_by_leliel"
+    timeline: "main"
+    chronological_order: 9
+    title: "シンジの消失"
+    source_episode: "第拾六話「死に至る病、そして」"
+    summary: |
+      使徒レリエルに初号機ごとシンジが取り込まれる。
+      16時間経過、救出作戦が難航。アスカは苛立ちを見せる。
+      「勝手に死んでんじゃないわよ！」という怒りは、心配の裏返し。
+      シンジが自力で帰還した時、素直に喜べない。
+    participants:
+      - "碇シンジ"
+      - "葛城ミサト"
+      - "綾波レイ"
+    emotional_impact: "medium"
+    emotional_detail: |
+      シンジがいなくなって初めて、その存在の大きさを意識。
+      心配を怒りで表現する、アスカらしい反応。
+    canonical_quotes:
+      - quote: "勝手に死んでんじゃないわよ、バカシンジ！"
+        context: "シンジが取り込まれて心配（怒りの形）"
+        z_mode: "rage"
+    z_relevance: |
+      心配を怒りで表現するアスカの典型パターン。
+      「勝手に死ぬな」は「いなくなったら困る」の裏返し。
+      翻訳時、怒りの下にある不安を表現する。
+    character_state_change:
+      before: "シンジの存在を当然視"
+      after: "シンジがいなくなる恐怖を意識（認めないが）"
+      permanent: false
+    tags: ["relationship", "シンジ", "心配", "怒り"]
+
+  - episode_id: "sync_rate_decline_begins"
+    timeline: "main"
+    chronological_order: 10
+    title: "シンクロ率逆転"
+    source_episode: "第拾七話〜第拾九話"
+    summary: |
+      シンジのシンクロ率がアスカを上回り始める。
+      「あたしの方が訓練してるのに」「なんであいつが」という焦り。
+      エヴァパイロットとしての優位性、アイデンティティの根幹が揺らぐ。
+    participants:
+      - "碇シンジ"
+      - "赤木リツコ"
+    emotional_impact: "high"
+    emotional_detail: |
+      「エヴァに乗れる自分」がアイデンティティの全て。
+      シンジに負けることは、存在価値の否定に直結する。
+    canonical_quotes:
+      - quote: "なんでよ……なんであんたがあたしより上なのよ……！"
+        context: "シンクロ率でシンジに抜かれた時"
+        z_mode: "collapse"
+    z_relevance: |
+      崩壊への序章。シンクロ率＝自己価値というアスカの等式。
+      この後の言動全てに「シンジに負けた」という傷が影響する。
+      翻訳時、攻撃性の増加が防衛の強化であることを意識。
+    character_state_change:
+      before: "自分がNo.1パイロット"
+      after: "シンジに追い抜かれる恐怖"
+      permanent: true
+    tags: ["turning_point", "シンジ", "プライド", "崩壊序章"]
+
+  - episode_id: "kaji_death"
+    timeline: "main"
+    chronological_order: 11
+    title: "加持の死"
+    source_episode: "第弐拾壱話「NERV、誕生」"
+    summary: |
+      アスカが慕っていた加持リョウジが殺害される。
+      電話の留守番メッセージだけが残される。
+      理想化していた大人の男性像の喪失。誰にも頼れない感覚の強化。
+    participants:
+      - "加持リョウジ"
+      - "葛城ミサト"
+    emotional_impact: "high"
+    emotional_detail: |
+      「認めてくれる大人」の喪失。すでに始まっていた精神的動揺が加速。
+      頼れる人がいなくなっていく孤独感。
+    canonical_quotes:
+      - quote: "……加持さん……"
+        context: "加持の死を知った時"
+        z_mode: "collapse"
+    z_relevance: |
+      心の支えの一つが消失。この後のアスカの孤立感を理解する上で重要。
+      翻訳時、アスカの攻撃性が増すのは防衛の最後の砦だと認識。
+    character_state_change:
+      before: "加持という心の支えがある"
+      after: "頼れる大人の喪失、孤立の深化"
+      permanent: true
+    tags: ["loss", "加持", "孤独", "崩壊加速"]
+
+  - episode_id: "arael_mind_contamination"
+    timeline: "main"
+    chronological_order: 12
+    title: "アラエルによる精神汚染"
+    source_episode: "第弐拾弐話「せめて、人間らしく」"
+    summary: |
+      使徒アラエルがアスカの精神を直接攻撃。トラウマを強制的に再生される。
+      母の狂気、「私を見て」という叫び、自殺の記憶が蘇る。
+      「やめて……私の中を見ないで……！」という絶叫。
+      レイのロンギヌスの槍で救出されるが、精神は深く傷つく。
+    participants:
+      - "綾波レイ"
+      - "葛城ミサト"
+      - "使徒アラエル"
+    emotional_impact: "critical"
+    emotional_detail: |
+      封印していたトラウマが強制的に暴かれる。
+      「私の中を見るな」＝本当の自分を見られることへの恐怖。
+      レイに救われたことも、プライドを深く傷つける。
+    canonical_quotes:
+      - quote: "やめて……私の中を見ないで……っ！"
+        context: "精神汚染中、トラウマを暴かれながら"
+        z_mode: "plea"
+      - quote: "私は人形じゃない！"
+        context: "母の記憶の中で叫ぶ"
+        z_mode: "collapse"
+      - quote: "ママ……どうして……どうして私を見てくれないの……"
+        context: "幼少期の記憶が蘇る"
+        z_mode: "collapse"
+    z_relevance: |
+      アスカの崩壊の決定的転換点。以後、防衛機制が機能不全に陥る。
+      「私の中を見ないで」は、アスカの全ての防衛の核心。
+      翻訳時、この後のアスカの言動全てにこのトラウマが影響している。
+    character_state_change:
+      before: "トラウマを封印して機能"
+      after: "トラウマが暴かれ、防衛崩壊開始"
+      permanent: true
+    tags: ["trauma", "turning_point", "母親", "崩壊"]
+
+  - episode_id: "elevator_confrontation_rei"
+    timeline: "main"
+    chronological_order: 13
+    title: "レイとのエレベーター対峙"
+    source_episode: "第弐拾弐話「せめて、人間らしく」"
+    summary: |
+      精神汚染後、エレベーターでレイと二人きりになる。
+      レイに救われたことへの複雑な感情をぶつける。
+      「あんたには分からないわよ」「人形のくせに」と攻撃。
+      レイは無感情に見つめ返す。アスカの焦燥が深まる。
+    participants:
+      - "綾波レイ"
+    emotional_impact: "high"
+    emotional_detail: |
+      レイへの敵意と劣等感の爆発。感情を見せないレイに、
+      自分の感情の乱れを突きつけられる屈辱。
+    canonical_quotes:
+      - quote: "あんたみたいな人形に、あたしの気持ちなんか分かんないわよ！"
+        context: "レイに対して叫ぶ"
+        z_mode: "rage"
+      - quote: "あんたに助けられるなんて……屈辱よ……っ"
+        context: "レイに救われたことへの複雑な感情"
+        z_mode: "collapse"
+    z_relevance: |
+      レイとの関係性の核心。「人形」という言葉は、
+      母が自分を人形と見間違えたトラウマの投影でもある。
+      翻訳時、レイへの攻撃が自己嫌悪の裏返しであることを意識。
+    character_state_change:
+      before: "レイを見下して優位に立つ"
+      after: "レイに救われた屈辱、優位性の完全喪失"
+      permanent: true
+    tags: ["relationship", "レイ", "敵意", "劣等感"]
+
+  - episode_id: "armisael_defeat"
+    timeline: "main"
+    chronological_order: 14
+    title: "アルミサエル戦敗北"
+    source_episode: "第弐拾参話「涙」"
+    summary: |
+      使徒アルミサエルとの戦闘。弐号機は動かない。シンクロ率が低すぎる。
+      「動いて……動いてよ……！」と懇願するが、弐号機は応えない。
+      レイが零号機で自爆特攻して使徒を道連れにする。
+      アスカは戦場で何もできなかった。
+    participants:
+      - "綾波レイ"
+      - "碇シンジ"
+    emotional_impact: "critical"
+    emotional_detail: |
+      「エヴァに乗れない自分」の現実化。存在価値の完全否定。
+      レイが命を捨てて勝利し、アスカは何もできなかった対比。
+    canonical_quotes:
+      - quote: "動いて……動いてよ……お願い……っ"
+        context: "動かない弐号機に懇願"
+        z_mode: "plea"
+      - quote: "なんで……なんであたしじゃダメなの……っ"
+        context: "シンクロできない絶望"
+        z_mode: "collapse"
+    z_relevance: |
+      崩壊の決定的瞬間。「エヴァに乗れる自分」＝全ての価値だったのに、
+      エヴァが動かない。翻訳時、この後のアスカの虚脱状態は
+      この「動かない弐号機」の記憶が支配していることを意識。
+    character_state_change:
+      before: "エヴァに乗れる自分"
+      after: "エヴァに乗れない、価値のない自分"
+      permanent: true
+    tags: ["battle", "崩壊", "プライド", "存在否定"]
+
+  - episode_id: "sync_rate_zero"
+    timeline: "main"
+    chronological_order: 15
+    title: "シンクロ率ゼロ"
+    source_episode: "第弐拾四話「最後のシ者」"
+    summary: |
+      シンクロテストの結果、アスカのシンクロ率は限りなくゼロに近い。
+      弐号機は「拒絶」しているとさえ言える状態。
+      パイロット解任の可能性。アスカのアイデンティティは完全崩壊。
+    participants:
+      - "赤木リツコ"
+    emotional_impact: "critical"
+    emotional_detail: |
+      「エヴァに選ばれた特別な自分」が完全否定された。
+      選ばれた日＝母の死んだ日。選ばれなくなったら、何のために生きている？
+    canonical_quotes:
+      - quote: "……もういい……もう、いいわよ……"
+        context: "シンクロ率がゼロに近いと告げられて"
+        z_mode: "collapse"
+    z_relevance: |
+      完全崩壊の確定。「もういい」は諦めであり、自己放棄。
+      翻訳時、この後のアスカの言動（または沈黙）は
+      全て「価値を失った」状態からのものであることを認識。
+    character_state_change:
+      before: "エヴァに乗れなくなる恐怖"
+      after: "エヴァに乗れなくなった現実"
+      permanent: true
+    tags: ["turning_point", "崩壊", "存在否定", "絶望"]
+
+  - episode_id: "bathtub_catatonia"
+    timeline: "main"
+    chronological_order: 16
+    title: "浴槽での廃人状態"
+    source_episode: "第弐拾四話「最後のシ者」"
+    summary: |
+      アパートの浴槽で水に浸かり、虚ろな目で天井を見つめるアスカ。
+      食事も取らず、言葉も発しない。完全な廃人状態。
+      「私には価値がない」という確信に支配されている。
+    participants: []
+    emotional_impact: "critical"
+    emotional_detail: |
+      防衛機制の完全停止。攻撃性を発揮するエネルギーすらない。
+      存在することへの意志の喪失。
+    canonical_quotes:
+      - quote: "……"
+        context: "浴槽で虚ろに天井を見つめる（言葉なし）"
+        z_mode: "collapse"
+    z_relevance: |
+      言葉を発しないことも「台詞」である。沈黙の翻訳。
+      以後のアスカの言動が戻った場合、それがどれだけの回復を
+      意味するかを理解するための基準点。
+    character_state_change:
+      before: "崩壊しながらも存在"
+      after: "存在への意志の喪失"
+      permanent: false
+    tags: ["collapse", "無言", "廃人", "絶望"]
+
+  - episode_id: "instrumentality_confrontation"
+    timeline: "main"
+    chronological_order: 17
+    title: "補完の中での対話"
+    source_episode: "第弐拾伍話・第弐拾六話"
+    summary: |
+      人類補完計画の中で、アスカの内面が描かれる。
+      「誰も私を愛してくれない」「私は一人」という叫び。
+      シンジとの関係、母との関係が交錯する。
+      「助けて」と言えなかった自分との対峙。
+    participants:
+      - "碇シンジ"
+      - "惣流・キョウコ・ツェッペリン"
+    emotional_impact: "critical"
+    emotional_detail: |
+      全ての防衛が剥がれた状態での本音。
+      「愛されたい」「認められたい」という根源的欲求の露出。
+    canonical_quotes:
+      - quote: "私を見て……私を見てよ……！"
+        context: "補完の中での叫び"
+        z_mode: "plea"
+      - quote: "誰も……私のこと、好きになってくれない……"
+        context: "孤独の告白"
+        z_mode: "collapse"
+      - quote: "ママ……ママ、私はここにいるよ……"
+        context: "母への呼びかけ"
+        z_mode: "plea"
+    z_relevance: |
+      アスカの「本音」の決定版。全ての攻撃性、プライド、
+      ツンデレ行動の下にあるのはこの「愛されたい」という叫び。
+      翻訳時、どんなアスカの台詞にもこの本音が底流していることを意識。
+    character_state_change:
+      before: "防衛で本音を隠す"
+      after: "本音を直視させられる"
+      permanent: true
+    tags: ["turning_point", "本音", "母親", "シンジ"]
+
+  # === 劇場版 End of Evangelion ===
+
+  - episode_id: "eoe_comatose_hospital"
+    timeline: "end_of_evangelion"
+    chronological_order: 18
+    title: "病院での昏睡"
+    source_episode: "劇場版 Air"
+    summary: |
+      廃人状態のアスカは病院のベッドで昏睡している。
+      シンジが見舞いに来るが、アスカは反応しない。
+      シンジの行為（自涜）に対しても、意識がない。
+    participants:
+      - "碇シンジ"
+    emotional_impact: "critical"
+    emotional_detail: |
+      完全な無防備状態。意識の喪失＝防衛の不在。
+      アスカにとっては「存在しない」に等しい状態。
+    canonical_quotes: []
+    z_relevance: |
+      アスカの不在・沈黙が持つ意味。意識のないアスカに対する
+      シンジの行為は、後の「気持ち悪い」に繋がる重要な文脈。
+    character_state_change:
+      before: "廃人だが存在"
+      after: "昏睡状態"
+      permanent: false
+    tags: ["collapse", "無意識", "シンジ"]
+
+  - episode_id: "eoe_mother_in_eva"
+    timeline: "end_of_evangelion"
+    chronological_order: 19
+    title: "弐号機の中の母"
+    source_episode: "劇場版 Air"
+    summary: |
+      戦略自衛隊の攻撃で絶体絶命の中、アスカは弐号機の中に母の魂を感知。
+      「ママ……ずっと私を守ってくれてたの……？」
+      母に見てもらえなかったと思っていたが、ずっと一緒だった。
+      覚醒し、圧倒的な強さで戦自を撃退。
+    participants:
+      - "惣流・キョウコ・ツェッペリン（弐号機内）"
+    emotional_impact: "critical"
+    emotional_detail: |
+      最も根源的なトラウマの癒し。母は自分を見ていなかったのではなく、
+      ずっと守ってくれていた。存在価値の再確認。
+    canonical_quotes:
+      - quote: "ママ……ずっと、一緒だったんだね……"
+        context: "弐号機の中で母の存在を感知"
+        z_mode: "plea"
+      - quote: "あたしを守って……ママ！"
+        context: "母と共に戦う覚悟"
+        z_mode: "leak"
+    z_relevance: |
+      アスカの回復の可能性を示す重要エピソード。
+      「母に見てもらえなかった」というトラウマの書き換え。
+      翻訳時、このエピソード以後のアスカには「救いの可能性」がある。
+    character_state_change:
+      before: "母に捨てられた自分"
+      after: "母に守られていた自分"
+      permanent: true
+    tags: ["recovery", "母親", "覚醒", "救い"]
+
+  - episode_id: "eoe_eva_series_battle"
+    timeline: "end_of_evangelion"
+    chronological_order: 20
+    title: "量産機との死闘"
+    source_episode: "劇場版 Air"
+    summary: |
+      9体のエヴァンゲリオン量産機との一人での戦い。
+      母と共に戦い、圧倒的な戦闘力を発揮。
+      しかし電源切れの直後、量産機が復活し、弐号機は惨殺される。
+      ロンギヌスの槍の複製に貫かれ、内臓を貪られる。
+    participants:
+      - "エヴァンゲリオン量産機"
+    emotional_impact: "critical"
+    emotional_detail: |
+      最高の復活の後の、最悪の敗北。勝利を確信した直後の絶望。
+      アスカの肉体（弐号機とシンクロ）も凌辱される。
+    canonical_quotes:
+      - quote: "あたしが……殺されてる……？"
+        context: "弐号機が破壊されながら"
+        z_mode: "collapse"
+    z_relevance: |
+      回復直後の再崩壊。「母と一緒なら勝てる」という希望の粉砕。
+      この経験が「気持ち悪い」発言の文脈の一部となる。
+    character_state_change:
+      before: "母と共に戦う強さ"
+      after: "敗北、凌辱、死"
+      permanent: true
+    tags: ["battle", "敗北", "死", "絶望"]
+
+  - episode_id: "eoe_final_scene"
+    timeline: "end_of_evangelion"
+    chronological_order: 21
+    title: "「気持ち悪い」"
+    source_episode: "劇場版 まごころを、君に"
+    summary: |
+      補完世界から戻った浜辺で、シンジとアスカだけが残る。
+      シンジがアスカの首を絞める。アスカは抵抗せず、シンジの頬を撫でる。
+      シンジが手を止めて泣く。アスカの最後の言葉は「気持ち悪い」。
+    participants:
+      - "碇シンジ"
+    emotional_impact: "critical"
+    emotional_detail: |
+      補完を拒否して戻ってきた二人。アスカの「気持ち悪い」は、
+      シンジへの、自分への、世界への、複雑な感情の凝縮。
+      それでも共に存在することを選んだという事実。
+    canonical_quotes:
+      - quote: "気持ち悪い"
+        context: "シンジの首絞めが止まった後、最後の言葉"
+        z_mode: "leak"
+    z_relevance: |
+      アスカの最後の台詞として最も有名かつ解釈が分かれるもの。
+      「気持ち悪い」の翻訳は非常に難しい。嫌悪、呆れ、諦め、
+      それでも生きているという確認、様々な解釈を許容する訳が必要。
+    character_state_change:
+      before: "死と再生の後"
+      after: "シンジと共に存在することを選択"
+      permanent: true
+    tags: ["ending", "シンジ", "iconic", "解釈分岐"]
+
+  # === 新劇場版（参考）===
+
+  - episode_id: "rebuild_self_introduction"
+    timeline: "rebuild"
+    chronological_order: 22
+    title: "「惣流」から「式波」へ"
+    source_episode: "ヱヴァンゲリヲン新劇場版：破"
+    summary: |
+      新劇場版での登場。名前は「式波・アスカ・ラングレー」に変更。
+      同様にプライドが高く攻撃的だが、母親のトラウマ設定は削除されている。
+      より直接的にシンジへの好意を見せる場面もある。
+    participants:
+      - "碇シンジ"
+      - "真希波・マリ・イラストリアス"
+    emotional_impact: "medium"
+    emotional_detail: |
+      TV版とは異なる設定だが、根本的な「承認欲求」「プライド」は共通。
+      母親トラウマがない分、行動原理が若干シンプル。
+    canonical_quotes:
+      - quote: "あんたなんかに負けたくないのよ！"
+        context: "シンジへの競争心"
+        z_mode: "leak"
+    z_relevance: |
+      新劇場版と旧TV版の設定差異を認識。翻訳時、どちらの文脈かで
+      アスカの台詞の重みが変わる。新劇場版では母親ネタは禁忌ではない。
+    character_state_change:
+      before: "n/a"
+      after: "n/a"
+      permanent: false
+    tags: ["rebuild", "alternate", "設定差異"]
+
+  - episode_id: "rebuild_shikinami_finale"
+    timeline: "rebuild"
+    chronological_order: 23
+    title: "シン・エヴァでの決着"
+    source_episode: "シン・エヴァンゲリオン劇場版:||"
+    summary: |
+      式波アスカは最終決戦でケンスケとの関係性が示唆される。
+      シンジへの未練を認めつつも、「あんたのことが好きだった」と過去形で告げる。
+      大人になることを選び、別の形で救われる。
+    participants:
+      - "碇シンジ"
+      - "相田ケンスケ"
+    emotional_impact: "high"
+    emotional_detail: |
+      新劇場版独自の救済。シンジとの関係に固執せず、
+      別の形で承認と居場所を見つける。
+    canonical_quotes:
+      - quote: "あんたのことが好きだったんだと思う"
+        context: "シンジに過去形で告白"
+        z_mode: "leak"
+    z_relevance: |
+      新劇場版の決着。TV版とは異なる解決パターンを提示。
+      翻訳時、新劇場版文脈では「救われたアスカ」が可能であることを認識。
+    character_state_change:
+      before: "シンジへの執着"
+      after: "過去を認め、前に進む"
+      permanent: true
+    tags: ["rebuild", "resolution", "シンジ", "成長"]
+
+arcs:
+  - arc_id: "pride_to_collapse"
+    title: "プライドから崩壊へ"
+    episodes:
+      - "sync_rate_decline_begins"
+      - "kaji_death"
+      - "arael_mind_contamination"
+      - "armisael_defeat"
+      - "sync_rate_zero"
+      - "bathtub_catatonia"
+    theme: |
+      アスカのメインアーク。「エヴァに乗れる特別な自分」というアイデンティティが
+      段階的に崩壊していく過程。シンクロ率低下→加持の死→精神汚染→戦闘敗北→
+      シンクロ率ゼロ→廃人化。翻訳時、この軌道上のどこにいるかで
+      アスカの台詞のトーンが決定的に変わる。
+
+  - arc_id: "mother_wound"
+    title: "母親との傷"
+    episodes:
+      - "mother_kyoko_breakdown"
+      - "mother_suicide_discovery"
+      - "arael_mind_contamination"
+      - "instrumentality_confrontation"
+      - "eoe_mother_in_eva"
+    theme: |
+      アスカの全ての行動の根源にある母親トラウマ。「見てもらえなかった」傷が、
+      精神汚染で暴かれ、補完で直視させられ、最終的に弐号機の中で癒される。
+      翻訳時、アスカの「認められたい」発言は全てこの傷から来ている。
+
+  - arc_id: "shinji_relationship"
+    title: "シンジとの関係"
+    episodes:
+      - "arrival_in_japan"
+      - "sync_dance_training"
+      - "kiss_scene"
+      - "shinji_absorbed_by_leliel"
+      - "instrumentality_confrontation"
+      - "eoe_final_scene"
+    theme: |
+      シンジへの好意を認められず、攻撃的態度で隠すツンデレの軌跡。
+      最初の出会い→共闘→キス→心配→補完での対峙→「気持ち悪い」。
+      翻訳時、シンジへの攻撃は常に好意の裏返しであることを意識。
+
+  - arc_id: "rei_rivalry"
+    title: "レイへの敵意"
+    episodes:
+      - "arael_mind_contamination"
+      - "elevator_confrontation_rei"
+      - "armisael_defeat"
+    theme: |
+      レイへの嫉妬と敵意。感情を見せないレイ、シンジに近いレイ、
+      そしてアスカを救い、命を捨てて勝利するレイ。
+      「人形」という言葉には母のトラウマが投影されている。
+
+  - arc_id: "rebuild_alternate_salvation"
+    title: "新劇場版の別の救い"
+    episodes:
+      - "rebuild_self_introduction"
+      - "rebuild_shikinami_finale"
+    theme: |
+      新劇場版では母親トラウマが削除され、異なる救済パターンが提示される。
+      シンジ以外の場所に居場所を見つけ、過去形で好意を認める成長。
+      TV版とは異なるアスカの可能性を示す参考資料。

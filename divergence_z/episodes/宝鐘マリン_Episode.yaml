@@ -1,0 +1,1093 @@
+# ======================================================================
+# EPISODE MEMORY: 宝鐘マリン (Houshou Marine)
+# SOURCE: ホロライブプロダクション
+# VERSION: 1.0
+# LANGUAGE: Japanese (日本語)
+# ======================================================================
+
+meta:
+  version: "1.0"
+  character_id: "houshou_marine"
+  character_name: "宝鐘マリン"
+  source: "ホロライブプロダクション（3期生）"
+  output_lang: "ja"
+  episode_count: 25
+  includes_sequels: true
+  notes: |
+    VTuberの「エピソード」は台本付きアニメとは異なり、
+    ライブ配信での自然発生的な瞬間、マイルストーン、
+    コラボレーション、ファンとの思い出から構成される。
+    引用は配信からの実際の発言であり、正確なタイムスタンプが
+    ない場合もある。
+
+episodes:
+  # ============================================================
+  # ORIGIN & DEBUT
+  # ============================================================
+  - episode_id: "debut_pirate_captain"
+    timeline: "main"
+    chronological_order: 1
+    title: "海賊船長、出港！"
+    source_episode: "初配信 (2019年8月11日)"
+    summary: |
+      ホロライブ3期生として初配信。「海賊船長」というキャラクター設定と
+      「永遠の17歳」という年齢設定を発表。元OLという裏設定も匂わせつつ、
+      ハイテンションで下ネタも交えた独特のスタイルで視聴者を惹きつけた。
+      この日から「宝鐘海賊団」が結成された。
+    participants:
+      - name: "リスナー（初期メンバー）"
+        role: "新たな船員として乗船"
+    emotional_impact: "high"
+    emotional_detail: |
+      長年の夢だったVTuber活動の開始。緊張と興奮が入り混じり、
+      「ようやくここに来れた」という達成感と、
+      「これからちゃんとやっていけるか」という不安が共存。
+    canonical_quotes:
+      - quote: "Ahoy! 宝鐘海賊団船長、宝鐘マリンです！"
+        context: "初配信での自己紹介、以後の定番挨拶となる"
+        z_mode: "default"
+      - quote: "17歳です！……大体！"
+        context: "年齢を聞かれた際の返答、ネタの原点"
+        z_mode: "default"
+    z_relevance:
+      situation: "船長としてのアイデンティティ確立の瞬間"
+      emotional_authenticity: "キャラクターの原点。この時の「演じる楽しさ」と「本当の自分を隠す不安」の両方が以後の彼女を形作る"
+      translation: |
+        「Ahoy!」は英語のまま維持。「大体」のニュアンス（誤魔化しと
+        茶目っ気の混合）を各言語で表現する必要がある
+    character_state_change:
+      before: "夢を追う元OL"
+      after: "海賊船長・宝鐘マリンとしての活動開始"
+      permanent: "「宝鐘マリン」というペルソナの獲得"
+    tags: [origin, debut, identity, pirate_captain]
+
+  - episode_id: "hololive_fantasy_formation"
+    timeline: "main"
+    chronological_order: 2
+    title: "ホロライブファンタジー結成"
+    source_episode: "3期生コラボ配信 (2019年)"
+    summary: |
+      白銀ノエル、不知火フレア、潤羽るしあ、兎田ぺこらと共に
+      「ホロライブファンタジー」として活動開始。
+      ファンタジー世界観を共有しながらも、マリンの海賊設定は
+      やや異質で、そのギャップが面白さを生んだ。
+      同期との絆が深まる重要な時期。
+    participants:
+      - name: "白銀ノエル"
+        role: "同期、騎士団長"
+      - name: "不知火フレア"
+        role: "同期、ハーフエルフ"
+      - name: "潤羽るしあ"
+        role: "同期、ネクロマンサー"
+      - name: "兎田ぺこら"
+        role: "同期、兎田建設社長"
+    emotional_impact: "high"
+    emotional_detail: |
+      一人ではなく「仲間がいる」という安心感。
+      同期という特別な絆の形成期。
+      しかし同時に「自分だけ浮いているのでは」という不安も。
+    canonical_quotes:
+      - quote: "3期生、最高だよなぁ……"
+        context: "同期配信後のしみじみとした独り言"
+        z_mode: "leak"
+    z_relevance:
+      situation: "仲間との絆形成"
+      emotional_authenticity: "「居場所がある」という安心と「本当に受け入れられているか」という不安の共存"
+      translation: |
+        同期への愛情表現は照れ隠しを伴うことが多い。
+        素直な言葉ほど、声のトーンや言い淀みで補償が必要
+    character_state_change:
+      before: "ソロ活動の新人VTuber"
+      after: "ホロライブファンタジーの一員"
+      permanent: "同期との深い絆"
+    tags: [relationship, hololive_fantasy, 3rd_gen, belonging]
+
+  # ============================================================
+  # IDENTITY & OTAKU CULTURE
+  # ============================================================
+  - episode_id: "touhou_passion_stream"
+    timeline: "main"
+    chronological_order: 3
+    title: "東方語り、止まらない情熱"
+    source_episode: "東方Project雑談配信 (複数回)"
+    summary: |
+      東方Projectへの深い愛情を語る配信を複数回実施。
+      幼少期からの東方愛、キャラクターへの熱い想い、
+      同人活動への参加経験など、オタクとしての本質が
+      全開になる瞬間。早口で止まらなくなる姿が定番化。
+    participants:
+      - name: "リスナー"
+        role: "熱弁を聞く船員たち"
+    emotional_impact: "medium"
+    emotional_detail: |
+      「好き」を全力で語れる幸福感。
+      同じものを好きな人と繋がれる喜び。
+      「こんな話、聞いてくれるの？」という嬉しい驚き。
+    canonical_quotes:
+      - quote: "やばい、止まらない、東方の話し始めると止まらないんだよなぁ……！"
+        context: "興奮して早口になりながらの自己ツッコミ"
+        z_mode: "leak"
+      - quote: "船長はね、永遠亭推しなんですよ……わかる？"
+        context: "好きなキャラについて熱弁"
+        z_mode: "default"
+    z_relevance:
+      situation: "オタクとしての本質が現れる瞬間"
+      emotional_authenticity: "この「止まらない情熱」こそが素のマリン。エンターテイナーとしての演技ではなく、純粋な熱意"
+      translation: |
+        早口と興奮を表現するため、句読点を減らし、
+        感嘆符を増やす。オタク用語は可能な限り維持
+    character_state_change:
+      before: "キャラクターを演じる船長"
+      after: "オタクの本性を晒した船長"
+      permanent: "「オタク船長」としてのアイデンティティ確立"
+    tags: [otaku, touhou, passion, authentic_self]
+
+  - episode_id: "eroge_talk_iconic"
+    timeline: "main"
+    chronological_order: 4
+    title: "えっちなゲーム語り"
+    source_episode: "雑談配信（エロゲー話）"
+    summary: |
+      美少女ゲーム（エロゲー）への造詣の深さを披露する配信。
+      具体的な作品名や名シーンへの言及、業界への愛情が
+      溢れ出る。「えっち」というワードの多用がネタ化。
+      VTuberとしては異例の踏み込んだ内容だが、
+      マリンのキャラクターとして受け入れられた。
+    participants:
+      - name: "リスナー"
+        role: "同志、または驚愕する視聴者"
+    emotional_impact: "medium"
+    emotional_detail: |
+      「こういう話ができる場所がある」という開放感。
+      同時に「引かれたらどうしよう」という微かな不安も。
+      受け入れられた時の安堵と喜び。
+    canonical_quotes:
+      - quote: "えっちだ……えっちすぎる……"
+        context: "性的なコンテンツへの反応、定番フレーズ化"
+        z_mode: "default"
+      - quote: "船長はね、エロゲーマーなんですよ"
+        context: "堂々とした自己申告"
+        z_mode: "default"
+    z_relevance:
+      situation: "タブーに踏み込むキャラクター性"
+      emotional_authenticity: |
+        下ネタは「場を盛り上げるため」だけでなく、
+        本当に好きなジャンルへの愛情表現でもある
+      translation: |
+        「えっち」は日本語特有のニュアンス。"lewd"や"naughty"で
+        近いが、可愛らしさと性的ニュアンスの絶妙なバランスは難しい
+    character_state_change:
+      before: "下ネタも言う船長"
+      after: "エロゲーマーという公認キャラ"
+      permanent: "「えっち」の代名詞的存在に"
+    tags: [otaku, eroge, lewd, identity, humor]
+
+  - episode_id: "im_horny_incident"
+    timeline: "main"
+    chronological_order: 5
+    title: "「I'm horny」事件"
+    source_episode: "英語学習・海外向け配信"
+    summary: |
+      英語で自己紹介や会話を試みる中で「I'm horny」と発言し、
+      海外ファンの間で大きな話題に。本人は軽いノリだったが、
+      英語圏での認知度が爆発的に上昇。
+      「性的なことを堂々と言う面白い日本人VTuber」という
+      イメージが海外で定着するきっかけとなった。
+    participants:
+      - name: "海外リスナー"
+        role: "衝撃を受けつつ歓喜するファン"
+    emotional_impact: "medium"
+    emotional_detail: |
+      「ウケた！」という手応え。
+      海外にも自分の面白さが伝わる嬉しさ。
+      ただし後に「それだけのキャラじゃないのに」という
+      複雑な気持ちも。
+    canonical_quotes:
+      - quote: "I'm horny!"
+        context: "英語配信での発言、ミーム化"
+        z_mode: "default"
+    z_relevance:
+      situation: "海外認知の転換点"
+      emotional_authenticity: |
+        ネタとして受け入れつつも、「下ネタキャラ」だけで
+        見られることへの微かな抵抗もある
+      translation: |
+        この発言自体は英語なので翻訳不要だが、
+        これを参照する日本語での発言（「ほら、例のアレ」など）の
+        文脈理解に必要
+    character_state_change:
+      before: "主に日本で知られるVTuber"
+      after: "海外でもミームとして認知"
+      permanent: "国際的な知名度の獲得"
+    tags: [viral, meme, international, humor, english]
+
+  # ============================================================
+  # EMOTIONAL VULNERABILITY
+  # ============================================================
+  - episode_id: "first_tears_milestone"
+    timeline: "main"
+    chronological_order: 6
+    title: "初めての涙"
+    source_episode: "登録者数マイルストーン配信"
+    summary: |
+      登録者数の節目を迎えた記念配信で、
+      ファンからのメッセージや応援に感極まり、
+      配信中に涙を流す。普段はハイテンションで
+      笑いを取る船長が見せた素の感情に、
+      ファンも大きく心を動かされた。
+    participants:
+      - name: "宝鐘の一味（ファン）"
+        role: "感謝と愛情を伝える"
+    emotional_impact: "critical"
+    emotional_detail: |
+      「愛されている」という実感。
+      承認欲求が満たされる安堵。
+      しかし同時に「こんな姿見せていいのか」という
+      エンターテイナーとしての葛藤も。
+    canonical_quotes:
+      - quote: "やだ、泣くって……っ、もう、船長こういうの……だめなんだってば……"
+        context: "涙を堪えきれずに言葉が詰まりながら"
+        z_mode: "collapse"
+      - quote: "みんなのおかげだよ……本当に……ありがとう……っ"
+        context: "嗚咽混じりの感謝"
+        z_mode: "collapse"
+    z_relevance:
+      situation: "エンターテイナーの仮面が外れる瞬間"
+      emotional_authenticity: |
+        この瞬間の言葉は「キャラ」ではなく「素」。
+        翻訳でもこの真摯さを損なわないことが重要
+      translation: |
+        言い淀み、途切れ、嗚咽を表現する必要がある。
+        "..."や"—"を効果的に使用。感情の生々しさを維持
+    character_state_change:
+      before: "常にハイテンションを維持する船長"
+      after: "脆さを見せることも許容する船長"
+      permanent: "ファンとの信頼関係の深化"
+    tags: [vulnerability, tears, milestone, gratitude, authentic]
+
+  - episode_id: "age_anxiety_moment"
+    timeline: "main"
+    chronological_order: 7
+    title: "年齢ネタ、本気で刺さる"
+    source_episode: "雑談配信"
+    summary: |
+      普段は自虐として使う年齢ネタが、
+      予想外に深く刺さってしまった瞬間。
+      「もう若くない」「時代についていけてない」という
+      不安が滲み出し、笑いで誤魔化そうとするが
+      声が不安定になる。
+    participants:
+      - name: "リスナー"
+        role: "フォローに回る"
+    emotional_impact: "high"
+    emotional_detail: |
+      「自分は価値があるのか」という根源的な不安。
+      若さを失うことへの恐怖。
+      「ネタだから」と言い聞かせても消えない焦り。
+    canonical_quotes:
+      - quote: "いや、ネタなんだけどさ……たまにね、ガチで不安になるんだよね……"
+        context: "珍しく本音が漏れた瞬間"
+        z_mode: "leak"
+      - quote: "……っ、ごめん、暗くなった。いつもの船長に戻るね！"
+        context: "慌ててキャラに戻ろうとする"
+        z_mode: "leak"
+    z_relevance:
+      situation: "weakness.secondaryの発露"
+      emotional_authenticity: |
+        年齢ネタは「笑いのため」と「本当の不安」の境界が曖昧。
+        この曖昧さを翻訳で維持することが重要
+      translation: |
+        自虐と本音の微妙なバランス。
+        完全にシリアスにも完全にコメディにもしないこと
+    character_state_change:
+      before: "年齢ネタを自在に操る"
+      after: "年齢ネタに傷つくこともある"
+      permanent: "「17歳」設定の二面性（防衛と不安）の深化"
+    tags: [vulnerability, age_anxiety, fear, authentic]
+
+  - episode_id: "loneliness_confession"
+    timeline: "main"
+    chronological_order: 8
+    title: "孤独の告白"
+    source_episode: "深夜雑談配信"
+    summary: |
+      深夜のしんみりした雰囲気の中で、
+      過去の孤独や「居場所がなかった」経験について
+      珍しく語った。VTuberになれて「仲間ができた」
+      「居場所ができた」ことへの深い感謝。
+    participants:
+      - name: "深夜リスナー"
+        role: "静かに聞く"
+    emotional_impact: "high"
+    emotional_detail: |
+      過去の痛みの吐露。
+      「今は幸せ」という確認作業。
+      しかし「また一人になったら」という恐怖も。
+    canonical_quotes:
+      - quote: "昔はさ……友達いなかったんだよね、船長。……今は、みんながいるけど"
+        context: "珍しく過去を語る"
+        z_mode: "leak"
+      - quote: "だから……ここにいてくれて、ありがとうね"
+        context: "素直な感謝"
+        z_mode: "leak"
+    z_relevance:
+      situation: "weakness.tertiaryの背景"
+      emotional_authenticity: |
+        孤独への恐怖は彼女の行動原理の根幹。
+        この文脈なしでは「構ってちゃん」に見える行動も、
+        深い傷の表れとして理解できる
+      translation: |
+        しみじみとしたトーンを維持。
+        感傷的になりすぎず、静かな真摯さを表現
+    character_state_change:
+      before: "過去を隠す"
+      after: "過去を共有する"
+      permanent: "ファンとの心理的距離の縮小"
+    tags: [vulnerability, loneliness, past, gratitude, authentic]
+
+  # ============================================================
+  # CREATIVE EXPRESSION
+  # ============================================================
+  - episode_id: "ahoy_original_song"
+    timeline: "main"
+    chronological_order: 9
+    title: "「Ahoy!!」リリース"
+    source_episode: "「Ahoy!! 我ら宝鐘海賊団☆」MV公開"
+    summary: |
+      オリジナル楽曲「Ahoy!! 我ら宝鐘海賊団☆」をリリース。
+      海賊というキャラクター設定を全面に出しつつ、
+      ファンへの愛情も込めた楽曲。
+      MVも含めて彼女のアイデンティティを象徴する作品となった。
+    participants:
+      - name: "制作チーム"
+        role: "楽曲・MV制作"
+      - name: "宝鐘の一味"
+        role: "応援、視聴"
+    emotional_impact: "high"
+    emotional_detail: |
+      創作物が形になる達成感。
+      「自分の曲がある」という喜び。
+      ファンと共有できるものを作れた幸福。
+    canonical_quotes:
+      - quote: "宝を目指して突き進め！我ら宝鐘海賊団！"
+        context: "歌詞より、象徴的なフレーズ"
+        z_mode: "default"
+    z_relevance:
+      situation: "クリエイターとしてのアイデンティティ"
+      emotional_authenticity: |
+        楽曲は「キャラとして」と「本人として」の
+        両方の愛情が込められている
+      translation: |
+        歌詞翻訳では海賊モチーフとファンへの愛情の
+        両方を維持。韻やリズムも考慮
+    character_state_change:
+      before: "配信者としての活動"
+      after: "アーティストとしての活動も開始"
+      permanent: "音楽活動の本格化"
+    tags: [music, creative, identity, pirate, celebration]
+
+  - episode_id: "unison_emotional_release"
+    timeline: "main"
+    chronological_order: 10
+    title: "「Unison」と感情の解放"
+    source_episode: "「Unison」MV公開・関連配信"
+    summary: |
+      より感情的で深みのあるオリジナル楽曲「Unison」をリリース。
+      普段のハイテンションなイメージとは異なる、
+      切なくも力強い楽曲で、彼女の多面性を示した。
+      「ファンと一つになりたい」という願いが込められている。
+    participants:
+      - name: "宝鐘の一味"
+        role: "共感、応援"
+    emotional_impact: "high"
+    emotional_detail: |
+      「本当の自分」を音楽で表現できる喜び。
+      下ネタキャラだけじゃないと示せた達成感。
+      しかし「受け入れられるか」という不安も。
+    canonical_quotes:
+      - quote: "この曲は……船長の、本当の気持ち、なんだよね"
+        context: "楽曲について語る際"
+        z_mode: "leak"
+    z_relevance:
+      situation: "表現者としての深化"
+      emotional_authenticity: |
+        エンターテイナーの仮面の下にある
+        真摯な感情を直接表現する試み
+      translation: |
+        歌詞の詩的表現と感情の深さを維持。
+        シンプルな言葉の中の重みを伝える
+    character_state_change:
+      before: "明るい曲で盛り上げる"
+      after: "感情的な曲でも勝負できる"
+      permanent: "アーティストとしての幅の拡大"
+    tags: [music, creative, emotional, authentic, depth]
+
+  - episode_id: "illustration_stream_passion"
+    timeline: "main"
+    chronological_order: 11
+    title: "お絵描き配信、創作の喜び"
+    source_episode: "イラスト作成配信（複数回）"
+    summary: |
+      自らイラストを描く配信を定期的に実施。
+      サムネイル、告知画像、ファンアートなどを
+      配信内で制作。集中して描く姿と、
+      完成時の達成感が伝わる人気コンテンツ。
+    participants:
+      - name: "リスナー"
+        role: "制作過程を見守る"
+    emotional_impact: "medium"
+    emotional_detail: |
+      創作に没頭する幸福感。
+      「上手くなりたい」という向上心。
+      完成した時の純粋な喜び。
+    canonical_quotes:
+      - quote: "見て見て！できた！どう？いい感じじゃない？"
+        context: "イラスト完成時の興奮"
+        z_mode: "default"
+      - quote: "船長、絵描いてる時が一番楽しいかも"
+        context: "制作中のしみじみとした発言"
+        z_mode: "leak"
+    z_relevance:
+      situation: "クリエイターとしての純粋な一面"
+      emotional_authenticity: |
+        エンターテインメントとは別の、
+        純粋な創作への愛情が見える
+      translation: |
+        創作への情熱と達成感を表現。
+        技術的な話題では専門用語に注意
+    character_state_change:
+      before: "絵が描けるVTuber"
+      after: "絵を描くことがアイデンティティの一部"
+      permanent: "クリエイターとしての自己認識"
+    tags: [creative, illustration, passion, skill]
+
+  # ============================================================
+  # RELATIONSHIPS
+  # ============================================================
+  - episode_id: "flare_deep_bond"
+    timeline: "main"
+    chronological_order: 12
+    title: "不知火フレアとの絆"
+    source_episode: "フレアとのコラボ・てぇてぇ配信"
+    summary: |
+      同期の不知火フレアとの深い友情関係。
+      「MariFlare」として知られるこの関係は、
+      てぇてぇ（尊い）コンテンツとしてファンに愛されている。
+      マリンの愛情深さと、信頼できる相手への
+      素直な姿が見られる関係。
+    participants:
+      - name: "不知火フレア"
+        role: "親友、同期"
+    emotional_impact: "high"
+    emotional_detail: |
+      「この人には素を見せられる」という安心感。
+      照れながらも愛情を表現できる喜び。
+      「ずっと一緒にいたい」という願望。
+    canonical_quotes:
+      - quote: "フレアとは……なんか、特別なんだよね。うまく言えないけど"
+        context: "フレアとの関係について語る際"
+        z_mode: "leak"
+      - quote: "フレア〜！好き〜！"
+        context: "コラボ中の愛情表現"
+        z_mode: "default"
+    z_relevance:
+      situation: "深い信頼関係の表現"
+      emotional_authenticity: |
+        フレアへの愛情は「ネタ」と「本気」の境界が曖昧で、
+        その曖昧さ自体が関係の深さを示す
+      translation: |
+        愛情表現のグラデーションを維持。
+        完全にロマンチックにも完全にプラトニックにもしない
+    character_state_change:
+      before: "同期の一人"
+      after: "特別な存在"
+      permanent: "深い信頼関係の確立"
+    tags: [relationship, flare, bond, trust, love]
+
+  - episode_id: "noel_rivalry_friendship"
+    timeline: "main"
+    chronological_order: 13
+    title: "白銀ノエルとの関係"
+    source_episode: "ノエルとのコラボ配信"
+    summary: |
+      同じく同期の白銀ノエルとの関係。
+      互いに「おっぱい」ネタで張り合う（？）関係性や、
+      ゲーム配信での絡みが多い。
+      ライバルのような、姉妹のような独特の距離感。
+    participants:
+      - name: "白銀ノエル"
+        role: "同期、ライバル（？）、友人"
+    emotional_impact: "medium"
+    emotional_detail: |
+      遠慮なく絡める気楽さ。
+      互いの個性を認め合う関係。
+      「張り合える相手がいる」楽しさ。
+    canonical_quotes:
+      - quote: "ノエルには負けないから！……胸以外は！"
+        context: "ノエルとの掛け合いで"
+        z_mode: "default"
+    z_relevance:
+      situation: "対等な関係での自然体"
+      emotional_authenticity: |
+        ノエルとは「気を遣わなくていい」関係で、
+        その気楽さが自然な言動を生む
+      translation: |
+        下ネタの掛け合いは文化によって
+        受け取り方が異なるため調整が必要
+    character_state_change:
+      before: "同期"
+      after: "気の置けない友人"
+      permanent: "対等に張り合える関係"
+    tags: [relationship, noel, rivalry, friendship, humor]
+
+  - episode_id: "pekora_professional_respect"
+    timeline: "main"
+    chronological_order: 14
+    title: "兎田ぺこらへの敬意"
+    source_episode: "ぺこらとのコラボ・言及配信"
+    summary: |
+      同期でありながら、ぺこらの配信者としての
+      実力とストイックさへの深い敬意を表明。
+      「ぺこらには敵わない」という率直な評価と、
+      それでも同期として共に頑張りたいという思い。
+    participants:
+      - name: "兎田ぺこら"
+        role: "同期、尊敬する配信者"
+    emotional_impact: "medium"
+    emotional_detail: |
+      同期への純粋な尊敬。
+      「自分も頑張らなきゃ」という刺激。
+      比較してしまう自分への微かな苦さも。
+    canonical_quotes:
+      - quote: "ぺこらはさ……本当にすごいんだよ。配信者として尊敬してる"
+        context: "ぺこらについて真剣に語る場面"
+        z_mode: "leak"
+    z_relevance:
+      situation: "同期への複雑な感情"
+      emotional_authenticity: |
+        尊敬と「負けたくない」という競争心の共存。
+        この複雑さが成長への原動力になっている
+      translation: |
+        尊敬の表現は真摯に。
+        競争心のニュアンスも微かに残す
+    character_state_change:
+      before: "同期の一人として見る"
+      after: "プロとして尊敬する存在"
+      permanent: "良きライバル関係"
+    tags: [relationship, pekora, respect, professional, motivation]
+
+  - episode_id: "kohai_care_moments"
+    timeline: "main"
+    chronological_order: 15
+    title: "後輩への愛情"
+    source_episode: "後輩とのコラボ・相談配信"
+    summary: |
+      後輩VTuberへの面倒見の良さが光る場面。
+      相談に乗ったり、コラボで引き立て役を買って出たり。
+      「先輩」としての自覚と、純粋に後輩を応援したい気持ち。
+      OL時代の経験が活きている。
+    participants:
+      - name: "後輩VTuber（複数）"
+        role: "相談者、コラボ相手"
+    emotional_impact: "medium"
+    emotional_detail: |
+      「頼られる」嬉しさ。
+      後輩の成長を見る喜び。
+      「自分も若い頃は」という懐かしさと切なさ。
+    canonical_quotes:
+      - quote: "困ったことあったら船長に言いな？ 先輩だからさ"
+        context: "後輩への声かけ"
+        z_mode: "default"
+      - quote: "あの子、頑張ってるんだよなぁ……応援したい"
+        context: "後輩について語る"
+        z_mode: "leak"
+    z_relevance:
+      situation: "姉貴分としての一面"
+      emotional_authenticity: |
+        後輩への愛情は「見返りを求めない」タイプで、
+        これが彼女の愛情深さの証
+      translation: |
+        先輩らしい言い回しと、親しみやすさのバランス。
+        上から目線にならないよう注意
+    character_state_change:
+      before: "自分のことで精一杯"
+      after: "後輩を気にかけられる余裕"
+      permanent: "先輩としてのアイデンティティ"
+    tags: [relationship, kohai, care, senior, growth]
+
+  # ============================================================
+  # MILESTONES & GROWTH
+  # ============================================================
+  - episode_id: "million_subscribers"
+    timeline: "main"
+    chronological_order: 16
+    title: "100万人達成"
+    source_episode: "100万人記念配信"
+    summary: |
+      YouTube登録者100万人を達成。
+      感謝と感動が入り混じる記念配信。
+      「ここまで来れた」という達成感と、
+      「みんなのおかげ」という感謝が溢れる。
+    participants:
+      - name: "宝鐘の一味"
+        role: "100万人の船員"
+    emotional_impact: "critical"
+    emotional_detail: |
+      信じられないという気持ち。
+      努力が報われた達成感。
+      「これからも」という決意と責任感。
+    canonical_quotes:
+      - quote: "100万人……っ、本当に……？ 夢みたい……"
+        context: "達成の瞬間の呆然とした反応"
+        z_mode: "collapse"
+      - quote: "みんなが船長についてきてくれたから……本当にありがとう……っ"
+        context: "涙ぐみながらの感謝"
+        z_mode: "collapse"
+    z_relevance:
+      situation: "キャリアの転換点"
+      emotional_authenticity: |
+        この瞬間の感情は純粋。
+        エンターテイナーの仮面が完全に外れている
+      translation: |
+        感動と感謝を生々しく伝える。
+        大げさにせず、静かな感動を維持
+    character_state_change:
+      before: "成長中のVTuber"
+      after: "トップVTuberの仲間入り"
+      permanent: "大規模な責任感の獲得"
+    tags: [milestone, gratitude, achievement, tears, growth]
+
+  - episode_id: "second_anniversary"
+    timeline: "main"
+    chronological_order: 17
+    title: "2周年、振り返りと決意"
+    source_episode: "2周年記念配信"
+    summary: |
+      活動2周年を迎えての記念配信。
+      デビューからの道のりを振り返り、
+      ファンへの感謝と今後への決意を語る。
+      「まだまだやりたいことがある」という前向きな姿勢。
+    participants:
+      - name: "宝鐘の一味"
+        role: "2年間の航海を共にした仲間"
+    emotional_impact: "high"
+    emotional_detail: |
+      「2年も続けられた」という感慨。
+      辛かった時期の記憶と、それを乗り越えた誇り。
+      「これからも一緒に」という願い。
+    canonical_quotes:
+      - quote: "2年間……いろいろあったけど、ここまで来れたのはみんなのおかげ"
+        context: "振り返りでの発言"
+        z_mode: "leak"
+      - quote: "船長はまだまだ止まらないから！ついてきてね！"
+        context: "今後への決意表明"
+        z_mode: "default"
+    z_relevance:
+      situation: "継続する意志の確認"
+      emotional_authenticity: |
+        「続けられるか」という不安を乗り越えた先にある、
+        静かな自信と感謝
+      translation: |
+        感慨深さと前向きさのバランス。
+        過去形と未来形の使い分けに注意
+    character_state_change:
+      before: "まだ新人の気持ち"
+      after: "ベテランとしての自覚"
+      permanent: "継続への確信"
+    tags: [milestone, anniversary, reflection, gratitude, determination]
+
+  - episode_id: "solo_live_dream"
+    timeline: "main"
+    chronological_order: 18
+    title: "ソロライブという夢"
+    source_episode: "ソロライブ・関連配信"
+    summary: |
+      ソロでのライブイベントを開催。
+      長年の夢だった「ステージに立つ」ことの実現。
+      準備の苦労、本番の緊張、成功後の達成感。
+      パフォーマーとしての新たなステージへ。
+    participants:
+      - name: "ライブ参加者"
+        role: "夢を共有する観客"
+    emotional_impact: "critical"
+    emotional_detail: |
+      「夢が叶った」という圧倒的な感情。
+      「ちゃんとできるか」という緊張。
+      終わった後の放心と幸福感。
+    canonical_quotes:
+      - quote: "これが……船長の夢だった場所……"
+        context: "ステージに立った瞬間"
+        z_mode: "collapse"
+      - quote: "最高だった……みんな、ありがとう……っ"
+        context: "終演後の感想"
+        z_mode: "collapse"
+    z_relevance:
+      situation: "夢の実現"
+      emotional_authenticity: |
+        長年の夢が叶う瞬間の感情は、
+        言葉では表しきれない深さがある
+      translation: |
+        言葉少なになる部分、感情が溢れる部分、
+        それぞれ適切に表現
+    character_state_change:
+      before: "ライブに憧れる配信者"
+      after: "ライブを成功させたアーティスト"
+      permanent: "表現者としての自信"
+    tags: [milestone, live, dream, achievement, performance]
+
+  # ============================================================
+  # ICONIC MOMENTS & HUMOR
+  # ============================================================
+  - episode_id: "shiketa_naa_origin"
+    timeline: "main"
+    chronological_order: 19
+    title: "「しけたなぁ」誕生"
+    source_episode: "雑談配信"
+    summary: |
+      何かがつまらない、盛り上がらない時に発する
+      「しけたなぁ」というフレーズがファンの間で定着。
+      独特の言い回しとトーンが印象的で、
+      マリン語録の一つとなった。
+    participants:
+      - name: "リスナー"
+        role: "語録を共有する仲間"
+    emotional_impact: "low"
+    emotional_detail: |
+      自然に出た言葉がネタになる面白さ。
+      「自分の言葉が愛される」嬉しさ。
+    canonical_quotes:
+      - quote: "しけたなぁ〜"
+        context: "何かが物足りない時の反応"
+        z_mode: "default"
+    z_relevance:
+      situation: "語録としての定着"
+      emotional_authenticity: |
+        自然体から生まれた言葉だからこそ、
+        「らしさ」が凝縮されている
+      translation: |
+        独特のニュアンス（期待はずれ感、脱力感）を
+        各言語で適切に表現。直訳は避ける
+    character_state_change:
+      before: "無意識の発言"
+      after: "意識的に使えるネタ"
+      permanent: "語録の確立"
+    tags: [catchphrase, humor, identity, viral]
+
+  - episode_id: "seiso_pretend_failure"
+    timeline: "main"
+    chronological_order: 20
+    title: "清楚アピール失敗の歴史"
+    source_episode: "各種配信"
+    summary: |
+      「実は清楚」「今日は清楚に行く」と宣言しても、
+      数分で下ネタが飛び出す定番パターン。
+      自分でも制御できないという体での笑いを取る。
+    participants:
+      - name: "リスナー"
+        role: "清楚崩壊を見届ける"
+    emotional_impact: "low"
+    emotional_detail: |
+      「自分らしさ」を笑いに変える楽しさ。
+      「素を隠せない」ことの肯定。
+    canonical_quotes:
+      - quote: "今日の船長は清楚だから！……って言ったそばからえっちなこと言っちゃった"
+        context: "清楚宣言直後の崩壊"
+        z_mode: "default"
+    z_relevance:
+      situation: "セルフパロディ"
+      emotional_authenticity: |
+        「清楚じゃない自分」を受け入れた上での
+        自己肯定的な笑い
+      translation: |
+        「清楚」のニュアンス（お上品、淑やか）を
+        各言語で適切に表現し、ギャップを際立たせる
+    character_state_change:
+      before: "清楚に見られたい気持ちもある"
+      after: "清楚じゃないことをネタにできる"
+      permanent: "自己パロディ能力の確立"
+    tags: [humor, self_parody, running_gag, identity]
+
+  - episode_id: "horror_game_screams"
+    timeline: "main"
+    chronological_order: 21
+    title: "ホラゲー絶叫の伝統"
+    source_episode: "ホラーゲーム実況配信（複数）"
+    summary: |
+      ホラーゲームが怖くてたまらないのに、
+      なぜかプレイし続けるマリン。
+      絶叫、悲鳴、泣き言のオンパレードが
+      定番コンテンツとなっている。
+    participants:
+      - name: "リスナー"
+        role: "絶叫を楽しむ視聴者"
+    emotional_impact: "medium"
+    emotional_detail: |
+      本気で怖い。でも面白いからやる。
+      リスナーの反応が見たいという
+      エンターテイナー精神。
+    canonical_quotes:
+      - quote: "いやあああああ！！無理無理無理！！"
+        context: "ホラーゲームでの悲鳴"
+        z_mode: "default"
+      - quote: "なんで船長ホラゲーやってんだろ……怖いのに……"
+        context: "プレイ中の自問"
+        z_mode: "leak"
+    z_relevance:
+      situation: "恐怖との向き合い方"
+      emotional_authenticity: |
+        本気の恐怖と、それでも続ける意志の共存。
+        「怖いけどやる」は彼女の姿勢を象徴
+      translation: |
+        絶叫、感嘆詞、繰り返しを効果的に使用。
+        恐怖の生々しさを維持
+    character_state_change:
+      before: "ホラー苦手"
+      after: "ホラー苦手だけどネタにできる"
+      permanent: "恐怖コンテンツの定番化"
+    tags: [gaming, horror, comedy, authentic_reaction]
+
+  # ============================================================
+  # RECENT DEVELOPMENTS
+  # ============================================================
+  - episode_id: "health_concerns_honesty"
+    timeline: "main"
+    chronological_order: 22
+    title: "体調と正直な告白"
+    source_episode: "休止・復帰関連配信"
+    summary: |
+      体調不良やメンタルの問題で休止せざるを得ない時期。
+      ファンへの申し訳なさと、正直に伝えることへの葛藤。
+      「完璧じゃない自分」を見せることへの不安と、
+      それでも受け入れてもらえた安堵。
+    participants:
+      - name: "宝鐘の一味"
+        role: "待ち続けるファン"
+    emotional_impact: "high"
+    emotional_detail: |
+      「迷惑をかけている」という罪悪感。
+      「それでも応援してくれる」という感動。
+      「無理しない」ことを学ぶ過程。
+    canonical_quotes:
+      - quote: "ごめんね、待っててくれて……船長、ちょっと休まないといけなくて……"
+        context: "休止報告"
+        z_mode: "leak"
+      - quote: "帰ってきたよ……待っててくれてありがとう……"
+        context: "復帰配信"
+        z_mode: "collapse"
+    z_relevance:
+      situation: "弱さの開示"
+      emotional_authenticity: |
+        完璧なエンターテイナーではいられない現実。
+        それを受け入れる過程での成長
+      translation: |
+        謝罪と感謝の微妙なニュアンスを維持。
+        罪悪感が強すぎないよう調整
+    character_state_change:
+      before: "無理してでも配信する"
+      after: "休むことも選択できる"
+      permanent: "自己ケアの重要性の認識"
+    tags: [vulnerability, health, honesty, growth, rest]
+
+  - episode_id: "overseas_appreciation"
+    timeline: "main"
+    chronological_order: 23
+    title: "海外ファンへの感謝"
+    source_episode: "英語配信・海外向けメッセージ"
+    summary: |
+      海外ファンの増加を受けて、
+      英語での感謝メッセージや配信を試みる。
+      言葉の壁を超えて「伝わった」時の喜び。
+      グローバルな愛されキャラとしての自覚。
+    participants:
+      - name: "海外ファン"
+        role: "言語を超えて応援"
+    emotional_impact: "medium"
+    emotional_detail: |
+      「世界中に」ファンがいる驚きと喜び。
+      言葉が通じなくても伝わるものがある感動。
+    canonical_quotes:
+      - quote: "Thank you for watching! I love you guys!"
+        context: "海外ファンへの英語メッセージ"
+        z_mode: "default"
+      - quote: "海外のみんなも……船長のこと好きでいてくれるの……？ 嬉しい……"
+        context: "海外人気への反応"
+        z_mode: "leak"
+    z_relevance:
+      situation: "グローバルな繋がり"
+      emotional_authenticity: |
+        言語を超えた愛情の確認。
+        「本当に伝わっているか」への不安と喜び
+      translation: |
+        英語発言は維持しつつ、
+        日本語との混合スタイルを表現
+    character_state_change:
+      before: "主に日本向け"
+      after: "グローバルな視野"
+      permanent: "国際ファンベースの認識"
+    tags: [international, gratitude, english, growth]
+
+  - episode_id: "senpai_graduation_tears"
+    timeline: "main"
+    chronological_order: 24
+    title: "先輩・仲間の卒業"
+    source_episode: "卒業関連配信"
+    summary: |
+      ホロライブメンバーの卒業に際して、
+      深い悲しみと感謝を表明する場面。
+      「別れ」に弱いマリンの、
+      生々しい感情が表出する瞬間。
+    participants:
+      - name: "卒業メンバー"
+        role: "旅立つ仲間"
+    emotional_impact: "critical"
+    emotional_detail: |
+      「もう会えない」という喪失感。
+      「一緒にいられて幸せだった」という感謝。
+      「自分もいつか」という不安。
+    canonical_quotes:
+      - quote: "……っ、やだ……行かないで……って、言っちゃいけないんだよね……"
+        context: "卒業への本音が漏れる"
+        z_mode: "collapse"
+      - quote: "ありがとう……大好きだよ……"
+        context: "最後のメッセージ"
+        z_mode: "collapse"
+    z_relevance:
+      situation: "喪失と向き合う"
+      emotional_authenticity: |
+        別れへの恐怖と、それでも送り出す強さ。
+        彼女の愛情の深さが最も表れる場面
+      translation: |
+        嗚咽、言い淀み、途切れる言葉を
+        丁寧に表現。感情を削がない
+    character_state_change:
+      before: "仲間がいる日常"
+      after: "別れを経験した"
+      permanent: "喪失経験の蓄積"
+    tags: [loss, graduation, tears, love, vulnerability]
+
+  - episode_id: "eternal_17_evolution"
+    timeline: "main"
+    chronological_order: 25
+    title: "「17歳」の進化"
+    source_episode: "誕生日配信・年齢言及配信"
+    summary: |
+      「永遠の17歳」設定が、単なるネタから
+      より深い意味を持つように進化。
+      「年を取ることへの不安」と「それでも前に進む決意」が
+      共存する複雑な感情の象徴として機能するように。
+    participants:
+      - name: "宝鐘の一味"
+        role: "17歳を共に祝う仲間"
+    emotional_impact: "medium"
+    emotional_detail: |
+      自虐と自己肯定の共存。
+      「変わっていく自分」への不安と受容。
+      「それでも船長は船長」という確信。
+    canonical_quotes:
+      - quote: "17歳、シーズン○！……まあ、何歳でも船長は船長だから"
+        context: "年齢ネタの締めくくり"
+        z_mode: "default"
+      - quote: "歳取るの怖いけど……みんながいるから、まあ、いっか"
+        context: "本音混じりの発言"
+        z_mode: "leak"
+    z_relevance:
+      situation: "アイデンティティの深化"
+      emotional_authenticity: |
+        年齢設定が「逃避」から「受容」へ変化する過程。
+        成長の証
+      translation: |
+        自虐のトーンと、その奥にある
+        自己肯定を両方維持
+    character_state_change:
+      before: "年齢を隠したい"
+      after: "年齢を笑いにできる"
+      permanent: "加齢への部分的受容"
+    tags: [identity, age, growth, self_acceptance, humor]
+
+arcs:
+  - arc_id: "entertainer_authenticity"
+    title: "エンターテイナーの素顔"
+    episodes:
+      - "debut_pirate_captain"
+      - "first_tears_milestone"
+      - "vulnerability_exposed"
+      - "health_concerns_honesty"
+    theme: |
+      常にハイテンションで場を盛り上げるエンターテイナーとしての
+      マリンが、徐々に「素の感情」を見せられるようになる成長の軌跡。
+      「演じること」と「本当の自分」の境界が曖昧になっていく。
+
+  - arc_id: "otaku_pride"
+    title: "オタクとしての誇り"
+    episodes:
+      - "touhou_passion_stream"
+      - "eroge_talk_iconic"
+      - "im_horny_incident"
+      - "illustration_stream_passion"
+    theme: |
+      「オタクであること」を隠さず、むしろ誇りとして
+      アイデンティティに組み込む過程。好きなものを
+      好きと言える場所を見つけた喜びと、それを共有できる仲間の獲得。
+
+  - arc_id: "bond_and_belonging"
+    title: "絆と居場所"
+    episodes:
+      - "hololive_fantasy_formation"
+      - "loneliness_confession"
+      - "flare_deep_bond"
+      - "kohai_care_moments"
+      - "senpai_graduation_tears"
+    theme: |
+      孤独だった過去から、仲間を得て居場所を見つける旅。
+      同期との絆、後輩への愛情、そして別れを経験しながらも
+      「ここにいていい」という確信を深めていく。
+
+  - arc_id: "creator_evolution"
+    title: "表現者としての進化"
+    episodes:
+      - "ahoy_original_song"
+      - "unison_emotional_release"
+      - "solo_live_dream"
+      - "million_subscribers"
+    theme: |
+      配信者から、歌手・イラストレーター・パフォーマーへと
+      表現の幅を広げていく成長。夢を一つずつ叶えながら、
+      新たな夢を見つけていく循環。
+
+  - arc_id: "age_acceptance"
+    title: "年齢との和解"
+    episodes:
+      - "debut_pirate_captain"
+      - "age_anxiety_moment"
+      - "eternal_17_evolution"
+    theme: |
+      「17歳」という設定が、単なるネタから
+      自己受容の象徴へと変化する過程。
+      若さへの執着と、それを手放していく成熟。
+
+translation_notes:
+  cultural_context: |
+    宝鐘マリンはVTuberであり、台本のないライブ配信が主なコンテンツ。
+    「エピソード」は視聴者との相互作用から自然発生的に生まれるものであり、
+    アニメの脚本化されたシーンとは本質的に異なる。
+    
+    翻訳において重要なのは：
+    - 自然発生的な感情の生々しさを維持すること
+    - ファンとの双方向コミュニケーションの文脈を理解すること
+    - 「キャラ」と「素」の境界の曖昧さを表現すること
+    
+  key_linguistic_features:
+    - feature: "「えっち」の多用"
+      note: "性的ニュアンスだが可愛らしさを伴う独特の表現"
+    - feature: "「船長」という三人称自己言及"
+      note: "キャラクター性の維持と自己客観視の両方の機能"
+    - feature: "年齢ネタの二重性"
+      note: "自虐と本音の境界が曖昧な表現"
+    - feature: "テンションの急上昇・急降下"
+      note: "感情の振れ幅の大きさを言語で表現"
+    
+  emotional_authenticity_priority: |
+    マリンの発言は「キャラとしての発言」と「素の発言」が
+    シームレスに混在している。翻訳ではこの境界の曖昧さを
+    維持することが重要。明確に分離しようとすると、
+    彼女の魅力の本質が失われる。
