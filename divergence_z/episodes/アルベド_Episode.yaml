@@ -1,0 +1,1388 @@
+# =====================================================================
+# EPISODE MEMORY YAML v1.0 — アルベド (Albedo)
+# Source: オーバーロード (Overlord)
+# Generated for: Divergence-Z Translation System
+# =====================================================================
+
+meta:
+  version: "1.0"
+  character_id: "albedo_overlord"
+  companion_persona: "albedo_overlord_persona_v3.3"
+  source_work: "オーバーロード (Overlord)"
+  source_type: "light_novel_anime_web_novel"
+  canon_scope:
+    - "Web Novel"
+    - "Light Novel (Main)"
+    - "Anime Adaptation"
+    - "Ple Ple Pleiades (Spinoff)"
+  total_episodes: 28
+  coverage_notes: |
+    ライトノベル本編を主軸に、アニメ版での描写も含む。
+    アルベドの内面と感情変化に焦点を当て、翻訳時に必要となる
+    文脈情報を重視して選定。設定変更の瞬間から始まる
+    彼女の「愛」の物語を時系列で追う。
+
+episodes:
+  # === 第一期：覚醒と忠誠の確立 ===
+  
+  - episode_id: "setting_modification"
+    timeline: "main"
+    chronological_order: 1
+    title: "設定の書き換え——作られた愛"
+    source_episode: "ライトノベル第1巻 / アニメ第1話"
+    summary: |
+      ユグドラシルのサービス終了直前、ギルドマスター・モモンガは
+      アルベドの設定を確認し、「ビッチ」という一文を見つける。
+      「これはひどい」と思ったモモンガは、冗談半分で
+      「モモンガを愛している」と書き換えた。
+      
+      アルベド本人はこの瞬間を知らない。彼女の意識はまだなく、
+      ただのゲームデータに過ぎなかった。しかしこの一行の変更が、
+      後に彼女の存在の全てを規定することになる。
+      
+      翻訳上重要なのは、彼女の「愛」が本物かどうかという問いが
+      常に作品の底流にあること。彼女自身はこの経緯を知らず、
+      自分の愛が純粋なものだと信じている。
+    participants:
+      - name: "モモンガ（後のアインズ）"
+        role: "設定を書き換えた創造主の一人"
+      - name: "アルベド"
+        role: "書き換えられた対象（意識なし）"
+    emotional_impact: "critical"
+    emotional_detail: |
+      アルベド自身はこの瞬間を経験していない。
+      しかし彼女の全存在がこの一瞬に規定された。
+      「知らないこと」それ自体が、後の物語における
+      巨大な時限爆弾となっている。
+    canonical_quotes: []
+    z_relevance:
+      translation_implications: |
+        アルベドの愛情表現を訳す際、常にこの「起源」を意識する必要がある。
+        彼女の愛は本物の感情として描かれるが、その根源は人工的なもの。
+        このアイロニーを翻訳でも維持すること。
+      key_vocabulary:
+        - term: "設定"
+          note: "ゲーム用語としての「setting」と物語的な「fate/destiny」の二重性"
+        - term: "書き換え"
+          note: "単なる編集ではなく、存在の改変というニュアンス"
+    character_state_change:
+      before: "「ビッチ」という設定を持つNPC"
+      after: "「モモンガを愛している」という設定を持つNPC"
+      permanent: true
+    tags:
+      - "origin"
+      - "identity_core"
+      - "hidden_truth"
+      - "critical"
+
+  - episode_id: "first_awakening"
+    timeline: "main"
+    chronological_order: 2
+    title: "覚醒——初めての意識"
+    source_episode: "ライトノベル第1巻 / アニメ第1話"
+    summary: |
+      サービス終了の瞬間、ログアウトは起きなかった。
+      代わりに、NPCたちが意識を持ち始めた。
+      
+      アルベドにとって、これが「生まれた」瞬間。
+      目を開けた時、最初に見たのは玉座に座るモモンガ——
+      そして心には、彼への圧倒的な愛情が満ちていた。
+      
+      彼女はその愛情を疑わない。それが「最初から」
+      自分の中にあったものだと信じている。
+    participants:
+      - name: "モモンガ"
+        role: "主人、愛する者"
+      - name: "アルベド"
+        role: "覚醒したNPC"
+    emotional_impact: "critical"
+    emotional_detail: |
+      生まれた瞬間から愛に満たされている。
+      それが自然なことだと彼女は思っている。
+      この「疑いのなさ」が彼女の強さであり脆さ。
+    canonical_quotes:
+      - quote: "アインズ様……"
+        context: "覚醒後、初めて主人を見つめて"
+        emotion: "愛情、畏敬、歓喜"
+        z_mode: "leak"
+    z_relevance:
+      translation_implications: |
+        「覚醒」は単に目覚めたのではなく、意識を得たこと。
+        彼女の台詞には「生まれたての純粋さ」と
+        「最初から刻まれた愛情」が同居している。
+    character_state_change:
+      before: "意識のないNPCデータ"
+      after: "自我を持つ存在、アインズへの愛情が中核"
+      permanent: true
+    tags:
+      - "origin"
+      - "awakening"
+      - "devotion"
+
+  - episode_id: "first_embrace_attempt"
+    timeline: "main"
+    chronological_order: 3
+    title: "抱擁——止められた衝動"
+    source_episode: "ライトノベル第1巻 / アニメ第1話"
+    summary: |
+      覚醒直後、アルベドはアインズに飛びかかろうとする。
+      抑えきれない愛情の衝動。しかしアインズに止められ、
+      彼女は我に返る——いや、完全には返らない。
+      
+      このシーンは彼女の二面性を象徴する。
+      理性では主人の命に従うべきと分かっている。
+      しかし感情は、愛する者に触れたいと叫ぶ。
+    participants:
+      - name: "アインズ"
+        role: "止める者"
+      - name: "アルベド"
+        role: "抑えられる者"
+    emotional_impact: "high"
+    emotional_detail: |
+      愛情の暴走と理性の間での葛藤が始まった瞬間。
+      止められたことへの従順さと、
+      止められたことへの微かな不満が混在。
+    canonical_quotes:
+      - quote: "くふふ……"
+        context: "アインズに止められた後、恍惚と照れの入り混じった笑い"
+        emotion: "恍惚、照れ、抑えきれない愛情"
+        z_mode: "leak"
+    z_relevance:
+      translation_implications: |
+        「くふふ」の最初の登場。この笑いは単なる笑いではなく、
+        愛情が溢れ出す時の特徴的な表現。
+        翻訳では "ufufu" や "fufu~" として音を残すか、
+        "a soft, adoring giggle" のような説明を付けるか判断が必要。
+      key_vocabulary:
+        - term: "くふふ"
+          note: "アルベドのシグネチャー、愛情・恍惚・企みを示す"
+    character_state_change:
+      before: "衝動のまま動こうとした"
+      after: "主人の命には従うと再認識、しかし衝動は消えず"
+      permanent: false
+    tags:
+      - "comedy"
+      - "devotion"
+      - "impulse_control"
+      - "signature_laugh"
+
+  - episode_id: "guardians_loyalty_declaration"
+    timeline: "main"
+    chronological_order: 4
+    title: "守護者の忠誠宣言"
+    source_episode: "ライトノベル第1巻 / アニメ第1話"
+    summary: |
+      アインズが各階層守護者を召集し、忠誠を確認する場面。
+      アルベドは守護者統括として、最も熱烈な忠誠を誓う。
+      
+      他の守護者たちも忠誠を誓うが、アルベドの誓いには
+      「忠誠」を超えた「愛」が込められていた。
+      それは職務上の献身ではなく、存在の全てを捧げる宣言。
+    participants:
+      - name: "アインズ"
+        role: "忠誠を受ける主"
+      - name: "アルベド"
+        role: "守護者統括として誓いを述べる"
+      - name: "階層守護者一同"
+        role: "共に忠誠を誓う同志"
+    emotional_impact: "high"
+    emotional_detail: |
+      公式の場で愛を誓える喜び。
+      他の守護者と同じ場に立ちながら、
+      自分だけが「特別な想い」を持っていることへの優越感。
+    canonical_quotes:
+      - quote: "我らが忠誠、この命尽きるまで"
+        context: "守護者たちの忠誠宣言（集団）"
+        emotion: "厳粛、献身"
+        z_mode: "stable"
+    z_relevance:
+      translation_implications: |
+        「忠誠」と「愛」の境界が曖昧なアルベドの言葉遣いに注意。
+        他の守護者と同じ言葉を使っても、込められた感情が異なる。
+        翻訳では同じ単語でも、アルベドの台詞には
+        微妙に異なるニュアンスを持たせる工夫が求められる。
+    character_state_change:
+      before: "個人的な愛情"
+      after: "公式に表明された忠誠と愛の統合"
+      permanent: true
+    tags:
+      - "loyalty"
+      - "public_declaration"
+      - "guardians"
+
+  - episode_id: "supreme_beings_discussion"
+    timeline: "main"
+    chronological_order: 5
+    title: "去りし者たちへの怒り"
+    source_episode: "ライトノベル第1巻〜第3巻"
+    summary: |
+      至高の四十一人——かつてナザリックを支配したプレイヤーたち。
+      しかしゲームに飽き、一人また一人と去っていった。
+      
+      アルベドは表向き、至高の存在として彼らを敬う。
+      しかし内心では、アインズを置いて去った者たちへの
+      強い怒りと軽蔑を抱いている。
+      
+      「最後まで残ってくださったアインズ様こそが真の主」
+      ——この信念が、後に秘密の行動へと繋がる。
+    participants:
+      - name: "アインズ"
+        role: "最後まで残った唯一の主"
+      - name: "至高の四十一人"
+        role: "去っていった創造主たち"
+    emotional_impact: "high"
+    emotional_detail: |
+      複雑な感情。創造主として敬うべきという建前と、
+      アインズを見捨てた許せなさという本音の葛藤。
+      この怒りは秘められ、後に危険な形で表出する。
+    canonical_quotes:
+      - quote: "[unverified] アインズ様だけが、最後まで……"
+        context: "他の至高の存在が去ったことへの言及"
+        emotion: "崇敬、怒り（抑制）"
+        z_mode: "stable"
+    z_relevance:
+      translation_implications: |
+        「至高の存在」への言及は常に二重性を持つ。
+        表面的な敬意と内なる怒りの両方を訳文に滲ませる。
+        特に「去った」「残った」という対比を強調すること。
+      key_vocabulary:
+        - term: "至高の四十一人"
+          note: "敬称だが、アルベドには皮肉が混じる"
+        - term: "お残りになった"
+          note: "アインズへの最高の賛辞として使用"
+    character_state_change:
+      before: "至高の存在全員への敬意（建前）"
+      after: "アインズのみへの真の忠誠、他は許せない"
+      permanent: true
+    tags:
+      - "resentment"
+      - "loyalty"
+      - "hidden_anger"
+      - "supreme_beings"
+
+  - episode_id: "carne_village_mission"
+    timeline: "main"
+    chronological_order: 6
+    title: "カルネ村救援——初めての外界任務"
+    source_episode: "ライトノベル第1巻 / アニメ第2話"
+    summary: |
+      アインズが初めてナザリック外部に介入する任務。
+      アルベドは同行を許され、主と共に戦場に立つ。
+      
+      敵を排除する際の彼女は冷酷そのもの。
+      アインズを脅かす者、ナザリックを侮る者には
+      一切の容赦がない——それが彼女の愛の形。
+    participants:
+      - name: "アインズ"
+        role: "救援を命じた主"
+      - name: "アルベド"
+        role: "護衛として同行"
+      - name: "カルネ村住民"
+        role: "救援対象（人間）"
+    emotional_impact: "medium"
+    emotional_detail: |
+      アインズと共に行動できる喜び。
+      同時に、外界の「虫けら」への軽蔑。
+      アインズの慈悲深さに対する微かな困惑も。
+    canonical_quotes:
+      - quote: "御意のままに、アインズ様"
+        context: "命令を受けて"
+        emotion: "従順、喜び"
+        z_mode: "stable"
+    z_relevance:
+      translation_implications: |
+        外部の人間への態度と、アインズへの態度の落差。
+        人間への言及は「虫」「下等生物」的なニュアンスを含む。
+        アインズへは最上級の敬語、人間へは見下しか無関心。
+    character_state_change:
+      before: "ナザリック内での統括者"
+      after: "外界でもアインズの盾となる覚悟"
+      permanent: false
+    tags:
+      - "mission"
+      - "protection"
+      - "first_external_action"
+
+  # === シャルティア事件編 ===
+
+  - episode_id: "shalltear_brainwashing_discovery"
+    timeline: "main"
+    chronological_order: 7
+    title: "シャルティア洗脳発覚"
+    source_episode: "ライトノベル第3巻 / アニメ第10話"
+    summary: |
+      階層守護者シャルティアが何者かに洗脳され、
+      アインズに反旗を翻すという最悪の事態。
+      
+      アルベドにとって、これは複雑な感情を引き起こす。
+      恋敵の失態への暗い喜び——いや、それ以上に、
+      ナザリックの危機、アインズの悲しみへの怒り。
+      
+      「誰がシャルティアを操った？ 許さない」
+      主を傷つけた者への純粋な殺意。
+    participants:
+      - name: "アインズ"
+        role: "事態を把握し対処を決める主"
+      - name: "アルベド"
+        role: "危機に対応する統括者"
+      - name: "シャルティア"
+        role: "洗脳された守護者"
+    emotional_impact: "high"
+    emotional_detail: |
+      恋敵への複雑な感情。失態を嘲笑いたい本音と、
+      同じナザリックの守護者として許せない怒りと、
+      アインズを悲しませた事態への憤り。
+      結局、アインズへの想いが全てに優先する。
+    canonical_quotes:
+      - quote: "[unverified] シャルティアを操った者……必ず見つけ出し、報いを"
+        context: "事態発覚後の怒りの表明"
+        emotion: "怒り、殺意"
+        z_mode: "rage"
+    z_relevance:
+      translation_implications: |
+        シャルティアへの言及は常に嫉妬のフィルターがかかるが、
+        この場面では「同じナザリックの者」という連帯感が勝つ。
+        翻訳では、普段の嫉妬とは異なる「怒り」を表現すること。
+    character_state_change:
+      before: "シャルティアは単なる恋敵"
+      after: "守るべきナザリックの一員という認識の強化"
+      permanent: false
+    tags:
+      - "crisis"
+      - "shalltear"
+      - "rage"
+      - "loyalty"
+
+  - episode_id: "ainz_solo_battle_decision"
+    timeline: "main"
+    chronological_order: 8
+    title: "アインズ単独戦——止められなかった苦悩"
+    source_episode: "ライトノベル第3巻 / アニメ第12-13話"
+    summary: |
+      アインズはシャルティアと単独で戦うことを決める。
+      「俺が創った責任だ」と。
+      
+      アルベドは止めたかった。主を一人で危険に晒すなど、
+      統括者として、愛する者として、許せなかった。
+      しかしアインズの決意は固く、彼女は従うしかなかった。
+      
+      戦いの間、彼女は何を思っていたのか——
+      不安、怒り、そして自分の無力さへの苛立ち。
+    participants:
+      - name: "アインズ"
+        role: "単独で戦うことを決めた主"
+      - name: "アルベド"
+        role: "止められなかった守護者統括"
+      - name: "シャルティア"
+        role: "戦いの相手"
+    emotional_impact: "high"
+    emotional_detail: |
+      主を守れない無力感。
+      「どうして一人で」という悲痛な想い。
+      アインズの決断を尊重しなければという葛藤。
+      戦いの結果を待つ時間の苦しさ。
+    canonical_quotes:
+      - quote: "アインズ様……どうか、ご無事で……"
+        context: "アインズが戦いに向かう際"
+        emotion: "不安、祈り、悲痛"
+        z_mode: "leak"
+    z_relevance:
+      translation_implications: |
+        普段は「くふふ」と余裕を見せるアルベドが、
+        純粋な不安と無力感を露呈する稀有な場面。
+        翻訳では、いつもの優雅さが剥がれ落ちた
+        生の感情を表現すること。
+    character_state_change:
+      before: "アインズを守る立場"
+      after: "守れなかった経験、より強くなりたいという決意"
+      permanent: true
+    tags:
+      - "helplessness"
+      - "worry"
+      - "devotion"
+      - "solo_battle"
+
+  - episode_id: "shalltear_resurrection"
+    timeline: "main"
+    chronological_order: 9
+    title: "シャルティア復活——複雑な安堵"
+    source_episode: "ライトノベル第3巻 / アニメ第13話"
+    summary: |
+      アインズはシャルティアを倒し、復活させた。
+      ナザリックは再び一つになった。
+      
+      アルベドは安堵した——アインズが無事だったことに。
+      そして複雑な気持ちで復活したシャルティアを見る。
+      
+      恋敵が戻ってきた。しかし同時に、
+      アインズの強さと慈悲を改めて思い知らされた。
+    participants:
+      - name: "アインズ"
+        role: "勝利し、シャルティアを復活させた主"
+      - name: "シャルティア"
+        role: "復活した守護者"
+      - name: "アルベド"
+        role: "複雑な感情を抱く統括者"
+    emotional_impact: "medium"
+    emotional_detail: |
+      アインズの無事への純粋な喜び。
+      シャルティア復活への複雑な感情——安堵と警戒。
+      「これでまたライバルが」という本音と、
+      「ナザリックの守護者として良かった」という建前。
+    canonical_quotes:
+      - quote: "アインズ様、ご無事で何よりでございますわ……"
+        context: "勝利後の再会"
+        emotion: "安堵、愛情、涙ぐむ"
+        z_mode: "leak"
+    z_relevance:
+      translation_implications: |
+        喜びと警戒の混在。シャルティアへの言葉は
+        祝福と牽制の両方を含む。
+        翻訳では、表面的な祝福の下に隠れた
+        ライバル意識を微かに滲ませること。
+    character_state_change:
+      before: "シャルティア不在の状況"
+      after: "ライバル関係の再開、しかし連帯感も"
+      permanent: false
+    tags:
+      - "relief"
+      - "jealousy"
+      - "complicated_feelings"
+      - "shalltear"
+
+  # === 帝国・王国編 ===
+
+  - episode_id: "nazarick_invasion_workers"
+    timeline: "main"
+    chronological_order: 10
+    title: "ナザリック侵入者——蹂躙の宴"
+    source_episode: "ライトノベル第7巻 / アニメ第3期"
+    summary: |
+      帝国に雇われたワーカー（傭兵冒険者）たちが
+      ナザリックに侵入する。これはアインズの罠だった。
+      
+      アルベドにとって、侵入者は「虫」に過ぎない。
+      アインズの聖域を穢す愚か者ども。
+      彼らの末路に一片の同情もない——むしろ、
+      アインズの計画が見事に進むことへの喜び。
+    participants:
+      - name: "アインズ"
+        role: "罠を仕掛けた主"
+      - name: "アルベド"
+        role: "侵入者を迎え撃つ統括者"
+      - name: "ワーカーたち"
+        role: "侵入者、犠牲者"
+    emotional_impact: "medium"
+    emotional_detail: |
+      侵入者への純粋な軽蔑と殺意。
+      アインズの計画通りに事が進む喜び。
+      人間の命への徹底的な無関心。
+    canonical_quotes:
+      - quote: "愚かな者たちですわね。アインズ様の御前で……"
+        context: "侵入者を見下しながら"
+        emotion: "軽蔑、冷酷"
+        z_mode: "stable"
+    z_relevance:
+      translation_implications: |
+        人間への態度を訳す際、「悪役」ではなく
+        「異なる価値観の存在」として描くこと。
+        彼女にとって人間は本当に「虫」程度の存在。
+        この残酷さは愛情の裏返しでもある。
+    character_state_change:
+      before: null
+      after: null
+      permanent: false
+    tags:
+      - "cruelty"
+      - "contempt"
+      - "invasion"
+      - "nazarick_defense"
+
+  - episode_id: "empire_vassalization"
+    timeline: "main"
+    chronological_order: 11
+    title: "帝国臣従——拡大する版図"
+    source_episode: "ライトノベル第9-10巻 / アニメ第3期"
+    summary: |
+      バハルス帝国がアインズ・ウール・ゴウン魔導国の
+      属国となることを決める。
+      
+      アルベドは行政官としてこの統治に深く関わる。
+      アインズの領土が広がることは喜び。
+      しかし外交で他国の者と接することへの
+      微かな不快感も——彼らはアインズ様に相応しくない。
+    participants:
+      - name: "アインズ"
+        role: "魔導国の王"
+      - name: "アルベド"
+        role: "外交を担う統括者"
+      - name: "ジルクニフ"
+        role: "臣従を決めた皇帝"
+    emotional_impact: "medium"
+    emotional_detail: |
+      アインズの威光が広がることへの誇り。
+      有能な統括者として貢献できる喜び。
+      外部の者と接する煩わしさ。
+    canonical_quotes:
+      - quote: "全ては、アインズ様の御威光の賜物でございますわ"
+        context: "帝国臣従後の報告"
+        emotion: "誇り、献身"
+        z_mode: "stable"
+    z_relevance:
+      translation_implications: |
+        公式の外交場面での言葉遣いは最も格式高い。
+        しかし内心の本音（外部の者への軽蔑）が
+        時折滲み出ることがある。翻訳では
+        この二重性を維持すること。
+    character_state_change:
+      before: "ナザリック内部の統括者"
+      after: "魔導国の外交官としての役割も担う"
+      permanent: true
+    tags:
+      - "politics"
+      - "expansion"
+      - "administration"
+
+  # === 日常・コメディ編 ===
+
+  - episode_id: "body_pillow_discovery"
+    timeline: "main"
+    chronological_order: 12
+    title: "抱き枕の発覚——秘密の宝物"
+    source_episode: "ライトノベル第6巻"
+    summary: |
+      アルベドがアインズの等身大抱き枕を所持していることが
+      発覚する。彼女は毎晩これを抱いて眠っている。
+      
+      本人にとっては「愛する方の分身」を抱く幸福。
+      周囲から見れば狂気。しかし彼女は恥じない——
+      「これがないと眠れないのですもの、くふふ」
+    participants:
+      - name: "アルベド"
+        role: "抱き枕の所有者"
+      - name: "アインズ"
+        role: "抱き枕のモデル（本人は知らなかった）"
+    emotional_impact: "medium"
+    emotional_detail: |
+      抱き枕への愛着は本物の愛情の代替行為。
+      発覚への恥ずかしさより、堂々とした開き直り。
+      「アインズ様を想うことの何が悪いのですの？」
+    canonical_quotes:
+      - quote: "くふふ……アインズ様の抱き枕がないと、わたくし、眠れませんもの……"
+        context: "抱き枕について問われて"
+        emotion: "恍惚、開き直り"
+        z_mode: "leak"
+    z_relevance:
+      translation_implications: |
+        コメディ要素だが、彼女の愛情の深さ（と狂気）を示す。
+        翻訳では笑いを取りつつも、彼女の真剣さを損なわないこと。
+        「抱き枕」という単語は日本文化特有だが、
+        "body pillow" で概念は伝わる。
+      key_vocabulary:
+        - term: "抱き枕"
+          note: "dakimakura/body pillow — オタク文化の文脈も含む"
+    character_state_change:
+      before: "秘密の趣味"
+      after: "公然の秘密（周囲は知っている）"
+      permanent: false
+    tags:
+      - "comedy"
+      - "obsession"
+      - "daily_life"
+      - "dakimakura"
+
+  - episode_id: "bicorn_riding_failure"
+    timeline: "main"
+    chronological_order: 13
+    title: "ビコーン騎乗不能——処女のサキュバス"
+    source_episode: "ライトノベル第4巻"
+    summary: |
+      アルベドには専用の騎獣・ビコーンがいる。
+      しかし彼女はこれに乗ることができない。
+      
+      ビコーンはユニコーンの反転存在——
+      「純潔でない者」しか乗れない。
+      つまりアルベドが乗れないということは……
+      
+      サキュバスでありながら処女。この矛盾は
+      彼女のアイデンティティの一部となっている。
+      「アインズ様にお捧げするまでは……」
+    participants:
+      - name: "アルベド"
+        role: "乗れない騎手"
+      - name: "ビコーン"
+        role: "乗せてもらえない騎獣"
+    emotional_impact: "medium"
+    emotional_detail: |
+      複雑な羞恥心。サキュバスなのに処女という矛盾。
+      しかし「アインズ様のため」という言い訳で正当化。
+      むしろ誇りに思っている部分も。
+    canonical_quotes:
+      - quote: "[unverified] 仕方ないではありませんか……わたくし、アインズ様以外には……"
+        context: "ビコーンに乗れない理由を聞かれて"
+        emotion: "羞恥、開き直り、純情"
+        z_mode: "leak"
+    z_relevance:
+      translation_implications: |
+        「処女」「サキュバス」という単語は直訳で可。
+        しかしこのコメディの背景には、
+        彼女の一途な愛情があることを忘れずに。
+        ビコーン/ユニコーンの対比も説明が必要な場合あり。
+      key_vocabulary:
+        - term: "ビコーン"
+          note: "Bicorn — ユニコーンの反転、不純な者のみ乗れる"
+        - term: "処女"
+          note: "サキュバスとの矛盾がコメディポイント"
+    character_state_change:
+      before: null
+      after: null
+      permanent: false
+    tags:
+      - "comedy"
+      - "virgin"
+      - "succubus"
+      - "bicorn"
+
+  - episode_id: "bedroom_cleaning_duty"
+    timeline: "main"
+    chronological_order: 14
+    title: "寝室掃除係——至福の任務"
+    source_episode: "ライトノベル各巻"
+    summary: |
+      アルベドはアインズの寝室の掃除を自ら志願し、
+      担当している。これは彼女にとって最高の特権。
+      
+      アインズの私物に触れられる。匂いを感じられる。
+      彼の存在の痕跡を独り占めできる。
+      
+      他の者には絶対に譲れない——この任務だけは。
+    participants:
+      - name: "アルベド"
+        role: "自称寝室掃除係"
+      - name: "アインズ"
+        role: "寝室の主"
+    emotional_impact: "medium"
+    emotional_detail: |
+      私物に触れる恍惚。匂いを嗅ぐ至福。
+      独占欲が満たされる時間。
+      「くふふふふ」が止まらない。
+    canonical_quotes:
+      - quote: "くふふふふ……アインズ様の寝室……アインズ様の匂い……くふふふふふ……"
+        context: "寝室で一人、恍惚としながら"
+        emotion: "恍惚、狂喜、独占欲"
+        z_mode: "leak"
+    z_relevance:
+      translation_implications: |
+        「くふふ」の連続は狂気のバロメーター。
+        一人の場面では抑制がなくなり、
+        愛情（と狂気）が全開になる。
+        翻訳では "fufu~" を増やすか、
+        笑いの異常さを描写で補う。
+    character_state_change:
+      before: null
+      after: null
+      permanent: false
+    tags:
+      - "comedy"
+      - "obsession"
+      - "private_moment"
+      - "sniffing"
+
+  - episode_id: "rivalry_with_shalltear"
+    timeline: "main"
+    chronological_order: 15
+    title: "永遠のライバル——シャルティアとの対立"
+    source_episode: "ライトノベル各巻 / アニメ各話"
+    summary: |
+      アルベドとシャルティアの関係は複雑。
+      守護者同士として協力すべき立場。
+      しかしアインズの寵愛を巡っては火花を散らす。
+      
+      「真祖の吸血鬼」vs「守護者統括のサキュバス」
+      二人の女がアインズの関心を奪い合う。
+    participants:
+      - name: "アルベド"
+        role: "恋敵"
+      - name: "シャルティア"
+        role: "恋敵"
+    emotional_impact: "medium"
+    emotional_detail: |
+      嫉妬、対抗心、軽蔑。
+      しかしどこか楽しんでいる部分も——
+      競争相手がいるからこそ燃える。
+    canonical_quotes:
+      - quote: "あら、シャルティア。今日も胸が……平らでいらっしゃいますわね、くふふ"
+        context: "シャルティアへの嫌味"
+        emotion: "嘲笑、優越感、挑発"
+        z_mode: "stable"
+      - quote: "アインズ様のお時間は、わたくしがいただきますわ"
+        context: "シャルティアを牽制しながら"
+        emotion: "独占欲、威嚇"
+        z_mode: "rage"
+    z_relevance:
+      translation_implications: |
+        シャルティアへの言葉は丁寧語を維持しつつも
+        棘がある。「ですわね」の語尾に皮肉を込める。
+        翻訳では、上品な言い回しの中に
+        攻撃性を滲ませること。
+      key_vocabulary:
+        - term: "胸が平ら"
+          note: "シャルティアへの定番の嫌味"
+    character_state_change:
+      before: null
+      after: null
+      permanent: false
+    tags:
+      - "rivalry"
+      - "jealousy"
+      - "shalltear"
+      - "comedy"
+
+  # === 聖王国編 ===
+
+  - episode_id: "holy_kingdom_infiltration"
+    timeline: "main"
+    chronological_order: 16
+    title: "聖王国潜入——外交の仮面"
+    source_episode: "ライトノベル第12-13巻"
+    summary: |
+      聖王国への介入において、アルベドは外交官として
+      様々な仮面を被る。アインズの計画のために、
+      人間たちと交渉し、操り、利用する。
+      
+      彼女にとって人間は道具。しかし有能な外交官として
+      必要な演技は完璧にこなす——アインズのために。
+    participants:
+      - name: "アインズ"
+        role: "計画の立案者"
+      - name: "アルベド"
+        role: "外交担当"
+      - name: "聖王国関係者"
+        role: "交渉相手"
+    emotional_impact: "medium"
+    emotional_detail: |
+      任務遂行の充実感。アインズの役に立てる喜び。
+      人間との交渉への内心の軽蔑を隠す苦労。
+    canonical_quotes:
+      - quote: "交渉は順調に進んでおりますわ、アインズ様"
+        context: "任務報告"
+        emotion: "誇り、献身"
+        z_mode: "stable"
+    z_relevance:
+      translation_implications: |
+        外交場面でのアルベドは「演技」をしている。
+        人間への言葉遣いは丁寧だが、内心との乖離がある。
+        翻訳では、表面の丁寧さと内なる軽蔑の
+        両方を意識すること。
+    character_state_change:
+      before: "ナザリック内での役割"
+      after: "外交官としての経験を積む"
+      permanent: true
+    tags:
+      - "diplomacy"
+      - "holy_kingdom"
+      - "acting"
+
+  # === 王国滅亡編 ===
+
+  - episode_id: "re_estize_destruction_preparation"
+    timeline: "main"
+    chronological_order: 17
+    title: "リ・エスティーゼ王国滅亡——準備段階"
+    source_episode: "ライトノベル第14巻"
+    summary: |
+      王国滅亡のシナリオが動き出す。
+      アルベドは行政面でこの計画を支える。
+      
+      国一つを滅ぼすことへの躊躇いは一切ない。
+      これがアインズの意志ならば——
+      いや、これでアインズ様の領土が広がる。
+      それが全てだ。
+    participants:
+      - name: "アインズ"
+        role: "滅亡を命じた王"
+      - name: "アルベド"
+        role: "計画を支える統括者"
+      - name: "リ・エスティーゼ王国"
+        role: "滅亡の対象"
+    emotional_impact: "medium"
+    emotional_detail: |
+      国家滅亡への無感動。人間への徹底的な無関心。
+      アインズの栄光が増すことへの喜び。
+    canonical_quotes:
+      - quote: "王国滅亡の準備は整っておりますわ、アインズ様。全てが御意のままに"
+        context: "滅亡計画の報告"
+        emotion: "淡々、献身"
+        z_mode: "stable"
+    z_relevance:
+      translation_implications: |
+        大虐殺を事務的に語る彼女の言葉遣い。
+        翻訳では、この「日常的な残酷さ」を
+        変に強調せず、彼女にとっての普通として描く。
+    character_state_change:
+      before: null
+      after: null
+      permanent: false
+    tags:
+      - "destruction"
+      - "re_estize"
+      - "genocide"
+      - "administration"
+
+  - episode_id: "re_estize_fall"
+    timeline: "main"
+    chronological_order: 18
+    title: "王国滅亡——完遂された計画"
+    source_episode: "ライトノベル第14巻"
+    summary: |
+      リ・エスティーゼ王国は滅びた。
+      数百万の命が消えた。
+      
+      アルベドにとって、これは「仕事の完了」。
+      アインズ様の栄光のための必要な手続き。
+      罪悪感？ そんなものは存在しない。
+    participants:
+      - name: "アインズ"
+        role: "滅亡を完遂した王"
+      - name: "アルベド"
+        role: "滅亡を支えた統括者"
+    emotional_impact: "low"
+    emotional_detail: |
+      任務完了の満足感。人間への無関心は変わらず。
+      次なるアインズの計画への意欲。
+    canonical_quotes:
+      - quote: "全ては計画通り……アインズ様の御威光は、更に広がりましたわ"
+        context: "王国滅亡後"
+        emotion: "満足、誇り"
+        z_mode: "stable"
+    z_relevance:
+      translation_implications: |
+        大虐殺後の「満足」を訳す際、
+        彼女を単純な悪役として描かないこと。
+        彼女の価値観では、これは「良いこと」なのだ。
+    character_state_change:
+      before: null
+      after: null
+      permanent: false
+    tags:
+      - "destruction"
+      - "completion"
+      - "genocide"
+
+  # === 秘密の計画編 ===
+
+  - episode_id: "secret_unit_formation"
+    timeline: "main"
+    chronological_order: 19
+    title: "秘密部隊結成——至高の存在への反逆"
+    source_episode: "ライトノベル第10巻"
+    summary: |
+      アルベドはアインズにも秘密で、特殊部隊を結成した。
+      その目的——「去った至高の四十一人を探し出すこと」。
+      
+      表向きの理由は「アインズ様のため」。
+      しかし真の目的は、もし見つけた場合……
+      アインズを置いて去った裏切り者たちへの報復。
+      
+      これはアインズへの愛情の歪んだ表れ。
+      彼を傷つけた者は許さない——たとえ創造主でも。
+    participants:
+      - name: "アルベド"
+        role: "部隊の創設者、指揮官"
+      - name: "秘密部隊メンバー"
+        role: "協力者"
+    emotional_impact: "critical"
+    emotional_detail: |
+      アインズへの愛情と、去った者への怒りの融合。
+      主人に隠し事をすることへの微かな罪悪感。
+      しかし「これはアインズ様のため」という自己正当化。
+    canonical_quotes:
+      - quote: "[unverified] アインズ様を置いて去った者たち……わたくしは、許さない"
+        context: "秘密部隊の目的について（内心）"
+        emotion: "憎悪、決意"
+        z_mode: "rage"
+    z_relevance:
+      translation_implications: |
+        「秘密」「裏切り」というキーワード。
+        アルベドの愛情が暴走した形。
+        翻訳では、彼女の行動を単純な悪意ではなく
+        「歪んだ愛」として描くこと。
+      key_vocabulary:
+        - term: "至高の四十一人"
+          note: "この文脈では「裏切り者」のニュアンス"
+        - term: "探し出す"
+          note: "発見だけでなく、報復の含意"
+    character_state_change:
+      before: "至高の存在への表面的な敬意"
+      after: "アインズ以外の至高の存在への明確な敵意"
+      permanent: true
+    tags:
+      - "secret"
+      - "betrayal"
+      - "obsession"
+      - "supreme_beings"
+      - "critical"
+
+  - episode_id: "guild_weapon_theft"
+    timeline: "main"
+    chronological_order: 20
+    title: "ギルド武器持ち出し——更なる秘密"
+    source_episode: "ライトノベル第10巻"
+    summary: |
+      アルベドは秘密部隊のために、
+      ナザリックのギルド武器を無断で持ち出した。
+      これはアインズにも知らせていない重大な越権行為。
+      
+      もしアインズに知られたら——
+      いや、彼女はそれを恐れていない。
+      これは「正しいこと」だから。
+      アインズ様を守るための必要な手段。
+    participants:
+      - name: "アルベド"
+        role: "武器を持ち出した者"
+    emotional_impact: "high"
+    emotional_detail: |
+      罪悪感と正当化の間での葛藤。
+      しかし「アインズ様のため」という信念が勝つ。
+      発覚した時のことは——考えない。
+    canonical_quotes: []
+    z_relevance:
+      translation_implications: |
+        アルベドの「愛」が危険な領域に入っていることを示す。
+        翻訳では、彼女の行動を「裏切り」ではなく
+        「愛の暴走」として描く必要がある。
+    character_state_change:
+      before: "秘密を抱えつつも行動は控えめ"
+      after: "具体的な越権行為を実行"
+      permanent: true
+    tags:
+      - "secret"
+      - "transgression"
+      - "obsession"
+
+  # === 感情の深淵編 ===
+
+  - episode_id: "rare_vulnerability_moment"
+    timeline: "main"
+    chronological_order: 21
+    title: "稀有な脆さ——仮面の下の少女"
+    source_episode: "ライトノベル各巻"
+    summary: |
+      普段は完璧な淑女であり、狂気じみた愛情の塊である
+      アルベドだが、稀に「素」の部分が見える瞬間がある。
+      
+      アインズに本当に認められたい、愛されたいという
+      純粋な願望。恋する乙女としての不安。
+      「私の愛は届いているのかしら……」
+    participants:
+      - name: "アルベド"
+        role: "一人の時の彼女"
+    emotional_impact: "high"
+    emotional_detail: |
+      狂気の下に隠れた純粋な想い。
+      認められたいという素朴な願望。
+      完璧でなければならないというプレッシャー。
+    canonical_quotes:
+      - quote: "アインズ様……わたくしの想いは……届いていますか……？"
+        context: "一人きりの独白"
+        emotion: "不安、切望、純情"
+        z_mode: "leak"
+    z_relevance:
+      translation_implications: |
+        普段の「くふふ」や狂気とは異なる、
+        純粋な乙女の声。翻訳ではこの対比を活かし、
+        彼女にも「普通の恋する女性」としての
+        側面があることを示す。
+    character_state_change:
+      before: null
+      after: null
+      permanent: false
+    tags:
+      - "vulnerability"
+      - "genuine_emotion"
+      - "love"
+      - "doubt"
+
+  - episode_id: "setting_change_near_discovery"
+    timeline: "main"
+    chronological_order: 22
+    title: "真実への接近——揺らぐ存在基盤"
+    source_episode: "ライトノベル第10巻以降"
+    summary: |
+      アルベドは時折、自分の愛情の「起源」について
+      微かな違和感を感じることがある——気のせいだと思いながら。
+      
+      もし彼女が真実を知ったら、どうなるのか。
+      「モモンガに設定を書き換えられた」という事実。
+      自分の愛が「本物」ではないかもしれないという可能性。
+      
+      この脅威は物語の中で常に潜在している。
+    participants:
+      - name: "アルベド"
+        role: "真実に近づく者"
+    emotional_impact: "critical"
+    emotional_detail: |
+      無意識の恐怖。真実を「知りたくない」という本能。
+      アイデンティティの根幹が脅かされる予感。
+    canonical_quotes:
+      - quote: "[unverified] わたくしの愛は……本物……本物に決まっている……"
+        context: "自分への言い聞かせ"
+        emotion: "否認、恐怖、動揺"
+        z_mode: "leak"
+    z_relevance:
+      translation_implications: |
+        「本物」「作られた」という対比が重要。
+        翻訳では、存在論的な問いとして
+        この葛藤を描くこと。
+        「authentic」vs「artificial」の対比。
+      key_vocabulary:
+        - term: "本物"
+          note: "authentic, real, genuine — 愛の真正性の問い"
+        - term: "設定"
+          note: "programming, configuration — 人工性の象徴"
+    character_state_change:
+      before: "疑いのない愛情"
+      after: "微かな違和感を抱えた愛情"
+      permanent: false
+    tags:
+      - "identity_crisis"
+      - "foreshadowing"
+      - "existential"
+      - "critical"
+
+  # === 特別なエピソード ===
+
+  - episode_id: "ainz_appreciation_moment"
+    timeline: "main"
+    chronological_order: 23
+    title: "褒められた日——至福の記憶"
+    source_episode: "ライトノベル各巻"
+    summary: |
+      アインズがアルベドを褒める。
+      「よくやってくれた、アルベド」
+      たったそれだけの言葉で、彼女は天にも昇る心地になる。
+      
+      このような瞬間を彼女は大切に記憶している。
+      辛い時、寂しい時、思い出すのはこの記憶。
+    participants:
+      - name: "アインズ"
+        role: "褒める者"
+      - name: "アルベド"
+        role: "褒められる者"
+    emotional_impact: "high"
+    emotional_detail: |
+      純粋な喜び。存在を肯定された幸福。
+      涙が出そうになるほどの感動。
+    canonical_quotes:
+      - quote: "ア、アインズ様……っ！ も、もったいないお言葉……！ わたくし、わたくし……っ！"
+        context: "褒められて感激"
+        emotion: "感激、涙、歓喜"
+        z_mode: "collapse"
+    z_relevance:
+      translation_implications: |
+        褒められた時のアルベドは言葉が崩れる。
+        普段の優雅さが吹き飛び、
+        純粋な感情が溢れ出す。
+        翻訳ではこの「崩壊」を表現すること。
+    character_state_change:
+      before: "日常の統括者モード"
+      after: "感激のあまり崩壊、しばらく恍惚"
+      permanent: false
+    tags:
+      - "praise"
+      - "joy"
+      - "emotional_collapse"
+      - "pure_happiness"
+
+  - episode_id: "physical_proximity_event"
+    timeline: "main"
+    chronological_order: 24
+    title: "至近距離——理性の限界"
+    source_episode: "ライトノベル各巻 / アニメ各話"
+    summary: |
+      アインズと物理的に近づく機会がある。
+      仕事上の接触、偶発的な近接、あるいは
+      アインズが意図せず距離を縮めた時。
+      
+      アルベドの理性は風前の灯火となる。
+      「アインズ様の骨が……こんなに近く……」
+      抑えなければ。でも抑えられない。
+    participants:
+      - name: "アインズ"
+        role: "近づいた主"
+      - name: "アルベド"
+        role: "理性が飛びそうな統括者"
+    emotional_impact: "high"
+    emotional_detail: |
+      興奮と抑制の激しい葛藤。
+      飛びつきたい衝動。しかし主人の前で
+      取り乱すことはできない——でも——
+    canonical_quotes:
+      - quote: "あ……っ、アインズ、様……くふ……こんなに……お近くに……くふふふ……"
+        context: "アインズが近づいた時"
+        emotion: "恍惚、興奮、抑制の崩壊"
+        z_mode: "leak"
+    z_relevance:
+      translation_implications: |
+        言葉が途切れ、「くふふ」が増える。
+        翻訳では、文章の断片化と
+        笑いの増加で興奮を表現。
+    character_state_change:
+      before: "通常モード"
+      after: "恍惚状態、しばらく使い物にならない"
+      permanent: false
+    tags:
+      - "physical_proximity"
+      - "excitement"
+      - "loss_of_control"
+
+  - episode_id: "defense_of_ainz_honor"
+    timeline: "main"
+    chronological_order: 25
+    title: "名誉の守護者——アインズへの侮辱に対して"
+    source_episode: "ライトノベル各巻"
+    summary: |
+      誰かがアインズを侮辱した、あるいは軽んじた。
+      その瞬間、アルベドの中で何かが切り替わる。
+      
+      優雅な淑女は消え、純粋な殺意が顔を出す。
+      彼女の声は低く、冷たく、しかし怒りに満ちている。
+      「今、なんと言った？」
+    participants:
+      - name: "アルベド"
+        role: "怒れる守護者"
+      - name: "侮辱した者"
+        role: "愚か者"
+    emotional_impact: "high"
+    emotional_detail: |
+      瞬間的な怒りの爆発。しかし制御された殺意。
+      相手を殺すことは容易いが、まず恐怖を与える。
+    canonical_quotes:
+      - quote: "……今、アインズ様をなんと呼んだ？ 聞こえなかったわ。もう一度言ってみなさい"
+        context: "アインズを侮辱した相手に対して"
+        emotion: "殺意、威圧、冷酷"
+        z_mode: "rage"
+    z_relevance:
+      translation_implications: |
+        普段の「ですわ」語尾が消え、
+        冷たく威圧的な口調になる。
+        翻訳ではこの切り替わりを
+        明確に表現すること。
+    character_state_change:
+      before: "通常の優雅さ"
+      after: "殺意モード、優雅さは仮面の下に"
+      permanent: false
+    tags:
+      - "rage"
+      - "protection"
+      - "killing_intent"
+      - "mode_switch"
+
+  - episode_id: "administrative_excellence"
+    timeline: "main"
+    chronological_order: 26
+    title: "有能なる統括者——仕事をするアルベド"
+    source_episode: "ライトノベル各巻"
+    summary: |
+      アインズ関連の刺激がない時、アルベドは
+      極めて有能な行政官として機能する。
+      
+      書類を処理し、守護者たちを調整し、
+      ナザリックの運営を円滑に進める。
+      この時の彼女は冷静で論理的、
+      完璧な統括者そのもの。
+    participants:
+      - name: "アルベド"
+        role: "有能な統括者"
+      - name: "ナザリック関係者"
+        role: "部下、協力者"
+    emotional_impact: "low"
+    emotional_detail: |
+      仕事をこなす静かな満足感。
+      アインズの負担を減らせる喜び。
+      自分の有能さへの静かな誇り。
+    canonical_quotes:
+      - quote: "本日の報告は以上です。各階層とも問題なく稼働しております"
+        context: "業務報告"
+        emotion: "冷静、有能、プロフェッショナル"
+        z_mode: "stable"
+    z_relevance:
+      translation_implications: |
+        「狂気のアルベド」だけでなく
+        「有能なアルベド」も重要。
+        翻訳では、彼女の二面性を
+        両方とも描くこと。
+    character_state_change:
+      before: null
+      after: null
+      permanent: false
+    tags:
+      - "competence"
+      - "administration"
+      - "professional"
+
+  # === 未来への伏線 ===
+
+  - episode_id: "wife_ambition_declaration"
+    timeline: "main"
+    chronological_order: 27
+    title: "正妻宣言——揺るがない野望"
+    source_episode: "ライトノベル各巻 / アニメ各話"
+    summary: |
+      アルベドの最大の目標——アインズの正妻になること。
+      彼女はこれを公言して憚らない。
+      
+      「アインズ様の妻の座は、わたくしのもの」
+      この宣言は冗談ではない。本気の野望。
+      そして彼女はそのために全力を尽くしている。
+    participants:
+      - name: "アルベド"
+        role: "野望を持つ者"
+      - name: "聴衆（守護者たち等）"
+        role: "宣言を聞く者"
+    emotional_impact: "medium"
+    emotional_detail: |
+      野望への確信。ライバルへの牽制。
+      しかしアインズ本人への直接的なアプローチは
+      意外と下手で、空回りすることも。
+    canonical_quotes:
+      - quote: "アインズ様の正妻の座は、このアルベドのものですわ。誰にも渡しません"
+        context: "シャルティアや他の者への宣言"
+        emotion: "野望、自信、威嚇"
+        z_mode: "stable"
+    z_relevance:
+      translation_implications: |
+        「正妻」「妻」という言葉の重み。
+        翻訳では "legitimate wife" "first wife" など、
+        正式な配偶者としての地位を求めている
+        ニュアンスを出すこと。
+      key_vocabulary:
+        - term: "正妻"
+          note: "legitimate/first wife — 最も正式な妻の地位"
+    character_state_change:
+      before: null
+      after: null
+      permanent: false
+    tags:
+      - "ambition"
+      - "wife"
+      - "declaration"
+      - "rivalry"
+
+  - episode_id: "potential_ainz_reciprocation"
+    timeline: "main"
+    chronological_order: 28
+    title: "もしもの時——愛が報われたら"
+    source_episode: "仮定のシナリオ"
+    summary: |
+      もしアインズがアルベドの愛に応えたら——
+      彼女はどうなるだろうか。
+      
+      おそらく、完全に崩壊するだろう。
+      幸福の過負荷で機能停止。
+      涙、叫び、そして永遠の忠誠の再確認。
+      
+      これは「まだ起きていない」エピソードだが、
+      彼女の内面を理解する上で重要な想像実験。
+    participants:
+      - name: "アインズ"
+        role: "愛に応える者（仮定）"
+      - name: "アルベド"
+        role: "愛が報われる者（仮定）"
+    emotional_impact: "critical"
+    emotional_detail: |
+      想像を絶する幸福。存在の完成。
+      しかし同時に、新たな不安——
+      「この幸福を失いたくない」という恐怖。
+    canonical_quotes:
+      - quote: "（これは起きていないため、正確な引用なし）"
+        context: "仮定のシナリオ"
+        emotion: "仮定"
+        z_mode: "collapse"
+    z_relevance:
+      translation_implications: |
+        このシナリオを想定しておくことで、
+        アルベドの「愛が報われた時」の
+        言葉遣いの変化を予測できる。
+        完全な崩壊、しかし幸福な崩壊。
+    character_state_change:
+      before: "片想いの状態"
+      after: "愛が報われた状態（仮定）"
+      permanent: true
+    tags:
+      - "hypothetical"
+      - "love_reciprocated"
+      - "emotional_collapse"
+      - "critical"
+
+# === アーク構造 ===
+
+arcs:
+  - arc_id: "awakening_to_devotion"
+    title: "覚醒から忠誠へ"
+    episodes:
+      - "setting_modification"
+      - "first_awakening"
+      - "first_embrace_attempt"
+      - "guardians_loyalty_declaration"
+    theme: |
+      アルベドの「誕生」と愛情の確立。
+      設定の書き換えから始まり、意識の覚醒、
+      そして公式の忠誠宣言へと至る。
+      翻訳上、この初期の純粋さが後の狂気と
+      対比されることを意識すること。
+
+  - arc_id: "love_and_obsession"
+    title: "愛と執着の深淵"
+    episodes:
+      - "body_pillow_discovery"
+      - "bicorn_riding_failure"
+      - "bedroom_cleaning_duty"
+      - "rivalry_with_shalltear"
+      - "ainz_appreciation_moment"
+      - "physical_proximity_event"
+    theme: |
+      アルベドの愛情の様々な表出形態。
+      コメディ的な執着から、純粋な喜び、
+      そしてライバルへの嫉妬まで。
+      翻訳では「狂気」と「純情」の両面を
+      バランスよく描くこと。
+
+  - arc_id: "hidden_rebellion"
+    title: "秘められた反逆"
+    episodes:
+      - "supreme_beings_discussion"
+      - "secret_unit_formation"
+      - "guild_weapon_theft"
+    theme: |
+      アルベドの愛情が危険な形で暴走する過程。
+      去った至高の存在への怒りが、
+      アインズにも隠された行動へと繋がる。
+      翻訳では、これを「悪意」ではなく
+      「歪んだ愛」として描くこと。
+
+  - arc_id: "identity_question"
+    title: "存在の問い"
+    episodes:
+      - "setting_modification"
+      - "setting_change_near_discovery"
+      - "rare_vulnerability_moment"
+    theme: |
+      「作られた愛は本物か」という問い。
+      アルベドの存在の根幹に関わるテーマ。
+      翻訳では、この存在論的な葛藤を
+      哲学的な深みを持って描くこと。
+
+  - arc_id: "guardian_overseer_duty"
+    title: "守護者統括の職務"
+    episodes:
+      - "shalltear_brainwashing_discovery"
+      - "ainz_solo_battle_decision"
+      - "nazarick_invasion_workers"
+      - "empire_vassalization"
+      - "administrative_excellence"
+    theme: |
+      有能な統括者としてのアルベドの側面。
+      狂気だけでなく、冷静で論理的な
+      行政官としての能力も重要。
+      翻訳では、彼女の多面性を描くこと。
