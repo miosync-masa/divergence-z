@@ -136,10 +136,15 @@ def parse_segments(text: str) -> Dict[str, str]:
 # =============================================================================
 
 def _label_variants(label: str) -> List[str]:
-    """persona_extractor_v2 / episode_extractor の保存名規則に合わせた候補"""
+    """各ツールの保存名規則に合わせた候補
+    persona_extractor_v2: 小文字化して英数字・_・- 以外を除去（「・」は消える）
+    persona_generator:    小文字化して空白と「・」を _ に、英数と _ 以外を除去
+    episode_*:            空白を _ に（「・」は残る）"""
     underscored = label.replace(" ", "_")
     lowered = re.sub(r"[^\w\-]", "", label.lower().replace(" ", "_"))
-    return list(dict.fromkeys([label, underscored, lowered]))
+    generated = "".join(c for c in label.lower().replace(" ", "_").replace("・", "_")
+                        if c.isalnum() or c == "_")
+    return list(dict.fromkeys([label, underscored, lowered, generated]))
 
 
 def find_character_file(label: str, directory: Path, kind: str) -> Optional[Path]:
@@ -147,13 +152,19 @@ def find_character_file(label: str, directory: Path, kind: str) -> Optional[Path
         return None
     for v in _label_variants(label):
         if kind == "persona":
-            candidates = [directory / f"{v}_extracted_v33.yaml", directory / f"{v}_v33.yaml"]
+            # 抽出版 > Web 生成版（日本語）> Web 生成版（他言語 {name}_v33_{lang}.yaml）
+            candidates = [directory / f"{v}_extracted_v33.yaml", directory / f"{v}_v33.yaml",
+                          *sorted(directory.glob(f"{glob_escape(v)}_v33_*.yaml"))]
         else:
             candidates = [directory / f"{v}_Episode.yaml", directory / f"{v}_Episode_full.yaml"]
         for c in candidates:
             if c.exists():
                 return c
     return None
+
+
+def glob_escape(text: str) -> str:
+    return re.sub(r"([*?\[\]])", r"[\1]", text)
 
 
 def parse_overrides(items: List[str]) -> Dict[str, Path]:
@@ -599,13 +610,20 @@ def _previous_chapter_tail(book: Book, idx: int, out_dir: Path, target_lang: str
 def build_section_prompt(book: Book, idx: int, segments: List[Dict[str, str]],
                          sections: List[Section], k: int, translated: Dict[str, str],
                          out_dir: Path, target_lang: str, previous: int = 2,
-                         use_bible: bool = True) -> Tuple[str, str, List[str]]:
+                         use_bible: bool = True, context: Optional[str] = None
+                         ) -> Tuple[str, str, List[str]]:
     """
     セクション k の (system, user, 登場人物) を組み立てる。
-    use_bible=False ならペルソナ・エピソードを渡さない（人物表のエントリだけ。比較実験用）。
+    context（比較実験用）:
+      "full" 人物表のエントリ＋ペルソナ＋エピソード（既定）
+      "cast" 人物表のエントリのみ（use_bible=False と同じ）
+      "none" 人物資料も語りの情報も渡さない（翻訳の指示・訳語表・前後の訳文・原文だけ）
     計画が挙げた登場人物を人物表と照合し、その人物の「人物表のエントリ・ペルソナ・エピソード」
     だけを渡す（人物表の他の人物は渡さない）。計画に人物が無ければ人物表でその章に出る人物。
     """
+    context = context or ("full" if use_bible else "cast")
+    use_bible = context == "full"
+    use_cast = context in ("full", "cast")
     sec = sections[k]
     known = set(book.cast_labels) or set(book.characters)
     people = [c for c in sec.characters if c in known] or book.cast_present_in(idx)
@@ -629,8 +647,9 @@ def build_section_prompt(book: Book, idx: int, segments: List[Dict[str, str]],
     multi = len(sections) > 1
     user = build_user_prompt(
         book.files[idx].name, segments[sec.start:sec.end + 1],
-        book.cast_subset(people) if book.cast else "", personas, episodes,
-        load_notes(out_dir), so_far, book.narration_by_file.get(book.files[idx].name, ""), target_lang,
+        book.cast_subset(people) if (book.cast and use_cast) else "", personas, episodes,
+        load_notes(out_dir), so_far,
+        book.narration_by_file.get(book.files[idx].name, "") if use_cast else "", target_lang,
         plan_text=render_plan(sections, segments, sec.id) if multi else "",
         section_label=f"{sec.id}/{len(sections)} {sec.title}" if multi else "")
     return build_system_prompt(target_lang), user, people
@@ -693,11 +712,12 @@ class ExcerptResult:
     issues: List[str]
     output_path: Path
     llm: Optional[LLMResult] = None
+    context: str = "full"
 
 
 def translate_excerpt(book: Book, idx: int, spec: str, *, llm: LLM, out_dir: Path,
                       target_lang: str = "en", characters: Optional[List[str]] = None,
-                      use_bible: bool = True, model: str = DEFAULT_MODEL,
+                      use_bible: bool = True, context: Optional[str] = None, model: str = DEFAULT_MODEL,
                       effort: Optional[str] = DEFAULT_EFFORT, max_output_tokens: int = 65536,
                       progress: Optional[Progress] = None) -> ExcerptResult:
     """
@@ -713,12 +733,15 @@ def translate_excerpt(book: Book, idx: int, spec: str, *, llm: LLM, out_dir: Pat
     unknown = [c for c in (characters or []) if c not in known]
     if unknown:
         raise ValueError(f"not in cast sheet: {unknown}")
+    context = context or ("full" if use_bible else "cast")
     sec = Section("S1", a, b, f"excerpt {spec}", people)
     system, user, used = build_section_prompt(book, idx, segments, [sec], 0, {}, out_dir,
-                                              target_lang, use_bible=use_bible)
+                                              target_lang, context=context)
+    if context == "none":
+        used = []
     report(f"✂️  {book.files[idx].name} {segments[a]['id']}–{segments[b]['id']} "
-           f"({_chars(segments, a, b):,} chars) → {target_lang} · bible={'on' if use_bible else 'off'} · "
-           f"{', '.join(used)}")
+           f"({_chars(segments, a, b):,} chars) → {target_lang} · context={context} · "
+           f"{', '.join(used) or '—'} · prompt {len(user):,} chars")
     result = llm.complete(system, user, model=model, effort=effort, max_output_tokens=max_output_tokens)
     body = re.search(r"<translation>(.*?)</translation>", result.text, re.S)
     got = parse_segments(body.group(1) if body else result.text)
@@ -731,23 +754,32 @@ def translate_excerpt(book: Book, idx: int, spec: str, *, llm: LLM, out_dir: Pat
                                                     encoding="utf-8")
     out_path = out_dir / f"{name}.md"
     out_path.write_text("\n\n".join(x["target"] for x in aligned) + "\n", encoding="utf-8")
-    return ExcerptResult(book.files[idx].name, spec, used, use_bible, aligned, issues, out_path, result)
+    return ExcerptResult(book.files[idx].name, spec, used, context == "full", aligned, issues, out_path,
+                         result, context)
 
 
-def write_comparison(path: Path, title: str, with_bible: ExcerptResult,
-                     without_bible: ExcerptResult) -> Path:
-    """資料あり／なしの訳を段落ごとに並べた Markdown を書く"""
+CONTEXT_LABELS = {
+    "full": "完全版（人物表＋ペルソナ＋エピソード）",
+    "cast": "人物表のみ",
+    "none": "資料なし（人物資料も語りの情報も無し）",
+}
+
+
+def write_comparison(path: Path, title: str, results: List["ExcerptResult"]) -> Path:
+    """条件ごとの訳を段落ごとに並べた Markdown を書く（results の順に列を並べる）"""
+    first = results[0]
     lines = [f"# {title}", "",
-             f"- 章: {with_bible.chapter} / 範囲: {with_bible.range}",
-             f"- 登場人物: {', '.join(with_bible.characters) or '—'}",
-             f"- A = 人物表のエントリ＋**ペルソナ＋エピソード** / B = 人物表のエントリのみ",
-             f"- 入力トークン: A {with_bible.llm.usage.get('input_tokens', '?')} / "
-             f"B {without_bible.llm.usage.get('input_tokens', '?')}", ""]
-    b_by_id = {x["id"]: x["target"] for x in without_bible.aligned}
-    for x in with_bible.aligned:
-        lines += [f"### {x['id']}", "", f"> {x['source']}", "",
-                  f"**A（資料あり）**  ", x["target"], "",
-                  f"**B（資料なし）**  ", b_by_id.get(x["id"], ""), ""]
+             f"- 章: {first.chapter} / 範囲: {first.range}",
+             f"- 登場人物: {', '.join(first.characters) or '—'}", ""]
+    for r in results:
+        lines.append(f"- **{r.context}** = {CONTEXT_LABELS.get(r.context, r.context)} · "
+                     f"入力 {r.llm.usage.get('input_tokens', '?')} / 出力 {r.llm.usage.get('output_tokens', '?')} tokens")
+    lines.append("")
+    by_ctx = [{x["id"]: x["target"] for x in r.aligned} for r in results]
+    for x in first.aligned:
+        lines += [f"### {x['id']}", "", f"> {x['source']}", ""]
+        for r, table in zip(results, by_ctx):
+            lines += [f"**{r.context}**  ", table.get(x["id"], ""), ""]
     path.write_text("\n".join(lines), encoding="utf-8")
     return path
 
@@ -926,9 +958,13 @@ def main() -> int:
     parser.add_argument("--characters", default="",
                         help="With --segments: comma-separated cast labels in the excerpt")
     parser.add_argument("--no-bible", action="store_true",
-                        help="With --segments: pass cast entries only (no persona / episode)")
-    parser.add_argument("--compare", action="store_true",
-                        help="With --segments: translate with and without bible and write a side-by-side file")
+                        help="With --segments: same as --context cast")
+    parser.add_argument("--context", default="full", choices=["full", "cast", "none"],
+                        help="With --segments: full = cast+persona+episode, cast = cast entries only, "
+                             "none = no character or narration info")
+    parser.add_argument("--compare", nargs="?", const="full,cast", default="",
+                        help="With --segments: translate under each context (default 'full,cast'; "
+                             "e.g. 'full,none' or 'full,cast,none') and write a side-by-side file")
     args = parser.parse_args()
 
     book = open_book(args.source, args.cast, args.persona_dir, args.episode_dir,
@@ -950,17 +986,23 @@ def main() -> int:
         common = dict(llm=llm, target_lang=args.target_lang, characters=chars, model=args.model,
                       effort=args.effort, max_output_tokens=args.max_output_tokens,
                       progress=print_progress)
-        runs = [True, False] if args.compare else [not args.no_bible]
-        results = {}
-        for use_bible in runs:
-            sub = out_dir / "excerpts" / ("bible" if use_bible else "no_bible")
-            r = translate_excerpt(book, idx, args.segments, out_dir=sub, use_bible=use_bible, **common)
-            results[use_bible] = r
-            print(f"{'✅' if not r.issues else '⚠️ '} {r.output_path}  {r.issues[:3]}")
         if args.compare:
-            path = out_dir / "excerpts" / f"compare_{book.files[idx].stem}_{args.segments}.{args.target_lang}.md"
-            write_comparison(path, f"{book.files[idx].name} {args.segments} → {args.target_lang}",
-                             results[True], results[False])
+            contexts = [c.strip() for c in args.compare.split(",") if c.strip()]
+            bad = [c for c in contexts if c not in ("full", "cast", "none")]
+            if bad:
+                parser.error(f"unknown context(s) in --compare: {bad}")
+        else:
+            contexts = ["cast" if args.no_bible else args.context]
+        results = []
+        for ctx in contexts:
+            r = translate_excerpt(book, idx, args.segments, out_dir=out_dir / "excerpts" / ctx,
+                                  context=ctx, **common)
+            results.append(r)
+            print(f"{'✅' if not r.issues else '⚠️ '} {r.output_path}  {r.issues[:3]}")
+        if len(results) > 1:
+            path = (out_dir / "excerpts" /
+                    f"compare_{book.files[idx].stem}_{args.segments}_{'-'.join(contexts)}.{args.target_lang}.md")
+            write_comparison(path, f"{book.files[idx].name} {args.segments} → {args.target_lang}", results)
             print(f"📊 {path}")
         print(f"usage: {llm.total_usage()}")
         return 0

@@ -89,7 +89,7 @@ export function ProjectsPage({ keys }: { keys: KeyStatus | null }) {
             <label className="field">保存先フォルダ
               <input value={form.root} readOnly />
             </label>
-            <label className="field">原稿フォルダ（章ごとのテキスト / PDF / EPUB）
+            <label className="field">原稿フォルダ（章ごとのテキスト / PDF / EPUB。Web 生成だけなら空でも可）
               <div className="row" style={{ flexWrap: "nowrap" }}>
                 <input value={form.source} onChange={(e) => setForm({ ...form, source: e.target.value })} placeholder="未選択" />
                 <button className="btn sm yellow" onClick={async () => {
@@ -111,7 +111,7 @@ export function ProjectsPage({ keys }: { keys: KeyStatus | null }) {
             </label>
           </div>
           <div className="row" style={{ marginTop: 18 }}>
-            <button className="btn" disabled={busy || !form.source} onClick={create}>作成して開く →</button>
+            <button className="btn" disabled={busy || !form.root} onClick={create}>作成して開く →</button>
             {formError ? <ErrorBox error={formError} /> : null}
           </div>
         </div>

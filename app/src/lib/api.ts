@@ -73,6 +73,41 @@ export interface Job {
   last_event_id: number;
 }
 
+export interface ChatMessage {
+  role: "user" | "assistant";
+  content: string;
+  display?: string;
+  time: number;
+  model?: string;
+  usage?: Record<string, any>;
+}
+
+export interface Chat {
+  id: string;
+  title: string;
+  character: string;
+  model: string;
+  effort: string | null;
+  user_profile: string;
+  created: number;
+  updated: number;
+  messages: ChatMessage[];
+  system_chars?: number;
+  system_tokens?: number;
+}
+
+export interface ChatSummary {
+  id: string;
+  title: string;
+  character: string;
+  model: string;
+  updated: number;
+  messages: number;
+  preview: string;
+}
+
+export interface CharacterInfo { label: string; persona: string; episode: string | null; in_cast: boolean }
+
 export interface EstimateRow {
   step: string;
   target: string;
@@ -110,6 +145,7 @@ export const api = {
   cast: (id: string) => call<{ path: string; yaml: string; data: any }>("GET", `/projects/${id}/cast`),
   putCast: (id: string, yaml: string) => call("PUT", `/projects/${id}/cast`, { yaml }),
   personas: (id: string) => call<{ files: string[] }>("GET", `/projects/${id}/personas`).then((r) => r.files),
+  episodes: (id: string) => call<{ files: string[] }>("GET", `/projects/${id}/episodes`).then((r) => r.files),
 
   translations: (id: string, lang: string) =>
     call<{ lang: string; notes: boolean; chapters: { chapter: string; file: string; status: string }[] }>(
@@ -125,6 +161,18 @@ export const api = {
            total_cost_usd: number | null; all_fit: boolean | null; characters: string[];
            source: { files: number; chars: number } }>("POST", `/projects/${id}/estimate`, body),
 
+  characters: (id: string) =>
+    call<{ characters: CharacterInfo[] }>("GET", `/projects/${id}/characters`).then((r) => r.characters),
+  chatTemplate: () => call<{ text: string; path: string; custom: boolean }>("GET", "/chat/template"),
+  putChatTemplate: (text: string) => call("PUT", "/chat/template", { text }),
+  chats: (id: string) => call<{ chats: ChatSummary[] }>("GET", `/projects/${id}/chats`).then((r) => r.chats),
+  createChat: (id: string, body: { character: string; model?: string; effort?: string; user_profile?: string; title?: string }) =>
+    call<Chat>("POST", `/projects/${id}/chats`, body),
+  chat: (id: string, chatId: string) => call<Chat>("GET", `/projects/${id}/chats/${chatId}`),
+  chatSystem: (id: string, chatId: string) =>
+    call<{ text: string }>("GET", `/projects/${id}/chats/${chatId}/system`).then((r) => r.text),
+  deleteChat: (id: string, chatId: string) => call("DELETE", `/projects/${id}/chats/${chatId}`),
+
   jobs: (projectId?: string) =>
     call<{ jobs: Job[] }>("GET", `/jobs${projectId ? `?project_id=${projectId}` : ""}`).then((r) => r.jobs),
   submit: (type: string, projectId: string, params: Record<string, any> = {}) =>
@@ -139,7 +187,7 @@ export const ERROR_HINTS: Record<string, string> = {
   auth_invalid: "API キーが無効か、権限がありません。",
   rate_limited: "レート制限に達しました。少し待ってから再実行してください。",
   context_too_large: "入力がモデルのコンテキストに収まりません。より大きいモデルを選んでください。",
-  refusal: "モデルがこのリクエストを断りました。",
+  refusal: "モデルがこのリクエストを断りました。チャットではシステム指示（テンプレート）の内容が原因のこともあります。",
   invalid_input: "入力やプロジェクトの設定を確認してください。",
   provider_error: "プロバイダ側でエラーが起きました。再実行してください。",
   internal_error: "アプリ内部のエラーです。",

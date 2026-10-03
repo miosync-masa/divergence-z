@@ -6,6 +6,7 @@ import { PipelineTab } from "./tabs/Pipeline";
 import { CastTab } from "./tabs/Cast";
 import { TranslateTab } from "./tabs/Translate";
 import { VoiceTab } from "./tabs/Voice";
+import { GenerateTab } from "./tabs/Generate";
 import { ConfigTab } from "./tabs/Config";
 
 const TABS: [string, string][] = [
@@ -13,6 +14,7 @@ const TABS: [string, string][] = [
   ["cast", "人物表"],
   ["translate", "翻訳"],
   ["voice", "ボイス"],
+  ["generate", "Web 生成"],
   ["config", "設定"],
 ];
 
@@ -105,6 +107,7 @@ export function ProjectPage({ id, tab }: { id: string; tab: string }) {
       {tab === "cast" ? <CastTab ctx={ctx} /> : null}
       {tab === "translate" ? <TranslateTab ctx={ctx} /> : null}
       {tab === "voice" ? <VoiceTab ctx={ctx} /> : null}
+      {tab === "generate" ? <GenerateTab ctx={ctx} /> : null}
       {tab === "config" ? <ConfigTab ctx={ctx} /> : null}
 
       {tab !== "pipeline" && tab !== "voice" && jobId ? (

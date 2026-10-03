@@ -25,9 +25,12 @@ from divergence_z.chapter_translator import (NOTES_FILE, collect_source_files, e
 from divergence_z.core import (Keys, check_fit, dump_yaml, get_model, list_models,
                                load_source_corpus)
 
+from divergence_z.chat import ChatStore, load_template, save_template, template_path
+from divergence_z.core import estimate_tokens
+
 from .jobs import TERMINAL, JobManager
 from .projects import STEPS, Project, ProjectRegistry
-from .tasks import RUNNERS
+from .tasks import RUNNERS, chat_system
 
 VERSION = "0.2.0"
 _ALLOWED_HOSTS = {"127.0.0.1", "localhost", "[::1]"}
@@ -70,6 +73,18 @@ class JobIn(BaseModel):
 
 class YamlIn(BaseModel):
     yaml: str
+
+
+class TemplateIn(BaseModel):
+    text: str
+
+
+class ChatIn(BaseModel):
+    character: str
+    model: Optional[str] = None
+    effort: Optional[str] = None
+    user_profile: str = ""
+    title: str = ""
 
 
 class EstimateIn(BaseModel):
@@ -291,6 +306,83 @@ def create_app(token: str, allowed_origins: Optional[List[str]] = None,
             raise HTTPException(404, "not translated yet")
         return {"chapter": chapter, "lang": lang,
                 "segments": json.loads(seg.read_text(encoding="utf-8"))}
+
+    # --- characters / chat ----------------------------------------------------------------
+
+    @app.get("/projects/{project_id}/characters")
+    def characters(project_id: str):
+        """会話・ボイスに使える人物（ペルソナがある人物）。人物表のラベル＋人物表に無い Web 生成分"""
+        project = project_or_404(project_id)
+        out, seen = [], set()
+        for label in project.cast_labels():
+            p, e = project.persona_file(label), project.episode_file(label)
+            if p:
+                seen.add(p.name)
+                out.append({"label": label, "persona": p.name, "episode": e.name if e else None,
+                            "in_cast": True})
+        for f in sorted(project.persona_dir.glob("*.yaml")) if project.persona_dir.is_dir() else []:
+            if f.name in seen:
+                continue
+            try:
+                name = (yaml.safe_load(f.read_text(encoding="utf-8")) or {}).get("persona", {}).get("name")
+            except yaml.YAMLError:
+                name = None
+            label = name or f.stem
+            e = project.episode_file(label)
+            out.append({"label": label, "persona": f.name, "episode": e.name if e else None,
+                        "in_cast": False})
+        return {"characters": out}
+
+    @app.get("/chat/template")
+    def get_template():
+        return {"text": load_template(), "path": str(template_path()), "custom": template_path().exists()}
+
+    @app.put("/chat/template")
+    def put_template(body: TemplateIn):
+        if "{{PERSONA_EPISODE}}" not in body.text:
+            raise HTTPException(422, "テンプレートに {{PERSONA_EPISODE}}（ペルソナとエピソードの差し込み口）が必要です")
+        save_template(body.text)
+        return {"ok": True}
+
+    @app.get("/projects/{project_id}/chats")
+    def list_chats(project_id: str):
+        return {"chats": ChatStore(project_or_404(project_id).root).list()}
+
+    @app.post("/projects/{project_id}/chats")
+    def create_chat(project_id: str, body: ChatIn):
+        project = project_or_404(project_id)
+        if not project.persona_file(body.character):
+            raise HTTPException(422, f"ペルソナがありません: {body.character}")
+        m = project.model_for("voice")
+        chat = ChatStore(project.root).create(body.character, body.model or m["model"],
+                                              body.effort or m.get("effort"), body.user_profile,
+                                              body.title)
+        return chat
+
+    def chat_or_404(project: Project, chat_id: str):
+        try:
+            return ChatStore(project.root).get(chat_id)
+        except KeyError:
+            raise HTTPException(404, "chat not found")
+
+    @app.get("/projects/{project_id}/chats/{chat_id}")
+    def get_chat(project_id: str, chat_id: str):
+        project = project_or_404(project_id)
+        chat = chat_or_404(project, chat_id)
+        system = chat_system(project, chat)
+        return {**chat, "system_chars": len(system), "system_tokens": estimate_tokens(system)}
+
+    @app.get("/projects/{project_id}/chats/{chat_id}/system")
+    def get_chat_system(project_id: str, chat_id: str):
+        project = project_or_404(project_id)
+        return {"text": chat_system(project, chat_or_404(project, chat_id))}
+
+    @app.delete("/projects/{project_id}/chats/{chat_id}")
+    def delete_chat(project_id: str, chat_id: str):
+        project = project_or_404(project_id)
+        chat_or_404(project, chat_id)
+        ChatStore(project.root).delete(chat_id)
+        return {"ok": True}
 
     # --- estimate -----------------------------------------------------------------------
 

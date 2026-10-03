@@ -4,6 +4,7 @@ import { go, useRoute } from "./lib/hooks";
 import { ProjectsPage } from "./pages/Projects";
 import { SettingsPage } from "./pages/Settings";
 import { ProjectPage } from "./pages/Project";
+import { ChatPage } from "./pages/Chat";
 import { Pill } from "./components/ui";
 
 export function App() {
@@ -18,7 +19,8 @@ export function App() {
   }, []);
 
   const [section, id, tab] = route;
-  const page = section === "settings" ? "settings" : section === "p" && id ? "project" : "projects";
+  const page = section === "settings" ? "settings" : section === "chat" ? "chat"
+    : section === "p" && id ? "project" : "projects";
 
   return (
     <div className="app">
@@ -29,6 +31,7 @@ export function App() {
         </div>
         <nav className="nav">
           <a href="#/" className={page === "projects" || page === "project" ? "active" : ""}><span className="ico">▤</span>プロジェクト</a>
+          <a href="#/chat" className={page === "chat" ? "active" : ""}><span className="ico">✦</span>AIチャット</a>
           <a href="#/settings" className={page === "settings" ? "active" : ""}><span className="ico">⚿</span>キー & モデル</a>
         </nav>
         <div className="foot">
@@ -48,6 +51,7 @@ export function App() {
         {sidecar.ready && page === "projects" ? <ProjectsPage keys={keys} /> : null}
         {sidecar.ready && page === "settings" ? <SettingsPage keys={keys} onKeys={setKeys} /> : null}
         {sidecar.ready && page === "project" ? <ProjectPage id={id} tab={tab || "pipeline"} key={id} /> : null}
+        {sidecar.ready && page === "chat" ? <ChatPage projectId={id} chatId={tab} /> : null}
         {sidecar.error ? (
           <div className="page">
             <div className="banner pink">ENGINE DOWN — Python サイドカーを起動できませんでした

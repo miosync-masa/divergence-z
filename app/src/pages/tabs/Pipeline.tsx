@@ -63,6 +63,15 @@ export function PipelineTab({ ctx }: { ctx: ProjectCtx }) {
 
   return (
     <>
+      {!project.source ? (
+        <div className="banner cyan">
+          <span className="mono">NO SOURCE</span>
+          <span>原稿フォルダが未設定です。抽出と翻訳には原稿が必要です（Web 生成とボイスはこのまま使えます）。</span>
+          <span className="spacer" />
+          <button className="btn sm yellow" onClick={() => go("p", project.id, "config")}>設定タブで指定する</button>
+          <button className="btn sm ghost" onClick={() => go("p", project.id, "generate")}>Web 生成へ</button>
+        </div>
+      ) : null}
       <div className="grid c4">
         {steps.map((s) => {
           const complete = s.total > 0 && s.done >= s.total;
