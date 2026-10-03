@@ -1,7 +1,8 @@
 """実行前のトークン見積もり・コンテキスト適合チェック・費用見積もり。
 
 厳密なトークン数はプロバイダのトークナイザ次第なので、ここは保守的な概算。
-日本語・中国語などの CJK 文字は 1 文字 ≒ 1 トークン強、それ以外は 4 文字 ≒ 1 トークンとみなす。
+日本語・中国語などの CJK 文字は 1 文字 ≒ 1.4 トークン、それ以外は 3.5 文字 ≒ 1 トークンとみなす。
+（STARGAZER の章翻訳で Claude Opus 5.5 の実測 81,026 tokens に対し、この式で ~81K になるよう較正）
 """
 
 from __future__ import annotations
@@ -17,7 +18,7 @@ _CJK = re.compile(r"[　-ヿ㐀-鿿豈-﫿＀-￯가-힯]")
 
 def estimate_tokens(text: str) -> int:
     cjk = len(_CJK.findall(text))
-    return int(cjk * 1.2 + (len(text) - cjk) / 4) + 1
+    return int(cjk * 1.4 + (len(text) - cjk) / 3.5) + 1
 
 
 @dataclass

@@ -24,3 +24,25 @@
 cd divergence_z
 python old/z_axis_translate.py --config old/requests/rem_test_a_suki.yaml
 ```
+
+旧系統のスクリプトは当時の環境変数を読む（現行の `.env.example` には載っていない）:
+
+| 変数 | 用途 |
+|---|---|
+| `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` | API キー |
+| `OPENAI_MODEL` | Step1/2 などで使う OpenAI モデル（当時の既定 `gpt-5.2`） |
+| `CLAUDE_MODEL` | Step3 で使う Claude モデル（当時の既定 `claude-opus-4-5-20251101`） |
+| `USE_CLAUDE_FOR_STEP3` | Step3 を Claude で行うか（既定 `true`） |
+| `IAP_MODEL` | IAP 評価のモデル（既定 `gpt-4.1-mini`） |
+
+## 論文との対応
+
+実践報告 *Translation as Action Preservation (TAP): Evaluating Anime/Manga Translation Beyond Meaning*
+（Journal of Audiovisual Translation 投稿）の実験は、この旧系統で行った。結果はリポジトリ直下の `Result/` にある。
+
+| `Result/` | 内容 |
+|---|---|
+| `ReZERO/` | レムとスバル（z_axis_dialogue / v3.3 ペルソナ） |
+| `STEINSGATE/` | 紅莉栖・まゆり・岡部（翻訳・ZAP 評価・persona_voice のデュアルボイス） |
+| `ONEPIEC/` | ルフィとレイリー（多言語の対話翻訳） |
+| `Shakespeare/` | persona_voice（ロミオとジュリエット） |

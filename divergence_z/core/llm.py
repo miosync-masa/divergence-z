@@ -15,6 +15,7 @@ import time
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
+from .cancel import CancelToken, Cancelled
 from .models import ModelSpec, get_model
 from .progress import Progress, resolve
 
@@ -30,6 +31,32 @@ class LLMError(RuntimeError):
 
 class LLMRefusal(LLMError):
     pass
+
+
+def classify_error(exc: BaseException) -> str:
+    """例外を UI 向けのエラー種別に変換する"""
+    if isinstance(exc, Cancelled):
+        return "cancelled"
+    if isinstance(exc, LLMRefusal):
+        return "refusal"
+    name = type(exc).__name__
+    msg = str(exc).lower()
+    if isinstance(exc, LLMError) and "api key is required" in msg:
+        return "auth_missing"
+    if name in ("AuthenticationError", "PermissionDeniedError"):
+        return "auth_invalid"
+    if name in ("RateLimitError", "OverloadedError", "ServiceUnavailableError"):
+        return "rate_limited"
+    if name == "RequestTooLargeError" or any(
+            k in msg for k in ("context length", "context window", "prompt is too long",
+                               "maximum context", "too many tokens", "input is too long")):
+        return "context_too_large"
+    if name in ("NotFoundError",) or "does not support effort" in msg:
+        return "invalid_input"
+    if name in ("APIConnectionError", "APITimeoutError", "InternalServerError", "APIStatusError",
+                "APIError") or isinstance(exc, LLMError):
+        return "provider_error"
+    return "internal_error"
 
 
 @dataclass
@@ -69,10 +96,12 @@ class LLMResult:
 
 class LLM:
     def __init__(self, keys: Optional[Keys] = None, timeout: float = 1800.0,
-                 progress: Optional[Progress] = None):
+                 progress: Optional[Progress] = None, cancel: Optional[CancelToken] = None):
         self.keys = keys or Keys.from_env()
         self.timeout = timeout
         self.progress = resolve(progress)
+        self.cancel = cancel
+        self.history: List[LLMResult] = []   # このインスタンスで行った呼び出し（使用量集計用）
         self._openai = None
         self._anthropic = None
 
@@ -106,14 +135,27 @@ class LLM:
             raise LLMError(f"{spec.id} does not support effort '{effort}' "
                            f"(supported: {', '.join(spec.efforts)})")
         effort = effort or spec.default_effort
+        if self.cancel:
+            self.cancel.check()
         if spec.provider == "anthropic":
-            return self._complete_anthropic(spec, system, user, effort, max_output_tokens,
-                                            web_search, max_searches, show_thinking)
-        if spec.provider == "openai":
+            result = self._complete_anthropic(spec, system, user, effort, max_output_tokens,
+                                              web_search, max_searches, show_thinking)
+        elif spec.provider == "openai":
             if web_search:
                 raise LLMError("web_search is supported on Anthropic models only in this build")
-            return self._complete_openai(spec, system, user, effort, max_output_tokens, background)
-        raise LLMError(f"Unknown provider: {spec.provider}")
+            result = self._complete_openai(spec, system, user, effort, max_output_tokens, background)
+        else:
+            raise LLMError(f"Unknown provider: {spec.provider}")
+        self.history.append(result)
+        return result
+
+    def total_usage(self) -> Dict[str, int]:
+        """history の input/output トークン合計（プロバイダ間でキー名を揃える）"""
+        total = {"input_tokens": 0, "output_tokens": 0, "calls": len(self.history)}
+        for r in self.history:
+            total["input_tokens"] += int(r.usage.get("input_tokens") or 0)
+            total["output_tokens"] += int(r.usage.get("output_tokens") or 0)
+        return total
 
     # --- OpenAI Responses API ---------------------------------------------------
 
@@ -167,6 +209,12 @@ class LLM:
     def _poll_openai(self, client, response, start: float, interval: int = 10):
         status = getattr(response, "status", None)
         while status not in _OPENAI_TERMINAL:
+            if self.cancel and self.cancel.cancelled:
+                try:
+                    client.responses.cancel(response.id)
+                except Exception:
+                    pass
+                raise Cancelled()
             if time.time() - start > self.timeout:
                 try:
                     client.responses.cancel(response.id)
@@ -222,6 +270,10 @@ class LLM:
         # web search 等の server tool は pause_turn で一時停止することがある → 続きを要求
         for _ in range(6):
             with messages_api.stream(messages=messages, **params) as stream:
+                # ストリームを読みながら中止を確認（with を抜けると接続が閉じる）
+                for _event in stream:
+                    if self.cancel and self.cancel.cancelled:
+                        raise Cancelled()
                 response = stream.get_final_message()
             content.extend(response.content)
             if response.stop_reason != "pause_turn":

@@ -5,3 +5,7 @@ __pycache__/
 translations/
 *_BROKEN.yaml
 *_INCOMPLETE.md
+.venv/
+app/node_modules/
+app/dist/
+*.egg-info/
