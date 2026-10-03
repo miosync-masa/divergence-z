@@ -1,6 +1,7 @@
-# Build the macOS desktop app (unsigned, ad-hoc signed) and publish it to GitHub Releases.
-#   - push a tag like v0.2.0  → build + create a Release with the .dmg
-#   - Actions tab "Run workflow" → build only (the .dmg is attached to the run as an artifact)
+# Build the desktop app for macOS (Apple silicon + Intel) and Windows, unsigned, and publish
+# the installers to GitHub Releases.
+#   - push a tag like v0.2.0  → build all platforms + create a Release
+#   - Actions tab "Run workflow" → build only (installers are attached to the run as artifacts)
 name: Release desktop app
 
 on:
@@ -12,8 +13,27 @@ permissions:
   contents: write
 
 jobs:
-  build-macos:
-    runs-on: macos-latest          # Apple silicon (arm64)
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: macos-arm64
+            runner: macos-latest          # Apple silicon
+            builder: --mac --arm64
+            files: app/release/*.dmg
+          - name: macos-x64
+            runner: macos-15-intel        # Intel
+            builder: --mac --x64
+            files: app/release/*.dmg
+          - name: windows-x64
+            runner: windows-latest
+            builder: --win --x64
+            files: app/release/*.exe
+    runs-on: ${{ matrix.runner }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
 
@@ -30,7 +50,7 @@ jobs:
       - name: Smoke test sidecar
         run: |
           ./dist-sidecar/dz-server/dz-server --no-parent-watch > ready.json &
-          for i in $(seq 1 60); do [ -s ready.json ] && break; sleep 1; done
+          for i in $(seq 1 90); do [ -s ready.json ] && break; sleep 1; done
           cat ready.json
           PORT=$(python -c "import json;print(json.load(open('ready.json'))['port'])")
           curl -sf "http://127.0.0.1:${PORT}/health"
@@ -51,28 +71,43 @@ jobs:
           if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
             npm version "${GITHUB_REF_NAME#v}" --no-git-tag-version --allow-same-version
           fi
-          npm run dist
+          npm run build
+          npx electron-builder ${{ matrix.builder }} --publish never
 
       - uses: actions/upload-artifact@v4
         with:
-          name: divergence-z-macos-arm64
-          path: app/release/*.dmg
+          name: divergence-z-${{ matrix.name }}
+          path: ${{ matrix.files }}
           if-no-files-found: error
 
-      - name: Publish release
-        if: github.ref_type == 'tag'
-        uses: softprops/action-gh-release@v2
+  release:
+    if: github.ref_type == 'tag'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
         with:
-          files: app/release/*.dmg
+          path: dist
+          merge-multiple: true
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
           generate_release_notes: true
           body: |
-            ## Divergence-Z ${{ github.ref_name }} (macOS, Apple silicon)
+            ## Divergence-Z ${{ github.ref_name }}
 
             BYOK のデスクトップアプリです。起動後「キー & モデル」で OpenAI / Anthropic の API キーを入れてください。
 
-            **このビルドは Apple の署名・公証をしていません。** 初回は次のどちらかで開いてください。
-            - Finder でアプリを右クリック →「開く」
-            - 開けない場合: システム設定 → プライバシーとセキュリティ →「このまま開く」
+            | | ファイル |
+            |---|---|
+            | Mac（Apple シリコン） | `Divergence-Z-*-arm64.dmg` |
+            | Mac（Intel） | `Divergence-Z-*-x64.dmg` |
+            | Windows | `Divergence-Z-Setup-*-x64.exe` |
 
-            This build is not signed or notarized by Apple. On first launch, right-click the app → Open,
-            or allow it in System Settings → Privacy & Security.
+            **このビルドは署名をしていません。** 初回は次のように開いてください。
+            - Mac: Finder でアプリを右クリック →「開く」（開けない場合は システム設定 → プライバシーとセキュリティ →「このまま開く」）
+            - Windows: 「Windows によって PC が保護されました」と出たら「詳細情報」→「実行」
+
+            These builds are unsigned. Mac: right-click the app → Open (or allow it in System Settings →
+            Privacy & Security). Windows: on the SmartScreen prompt choose "More info" → "Run anyway".

@@ -18,8 +18,10 @@ if [[ "$(uname)" == "Darwin" ]]; then
   RUN=(/usr/bin/arch "-$ARCH" "$PY")
 fi
 rm -rf build/dz-server dist-sidecar
+ARCH_ARGS=()
+if [[ "$(uname)" == "Darwin" ]]; then ARCH_ARGS=(--target-arch "$ARCH"); fi   # macOS だけのオプション
 "${RUN[@]}" -m PyInstaller packaging/dz_server_entry.py \
-  --target-arch "$ARCH" \
+  "${ARCH_ARGS[@]}" \
   --name dz-server \
   --onedir --noconfirm --clean \
   --distpath dist-sidecar --workpath build/dz-server --specpath build/dz-server \
@@ -28,4 +30,4 @@ rm -rf build/dz-server dist-sidecar
   --collect-data anthropic \
   --collect-data openai \
   --hidden-import PyPDF2
-echo "built: dist-sidecar/dz-server/dz-server"
+echo "built: dist-sidecar/dz-server/ ($ARCH)"
