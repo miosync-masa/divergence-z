@@ -137,9 +137,10 @@ def run_persona(job: Job, keys: Keys, corpus: Optional[_Corpus] = None,
         _track(job, llm)
         path = save_extracted_persona(r.yaml_text, label, str(project.persona_dir))
         job.artifact("persona", _rel(project, Path(path)), character=label, valid=r.valid,
-                     issues=r.issues)
+                     issues=r.issues, lines_total=r.lines_total, lines_missing=len(r.lines_missing))
         done.append({"character": label, "path": _rel(project, Path(path)), "valid": r.valid,
-                     "issues": r.issues})
+                     "issues": r.issues, "lines_total": r.lines_total,
+                     "lines_missing": r.lines_missing})
     return {"personas": done}
 
 
