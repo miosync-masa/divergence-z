@@ -1,79 +1,51 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Episode Extractor v1.0  (GPT-5.2+ / 5.6 SOL "Pro" ready)
-任意のフォルダ（またはファイル）の原作テキストから Episode Memory YAML を抽出
+Episode Extractor v1.1
+原作テキスト（ファイル/フォルダ）から Episode Memory YAML を抽出
 
-episode_generator.py (web_search で調べて生成) の「原作テキスト直読み」版。
-persona_extractor_v2.py と同じ方式で、フォルダ内の全テキストを1本に連結して
-長コンテキストにドーン！ → Episode Memory YAML v1.0 を出力する。
+episode_generator.py（web_search で調べて生成）の「原作テキスト直読み」版。
 
   persona_extractor_v2 → 原作テキストから「この人は誰か」
   episode_extractor    → 原作テキストから「この人は何を経験したか」
 
-再利用しているもの（コピーではなく import なので、元ファイルの修正が自動で反映される）:
-  - persona_extractor_v2: ファイル読み込み(txt/pdf/epub, 文字コード自動判定),
-                          OpenAI Responses クライアント(Pro/SOL の background polling)
-  - episode_generator:    Episode スキーマ/プロンプト, YAML抽出, クォート修復, 検証
+  - フォルダは自然順（vol2 < vol10）で連結し、各ファイルを `=== FILE: 相対パス ===` で区切る
+  - --cast: 人物表YAML（cast_extractor.py）で「彼女」「宇宙から来た少女」等の記述を人物に解決
+  - canonical_quotes を原文と照合し、実在しない台詞を報告
 
-v1.0 で追加したもの:
-  - フォルダ読み込み（自然順ソート: vol2 < vol10）。各ファイルは `=== FILE: 相対パス ===` で区切る
-    （ローダ本体は persona_extractor_v2.load_source_corpus）
-  - --cast: 人物表YAML（cast_extractor.py）で「彼女」「宇宙から落ちてきた少女」等の記述を人物に解決
-  - canonical_quotes の原文照合（抽出元テキストに実在するかをチェックして報告）
+v1.1: ライブラリ化（extract_episodes）、LLM 呼び出しを core.llm に統一（BYOK）
 
-Usage:
-    # フォルダ内の全テキストから抽出
-    python episode_extractor.py \\
-      --source texts/steins_gate/ \\
-      --character "椎名まゆり" \\
-      --work "Steins;Gate" \\
-      --lang ja
+Library:
+    result = extract_episodes(corpus, "宇宙から来た少女", llm=LLM(Keys(...)), work="STARGAZER",
+                              cast_text=cast_yaml)
+    result.yaml_text, result.valid, result.quotes_total, result.quotes_missing
 
-    # 既存ペルソナYAMLを文脈として渡す / 複数キャラ一括
-    python episode_extractor.py \\
-      --source texts/rezero/ \\
-      --characters "レム,ナツキ・スバル" \\
-      --work "Re:ゼロから始める異世界生活" \\
-      --persona personas/レム_v33.yaml
-
-    # サブフォルダは見ない / 拡張子を絞る
-    python episode_extractor.py -s texts/ -c "ヂューリエット" --no-recursive --ext .txt
-
-Requirements:
-    pip install "openai>=2.0" anthropic python-dotenv pyyaml PyPDF2
+CLI:
+    python episode_extractor.py -s scripts/STARGAZER/ --cast casts/STARGAZER_cast.yaml \\
+      -c "宇宙から来た少女" --work "STARGAZER ≠consciousness"
 """
 
 from __future__ import annotations
 
 import argparse
 import re
-import time
-import unicodedata
+import sys
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 import yaml
 
-from persona_extractor_v2 import (
-    DEFAULT_EXTENSIONS,
-    DEFAULT_MODEL,
-    DEFAULT_REASONING,
-    REASONING_EFFORTS,
-    SUPPORTED_LANGUAGES,
-    OpenAIResponsesClient,
-    _is_pro_tier_model,
-    _is_reasoning_model,
-    build_cast_note,
-    load_source_corpus,
-)
-from episode_generator import (
-    EPISODE_SCHEMA,
-    _extract_yaml,
-    _fix_yaml_quoting,
-    build_user_prompt,
-    validate_episode_yaml,
-)
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from divergence_z.core import (DEFAULT_EXTENSIONS, EFFORTS, LLM, Keys, LLMResult, Progress,
+                               appears_in, clean_yaml_output, iter_episodes, load_source_corpus,
+                               normalize_for_match, print_progress, resolve_progress)
+from divergence_z.episode_generator import (EPISODE_SCHEMA, build_user_prompt, count_episodes,
+                                            save_episodes, validate_episode_yaml)
+from divergence_z.persona_extractor_v2 import (DEFAULT_EFFORT, DEFAULT_MODEL, SUPPORTED_LANGUAGES,
+                                               build_cast_note)
 
 # =============================================================================
 # PROMPTS
@@ -164,86 +136,13 @@ def build_extraction_user_prompt(corpus: str, name: str, work: str, description:
 Output ONLY valid YAML."""
 
 
-# =============================================================================
-# OPENAI CALL (persona_extractor_v2 のクライアントを流用)
-# =============================================================================
-
-def call_responses(client: OpenAIResponsesClient, system_prompt: str, user_prompt: str,
-                   model: str, reasoning_effort: str,
-                   background: Optional[bool], max_output_tokens: int) -> Dict[str, Any]:
-    """Responses API 呼び出し（Pro/SOL は background + polling）"""
-    is_reasoning = _is_reasoning_model(model)
-    is_pro = _is_pro_tier_model(model)
-    use_background = background if background is not None else is_pro
-
-    params: Dict[str, Any] = {
-        "model": model,
-        "input": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
-        ],
-        "max_output_tokens": max_output_tokens,
-    }
-    if is_reasoning:
-        params["reasoning"] = {"effort": reasoning_effort}
-    if use_background:
-        params["background"] = True
-        params["store"] = True
-
-    print(f"🚀 Sending request to {model} (SDK / Responses API)...")
-    print(f"   Prompt: {len(user_prompt):,} characters")
-    if is_reasoning:
-        print(f"   Reasoning effort: {reasoning_effort}")
-    if use_background:
-        print(f"   Background mode: enabled (polling)")
-    print()
-
-    start = time.time()
-    response = client.client.responses.create(**params)
-    if use_background:
-        print(f"   Background mode: status={getattr(response, 'status', '?')}, "
-              f"id={getattr(response, 'id', '?')}")
-        response = client._poll_background(response, max_wait=client.timeout)
-    elapsed = time.time() - start
-    print(f"⏱️  Response received in {elapsed:.1f}s")
-
-    status = getattr(response, "status", None)
-    if status == "failed":
-        raise RuntimeError(f"Response failed: {getattr(response, 'error', None)}")
-    if status == "incomplete":
-        raise RuntimeError(
-            f"Response incomplete: {getattr(response, 'incomplete_details', None)}. "
-            f"max_output_tokens({max_output_tokens}) を増やすか "
-            f"--max-episodes / reasoning effort を下げてください。"
-        )
-
-    return {
-        "text": client._extract_output_text(response),
-        "model": model,
-        "reasoning_effort": reasoning_effort if is_reasoning else None,
-        "background": use_background,
-        "elapsed_seconds": elapsed,
-    }
-
 
 # =============================================================================
 # QUOTE VERIFICATION
 # =============================================================================
 
-_QUOTE_STRIP = "「」『』“”\"'‘’（）()"
-
-
-def _normalize(text: str) -> str:
-    """照合用正規化: NFKC + 空白除去 + 外側の括弧除去"""
-    text = unicodedata.normalize("NFKC", text)
-    return re.sub(r"\s+", "", text)
-
-
 def verify_quotes(yaml_text: str, corpus: str) -> Tuple[int, List[Tuple[str, str]]]:
-    """
-    canonical_quotes が原文に実在するか照合。
-    Returns (総クォート数, [(episode_id, 見つからなかったquote), ...])
-    """
+    """canonical_quotes が原文に実在するか照合。Returns (総数, [(episode_id, 不一致quote), ...])"""
     try:
         data = yaml.safe_load(yaml_text)
     except yaml.YAMLError:
@@ -251,32 +150,55 @@ def verify_quotes(yaml_text: str, corpus: str) -> Tuple[int, List[Tuple[str, str
     if not isinstance(data, dict):
         return 0, []
 
-    episodes: List[Dict[str, Any]] = []
-    for tl in data.get("timelines") or []:
-        if isinstance(tl, dict):
-            episodes.extend(e for e in (tl.get("episodes") or []) if isinstance(e, dict))
-    episodes.extend(e for e in (data.get("episodes") or []) if isinstance(e, dict))
-
-    norm_corpus = _normalize(corpus)
+    norm_corpus = normalize_for_match(corpus)
     total = 0
     missing: List[Tuple[str, str]] = []
-
-    for ep in episodes:
+    for ep in iter_episodes(data):
         for q in ep.get("canonical_quotes") or []:
-            if not isinstance(q, dict) or not q.get("quote"):
-                continue
-            quote = str(q["quote"])
-            total += 1
-            needle = _normalize(quote).strip(_QUOTE_STRIP)
-            if needle and needle not in norm_corpus:
-                missing.append((str(ep.get("episode_id", "unknown")), quote))
-
+            if isinstance(q, dict) and q.get("quote"):
+                total += 1
+                if not appears_in(str(q["quote"]), norm_corpus):
+                    missing.append((str(ep.get("episode_id", "unknown")), str(q["quote"])))
     return total, missing
 
 
 # =============================================================================
-# MAIN
+# LIBRARY
 # =============================================================================
+
+@dataclass
+class EpisodeExtraction:
+    character: str
+    yaml_text: str
+    valid: bool
+    issues: List[str] = field(default_factory=list)
+    episode_count: int = 0
+    quotes_total: int = 0
+    quotes_missing: List[Tuple[str, str]] = field(default_factory=list)
+    llm: Optional[LLMResult] = None
+
+
+def extract_episodes(corpus: str, character: str, *, llm: LLM, work: str = "",
+                     description: str = "", model: str = DEFAULT_MODEL,
+                     effort: Optional[str] = DEFAULT_EFFORT, output_lang: str = "ja",
+                     persona_text: str = "", cast_text: str = "", max_episodes: int = 20,
+                     max_output_tokens: int = 65536, background: Optional[bool] = None,
+                     progress: Optional[Progress] = None) -> EpisodeExtraction:
+    """原作全文から1キャラクターの Episode Memory YAML を抽出し、検証・原文照合する"""
+    report = resolve_progress(progress)
+    report(f"📖 Extracting episodes: {character} ({work})")
+    result = llm.complete(
+        build_extraction_system_prompt(output_lang),
+        build_extraction_user_prompt(corpus, character, work, description, output_lang,
+                                     persona_context=persona_text,
+                                     max_episodes=min(max_episodes, 30), cast_text=cast_text),
+        model=model, effort=effort, max_output_tokens=max_output_tokens, background=background)
+    yaml_text = clean_yaml_output(result.text, progress=report)
+    valid, issues = validate_episode_yaml(yaml_text)
+    total, missing = verify_quotes(yaml_text, corpus)
+    return EpisodeExtraction(character, yaml_text, valid, issues, count_episodes(yaml_text),
+                             total, missing, result)
+
 
 def output_path_for(name: str, output_dir: str) -> Path:
     """episode_generator と同じ命名: {name}_Episode.yaml"""
@@ -284,63 +206,39 @@ def output_path_for(name: str, output_dir: str) -> Path:
     return Path(output_dir) / f"{safe_name}_Episode.yaml"
 
 
+# =============================================================================
+# CLI
+# =============================================================================
+
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Episode Extractor v1.0 — extract Episode Memory YAML from a folder of source texts",
+        description="Episode Extractor v1.1 — extract Episode Memory YAML from source texts",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
-  python episode_extractor.py -s texts/steins_gate/ -c "椎名まゆり" --work "Steins;Gate"
-  python episode_extractor.py -s texts/rezero/ --characters "レム,ナツキ・スバル" \\
-    --work "Re:ゼロから始める異世界生活" --persona personas/レム_v33.yaml
-  python episode_extractor.py -s novel.pdf -c "レム" --lang en --reasoning high
-        """,
     )
-
-    parser.add_argument("--source", "-s", required=True,
-                        help="Source folder (or single file: txt, md, pdf, epub)")
+    parser.add_argument("--source", "-s", required=True, help="Source folder or file")
     parser.add_argument("--character", "-c", help="Character name to extract")
     parser.add_argument("--characters", help="Comma-separated list of character names")
-    parser.add_argument("--work", "-w", default="",
-                        help="Work title (default: source folder name)")
+    parser.add_argument("--work", "-w", default="", help="Work title (default: folder name)")
     parser.add_argument("--desc", default="", help="Brief character description (optional)")
-    parser.add_argument("--cast", default="",
-                        help="Cast sheet YAML (from cast_extractor.py) for works that refer to "
-                             "characters by description instead of name")
+    parser.add_argument("--cast", default="", help="Cast sheet YAML (cast_extractor.py)")
     parser.add_argument("--persona", default="",
                         help="Companion persona YAML for context (single character only)")
-    parser.add_argument("--max-episodes", type=int, default=20,
-                        help="Maximum episodes (default: 20, max: 30)")
-    parser.add_argument("--ext", default=",".join(DEFAULT_EXTENSIONS),
-                        help=f"Comma-separated extensions to load (default: {','.join(DEFAULT_EXTENSIONS)})")
-    parser.add_argument("--no-recursive", action="store_true",
-                        help="Do not descend into subfolders")
-    parser.add_argument("--lang", "-l", default="ja",
-                        choices=list(SUPPORTED_LANGUAGES.keys()),
-                        help="Output language for descriptions (default: ja)")
-    parser.add_argument("--model", "-m", default=DEFAULT_MODEL,
-                        help=f"Model to use (default: {DEFAULT_MODEL})")
-    parser.add_argument("--reasoning", "-r", default=DEFAULT_REASONING,
-                        choices=REASONING_EFFORTS,
-                        help=f"Reasoning effort (default: {DEFAULT_REASONING})")
-    parser.add_argument("--background", "-b", action="store_true", default=None,
-                        help="Force background mode (Pro/SOL tiers auto-enable it anyway)")
-    parser.add_argument("--no-background", dest="background", action="store_false",
-                        help="Disable background even for Pro/SOL")
-    parser.add_argument("--max-output-tokens", type=int, default=65536,
-                        help="Max output tokens incl. reasoning (default: 65536)")
-    parser.add_argument("--output-dir", "-o", default="episodes",
-                        help="Output directory (default: episodes)")
-    parser.add_argument("--print-only", action="store_true",
-                        help="Print YAML without saving")
-
+    parser.add_argument("--max-episodes", type=int, default=20)
+    parser.add_argument("--ext", default=",".join(DEFAULT_EXTENSIONS))
+    parser.add_argument("--no-recursive", action="store_true")
+    parser.add_argument("--lang", "-l", default="ja", choices=list(SUPPORTED_LANGUAGES.keys()))
+    parser.add_argument("--model", "-m", default=DEFAULT_MODEL)
+    parser.add_argument("--effort", "--reasoning", "-r", dest="effort", default=DEFAULT_EFFORT,
+                        choices=EFFORTS)
+    parser.add_argument("--background", "-b", action="store_true", default=None)
+    parser.add_argument("--no-background", dest="background", action="store_false")
+    parser.add_argument("--max-output-tokens", type=int, default=65536)
+    parser.add_argument("--output-dir", "-o", default="episodes")
+    parser.add_argument("--print-only", action="store_true")
     args = parser.parse_args()
 
-    characters: List[str] = []
-    if args.character:
-        characters.append(args.character)
-    if args.characters:
-        characters.extend(c.strip() for c in args.characters.split(",") if c.strip())
+    characters = ([args.character] if args.character else []) + \
+        [c.strip() for c in (args.characters or "").split(",") if c.strip()]
     if not characters:
         parser.error("--character or --characters is required")
     if args.persona and len(characters) > 1:
@@ -348,90 +246,47 @@ Examples:
 
     source_path = Path(args.source)
     work = args.work or (source_path.name if source_path.is_dir() else source_path.stem)
-    extensions = [e.strip() for e in args.ext.split(",") if e.strip()]
-
-    # ソース読み込み
     print(f"📖 Loading source: {args.source}")
-    corpus, manifest = load_source_corpus(args.source, extensions,
-                                          recursive=not args.no_recursive)
+    corpus, manifest = load_source_corpus(
+        args.source, [e.strip() for e in args.ext.split(",") if e.strip()],
+        recursive=not args.no_recursive)
     print(f"   Loaded {len(manifest)} file(s), {len(corpus):,} characters")
-    print()
+    persona_text = Path(args.persona).read_text(encoding="utf-8") if args.persona else ""
+    cast_text = Path(args.cast).read_text(encoding="utf-8") if args.cast else ""
 
-    persona_context = ""
-    if args.persona:
-        persona_context = Path(args.persona).read_text(encoding="utf-8")
-        print(f"   📋 Persona context: {args.persona} ({len(persona_context):,} chars)")
-
-    cast_text = ""
-    if args.cast:
-        cast_text = Path(args.cast).read_text(encoding="utf-8")
-        print(f"   🗂  Cast sheet: {args.cast} ({len(cast_text):,} chars)")
-
-    client = OpenAIResponsesClient()
-    system_prompt = build_extraction_system_prompt(args.lang)
+    llm = LLM(Keys.from_env(), progress=print_progress)
     exit_code = 0
-
     for character in characters:
-        print(f"{'=' * 60}")
-        print(f"📖 Extracting episodes for: {character} ({work})")
-        print(f"{'=' * 60}")
-
-        user_prompt = build_extraction_user_prompt(
-            corpus, character, work, args.desc, args.lang,
-            persona_context=persona_context,
-            max_episodes=min(args.max_episodes, 30),
-            cast_text=cast_text,
-        )
-        result = call_responses(
-            client, system_prompt, user_prompt,
-            model=args.model,
-            reasoning_effort=args.reasoning,
-            background=args.background,
-            max_output_tokens=args.max_output_tokens,
-        )
-
-        yaml_text = _fix_yaml_quoting(_extract_yaml(result["text"])).strip()
-
-        # スキーマ検証
-        print()
-        is_valid, issues = validate_episode_yaml(yaml_text)
-        if is_valid:
+        print(f"\n{'=' * 60}")
+        r = extract_episodes(corpus, character, llm=llm, work=work, description=args.desc,
+                             model=args.model, effort=args.effort, output_lang=args.lang,
+                             persona_text=persona_text, cast_text=cast_text,
+                             max_episodes=args.max_episodes,
+                             max_output_tokens=args.max_output_tokens,
+                             background=args.background, progress=print_progress)
+        print(f"   📊 Episodes found: {r.episode_count}")
+        if r.valid:
             print("✅ Episode YAML validation: PASSED")
         else:
             print("⚠️  Episode YAML Validation Issues:")
-            for issue in issues:
+            for issue in r.issues:
                 print(f"   - {issue}")
-
-        # 原文照合
-        total, missing = verify_quotes(yaml_text, corpus)
-        if total:
-            print(f"🔎 Quote verification: {total - len(missing)}/{total} found verbatim in source")
-            for ep_id, quote in missing:
+        if r.quotes_total:
+            print(f"🔎 Quote verification: {r.quotes_total - len(r.quotes_missing)}/"
+                  f"{r.quotes_total} found verbatim in source")
+            for ep_id, quote in r.quotes_missing:
                 print(f"   ✗ [{ep_id}] {quote[:80]}")
 
-        print()
-        print(f"📊 Model: {result['model']} / Reasoning: {result['reasoning_effort']} / "
-              f"Background: {result['background']} / Time: {result['elapsed_seconds']:.1f}s")
-
         if args.print_only:
-            print("=" * 60)
-            print(yaml_text)
-            print()
+            print(r.yaml_text)
             continue
-
-        out_path = output_path_for(character, args.output_dir)
-        out_path.parent.mkdir(parents=True, exist_ok=True)
-        if any("YAML parse error" in issue for issue in issues):
-            broken = out_path.with_name(out_path.stem + "_BROKEN.yaml")
-            broken.write_text(yaml_text, encoding="utf-8")
-            print(f"❌ YAML parse error — saved as: {broken}")
-            print("   ↳ Fix manually or re-run with fewer episodes (--max-episodes)")
-            exit_code = 1
+        path, ok = save_episodes(r.yaml_text, str(output_path_for(character, args.output_dir)),
+                                 r.issues)
+        if ok:
+            print(f"📁 Episode Memory saved to: {path} ({len(r.yaml_text):,} chars)")
         else:
-            out_path.write_text(yaml_text, encoding="utf-8")
-            print(f"📁 Episode Memory saved to: {out_path} ({len(yaml_text):,} chars)")
-        print()
-
+            print(f"❌ YAML parse error — saved as: {path}")
+            exit_code = 1
     return exit_code
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Chapter Translator v1.0
+Chapter Translator v1.1
 キャラクター構築系の出力（cast / persona / episode）＋これまでの訳文を LLM に渡し、章単位で一括翻訳する
 
 旧 Z軸翻訳系（old/）は「行ごとに z / z_mode を推定 → 訳す → ZAP/IAP で採点」だったが、
@@ -38,6 +38,9 @@ Usage:
     {章}.{lang}.segments.json 原文と訳文の段落対応
     translation_notes.yaml    訳語表（章をまたいで持ち回る。手で直してよい）
 既に訳済みの章はスキップ（--force で再翻訳）。
+
+v1.1: ライブラリ化（open_book / build_chapter_prompt / translate_chapter）、
+      LLM 呼び出しを core.llm に統一（BYOK）、実行前のコンテキスト適合チェック
 """
 
 from __future__ import annotations
@@ -45,20 +48,23 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 import yaml
 
-from persona_extractor_v2 import (
-    DEFAULT_MODEL,
-    REASONING_EFFORTS,
-    SUPPORTED_LANGUAGES,
-    OpenAIResponsesClient,
-    collect_source_files,
-    load_source_file,
-)
-from episode_extractor import call_responses
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from divergence_z.core import (EFFORTS, LLM, FitReport, Keys, LLMResult, Progress, check_fit,
+                               collect_source_files, dump_yaml, get_model, iter_episodes,
+                               load_source_file,
+                               print_progress, resolve_progress)
+from divergence_z.persona_extractor_v2 import DEFAULT_MODEL, SUPPORTED_LANGUAGES
+
+DEFAULT_EFFORT = "high"
 
 NOTES_FILE = "translation_notes.yaml"
 
@@ -148,11 +154,7 @@ def chapter_position(ref: str, chapter_names: List[str]) -> Optional[int]:
 def render_episodes(episode_yaml: Dict[str, Any], chapter_names: List[str],
                     current: int) -> str:
     """episode を「この章より前 / この章 / この先」に分けて渡す"""
-    episodes: List[Dict[str, Any]] = []
-    for tl in episode_yaml.get("timelines") or []:
-        if isinstance(tl, dict):
-            episodes.extend(e for e in tl.get("episodes") or [] if isinstance(e, dict))
-    episodes.extend(e for e in episode_yaml.get("episodes") or [] if isinstance(e, dict))
+    episodes = iter_episodes(episode_yaml)
 
     past, now, future, unknown = [], [], [], []
     for ep in episodes:
@@ -291,7 +293,7 @@ def build_user_prompt(chapter_name: str, segments: List[Dict[str, str]], cast_te
     for label, text in episodes.items():
         parts.append(f"## EPISODE MEMORY: {label}\n{text}")
     parts.append("## TRANSLATION NOTES (binding)\n```yaml\n"
-                 + yaml.safe_dump(notes, allow_unicode=True, sort_keys=False, width=1000)
+                 + dump_yaml(notes)
                  + "```")
     for name, text in previous:
         parts.append(f"## PREVIOUS CHAPTER (your translation): {name}\n{text}")
@@ -331,6 +333,185 @@ def check_alignment(segments: List[Dict[str, str]], translated: Dict[str, str]) 
 # MAIN
 # =============================================================================
 
+
+# =============================================================================
+# LIBRARY
+# =============================================================================
+
+@dataclass
+class Book:
+    """翻訳対象の作品と、その章ごとに渡す人物資料"""
+    source: Path
+    files: List[Path]
+    cast_text: str = ""
+    cast: Dict[str, Any] = field(default_factory=dict)
+    persona_paths: Dict[str, Path] = field(default_factory=dict)
+    episode_paths: Dict[str, Path] = field(default_factory=dict)
+    appears: Dict[str, List[str]] = field(default_factory=dict)
+    narration_by_file: Dict[str, str] = field(default_factory=dict)
+
+    @property
+    def chapter_names(self) -> List[str]:
+        return [f.name for f in self.files]
+
+    @property
+    def characters(self) -> List[str]:
+        return list(dict.fromkeys(list(self.persona_paths) + list(self.episode_paths)))
+
+    def present_in(self, idx: int) -> List[str]:
+        """その章に登場する人物（cast に appears_in が無ければ全員）"""
+        name = self.files[idx].name
+        return [l for l in self.characters if not self.appears.get(l) or name in self.appears[l]]
+
+
+def open_book(source: str, cast_path: str = "", persona_dir: str = "personas",
+              episode_dir: str = "episodes",
+              persona_overrides: Optional[Dict[str, Path]] = None,
+              episode_overrides: Optional[Dict[str, Path]] = None) -> Book:
+    """章フォルダ・人物表を読み、cast のラベルごとに persona / episode を解決する"""
+    files = collect_source_files(source)
+    cast_text = Path(cast_path).read_text(encoding="utf-8") if cast_path else ""
+    cast = (yaml.safe_load(cast_text) or {}) if cast_text else {}
+    persona_overrides = persona_overrides or {}
+    episode_overrides = episode_overrides or {}
+
+    book = Book(Path(source), files, cast_text, cast)
+    labels = [c.get("label") for c in cast.get("characters") or [] if c.get("label")]
+    for label in dict.fromkeys(labels + list(persona_overrides) + list(episode_overrides)):
+        p = persona_overrides.get(label) or find_character_file(label, Path(persona_dir), "persona")
+        e = episode_overrides.get(label) or find_character_file(label, Path(episode_dir), "episode")
+        if p:
+            book.persona_paths[label] = p
+        if e:
+            book.episode_paths[label] = e
+
+    book.appears = {c["label"]: c.get("appears_in") or []
+                    for c in cast.get("characters") or [] if c.get("label")}
+    for n in cast.get("narration") or []:
+        for f in n.get("files") or []:
+            book.narration_by_file[f] = (f"narrator: {n.get('narrator')} / style: {n.get('style')}\n"
+                                         f"{n.get('notes', '')}")
+    return book
+
+
+def chapter_output_path(book: Book, idx: int, out_dir: Path, target_lang: str) -> Path:
+    return out_dir / f"{book.files[idx].stem}.{target_lang}.md"
+
+
+@dataclass
+class ChapterPrompt:
+    system: str
+    user: str
+    segments: List[Dict[str, str]]
+    present: List[str]
+    previous: List[str]
+
+
+def build_chapter_prompt(book: Book, idx: int, out_dir: Path, target_lang: str = "en",
+                         previous: int = 2) -> ChapterPrompt:
+    path = book.files[idx]
+    segments = segment_chapter(load_source_file(str(path)))
+    present = book.present_in(idx)
+    personas = {l: book.persona_paths[l].read_text(encoding="utf-8")
+                for l in present if l in book.persona_paths}
+    episodes = {
+        l: render_episodes(yaml.safe_load(book.episode_paths[l].read_text(encoding="utf-8")) or {},
+                           book.chapter_names, idx)
+        for l in present if l in book.episode_paths
+    }
+
+    prev: List[Tuple[str, str]] = []
+    for j in range(idx - 1, -1, -1):
+        if len(prev) >= previous:
+            break
+        prev_md = chapter_output_path(book, j, out_dir, target_lang)
+        if prev_md.exists():
+            prev.insert(0, (book.files[j].name, prev_md.read_text(encoding="utf-8")))
+
+    user = build_user_prompt(path.name, segments, book.cast_text, personas, episodes,
+                             load_notes(out_dir), prev, book.narration_by_file.get(path.name, ""),
+                             target_lang)
+    return ChapterPrompt(build_system_prompt(target_lang), user, segments, present,
+                         [p[0] for p in prev])
+
+
+def estimate_chapter(book: Book, idx: int, out_dir: Path, model: str, target_lang: str = "en",
+                     previous: int = 2) -> FitReport:
+    """API を呼ばずに、その章のプロンプトがモデルに収まるか・概算費用を返す（UI の事前表示用）"""
+    prompt = build_chapter_prompt(book, idx, out_dir, target_lang, previous)
+    source_chars = sum(len(s["text"]) for s in prompt.segments)
+    # 訳文 + 訳語表追記 + 推論分のざっくりした出力見積もり
+    return check_fit(get_model(model), prompt.system + prompt.user, output_tokens=source_chars * 3)
+
+
+@dataclass
+class ChapterResult:
+    chapter: str
+    segments: int
+    translated: Dict[str, str]
+    issues: List[str]
+    complete: bool
+    output_path: Optional[Path]
+    notes_added: int = 0
+    notes_error: Optional[str] = None
+    llm: Optional[LLMResult] = None
+
+
+def translate_chapter(book: Book, idx: int, *, llm: LLM, out_dir: Path,
+                      target_lang: str = "en", model: str = DEFAULT_MODEL,
+                      effort: Optional[str] = DEFAULT_EFFORT, previous: int = 2,
+                      max_output_tokens: int = 65536,
+                      progress: Optional[Progress] = None) -> ChapterResult:
+    """1章を翻訳し、訳文・段落対応・訳語表（out_dir 内）を更新する"""
+    report = resolve_progress(progress)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    path = book.files[idx]
+    stem = path.stem
+    prompt = build_chapter_prompt(book, idx, out_dir, target_lang, previous)
+    report(f"🌐 [{idx}] {path.name} → {target_lang}  segments={len(prompt.segments)} "
+           f"characters={prompt.present} previous={prompt.previous}")
+
+    result = llm.complete(prompt.system, prompt.user, model=model, effort=effort,
+                          max_output_tokens=max_output_tokens)
+    body = re.search(r"<translation>(.*?)</translation>", result.text, re.S)
+    translated = parse_segments(body.group(1) if body else result.text)
+    issues = check_alignment(prompt.segments, translated)
+
+    # 訳語表の更新
+    notes_added, notes_error = 0, None
+    notes_match = re.search(r"<notes>(.*?)</notes>", result.text, re.S)
+    if notes_match:
+        raw = re.sub(r"^```(?:yaml)?\s*|\s*```$", "", notes_match.group(1).strip())
+        try:
+            new_notes = yaml.safe_load(raw) or {}
+            merged = merge_notes(load_notes(out_dir), new_notes, path.name)
+            (out_dir / NOTES_FILE).write_text(dump_yaml(merged), encoding="utf-8")
+            notes_added = sum(len(new_notes.get(k) or []) for k in ("glossary", "voice", "style"))
+        except yaml.YAMLError as e:
+            notes_error = str(e)
+            (out_dir / f"{stem}.notes_BROKEN.yaml").write_text(raw, encoding="utf-8")
+
+    aligned = [{"id": s["id"], "source": s["text"], "target": translated.get(s["id"], "")}
+               for s in prompt.segments]
+    (out_dir / f"{stem}.{target_lang}.segments.json").write_text(
+        json.dumps(aligned, ensure_ascii=False, indent=1), encoding="utf-8")
+
+    complete = not any(i.startswith("missing") for i in issues)
+    if complete:
+        out_path = chapter_output_path(book, idx, out_dir, target_lang)
+        out_path.write_text("\n\n".join(a["target"] for a in aligned) + "\n", encoding="utf-8")
+    else:
+        out_path = out_dir / f"{stem}.{target_lang}_INCOMPLETE.md"
+        out_path.write_text("\n\n".join(a["target"] or f"[[{a['id']} MISSING]]" for a in aligned),
+                            encoding="utf-8")
+    return ChapterResult(path.name, len(prompt.segments), translated, issues, complete, out_path,
+                         notes_added, notes_error, result)
+
+
+# =============================================================================
+# CLI
+# =============================================================================
+
 def parse_chapter_selection(spec: str, total: int) -> List[int]:
     """'0-2,5' → [0,1,2,5]（0始まりのファイル順インデックス）"""
     if not spec:
@@ -346,19 +527,18 @@ def parse_chapter_selection(spec: str, total: int) -> List[int]:
     return [i for i in dict.fromkeys(picked) if 0 <= i < total]
 
 
+
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Chapter Translator v1.0 — translate chapter by chapter with cast/persona/episode context",
+        description="Chapter Translator v1.1 — translate chapter by chapter with cast/persona/episode context",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument("--source", "-s", required=True, help="Source folder (one file per chapter)")
     parser.add_argument("--cast", default="", help="Cast sheet YAML (cast_extractor.py)")
     parser.add_argument("--persona-dir", default="personas")
     parser.add_argument("--episode-dir", default="episodes")
-    parser.add_argument("--persona", action="append", default=[], metavar="LABEL=PATH",
-                        help="Explicit persona for a cast label (repeatable)")
-    parser.add_argument("--episode", action="append", default=[], metavar="LABEL=PATH",
-                        help="Explicit episode memory for a cast label (repeatable)")
+    parser.add_argument("--persona", action="append", default=[], metavar="LABEL=PATH")
+    parser.add_argument("--episode", action="append", default=[], metavar="LABEL=PATH")
     parser.add_argument("--target-lang", "-t", default="en", choices=list(SUPPORTED_LANGUAGES.keys()))
     parser.add_argument("--chapters", default="",
                         help="Chapter indices in file order, e.g. '0-2,5' (default: all)")
@@ -367,144 +547,52 @@ def main() -> int:
     parser.add_argument("--out-dir", "-o", default="")
     parser.add_argument("--force", action="store_true", help="Re-translate chapters already done")
     parser.add_argument("--model", "-m", default=DEFAULT_MODEL)
-    parser.add_argument("--reasoning", "-r", default="high", choices=REASONING_EFFORTS,
-                        help="Reasoning effort (default: high)")
+    parser.add_argument("--effort", "--reasoning", "-r", dest="effort", default=DEFAULT_EFFORT,
+                        choices=EFFORTS)
     parser.add_argument("--max-output-tokens", type=int, default=65536)
     parser.add_argument("--dry-run", action="store_true",
-                        help="Build prompts and print their size without calling the API")
+                        help="Build prompts and show size / fit / cost without calling the API")
     args = parser.parse_args()
 
-    source = Path(args.source)
-    files = collect_source_files(str(source))
-    chapter_names = [f.name for f in files]
-    out_dir = Path(args.out_dir or f"translations/{source.name}_{args.target_lang}")
-    out_dir.mkdir(parents=True, exist_ok=True)
+    book = open_book(args.source, args.cast, args.persona_dir, args.episode_dir,
+                     parse_overrides(args.persona), parse_overrides(args.episode))
+    out_dir = Path(args.out_dir or f"translations/{book.source.name}_{args.target_lang}")
+    print(f"📚 {len(book.files)} chapter(s) in {book.source}")
+    for label in book.characters:
+        print(f"   🎭 {label}: persona={book.persona_paths.get(label)} "
+              f"episode={book.episode_paths.get(label)}")
 
-    cast: Dict[str, Any] = {}
-    cast_text = ""
-    if args.cast:
-        cast_text = Path(args.cast).read_text(encoding="utf-8")
-        cast = yaml.safe_load(cast_text) or {}
-
-    persona_over = parse_overrides(args.persona)
-    episode_over = parse_overrides(args.episode)
-
-    # cast のラベルごとに persona / episode を解決
-    persona_paths: Dict[str, Path] = {}
-    episode_paths: Dict[str, Path] = {}
-    labels = [c.get("label") for c in cast.get("characters") or [] if c.get("label")]
-    for label in dict.fromkeys(labels + list(persona_over) + list(episode_over)):
-        p = persona_over.get(label) or find_character_file(label, Path(args.persona_dir), "persona")
-        e = episode_over.get(label) or find_character_file(label, Path(args.episode_dir), "episode")
-        if p:
-            persona_paths[label] = p
-        if e:
-            episode_paths[label] = e
-    print(f"📚 {len(files)} chapter(s) in {source}")
-    for label in dict.fromkeys(list(persona_paths) + list(episode_paths)):
-        print(f"   🎭 {label}: persona={persona_paths.get(label)} episode={episode_paths.get(label)}")
-
-    appears: Dict[str, List[str]] = {
-        c["label"]: c.get("appears_in") or [] for c in cast.get("characters") or [] if c.get("label")
-    }
-    narration_by_file: Dict[str, str] = {}
-    for n in cast.get("narration") or []:
-        for f in n.get("files") or []:
-            narration_by_file[f] = (f"narrator: {n.get('narrator')} / style: {n.get('style')}\n"
-                                    f"{n.get('notes', '')}")
-
-    client = None if args.dry_run else OpenAIResponsesClient()
-    system_prompt = build_system_prompt(args.target_lang)
+    llm = None if args.dry_run else LLM(Keys.from_env(), progress=print_progress)
     exit_code = 0
-
-    for idx in parse_chapter_selection(args.chapters, len(files)):
-        path = files[idx]
-        stem = path.stem
-        out_md = out_dir / f"{stem}.{args.target_lang}.md"
+    for idx in parse_chapter_selection(args.chapters, len(book.files)):
+        out_md = chapter_output_path(book, idx, out_dir, args.target_lang)
         if out_md.exists() and not args.force:
-            print(f"⏭  {path.name}: already translated ({out_md})")
+            print(f"⏭  {book.files[idx].name}: already translated ({out_md})")
             continue
-
-        print(f"\n{'=' * 60}\n🌐 [{idx}] {path.name} → {args.target_lang}\n{'=' * 60}")
-        segments = segment_chapter(load_source_file(str(path)))
-
-        # この章に登場する人物（cast に appears_in が無ければ全員）
-        present = [l for l in dict.fromkeys(list(persona_paths) + list(episode_paths))
-                   if not appears.get(l) or path.name in appears[l]]
-        personas = {l: persona_paths[l].read_text(encoding="utf-8")
-                    for l in present if l in persona_paths}
-        episodes = {
-            l: render_episodes(yaml.safe_load(episode_paths[l].read_text(encoding="utf-8")) or {},
-                               chapter_names, idx)
-            for l in present if l in episode_paths
-        }
-
-        previous: List[Tuple[str, str]] = []
-        for j in range(idx - 1, -1, -1):
-            if len(previous) >= args.previous:
-                break
-            prev_md = out_dir / f"{files[j].stem}.{args.target_lang}.md"
-            if prev_md.exists():
-                previous.insert(0, (files[j].name, prev_md.read_text(encoding="utf-8")))
-
-        notes = load_notes(out_dir)
-        user_prompt = build_user_prompt(path.name, segments, cast_text, personas, episodes,
-                                        notes, previous, narration_by_file.get(path.name, ""),
-                                        args.target_lang)
-        print(f"   segments={len(segments)} characters={present} previous={[p[0] for p in previous]}")
-
         if args.dry_run:
-            print(f"   (dry-run) prompt: {len(user_prompt):,} chars")
+            fit = estimate_chapter(book, idx, out_dir, args.model, args.target_lang, args.previous)
+            print(f"   [{idx}] {book.files[idx].name}: {fit.message}")
             continue
 
-        result = call_responses(client, system_prompt, user_prompt,
-                                model=args.model, reasoning_effort=args.reasoning,
-                                background=None, max_output_tokens=args.max_output_tokens)
-        text = result["text"]
-
-        body = re.search(r"<translation>(.*?)</translation>", text, re.S)
-        translated = parse_segments(body.group(1) if body else text)
-
-        issues = check_alignment(segments, translated)
-        if issues:
+        print(f"\n{'=' * 60}")
+        r = translate_chapter(book, idx, llm=llm, out_dir=out_dir, target_lang=args.target_lang,
+                              model=args.model, effort=args.effort, previous=args.previous,
+                              max_output_tokens=args.max_output_tokens, progress=print_progress)
+        if r.issues:
             print("⚠️  Checks:")
-            for i in issues:
+            for i in r.issues:
                 print(f"   - {i}")
         else:
-            print(f"✅ Checks: {len(segments)}/{len(segments)} segments aligned")
-
-        # 訳語表の更新
-        notes_match = re.search(r"<notes>(.*?)</notes>", text, re.S)
-        if notes_match:
-            raw = re.sub(r"^```(?:yaml)?\s*|\s*```$", "", notes_match.group(1).strip())
-            try:
-                new_notes = yaml.safe_load(raw) or {}
-                notes = merge_notes(notes, new_notes, path.name)
-                (out_dir / NOTES_FILE).write_text(
-                    yaml.safe_dump(notes, allow_unicode=True, sort_keys=False, width=1000),
-                    encoding="utf-8")
-                added = sum(len(new_notes.get(k) or []) for k in ("glossary", "voice", "style"))
-                print(f"📝 Notes: +{added} decision(s) → {out_dir / NOTES_FILE}")
-            except yaml.YAMLError as e:
-                print(f"⚠️  Notes YAML parse error (not merged): {e}")
-                (out_dir / f"{stem}.notes_BROKEN.yaml").write_text(raw, encoding="utf-8")
-
-        aligned = [{"id": s["id"], "source": s["text"], "target": translated.get(s["id"], "")}
-                   for s in segments]
-        (out_dir / f"{stem}.{args.target_lang}.segments.json").write_text(
-            json.dumps(aligned, ensure_ascii=False, indent=1), encoding="utf-8")
-
-        if any(i.startswith("missing") for i in issues):
-            broken = out_dir / f"{stem}.{args.target_lang}_INCOMPLETE.md"
-            broken.write_text("\n\n".join(a["target"] or f"[[{a['id']} MISSING]]" for a in aligned),
-                              encoding="utf-8")
-            print(f"❌ Incomplete — saved as {broken} (re-run to retry)")
+            print(f"✅ Checks: {r.segments}/{r.segments} segments aligned")
+        if r.notes_error:
+            print(f"⚠️  Notes YAML parse error (not merged): {r.notes_error}")
+        else:
+            print(f"📝 Notes: +{r.notes_added} decision(s)")
+        if r.complete:
+            print(f"📁 Saved: {r.output_path}")
+        else:
+            print(f"❌ Incomplete — saved as {r.output_path} (re-run to retry)")
             exit_code = 1
-            continue
-
-        out_md.write_text("\n\n".join(a["target"] for a in aligned) + "\n", encoding="utf-8")
-        print(f"📁 Saved: {out_md}  ({result['elapsed_seconds']:.0f}s)")
-
     return exit_code
 
 

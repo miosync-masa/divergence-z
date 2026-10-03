@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """
-Persona Generator v3.3
+Persona Generator v3.4
 Z-Axis Translation System — Automatic Persona YAML Generation
+
+v3.4 Changes:
+- ライブラリ化: generate_persona() を UI / pipeline から直接呼べる関数に
+- LLM 呼び出しを core.llm に統一（BYOK・モデル登録表）。既定モデルを claude-opus-5-5 に
+- --thinking N（budget）→ --effort（low〜max）。--thinking は互換のため残し、指定時は high 扱い
+- 60秒のレート制限待ちは既定 OFF（--wait 60 で従来どおり）
 
 v3.3 Changes:
 - IDENTITY_CORE: New I₀ layer — describes WHO the character IS, not just how they REACT
@@ -39,20 +45,28 @@ Usage:
       --desc "傲娇天才科学家" --lang zh
 """
 
+from __future__ import annotations
+
 import argparse
-import json
 import os
 import sys
 import time
-from anthropic import Anthropic
-from dotenv import load_dotenv
-load_dotenv()
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import List, Optional
+
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from divergence_z.core import (EFFORTS, LLM, Keys, LLMResult, Progress, clean_yaml_output,
+                               print_progress, resolve_progress)
 
 # =============================================================================
 # CONFIGURATION
 # =============================================================================
 
-DEFAULT_MODEL = os.getenv("PERSONA_GENERATOR_MODEL", os.getenv("CLAUDE_MODEL", "claude-opus-4-5-20251101"))
+DEFAULT_MODEL = os.getenv("PERSONA_GENERATOR_MODEL", os.getenv("CLAUDE_MODEL", "claude-opus-5-5"))
+DEFAULT_EFFORT = "high"
 
 SUPPORTED_LANGUAGES = {
     "ja": "Japanese (日本語)",
@@ -571,15 +585,22 @@ REMEMBER:
     return prompt
 
 
-def _research_character(client, name: str, source: str, description: str, 
-                        model: str) -> str:
-    """Pass 1: Research character details using web search.
-    
-    Returns a text summary of search findings for use as context in generation.
-    Uses tool_choice to FORCE the model to perform web searches.
-    """
-    
-    research_prompt = f"""You are researching a character to build a high-resolution persona YAML 
+
+# =============================================================================
+# TWO-PASS GENERATION (research → generate)
+# =============================================================================
+
+RESEARCH_SYSTEM = ("You are a research assistant for anime/manga persona generation. "
+                   "Your research will be used to build persona YAMLs for Z-axis translation, "
+                   "where example_response fields must be grounded in canonical dialogue, not fabricated. "
+                   "Web search is essential because even well-known characters have subtle details "
+                   "(pronoun variants, specific catchphrase frequency, exact relationship dynamics) "
+                   "that LLM training data often gets slightly wrong. "
+                   "Always search first, then compile verified findings.")
+
+
+def build_research_prompt(name: str, source: str, description: str) -> str:
+    return f"""You are researching a character to build a high-resolution persona YAML 
 for Z-axis translation. Web search is essential here for a specific reason:
 
 **WHY SEARCH MATTERS:**
@@ -636,206 +657,61 @@ translation signal.
 
 Only include information you actually found in search results. Do NOT invent details."""
 
-    print("   📖 Pass 1: Researching character via web search...")
-    
-    # Force search: tool_choice + system prompt + user prompt all insist
-    api_kwargs = {
-        "model": model,
-        "max_tokens": 4000,
-        "system": "You are a research assistant for anime/manga persona generation. "
-                  "Your research will be used to build persona YAMLs for Z-axis translation, "
-                  "where example_response fields must be grounded in canonical dialogue, not fabricated. "
-                  "Web search is essential because even well-known characters have subtle details "
-                  "(pronoun variants, specific catchphrase frequency, exact relationship dynamics) "
-                  "that LLM training data often gets slightly wrong. "
-                  "Always search first, then compile verified findings.",
-        "tools": [
-            {
-                "type": "web_search_20250305",
-                "name": "web_search",
-                "max_uses": 5
-            }
-        ],
-        "messages": [
-            {"role": "user", "content": research_prompt}
-        ]
-    }
-    
-    # Try to force tool use (may not work with server-side tools)
-    try:
-        api_kwargs["tool_choice"] = {"type": "any"}
-        response = client.messages.create(**api_kwargs)
-    except Exception:
-        # If tool_choice fails with web_search, retry without it
-        print("   ⚠️  tool_choice not supported for web_search, retrying without...")
-        del api_kwargs["tool_choice"]
-        response = client.messages.create(**api_kwargs)
-    
-    # Extract text and count searches
-    # Debug: show all block types to diagnose search detection
-    research_text = ""
-    search_count = 0
-    block_types = []
-    for block in response.content:
-        block_types.append(block.type)
-        if block.type == "text":
-            research_text = block.text  # Last text block has the summary
-        elif block.type in ("web_search_tool_use", "server_tool_use", "tool_use"):
-            search_count += 1
-    
-    print(f"   📊 Response blocks: {block_types}")
-    print(f"   🔍 Web searches performed: {search_count}")
-    if search_count == 0:
-        print(f"   ⚠️  Model did not use web search in research pass")
-        # Show first 200 chars of response for debugging
-        if research_text:
-            print(f"   📄 Response preview: {research_text[:200]}...")
-    
-    return research_text
+
+def research_character(name: str, source: str, description: str, *, llm: LLM,
+                       model: str = DEFAULT_MODEL,
+                       progress: Optional[Progress] = None) -> LLMResult:
+    """Pass 1: web_search でキャラクター情報を調べる"""
+    resolve_progress(progress)("   📖 Pass 1: Researching character via web search...")
+    result = llm.complete(RESEARCH_SYSTEM, build_research_prompt(name, source, description),
+                          model=model, effort="low", max_output_tokens=8000,
+                          web_search=True, max_searches=5)
+    if result.searches == 0:
+        resolve_progress(progress)("   ⚠️  Model did not use web search in research pass")
+    return result
 
 
-def generate_persona(name: str, source: str, description: str,
-                     output_lang: str = "ja",
-                     search_context: str = "", 
-                     model: str = DEFAULT_MODEL,
-                     thinking_budget: int = 0,
-                     no_search: bool = False,
-                     no_wait: bool = False) -> str:
-    """Generate persona YAML using Claude API with web search.
-    
-    Two-pass approach:
-      Pass 1 (Research): web_search to gather character details (no thinking)
-      Pass 2 (Generate): thinking to generate YAML with research context (no search)
-    
-    This separation avoids thinking + web_search compatibility issues.
-    
-    Args:
-        thinking_budget: If > 0, enable extended thinking with this token budget.
-                        Recommended: 10000-16000 for complex characters.
-        no_search: If True, disable web search (LLM knowledge only).
-    """
-    
-    client = Anthropic()
-    
-    lang_name = SUPPORTED_LANGUAGES.get(output_lang, output_lang)
-    print(f"🐯 Generating persona v3.3 for: {name} ({source})")
-    print(f"   Output language: {lang_name}")
-    print(f"   Model: {model}")
-    if no_search:
-        print(f"   🔍 Web search: OFF (LLM knowledge only)")
-    else:
-        print(f"   🔍 Web search: ON (two-pass: research → generate)")
-    if thinking_budget > 0:
-        print(f"   🧠 Thinking mode: ON (budget: {thinking_budget} tokens)")
-    print()
-    
-    # === PASS 1: RESEARCH (web search, no thinking) ===
-    research_context = ""
-    if not no_search:
-        research_context = _research_character(client, name, source, description, model)
-        # Rate limit protection: wait between passes
-        # Tier 1 Opus: 8K output tokens/min — Pass 1 uses ~2-3K, Pass 2 needs the rest
-        if not no_wait:
-            print("   ⏳ Waiting 60s for rate limit reset (Tier 1: 8K output tokens/min)...")
-            print("   💡 Use --no-wait to skip (if you have Tier 2+ API key)")
-            time.sleep(60)
-        else:
-            print("   ⚡ Skipping rate limit wait (--no-wait)")
-    
-    # Merge any user-provided context with research results
-    combined_context = ""
-    if search_context and research_context:
-        combined_context = f"## User-provided context:\n{search_context}\n\n## Web research results:\n{research_context}"
-    elif research_context:
-        combined_context = research_context
-    elif search_context:
-        combined_context = search_context
-    
-    # === PASS 2: GENERATE YAML (thinking, no search) ===
-    system_prompt = build_system_prompt(output_lang)
-    user_prompt = build_user_prompt(name, source, description, output_lang, combined_context)
-    
-    if not no_search:
-        print("   📝 Pass 2: Generating persona YAML...")
-    
-    api_kwargs = {
-        "model": model,
-        "max_tokens": 16000 if thinking_budget > 0 else 8000,
-        "system": system_prompt,
-        "messages": [
-            {"role": "user", "content": user_prompt}
-        ]
-    }
-    
-    if thinking_budget > 0:
-        api_kwargs["thinking"] = {
-            "type": "enabled",
-            "budget_tokens": thinking_budget
-        }
-    
-    response = client.messages.create(**api_kwargs)
-    
-    # Extract YAML from response (skip thinking blocks)
-    yaml_content = ""
-    for block in response.content:
-        if block.type == "text":
-            yaml_content = block.text  # Last text block wins
-    
-    # === ROBUST YAML EXTRACTION ===
-    # Model may output: explanation text → code block or raw YAML
-    # Strategy: try multiple extraction methods in order of reliability
-    yaml_content = _extract_yaml(yaml_content)
-    
-    return yaml_content.strip()
+@dataclass
+class PersonaGeneration:
+    character: str
+    yaml_text: str
+    valid: bool
+    issues: List[str] = field(default_factory=list)
+    research: Optional[LLMResult] = None
+    llm: Optional[LLMResult] = None
 
 
-def _extract_yaml(raw: str) -> str:
-    """Extract YAML content from model output, handling various formats.
-    
-    The model may output:
-    1. Pure YAML (ideal)
-    2. ```yaml ... ``` code block (common)
-    3. Preamble text + ```yaml ... ``` (with thinking mode)
-    4. Preamble text + raw YAML without code fences (worst case)
-    """
-    
-    # Method 1: Extract from ```yaml ... ``` code block
-    if "```yaml" in raw:
-        yaml_part = raw.split("```yaml", 1)[1]
-        if "```" in yaml_part:
-            yaml_part = yaml_part.split("```", 1)[0]
-        return yaml_part.strip()
-    
-    # Method 2: Extract from generic ``` ... ``` code block
-    if "```" in raw:
-        parts = raw.split("```")
-        # Find the part that looks like YAML (contains "meta:" or starts with "#")
-        for part in parts[1::2]:  # odd-indexed parts are inside code fences
-            stripped = part.strip()
-            if stripped.startswith("# ===") or "meta:" in stripped[:200]:
-                return stripped
-    
-    # Method 3: Find YAML start marker in raw text
-    lines = raw.split("\n")
-    for i, line in enumerate(lines):
-        s = line.strip()
-        if s.startswith("# ===") or s.startswith("meta:"):
-            return "\n".join(lines[i:])
-    
-    # Method 4: Find "persona:" or "identity_core:" as fallback start markers
-    for i, line in enumerate(lines):
-        s = line.strip()
-        if s.startswith("persona:") or s.startswith("identity_core:"):
-            # Include from this line, but check if meta: is a few lines above
-            search_start = max(0, i - 5)
-            for j in range(search_start, i):
-                if lines[j].strip().startswith("meta:"):
-                    return "\n".join(lines[j:])
-            return "\n".join(lines[i:])
-    
-    # Method 5: Last resort — return as-is and let validator catch it
-    print("   ⚠️  Could not reliably extract YAML from model output")
-    return raw
+def generate_persona(name: str, source: str, description: str, *, llm: LLM,
+                     output_lang: str = "ja", extra_context: str = "",
+                     model: str = DEFAULT_MODEL, effort: Optional[str] = DEFAULT_EFFORT,
+                     web_search: bool = True, rate_limit_wait: int = 0,
+                     max_output_tokens: int = 32000,
+                     progress: Optional[Progress] = None) -> PersonaGeneration:
+    """キャラクター名からペルソナ YAML v3.3 を生成（web_search=False なら LLM の知識のみ）"""
+    report = resolve_progress(progress)
+    report(f"🐯 Generating persona v3.3 for: {name} ({source})")
+
+    research = None
+    if web_search:
+        research = research_character(name, source, description, llm=llm, model=model,
+                                      progress=progress)
+        if rate_limit_wait:
+            report(f"   ⏳ Waiting {rate_limit_wait}s for rate limit reset...")
+            time.sleep(rate_limit_wait)
+        report("   📝 Pass 2: Generating persona YAML...")
+
+    parts = []
+    if extra_context:
+        parts.append(f"## User-provided context:\n{extra_context}")
+    if research and research.text:
+        parts.append(f"## Web research results:\n{research.text}")
+    result = llm.complete(build_system_prompt(output_lang),
+                          build_user_prompt(name, source, description, output_lang,
+                                            "\n\n".join(parts)),
+                          model=model, effort=effort, max_output_tokens=max_output_tokens)
+    yaml_text = clean_yaml_output(result.text, progress=report)
+    valid, issues = validate_v33_persona(yaml_text)
+    return PersonaGeneration(name, yaml_text, valid, issues, research, result)
 
 
 def validate_v33_persona(yaml_content: str) -> tuple[bool, list[str]]:
@@ -987,109 +863,58 @@ def list_languages():
     print()
 
 
-def main():
+
+def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Generate persona YAML v3.3 for Z-Axis Translation System",
+        description="Persona Generator v3.4 — generate persona YAML v3.3 (web search)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
-  # Japanese output (default) — with web search
-  python persona_generator.py --name "牧瀬紅莉栖" --source "Steins;Gate" \\
-    --desc "ツンデレの天才科学者"
-
-  # Without web search (LLM knowledge only)
-  python persona_generator.py --name "牧瀬紅莉栖" --source "Steins;Gate" \\
-    --desc "ツンデレの天才科学者" --no-search
-
-  # English output
-  python persona_generator.py --name "Kurisu Makise" --source "Steins;Gate" \\
-    --desc "Tsundere genius scientist" --lang en
-
-  # Chinese output
-  python persona_generator.py --name "牧濑红莉栖" --source "命运石之门" \\
-    --desc "傲娇天才科学家" --lang zh
-
-  # With validation
-  python persona_generator.py --name "ナツキ・スバル" --source "Re:Zero" \\
-    --desc "死に戻り能力者" --validate
-
-  # With extended thinking + web search (maximum quality)
-  python persona_generator.py --name "椎名まゆり" --source "Steins;Gate" \\
-    --desc "天然癒し系の幼馴染" --thinking 10000
-
-  # List supported languages
-  python persona_generator.py --list-languages
-        """
     )
     parser.add_argument("--name", help="Character name")
     parser.add_argument("--source", help="Source work (anime, game, etc.)")
     parser.add_argument("--desc", help="Brief character description")
-    parser.add_argument("--lang", default="ja", choices=list(SUPPORTED_LANGUAGES.keys()),
-                        help="Output language for descriptions (default: ja)")
+    parser.add_argument("--lang", default="ja", choices=list(SUPPORTED_LANGUAGES.keys()))
     parser.add_argument("--context", default="", help="Additional context or search results")
     parser.add_argument("--context-file", help="File containing additional context")
-    parser.add_argument("--model", default=DEFAULT_MODEL, help="Model to use")
+    parser.add_argument("--model", default=DEFAULT_MODEL)
+    parser.add_argument("--effort", default=DEFAULT_EFFORT, choices=EFFORTS)
     parser.add_argument("--thinking", type=int, default=0, metavar="BUDGET",
-                        help="Enable extended thinking with token budget (e.g. --thinking 10000)")
-    parser.add_argument("--no-search", action="store_true",
-                        help="Disable web search (use LLM knowledge only). Default: search enabled")
-    parser.add_argument("--no-wait", action="store_true",
-                        help="Skip rate limit wait between passes (for Tier 2+ API keys)")
-    parser.add_argument("--output-dir", default="personas", help="Output directory")
-    parser.add_argument("--print-only", action="store_true", help="Print YAML without saving")
-    parser.add_argument("--validate", action="store_true", help="Validate v3.3 schema compliance")
-    parser.add_argument("--list-languages", action="store_true", help="List supported output languages")
-    
+                        help="(deprecated) any value > 0 is treated as --effort high")
+    parser.add_argument("--no-search", action="store_true", help="Disable web search")
+    parser.add_argument("--wait", type=int, default=0,
+                        help="Seconds to sleep between passes (rate-limit tiers)")
+    parser.add_argument("--no-wait", action="store_true", help="(deprecated, now the default)")
+    parser.add_argument("--output-dir", default="personas")
+    parser.add_argument("--print-only", action="store_true")
+    parser.add_argument("--validate", action="store_true", help="(always on)")
+    parser.add_argument("--list-languages", action="store_true")
     args = parser.parse_args()
-    
-    # Handle --list-languages
+
     if args.list_languages:
         list_languages()
-        return
-    
-    # Check required arguments
+        return 0
     if not args.name or not args.source or not args.desc:
         parser.error("--name, --source, and --desc are required (unless using --list-languages)")
-    
-    # Load context from file if provided
-    context = args.context
-    if args.context_file:
-        with open(args.context_file, "r", encoding="utf-8") as f:
-            context = f.read()
-    
-    # Generate persona
-    yaml_content = generate_persona(
-        name=args.name,
-        source=args.source,
-        description=args.desc,
-        output_lang=args.lang,
-        search_context=context,
-        model=args.model,
-        thinking_budget=args.thinking,
-        no_search=args.no_search,
-        no_wait=args.no_wait
-    )
-    
-    # Always validate in v3.2 (show warnings)
-    is_valid, issues = validate_v33_persona(yaml_content)
-    if not is_valid:
-        print("⚠️  v3.3 Schema Validation Issues:")
-        for issue in issues:
-            print(f"   - {issue}")
-        print()
-    else:
+    context = Path(args.context_file).read_text(encoding="utf-8") if args.context_file else args.context
+
+    result = generate_persona(
+        args.name, args.source, args.desc, llm=LLM(Keys.from_env(), progress=print_progress),
+        output_lang=args.lang, extra_context=context, model=args.model,
+        effort="high" if args.thinking > 0 else args.effort, web_search=not args.no_search,
+        rate_limit_wait=args.wait, progress=print_progress)
+
+    if result.valid:
         print("✅ v3.3 Schema Validation: PASSED")
-        print()
-    
-    if args.print_only:
-        print(yaml_content)
     else:
-        filepath = save_persona(yaml_content, args.name, args.lang, args.output_dir)
-        print(f"✅ Persona v3.3 saved to: {filepath}")
-        print()
-        print("=" * 60)
-        print(yaml_content)
+        print("⚠️  v3.3 Schema Validation Issues:")
+        for issue in result.issues:
+            print(f"   - {issue}")
+    if args.print_only:
+        print(result.yaml_text)
+    else:
+        print(f"✅ Persona v3.3 saved to: "
+              f"{save_persona(result.yaml_text, args.name, args.lang, args.output_dir)}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
