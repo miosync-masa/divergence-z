@@ -63,6 +63,14 @@
 
 ## 3. インストール
 
+### アプリだけ使う（Mac・Apple シリコン）
+
+[Releases](https://github.com/miosync-masa/divergence-z/releases) から `Divergence-Z-<version>-arm64.dmg` をダウンロードして、アプリをアプリケーションフォルダに入れます。Python も Node も不要です。
+
+このビルドは Apple の署名・公証をしていないため、初回は Finder でアプリを右クリック →「開く」で起動してください（開けない場合は システム設定 → プライバシーとセキュリティ →「このまま開く」）。
+
+### ソースから使う（CLI・開発）
+
 ```bash
 git clone https://github.com/miosync-masa/divergence-z.git
 cd divergence-z
@@ -394,6 +402,14 @@ Divergence-Z has an LLM read an entire novel, script, or game text and build a *
   The model can be changed per step ([6. Models and cost](#6-models-and-cost)).
 
 ## 3. Install
+
+### App only (Mac, Apple silicon)
+
+Download `Divergence-Z-<version>-arm64.dmg` from [Releases](https://github.com/miosync-masa/divergence-z/releases) and drag the app to Applications. No Python or Node needed.
+
+The build is not signed or notarized by Apple: on first launch, right-click the app in Finder → Open (or allow it in System Settings → Privacy & Security).
+
+### From source (CLI, development)
 
 ```bash
 git clone https://github.com/miosync-masa/divergence-z.git

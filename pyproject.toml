@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "divergence-z"
 version = "0.1.0"
-description = "Z-Axis Translation System — Action-Preserving Translation for Fictional Speech"
+description = "Character bible (cast, persona, episodes) from source text, for translation and character voice — BYOK"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
@@ -34,6 +34,9 @@ server = [
     "fastapi>=0.115",
     "uvicorn>=0.30",
 ]
+pdf = [
+    "PyPDF2>=3.0",
+]
 dev = [
     "pytest>=7.0.0",
     "pytest-asyncio>=0.21.0",
@@ -46,8 +49,8 @@ persona-generator = "divergence_z.persona_generator:main"
 dz-server = "divergence_z.server.__main__:main"
 
 [project.urls]
-Homepage = "https://github.com/miosync/divergence-z"
-Repository = "https://github.com/miosync/divergence-z"
+Homepage = "https://github.com/miosync-masa/divergence-z"
+Repository = "https://github.com/miosync-masa/divergence-z"
 
 [tool.setuptools.packages.find]
 where = ["."]
