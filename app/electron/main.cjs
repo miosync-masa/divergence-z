@@ -31,20 +31,34 @@ function pythonPath() {
   return fs.existsSync(venv) ? venv : "python3";
 }
 
+// 配布版: アプリに同梱した単体エンジン（PyInstaller）。開発時: リポジトリの venv の Python
+function sidecarCommand() {
+  if (process.env.DZ_SIDECAR) return { cmd: process.env.DZ_SIDECAR, args: [], cwd: app.getPath("userData") };
+  if (app.isPackaged) {
+    const exe = path.join(process.resourcesPath, "dz-server", process.platform === "win32" ? "dz-server.exe" : "dz-server");
+    return { cmd: exe, args: [], cwd: app.getPath("userData") };
+  }
+  // macOS: universal な Python は GUI アプリから起動すると x86_64 で立ち上がることがあり、
+  // arm64 の venv（pydantic_core 等のネイティブ拡張）を読めずに落ちる。Electron と同じ arch に固定する
+  if (process.platform === "darwin") {
+    return { cmd: "/usr/bin/arch",
+             args: [`-${process.arch === "arm64" ? "arm64" : "x86_64"}`, pythonPath(), "-m", "divergence_z.server"],
+             cwd: REPO_ROOT };
+  }
+  return { cmd: pythonPath(), args: ["-m", "divergence_z.server"], cwd: REPO_ROOT };
+}
+
 function startSidecar() {
   return new Promise((resolve, reject) => {
-    // macOS: universal な Python は GUI アプリから起動すると x86_64 で立ち上がることがあり、
-    // arm64 の venv（pydantic_core 等のネイティブ拡張）を読めずに落ちる。Electron と同じ arch に固定する
-    const [cmd, args] = process.platform === "darwin"
-      ? ["/usr/bin/arch", [`-${process.arch === "arm64" ? "arm64" : "x86_64"}`, pythonPath(), "-m", "divergence_z.server"]]
-      : [pythonPath(), ["-m", "divergence_z.server"]];
+    const { cmd, args, cwd } = sidecarCommand();
     const proc = spawn(cmd, args, {
-      cwd: REPO_ROOT,
+      cwd,
       env: { ...process.env, PYTHONUNBUFFERED: "1" },
       stdio: ["ignore", "pipe", "pipe"],
     });
     sidecar = proc;
-    const timer = setTimeout(() => reject(new Error("sidecar did not become ready in 30s")), 30000);
+    // 配布版の初回起動は macOS の検査で数十秒かかることがあるので余裕を持たせる
+    const timer = setTimeout(() => reject(new Error("sidecar did not become ready in 60s")), 60000);
 
     readline.createInterface({ input: proc.stdout }).on("line", (line) => {
       try {

@@ -23,6 +23,17 @@ npm run build && npm start   # ビルド版で起動
 
 サイドカーのログ: `~/Library/Application Support/divergence-z-app/sidecar.log`
 
+## 配布用ビルド（.dmg）
+
+```bash
+PYTHON=../.venv/bin/python ../packaging/build_sidecar.sh   # Python エンジンを単体実行ファイルに（dist-sidecar/）
+npm run dist                                              # release/Divergence-Z-<version>-arm64.dmg
+```
+
+配布版は同梱のエンジン（`Resources/dz-server/`）を起動する。Apple の署名が無い場合は
+`electron/adhoc-sign.cjs` が ad-hoc 署名を付ける（無署名だと Apple シリコンで開けないため）。
+`v*` タグを push すると GitHub Actions（`.github/workflows/release-desktop.yml`）が同じ手順でビルドし、Releases に置く。
+
 ## 画面確認（スクリーンショット）
 
 ```bash

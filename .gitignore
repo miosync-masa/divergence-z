@@ -9,3 +9,6 @@ translations/
 app/node_modules/
 app/dist/
 *.egg-info/
+release/
+dist-sidecar/
+build/

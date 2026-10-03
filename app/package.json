@@ -8,7 +8,8 @@
     "dev": "concurrently -k \"vite\" \"wait-on tcp:5173 && cross-env DZ_DEV_URL=http://localhost:5173 electron .\"",
     "build": "tsc --noEmit && vite build",
     "start": "electron .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "dist": "npm run build && electron-builder --mac --publish never"
   },
   "dependencies": {
     "@fontsource/jetbrains-mono": "^5.3.0",
@@ -26,9 +27,45 @@
     "concurrently": "^9.2.4",
     "cross-env": "^10.1.0",
     "electron": "^33.4.11",
+    "electron-builder": "^25.1.8",
     "typescript": "^5.9.3",
     "vite": "^5.4.21",
     "wait-on": "^9.5.1"
   },
-  "type": "module"
+  "type": "module",
+  "productName": "Divergence-Z",
+  "author": "Masamichi Iizumi",
+  "build": {
+    "appId": "com.miosync.divergence-z",
+    "productName": "Divergence-Z",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "electron/**",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../dist-sidecar/dz-server",
+        "to": "dz-server"
+      }
+    ],
+    "asar": true,
+    "afterSign": "electron/adhoc-sign.cjs",
+    "mac": {
+      "identity": null,
+      "category": "public.app-category.productivity",
+      "target": [
+        {
+          "target": "dmg"
+        }
+      ],
+      "hardenedRuntime": false
+    },
+    "dmg": {
+      "artifactName": "Divergence-Z-${version}-${arch}.dmg"
+    }
+  }
 }
