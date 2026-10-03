@@ -204,9 +204,12 @@ def run_translate(job: Job, keys: Keys, llm: Optional[LLM] = None,
         job.progress(f"🌐 {name} → {lang}", step="translate", index=n, total=len(chapters), lang=lang)
         r = translate_chapter(book, idx, llm=llm, out_dir=out_dir, target_lang=lang,
                               model=m["model"], effort=m.get("effort"),
-                              previous=int(job.params.get("previous", 2)), progress=job.progress)
+                              previous=int(job.params.get("previous", 2)),
+                              max_section_chars=int(job.params.get("max_section_chars", 6000)),
+                              force=force, cancel_check=job.check, progress=job.progress)
         _track(job, llm)
         info = {"chapter": name, "complete": r.complete, "segments": r.segments,
+                "sections": len(r.sections),
                 "issues": r.issues, "notes_added": r.notes_added, "notes_error": r.notes_error}
         job.artifact("translation", _rel(project, r.output_path), lang=lang,
                      **{k: v for k, v in info.items()})

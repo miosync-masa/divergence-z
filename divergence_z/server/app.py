@@ -20,7 +20,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
-from divergence_z.chapter_translator import (NOTES_FILE, build_chapter_prompt, collect_source_files,
+from divergence_z.chapter_translator import (NOTES_FILE, collect_source_files, estimate_chapter,
                                              open_book)
 from divergence_z.core import (Keys, check_fit, dump_yaml, get_model, list_models,
                                load_source_corpus)
@@ -77,6 +77,7 @@ class EstimateIn(BaseModel):
     characters: Optional[List[str]] = None
     langs: List[str] = Field(default_factory=lambda: ["en"])
     chapters: str = ""
+    max_section_chars: int = 6000
 
 
 # =============================================================================
@@ -325,10 +326,13 @@ def create_app(token: str, allowed_origins: Optional[List[str]] = None,
                              str(project.persona_dir), str(project.episode_dir))
             from divergence_z.chapter_translator import parse_chapter_selection
             for lang in body.langs:
+                m = project.model_for("translate")
                 for idx in parse_chapter_selection(body.chapters, len(book.files)):
-                    prompt = build_chapter_prompt(book, idx, project.translation_dir(lang), lang)
-                    out = sum(len(s["text"]) for s in prompt.segments) * 3
-                    add("translate", f"{book.files[idx].name}:{lang}", prompt.system + prompt.user, out)
+                    # 長い章は計画 + セクションごとの呼び出しの合計
+                    fit = estimate_chapter(book, idx, project.translation_dir(lang), m["model"], lang,
+                                           max_section_chars=body.max_section_chars)
+                    rows.append({"step": "translate", "target": f"{book.files[idx].name}:{lang}",
+                                 "model": m["model"], **asdict(fit)})
 
         costs = [r["cost_usd"] for r in rows]
         return {

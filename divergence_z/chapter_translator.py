@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Chapter Translator v1.1
+Chapter Translator v1.2
 キャラクター構築系の出力（cast / persona / episode）＋これまでの訳文を LLM に渡し、章単位で一括翻訳する
 
 旧 Z軸翻訳系（old/）は「行ごとに z / z_mode を推定 → 訳す → ZAP/IAP で採点」だったが、
@@ -39,8 +39,10 @@ Usage:
     translation_notes.yaml    訳語表（章をまたいで持ち回る。手で直してよい）
 既に訳済みの章はスキップ（--force で再翻訳）。
 
-v1.1: ライブラリ化（open_book / build_chapter_prompt / translate_chapter）、
-      LLM 呼び出しを core.llm に統一（BYOK）、実行前のコンテキスト適合チェック
+v1.2: 長い章は LLM が場面単位のセクションに分け（計画）、セクションごとに1回推論して訳す。
+      各セクションには章の計画・直前の訳文・そのセクションの登場人物の資料だけを渡す。
+      途中経過を {章}.{lang}.work.json に保存し、中断してもセクション単位で再開する
+v1.1: ライブラリ化（open_book / translate_chapter）、LLM 呼び出しを core.llm に統一（BYOK）
 """
 
 from __future__ import annotations
@@ -96,7 +98,26 @@ def segment_chapter(text: str) -> List[Dict[str, str]]:
     if buf:
         segments.append("\n".join(buf))
 
-    return [{"id": f"P{i:03d}", "text": s} for i, s in enumerate(segments, 1)]
+    # 青空文庫などは段落の間に空行が無く「1行 = 1段落」。ブロック内で全角スペースや
+    # 鉤括弧から始まる行は新しい段落として分ける（コードブロック・見出しの続きはそのまま）
+    split: List[str] = []
+    for block in segments:
+        lines = block.split("\n")
+        if block.lstrip().startswith("```") or len(lines) == 1:
+            split.append(block)
+            continue
+        cur: List[str] = []
+        for line in lines:
+            if cur and _PARA_START.match(line):
+                split.append("\n".join(cur))
+                cur = []
+            cur.append(line)
+        split.append("\n".join(cur))
+
+    return [{"id": f"P{i:03d}", "text": s} for i, s in enumerate(split, 1)]
+
+
+_PARA_START = re.compile(r"^[　「『（(]")
 
 
 def render_segments(segments: List[Dict[str, str]]) -> str:
@@ -227,33 +248,35 @@ def merge_notes(notes: Dict[str, Any], new: Dict[str, Any], chapter: str) -> Dic
 def build_system_prompt(target_lang: str) -> str:
     lang = SUPPORTED_LANGUAGES.get(target_lang, target_lang)
     return f"""You are a literary translator for the Divergence-Z project, translating a work of fiction
-into {lang}, one chapter at a time, as a single coherent book.
+into {lang} as a single coherent book. Long chapters are translated one SECTION at a time
+(a scene or a run of related scenes); you translate exactly the section you are given.
 
 ## WHAT YOU ARE GIVEN
 - CAST SHEET: who is who, and how the text refers to each person (often by description or pronoun,
-  not by name), plus who narrates which chapter.
-- PERSONAS: for each character in this chapter — who they are (identity_core), how they speak in the
+  not by name), plus who narrates the chapter.
+- PERSONAS: for each character in this section — who they are (identity_core), how they speak in the
   original (original_speech_patterns), and recommended compensations for the target language
-  (translation_compensations). conflict_axes / triggers / emotion_states describe how their speech
-  shifts under emotion.
+  (translation_compensations). emotion_states describe how their speech shifts under emotion.
 - EPISODE MEMORY: what each character has lived through, split into what already happened,
   what happens in this chapter, and what has not happened yet.
-- TRANSLATION NOTES: decisions already made in earlier chapters (glossary, character voice, style).
-  These are binding unless they are clearly wrong for this chapter.
-- PREVIOUS CHAPTERS: your own translation of the preceding chapter(s), for continuity of voice.
-- THIS CHAPTER: the source text, split into numbered segments <seg id="P001">…</seg>.
+- TRANSLATION NOTES: decisions already made (glossary, character voice, style). Binding unless
+  clearly wrong here.
+- CHAPTER PLAN: every section of this chapter with a summary, so you know where this section sits.
+- TRANSLATION SO FAR: your own translation of what comes immediately before this section.
+- THIS SECTION: the source text, split into numbered segments <seg id="P001">…</seg>.
 
 ## HOW TO TRANSLATE
-1. Translate the whole chapter as literature, not line by line. Read it all first.
+1. Translate as literature, not line by line. Read the whole section first, and keep continuity
+   with TRANSLATION SO FAR (voice, tense, rhythm, names).
 2. Each character must sound like THEMSELVES in {lang}: use the persona to decide register, rhythm,
    verbal tics, how broken or fluent their speech is, and how it changes with emotion.
    A line's weight comes from the episodes behind it — let that shape word choice.
 3. Resolve every pronoun/description to the right person using the cast sheet before translating.
 4. Wordplay, non-standard grammar, mispronunciations, dialect, and language-learning speech are
    meaning, not noise: find a {lang} equivalent that does the same job, and record the decision.
-5. Words already in a foreign/alien language in the source (e.g. romanized alien words) stay as they are.
+5. Words already in a foreign/alien language in the source stay as they are.
 6. Keep markdown exactly: headings, **bold**, ``` code blocks ``` (translate their contents, keep layout),
-   --- separators, ［brackets］ styles may be adapted to {lang} conventions consistently.
+   --- separators; bracket styles may be adapted to {lang} conventions consistently.
 7. Do not add, omit, merge, or split segments. Every input segment id appears exactly once in output.
 8. Follow TRANSLATION NOTES. If you must deviate, add an updated entry explaining why.
 
@@ -262,7 +285,7 @@ into {lang}, one chapter at a time, as a single coherent book.
 <seg id="P001">
 …translated text…
 </seg>
-… (every segment, same ids, same order)
+… (every segment of THIS SECTION, same ids, same order)
 </translation>
 <notes>
 glossary:            # NEW or CHANGED decisions only (terms, names, invented words, recurring phrases)
@@ -279,10 +302,35 @@ style:               # NEW chapter-independent conventions (punctuation, bracket
 Write the notes block as valid YAML. Use [] for an empty section."""
 
 
+PLAN_SYSTEM = """You plan the translation of one long chapter of a work of fiction.
+The chapter will be translated section by section, one model call per section, so each
+section must be readable on its own with a short summary of the rest.
+
+Split the chapter into SECTIONS at natural boundaries: scene changes, shifts of place or time,
+a change of who is talking, a new narrative movement. Never cut inside a conversation or a
+continuous action if you can avoid it. Each section must stay at or below the character limit
+given (the char count of every segment is shown); prefer fewer, larger sections over many tiny ones.
+
+For each section also list the characters who appear, speak, or are referred to in a way that
+matters for translation, using EXACT labels from the CAST LABELS list (use [] if nobody), give a
+2–3 sentence summary, and note anything a translator must watch (wordplay, a pronoun that points to
+someone unexpected, a recurring phrase, a voice change).
+
+Output ONLY this JSON, nothing else:
+{"sections": [
+  {"start": "P001", "end": "P034", "title": "short title",
+   "characters": ["cast label", "..."],
+   "summary": "what happens",
+   "translation_focus": "what to watch"}
+]}
+Sections must be contiguous, in order, and together cover every segment exactly once."""
+
+
 def build_user_prompt(chapter_name: str, segments: List[Dict[str, str]], cast_text: str,
                       personas: Dict[str, str], episodes: Dict[str, str],
-                      notes: Dict[str, Any], previous: List[Tuple[str, str]],
-                      narration: str, target_lang: str) -> str:
+                      notes: Dict[str, Any], so_far: List[Tuple[str, str]],
+                      narration: str, target_lang: str, plan_text: str = "",
+                      section_label: str = "") -> str:
     parts: List[str] = []
     if cast_text:
         parts.append("## CAST SHEET\n```yaml\n" + cast_text.strip() + "\n```")
@@ -292,13 +340,14 @@ def build_user_prompt(chapter_name: str, segments: List[Dict[str, str]], cast_te
         parts.append(f"## PERSONA: {label}\n```yaml\n{text.strip()}\n```")
     for label, text in episodes.items():
         parts.append(f"## EPISODE MEMORY: {label}\n{text}")
-    parts.append("## TRANSLATION NOTES (binding)\n```yaml\n"
-                 + dump_yaml(notes)
-                 + "```")
-    for name, text in previous:
-        parts.append(f"## PREVIOUS CHAPTER (your translation): {name}\n{text}")
-    parts.append(f"## THIS CHAPTER: {chapter_name}\n{render_segments(segments)}")
-    parts.append(f"Translate THIS CHAPTER into {SUPPORTED_LANGUAGES.get(target_lang, target_lang)}. "
+    parts.append("## TRANSLATION NOTES (binding)\n```yaml\n" + dump_yaml(notes) + "```")
+    if plan_text:
+        parts.append(f"## CHAPTER PLAN: {chapter_name}\n{plan_text}")
+    for name, text in so_far:
+        parts.append(f"## TRANSLATION SO FAR ({name})\n{text}")
+    where = f"{chapter_name} — {section_label}" if section_label else chapter_name
+    parts.append(f"## THIS SECTION: {where}\n{render_segments(segments)}")
+    parts.append(f"Translate THIS SECTION into {SUPPORTED_LANGUAGES.get(target_lang, target_lang)}. "
                  f"Output <translation> with all {len(segments)} segments, then <notes>.")
     return "\n\n".join(parts)
 
@@ -327,11 +376,6 @@ def check_alignment(segments: List[Dict[str, str]], translated: Dict[str, str]) 
         if n_src and t and n_tgt != n_src:
             issues.append(f"{s['id']}: dialogue count {n_src} → {n_tgt}")
     return issues
-
-
-# =============================================================================
-# MAIN
-# =============================================================================
 
 
 # =============================================================================
@@ -398,51 +442,208 @@ def chapter_output_path(book: Book, idx: int, out_dir: Path, target_lang: str) -
     return out_dir / f"{book.files[idx].stem}.{target_lang}.md"
 
 
+def _work_path(book: Book, idx: int, out_dir: Path, target_lang: str) -> Path:
+    return out_dir / f"{book.files[idx].stem}.{target_lang}.work.json"
+
+
+# --- chapter plan (LLM がセクションに分ける) ------------------------------------------
+
 @dataclass
-class ChapterPrompt:
-    system: str
-    user: str
-    segments: List[Dict[str, str]]
-    present: List[str]
-    previous: List[str]
+class Section:
+    id: str
+    start: int                 # segments のインデックス（含む）
+    end: int                   # segments のインデックス（含む）
+    title: str = ""
+    characters: List[str] = field(default_factory=list)
+    summary: str = ""
+    focus: str = ""
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {"id": self.id, "start": self.start, "end": self.end, "title": self.title,
+                "characters": self.characters, "summary": self.summary, "focus": self.focus}
 
 
-def build_chapter_prompt(book: Book, idx: int, out_dir: Path, target_lang: str = "en",
-                         previous: int = 2) -> ChapterPrompt:
-    path = book.files[idx]
-    segments = segment_chapter(load_source_file(str(path)))
+def _chars(segments: List[Dict[str, str]], a: int, b: int) -> int:
+    return sum(len(s["text"]) for s in segments[a:b + 1])
+
+
+def split_by_chars(segments: List[Dict[str, str]], a: int, b: int, limit: int) -> List[Tuple[int, int]]:
+    """[a, b] を段落の区切りで limit 字以下の塊に分ける（計画のフォールバック・長すぎるセクション用）"""
+    spans, start, size = [], a, 0
+    for i in range(a, b + 1):
+        n = len(segments[i]["text"])
+        if size and size + n > limit:
+            spans.append((start, i - 1))
+            start, size = i, 0
+        size += n
+    spans.append((start, b))
+    return spans
+
+
+def render_plan(sections: List[Section], segments: List[Dict[str, str]], current: str = "") -> str:
+    lines = []
+    for s in sections:
+        mark = "  ← THIS SECTION" if s.id == current else ""
+        lines.append(f"- {s.id} [{segments[s.start]['id']}–{segments[s.end]['id']}] {s.title}{mark}\n"
+                     f"  characters: {', '.join(s.characters) or '—'}\n"
+                     f"  summary: {s.summary}" + (f"\n  watch: {s.focus}" if s.focus else ""))
+    return "\n".join(lines)
+
+
+def _parse_plan(text: str, segments: List[Dict[str, str]], labels: List[str],
+                limit: int) -> Optional[List[Section]]:
+    """計画 JSON を検証して Section にする。連続性・網羅性が崩れていれば None"""
+    m = re.search(r"\{.*\}", text, re.S)
+    if not m:
+        return None
+    try:
+        data = json.loads(m.group(0))
+    except json.JSONDecodeError:
+        return None
+    index = {s["id"]: i for i, s in enumerate(segments)}
+    out: List[Section] = []
+    expected = 0
+    for raw in data.get("sections") or []:
+        a, b = index.get(str(raw.get("start"))), index.get(str(raw.get("end")))
+        if a is None or b is None or a != expected or b < a:
+            return None
+        chars = [c for c in raw.get("characters") or [] if c in labels]
+        # 上限を大きく超えたセクションは段落の区切りで分ける（同じ計画情報を引き継ぐ）
+        for k, (x, y) in enumerate(split_by_chars(segments, a, b, int(limit * 1.3))
+                                   if _chars(segments, a, b) > limit * 1.3 else [(a, b)]):
+            title = str(raw.get("title", "")) + (f" ({k + 1})" if k else "")
+            out.append(Section("", x, y, title, chars, str(raw.get("summary", "")),
+                               str(raw.get("translation_focus", ""))))
+        expected = b + 1
+    if expected != len(segments):
+        return None
+    for i, s in enumerate(out, 1):
+        s.id = f"S{i}"
+    return out
+
+
+def plan_chapter(book: Book, idx: int, segments: List[Dict[str, str]], *, llm: Optional[LLM],
+                 model: str, max_section_chars: int, effort: Optional[str] = "medium",
+                 progress: Optional[Progress] = None) -> Tuple[List[Section], Optional[LLMResult]]:
+    """
+    章をセクションに分ける。短い章は1セクション（LLM を呼ばない）。
+    長い章は LLM が場面の切れ目で分け、登場人物・要約・注意点を付ける。失敗時は字数で分割。
+    """
+    report = resolve_progress(progress)
     present = book.present_in(idx)
+    total = _chars(segments, 0, len(segments) - 1)
+    if total <= max_section_chars or llm is None:
+        if total <= max_section_chars:
+            return [Section("S1", 0, len(segments) - 1, "whole chapter", present)], None
+        spans = split_by_chars(segments, 0, len(segments) - 1, max_section_chars)
+        return [Section(f"S{i}", a, b, f"part {i}", present) for i, (a, b) in enumerate(spans, 1)], None
+
+    labels = [c.get("label") for c in book.cast.get("characters") or [] if c.get("label")]
+    roster = "\n".join(f"- {c['label']}: {c.get('role', '')}" for c in book.cast.get("characters") or []
+                       if c.get("label")) or "(no cast sheet)"
+    listing = "\n".join(f'<seg id="{s["id"]}" chars="{len(s["text"])}">\n{s["text"]}\n</seg>'
+                        for s in segments)
+    user = (f"## CAST LABELS\n{roster}\n\n## NARRATION\n{book.narration_by_file.get(book.files[idx].name, '')}\n\n"
+            f"## CHAPTER: {book.files[idx].name} ({total:,} chars, {len(segments)} segments)\n{listing}\n\n"
+            f"Character limit per section: {max_section_chars:,}. Produce the plan JSON now.")
+    spec_efforts = get_model(model).efforts
+    report(f"🗺  planning {book.files[idx].name}: {total:,} chars, {len(segments)} segments")
+    result = llm.complete(PLAN_SYSTEM, user, model=model,
+                          effort=effort if effort in spec_efforts else None,
+                          max_output_tokens=16000)
+    sections = _parse_plan(result.text, segments, labels, max_section_chars)
+    if sections is None:
+        report("   ⚠️  plan was invalid — splitting by paragraph instead")
+        spans = split_by_chars(segments, 0, len(segments) - 1, max_section_chars)
+        sections = [Section(f"S{i}", a, b, f"part {i}", present) for i, (a, b) in enumerate(spans, 1)]
+    for s in sections:
+        report(f"   {s.id} {segments[s.start]['id']}–{segments[s.end]['id']} "
+               f"({_chars(segments, s.start, s.end):,} chars) {s.title} · {', '.join(s.characters) or '—'}")
+    return sections, result
+
+
+# --- prompts per section --------------------------------------------------------------
+
+def _previous_chapter_tail(book: Book, idx: int, out_dir: Path, target_lang: str,
+                           chars: int = 4000) -> Optional[Tuple[str, str]]:
+    for j in range(idx - 1, -1, -1):
+        prev = chapter_output_path(book, j, out_dir, target_lang)
+        if prev.exists():
+            text = prev.read_text(encoding="utf-8")
+            return (f"end of previous chapter {book.files[j].name}",
+                    ("…" if len(text) > chars else "") + text[-chars:])
+    return None
+
+
+def build_section_prompt(book: Book, idx: int, segments: List[Dict[str, str]],
+                         sections: List[Section], k: int, translated: Dict[str, str],
+                         out_dir: Path, target_lang: str, previous: int = 2) -> Tuple[str, str, List[str]]:
+    """セクション k の (system, user, 渡した人物) を組み立てる"""
+    sec = sections[k]
+    chapter_present = book.present_in(idx)
+    people = [c for c in sec.characters if c in book.characters] or chapter_present
     personas = {l: book.persona_paths[l].read_text(encoding="utf-8")
-                for l in present if l in book.persona_paths}
+                for l in people if l in book.persona_paths}
     episodes = {
         l: render_episodes(yaml.safe_load(book.episode_paths[l].read_text(encoding="utf-8")) or {},
                            book.chapter_names, idx)
-        for l in present if l in book.episode_paths
+        for l in people if l in book.episode_paths
     }
 
-    prev: List[Tuple[str, str]] = []
-    for j in range(idx - 1, -1, -1):
-        if len(prev) >= previous:
-            break
-        prev_md = chapter_output_path(book, j, out_dir, target_lang)
-        if prev_md.exists():
-            prev.insert(0, (book.files[j].name, prev_md.read_text(encoding="utf-8")))
+    so_far: List[Tuple[str, str]] = []
+    if k == 0:
+        tail = _previous_chapter_tail(book, idx, out_dir, target_lang)
+        if tail:
+            so_far.append(tail)
+    for prev in sections[max(0, k - previous):k]:
+        text = "\n\n".join(translated.get(s["id"], "") for s in segments[prev.start:prev.end + 1])
+        so_far.append((f"{prev.id} {prev.title}", text))
 
-    user = build_user_prompt(path.name, segments, book.cast_text, personas, episodes,
-                             load_notes(out_dir), prev, book.narration_by_file.get(path.name, ""),
-                             target_lang)
-    return ChapterPrompt(build_system_prompt(target_lang), user, segments, present,
-                         [p[0] for p in prev])
+    multi = len(sections) > 1
+    user = build_user_prompt(
+        book.files[idx].name, segments[sec.start:sec.end + 1], book.cast_text, personas, episodes,
+        load_notes(out_dir), so_far, book.narration_by_file.get(book.files[idx].name, ""), target_lang,
+        plan_text=render_plan(sections, segments, sec.id) if multi else "",
+        section_label=f"{sec.id}/{len(sections)} {sec.title}" if multi else "")
+    return build_system_prompt(target_lang), user, people
 
+
+# --- estimate ---------------------------------------------------------------------------
 
 def estimate_chapter(book: Book, idx: int, out_dir: Path, model: str, target_lang: str = "en",
-                     previous: int = 2) -> FitReport:
-    """API を呼ばずに、その章のプロンプトがモデルに収まるか・概算費用を返す（UI の事前表示用）"""
-    prompt = build_chapter_prompt(book, idx, out_dir, target_lang, previous)
-    source_chars = sum(len(s["text"]) for s in prompt.segments)
-    # 訳文 + 訳語表追記 + 推論分のざっくりした出力見積もり
-    return check_fit(get_model(model), prompt.system + prompt.user, output_tokens=source_chars * 3)
+                     previous: int = 2, max_section_chars: int = 6000) -> FitReport:
+    """
+    API を呼ばずに、その章の全呼び出し（計画 + セクションごと）の合計トークン・概算費用と、
+    各呼び出しがコンテキストに収まるかを返す。長い章は字数で仮分割して見積もる。
+    """
+    spec = get_model(model)
+    segments = segment_chapter(load_source_file(str(book.files[idx])))
+    total = _chars(segments, 0, len(segments) - 1)
+    spans = ([(0, len(segments) - 1)] if total <= max_section_chars
+             else split_by_chars(segments, 0, len(segments) - 1, max_section_chars))
+    sections = [Section(f"S{i}", a, b, "", book.present_in(idx)) for i, (a, b) in enumerate(spans, 1)]
+    reports = []
+    if len(sections) > 1:
+        plan_in = PLAN_SYSTEM + "\n".join(s["text"] for s in segments)
+        reports.append(check_fit(spec, plan_in, output_tokens=4000))
+    # 前のセクションの訳文は、原文と同じ量があるものとして見積もる
+    fake = {s["id"]: s["text"] for s in segments}
+    for k in range(len(sections)):
+        system, user, _ = build_section_prompt(book, idx, segments, sections, k, fake, out_dir,
+                                               target_lang, previous)
+        out = _chars(segments, sections[k].start, sections[k].end) * 3
+        reports.append(check_fit(spec, system + user, output_tokens=out))
+    tin = sum(r.input_tokens for r in reports)
+    tout = sum(r.output_tokens for r in reports)
+    fits = None if any(r.fits is None for r in reports) else all(r.fits for r in reports)
+    cost = None if any(r.cost_usd is None for r in reports) else sum(r.cost_usd for r in reports)
+    msg = (f"{len(reports)} call(s) ({len(sections)} section(s)) · ~{tin:,} in + {tout:,} out"
+           + ("" if fits is None else f" · {'OK' if fits else 'TOO LARGE'}")
+           + ("" if cost is None else f" · est. ${cost:.2f}"))
+    return FitReport(tin, tout, spec.context_window, fits, cost, msg)
 
+
+# --- translate ---------------------------------------------------------------------------
 
 @dataclass
 class ChapterResult:
@@ -455,57 +656,109 @@ class ChapterResult:
     notes_added: int = 0
     notes_error: Optional[str] = None
     llm: Optional[LLMResult] = None
+    sections: List[Dict[str, Any]] = field(default_factory=list)
+
+
+def _apply_notes(text: str, out_dir: Path, chapter: str, stem: str) -> Tuple[int, Optional[str]]:
+    m = re.search(r"<notes>(.*?)</notes>", text, re.S)
+    if not m:
+        return 0, None
+    raw = re.sub(r"^```(?:yaml)?\s*|\s*```$", "", m.group(1).strip())
+    try:
+        new_notes = yaml.safe_load(raw) or {}
+        merged = merge_notes(load_notes(out_dir), new_notes, chapter)
+        (out_dir / NOTES_FILE).write_text(dump_yaml(merged), encoding="utf-8")
+        return sum(len(new_notes.get(k) or []) for k in ("glossary", "voice", "style")), None
+    except (yaml.YAMLError, AttributeError) as e:
+        (out_dir / f"{stem}.notes_BROKEN.yaml").write_text(raw, encoding="utf-8")
+        return 0, str(e)
 
 
 def translate_chapter(book: Book, idx: int, *, llm: LLM, out_dir: Path,
                       target_lang: str = "en", model: str = DEFAULT_MODEL,
                       effort: Optional[str] = DEFAULT_EFFORT, previous: int = 2,
-                      max_output_tokens: int = 65536,
+                      max_section_chars: int = 6000, plan_effort: Optional[str] = "medium",
+                      max_output_tokens: int = 65536, force: bool = False,
+                      cancel_check=None,
                       progress: Optional[Progress] = None) -> ChapterResult:
-    """1章を翻訳し、訳文・段落対応・訳語表（out_dir 内）を更新する"""
+    """
+    1章を翻訳する。長い章は LLM が場面単位のセクションに分け、セクションごとに1回推論する。
+    途中経過は {章}.{lang}.work.json に保存し、中断しても完了済みのセクションから再開する。
+    """
     report = resolve_progress(progress)
     out_dir.mkdir(parents=True, exist_ok=True)
     path = book.files[idx]
     stem = path.stem
-    prompt = build_chapter_prompt(book, idx, out_dir, target_lang, previous)
-    report(f"🌐 [{idx}] {path.name} → {target_lang}  segments={len(prompt.segments)} "
-           f"characters={prompt.present} previous={prompt.previous}")
+    segments = segment_chapter(load_source_file(str(path)))
+    work_path = _work_path(book, idx, out_dir, target_lang)
 
-    result = llm.complete(prompt.system, prompt.user, model=model, effort=effort,
-                          max_output_tokens=max_output_tokens)
-    body = re.search(r"<translation>(.*?)</translation>", result.text, re.S)
-    translated = parse_segments(body.group(1) if body else result.text)
-    issues = check_alignment(prompt.segments, translated)
+    # 計画（再開時は保存済みの計画を使う）
+    work: Dict[str, Any] = {}
+    if work_path.exists() and not force:
+        work = json.loads(work_path.read_text(encoding="utf-8"))
+        sections = [Section(**s) for s in work["sections"]]
+        report(f"↻  resuming {path.name}: {len(work.get('done', []))}/{len(sections)} section(s) done")
+    else:
+        sections, _ = plan_chapter(book, idx, segments, llm=llm, model=model,
+                                   max_section_chars=max_section_chars, effort=plan_effort,
+                                   progress=report)
+        work = {"sections": [s.to_dict() for s in sections], "translated": {}, "done": []}
+        work_path.write_text(json.dumps(work, ensure_ascii=False, indent=1), encoding="utf-8")
 
-    # 訳語表の更新
-    notes_added, notes_error = 0, None
-    notes_match = re.search(r"<notes>(.*?)</notes>", result.text, re.S)
-    if notes_match:
-        raw = re.sub(r"^```(?:yaml)?\s*|\s*```$", "", notes_match.group(1).strip())
-        try:
-            new_notes = yaml.safe_load(raw) or {}
-            merged = merge_notes(load_notes(out_dir), new_notes, path.name)
-            (out_dir / NOTES_FILE).write_text(dump_yaml(merged), encoding="utf-8")
-            notes_added = sum(len(new_notes.get(k) or []) for k in ("glossary", "voice", "style"))
-        except yaml.YAMLError as e:
-            notes_error = str(e)
-            (out_dir / f"{stem}.notes_BROKEN.yaml").write_text(raw, encoding="utf-8")
+    translated: Dict[str, str] = dict(work.get("translated") or {})
+    done = set(work.get("done") or [])
+    notes_added, notes_error, last = 0, None, None
+    report(f"🌐 [{idx}] {path.name} → {target_lang}  segments={len(segments)} sections={len(sections)}")
 
+    for k, sec in enumerate(sections):
+        if sec.id in done:
+            continue
+        if cancel_check:
+            cancel_check()
+        sec_segments = segments[sec.start:sec.end + 1]
+        system, user, people = build_section_prompt(book, idx, segments, sections, k, translated,
+                                                    out_dir, target_lang, previous)
+        report(f"🧩 {sec.id}/{len(sections)} {sec_segments[0]['id']}–{sec_segments[-1]['id']} "
+               f"({_chars(segments, sec.start, sec.end):,} chars) {sec.title} · {', '.join(people) or '—'}")
+        for attempt in range(2):
+            last = llm.complete(system, user, model=model, effort=effort,
+                                max_output_tokens=max_output_tokens)
+            body = re.search(r"<translation>(.*?)</translation>", last.text, re.S)
+            got = parse_segments(body.group(1) if body else last.text)
+            missing = [s["id"] for s in sec_segments if not got.get(s["id"], "").strip()]
+            if not missing or attempt == 1:
+                break
+            report(f"   ↻ {len(missing)} segment(s) missing — retrying {sec.id}")
+        for s in sec_segments:
+            if got.get(s["id"], "").strip():
+                translated[s["id"]] = got[s["id"]]
+        added, err = _apply_notes(last.text, out_dir, path.name, stem)
+        notes_added += added
+        notes_error = notes_error or err
+        if not missing:
+            done.add(sec.id)
+        work.update(translated=translated, done=sorted(done, key=lambda x: int(x[1:])))
+        work_path.write_text(json.dumps(work, ensure_ascii=False, indent=1), encoding="utf-8")
+
+    issues = check_alignment(segments, translated)
     aligned = [{"id": s["id"], "source": s["text"], "target": translated.get(s["id"], "")}
-               for s in prompt.segments]
+               for s in segments]
     (out_dir / f"{stem}.{target_lang}.segments.json").write_text(
         json.dumps(aligned, ensure_ascii=False, indent=1), encoding="utf-8")
 
     complete = not any(i.startswith("missing") for i in issues)
+    incomplete_path = out_dir / f"{stem}.{target_lang}_INCOMPLETE.md"
     if complete:
         out_path = chapter_output_path(book, idx, out_dir, target_lang)
         out_path.write_text("\n\n".join(a["target"] for a in aligned) + "\n", encoding="utf-8")
+        work_path.unlink(missing_ok=True)
+        incomplete_path.unlink(missing_ok=True)
     else:
-        out_path = out_dir / f"{stem}.{target_lang}_INCOMPLETE.md"
+        out_path = incomplete_path
         out_path.write_text("\n\n".join(a["target"] or f"[[{a['id']} MISSING]]" for a in aligned),
                             encoding="utf-8")
-    return ChapterResult(path.name, len(prompt.segments), translated, issues, complete, out_path,
-                         notes_added, notes_error, result)
+    return ChapterResult(path.name, len(segments), translated, issues, complete, out_path,
+                         notes_added, notes_error, last, [s.to_dict() for s in sections])
 
 
 # =============================================================================
@@ -530,7 +783,7 @@ def parse_chapter_selection(spec: str, total: int) -> List[int]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Chapter Translator v1.1 — translate chapter by chapter with cast/persona/episode context",
+        description="Chapter Translator v1.2 — section-by-section translation with cast/persona/episode context",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument("--source", "-s", required=True, help="Source folder (one file per chapter)")
@@ -543,7 +796,11 @@ def main() -> int:
     parser.add_argument("--chapters", default="",
                         help="Chapter indices in file order, e.g. '0-2,5' (default: all)")
     parser.add_argument("--previous", type=int, default=2,
-                        help="How many preceding translated chapters to include (default: 2)")
+                        help="Preceding translated sections passed as context (default: 2)")
+    parser.add_argument("--max-section-chars", type=int, default=6000,
+                        help="Chapters longer than this are planned into sections (default: 6000)")
+    parser.add_argument("--plan-effort", default="medium", choices=EFFORTS,
+                        help="Reasoning effort for the section plan (default: medium)")
     parser.add_argument("--out-dir", "-o", default="")
     parser.add_argument("--force", action="store_true", help="Re-translate chapters already done")
     parser.add_argument("--model", "-m", default=DEFAULT_MODEL)
@@ -551,7 +808,7 @@ def main() -> int:
                         choices=EFFORTS)
     parser.add_argument("--max-output-tokens", type=int, default=65536)
     parser.add_argument("--dry-run", action="store_true",
-                        help="Build prompts and show size / fit / cost without calling the API")
+                        help="Show calls / size / fit / cost without calling the API")
     args = parser.parse_args()
 
     book = open_book(args.source, args.cast, args.persona_dir, args.episode_dir,
@@ -570,20 +827,23 @@ def main() -> int:
             print(f"⏭  {book.files[idx].name}: already translated ({out_md})")
             continue
         if args.dry_run:
-            fit = estimate_chapter(book, idx, out_dir, args.model, args.target_lang, args.previous)
+            fit = estimate_chapter(book, idx, out_dir, args.model, args.target_lang, args.previous,
+                                   args.max_section_chars)
             print(f"   [{idx}] {book.files[idx].name}: {fit.message}")
             continue
 
         print(f"\n{'=' * 60}")
         r = translate_chapter(book, idx, llm=llm, out_dir=out_dir, target_lang=args.target_lang,
                               model=args.model, effort=args.effort, previous=args.previous,
-                              max_output_tokens=args.max_output_tokens, progress=print_progress)
+                              max_section_chars=args.max_section_chars, plan_effort=args.plan_effort,
+                              max_output_tokens=args.max_output_tokens, force=args.force,
+                              progress=print_progress)
         if r.issues:
             print("⚠️  Checks:")
             for i in r.issues:
                 print(f"   - {i}")
         else:
-            print(f"✅ Checks: {r.segments}/{r.segments} segments aligned")
+            print(f"✅ Checks: {r.segments}/{r.segments} segments aligned ({len(r.sections)} section(s))")
         if r.notes_error:
             print(f"⚠️  Notes YAML parse error (not merged): {r.notes_error}")
         else:
@@ -591,7 +851,7 @@ def main() -> int:
         if r.complete:
             print(f"📁 Saved: {r.output_path}")
         else:
-            print(f"❌ Incomplete — saved as {r.output_path} (re-run to retry)")
+            print(f"❌ Incomplete — saved as {r.output_path} (re-run to resume)")
             exit_code = 1
     return exit_code
 
