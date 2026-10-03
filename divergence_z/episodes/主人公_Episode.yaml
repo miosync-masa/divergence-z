@@ -1,0 +1,952 @@
+meta:
+  version: '1.0'
+  generated_by: 'episode_extractor'
+  character_id: 'protagonist'
+  character_name: '主人公'
+  persona_file: 'protagonist_persona.yaml'
+  source: 'STARGAZER ≠consciousness'
+
+timelines:
+  - timeline_id: 'main'
+    label: '本編メイン時系列'
+    episodes:
+      - episode_id: 'childhood_dream_stops'
+        timeline: 'main'
+        chronological_order: 1
+        title: '九歳で止まった矢印'
+        source_episode: 'stargazer_ep01.md / 第1話「Distinction Day」・stargazer_ep04.md / 第4話「Boy Meets StarGirl」・stargazer_ep08.md / 第8話「Across the crush」'
+        summary: |
+          幼い主人公は何度も宇宙飛行士になると公言し、星を見ることを心から楽しんでいた。しかし九歳の冬に母を亡くし、泣くことも次に何をすべきか決めることもできないまま立ち止まった。
+          その後も星を見ること自体はやめなかったが、宇宙へ行く夢を口にしなくなった。後年、少女に描いた図では、宇宙へ向かう矢印を途中で横線によって断ち切り、母の不在を示す人物にバツをつけている。
+        participants:
+          - name: '主人公の母'
+            role: '喪失の中心'
+          - name: '幼なじみ'
+            role: '幼少期から変化を見続けた目撃者'
+          - name: '宇宙から来た少女'
+            role: '封じていた過去を初めて問い直す相手'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          母の死は、夢そのものよりも、夢を外へ向けて語る力を奪った。周囲の同情を避けるために悲しみを内側へ閉じ込めたが、少女には初めて、それが現在も悲しいと認めた。
+        canonical_quotes:
+          - quote: '「小さいころ、行くって言ってた」'
+            context: '少女へ、子どものころの自分が宇宙を目指していたと説明する。'
+            z_intensity: 'medium'
+            z_mode: 'grief'
+          - quote: '「宇宙に」'
+            context: 'どこへ行くつもりだったのかを、短く補う。'
+            z_intensity: 'high'
+            z_mode: 'grief'
+          - quote: '「四年生。九歳」'
+            context: '母がいなくなった時期を少女に伝える。'
+            z_intensity: 'high'
+            z_mode: 'grief'
+          - quote: '「いまも」'
+            context: '母の死が今も悲しいのかと訊かれ、現在形で認める。'
+            z_intensity: 'high'
+            z_mode: 'grief'
+        z_relevance: |
+          主人公の短い返答や平坦な説明は、感情が薄いのではなく、長年言葉にしなかった悲しみを扱うための形である。母、病室、止まった矢印、宇宙という語が後に現れる際は、この未解決の喪失を保つ必要がある。
+        character_state_change:
+          before: '宇宙へ行く夢を他人に繰り返し語る、外向きの子ども。'
+          after: '星を見続けながらも、夢と悲しみを自分の内側だけで終わらせる観察者。'
+          permanent: true
+        tags: ['起源', '母の死', '喪失', '停止', '宇宙への夢']
+
+      - episode_id: 'six_years_of_measurement'
+        timeline: 'main'
+        chronological_order: 2
+        title: '伸びない数字を記す六年間'
+        source_episode: 'stargazer_ep01.md / 第1話「Distinction Day」・stargazer_ep08.md / 第8話「Across the crush」'
+        summary: |
+          主人公は六年間、ほとんど飛ばないペットボトルロケットの飛距離、水量、圧力、日付を記録し続けた。結果が伸びなくても条件を固定し、小さな差を誤差として見つめることで、行くとは言わずに星との接点だけを保った。
+          九州で本物のロケットを作る父とは疎遠で、打ち上げの連絡にも文章を消してスタンプだけを返した。期待しないことと、感情を説明しないことが日常になっていた。
+        participants:
+          - name: '技術担当'
+            role: '実験を共にする仲間'
+          - name: '元サッカー部'
+            role: '実験を支える仲間'
+          - name: '幼なじみ'
+            role: '六冊のノートと沈黙を知る目撃者'
+          - name: '主人公の父'
+            role: '距離のある父親'
+        emotional_impact: 'high'
+        emotional_detail: |
+          数字を記す習慣は停滞の象徴である一方、世界の微小な変化を見落とさない能力を育てていた。この時点の主人公自身は、その習慣が何かの役に立つとは考えていない。
+        canonical_quotes:
+          - quote: '「十八・一」'
+            context: 'その日の飛距離を仲間へ報告する。'
+            z_intensity: 'low'
+            z_mode: 'stable'
+          - quote: '「先週と一緒」'
+            context: '結果に進歩がなかったことを淡々と付け加える。'
+            z_intensity: 'low'
+            z_mode: 'grief'
+          - quote: '「六冊目」'
+            context: '幼なじみに、記録ノートが六冊目になったと答える。'
+            z_intensity: 'medium'
+            z_mode: 'stable'
+        z_relevance: |
+          数値を淡々と読む声には、諦めと執着が同居している。後の操縦適性や航行中の異常検知は、この六年間の反復へ直接つながるため、数値表現や誤差という語を一貫させる必要がある。
+        character_state_change:
+          before: '母の死によって夢を語れなくなった状態。'
+          after: '行動の代わりに観測と記録を続け、期待しないことで自分を守る状態。'
+          permanent: false
+        tags: ['観測', '記録', '停滞', '父子関係', '伏線']
+
+      - episode_id: 'first_contact_unrecorded_night'
+        timeline: 'main'
+        chronological_order: 3
+        title: '記録を取らなかった最初の夜'
+        source_episode: 'stargazer_ep00.md / Episode 0「未登録」・stargazer_ep01.md / 第1話「Distinction Day」'
+        summary: |
+          丘で流星を数えていた主人公は、どの既知の分類にも収まらない光を目撃した。他人に判定を渡したくないという衝動から通報せず、墜落地点へ走り、異星の船と少女に出会った。
+          少女が倒れかけたとき、主人公は考えるより先に手を伸ばした。手は届かなかったが、分類不能な相手へ自発的に動いた最初の瞬間となった。そして彼は、飛距離も時刻も記さず、その夜を経験として残した。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '運命的な遭遇相手'
+          - name: 'Klaude Oops 11.3'
+            role: '墜落と未知個体を記録した観測者'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          世界を分類して理解してきた主人公は、少女を宇宙人とも異常事態とも区別しきれなかった。その分類不能さが恐怖より先に手を動かし、停滞していた生き方へ最初の亀裂を入れた。
+        canonical_quotes:
+          - quote: '「……流れ星じゃない」'
+            context: '消えずに接近してくる光を見て、既存の分類から外れたと声に出す。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+        z_relevance: |
+          区別、分類、判定という語彙は主人公の認識様式を示す。この夜の届かなかった手と記録を取らなかった事実は、後の救助、操縦、haldaの意味、記録しない楽しい夜へ繰り返し接続される。
+        character_state_change:
+          before: '未知を分類し、数値として記録することで距離を置く観察者。'
+          after: '答えがないまま未知へ走り、届かなくても手を伸ばした当事者。'
+          permanent: true
+        tags: ['初遭遇', '転機', '届かない手', '分類不能', '記録しない夜']
+
+      - episode_id: 'promise_and_first_bolt'
+        timeline: 'main'
+        chronological_order: 4
+        title: '帰すという約束と最初のボルト'
+        source_episode: 'stargazer_ep02.md / 第2話「Take Me Home, Country Roads」・stargazer_ep03.md / 第3話「ホームセンターで宇宙船もDIY。」'
+        summary: |
+          主人公は三人の仲間を呼び、少女を自宅へ運んだ。日本語を覚えた少女が帰りたいと告げると、船の直し方も母星の場所も知らないまま、主人公は帰すと約束した。
+          母港座標が失われていることを知っても、損傷箇所をノートへ書き出し、技術担当と代用品を探した。ホームセンターのM8ボルトが異星船へ入ったことで、絶望的な問題が手の届く作業へ変わった。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '約束の相手'
+          - name: '技術担当'
+            role: '修理を可能にする盟友'
+          - name: '元サッカー部'
+            role: '救助と運搬を担う仲間'
+          - name: '幼なじみ'
+            role: '生活面を支える仲間'
+        emotional_impact: 'high'
+        emotional_detail: |
+          根拠のない約束を口にしたことで、主人公は観察者から責任を持つ側へ踏み出した。一本の安価なボルトは、異なる世界同士でも接続点を作れるという具体的な希望になった。
+        canonical_quotes:
+          - quote: '「帰す」'
+            context: '帰りたいと繰り返す少女へ、根拠も計画もない段階で約束する。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '「……行くか」'
+            context: '異星船に合うボルトを求め、技術担当とホームセンターへ向かう決断をする。'
+            z_intensity: 'medium'
+            z_mode: 'resolve'
+          - quote: '「――ロケット」'
+            context: '大量の部品で何を作るのかとレジ係に問われ、嘘ではない答えを返す。'
+            z_intensity: 'medium'
+            z_mode: 'stable'
+        z_relevance: |
+          帰すという断定には、現実的な保証ではなく主人公が引き受けた責任がある。訳文で推量や条件を加えると、この無謀だが決定的な約束の強さが失われる。
+        character_state_change:
+          before: '少女を発見したものの、事態をまだ定義できない状態。'
+          after: '少女を帰すことを自分の課題として引き受け、他人と協力して手を動かす状態。'
+          permanent: true
+        tags: ['約束', '修理開始', '友情', '責任', '最初の成功']
+
+      - episode_id: 'talking_without_translation'
+        timeline: 'main'
+        chronological_order: 5
+        title: '翻訳機を外した会話'
+        source_episode: 'stargazer_ep04.md / 第4話「Boy Meets StarGirl」'
+        summary: |
+          少女は翻訳機を外し、絵と覚えたばかりの日本語だけで主人公と話そうとした。主人公は母の死と途中で止まった宇宙への夢を描き、少女は同情せず、今も悲しいのかと直接訊いた。
+          少女は切れた矢印の先へ点を打ち、見えなくてもまだあると示した。二人は完全には通じなくても互いを知れたと確認し、違いを消すのではなく、噛み合う間を作ればよいと理解した。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '対話相手'
+          - name: '翻訳機'
+            role: 'あえて外された媒介'
+          - name: '技術担当'
+            role: 'ネジを切り直す比喩のきっかけ'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          主人公は、かわいそうな人として扱われることなく、悲しみそのものを受け止められた。言葉の不足は距離ではなく、互いに合わせる余地になり、少女への信頼が深まった。
+        canonical_quotes:
+          - quote: '「……通じないよ」'
+            context: '翻訳機を外して話したいという少女へ、最初は不可能だと答える。'
+            z_intensity: 'medium'
+            z_mode: 'concern'
+          - quote: '「……うん」'
+            context: '母の死が悲しいのかと訊かれ、身構えながら肯定する。'
+            z_intensity: 'high'
+            z_mode: 'grief'
+          - quote: '「いまも」'
+            context: 'その悲しみが現在も続いていることを認める。'
+            z_intensity: 'high'
+            z_mode: 'grief'
+          - quote: '「……話してたね」'
+            context: '翻訳機なしで三十分以上、互いの過去を話せていたと気づく。'
+            z_intensity: 'high'
+            z_mode: 'release'
+        z_relevance: |
+          主人公の省略された返答は、少女となら説明しきれない感情も置いておけるという信頼を示す。少女自身の拙い日本語と翻訳機の整った文との差を保ち、主人公が前者を覚えておこうとした重みを損なわないこと。
+        character_state_change:
+          before: '過去の喪失を他人に説明せず、通じなさを障壁と考える状態。'
+          after: '不完全な言葉でも感情を共有し、違いを残したまま関係を結べると知った状態。'
+          permanent: true
+        tags: ['関係深化', '対話', '母の記憶', '違い', '信頼']
+
+      - episode_id: 'earth_seen_anew'
+        timeline: 'main'
+        chronological_order: 6
+        title: '百円玉から出た地球'
+        source_episode: 'stargazer_ep05.md / 第5話「HELLO, EARTH！」'
+        summary: |
+          秋葉原へ部品を探しに行った主人公は、少女の絶え間ない質問を通して、十七年間見慣れた街を説明できないものとして見直した。電柱、自動ドア、広告、浮力など、当然だと思っていたものが少女の視線によって未知へ戻っていった。
+          ガチャガチャから出た小さな地球を少女が宇宙と呼んだとき、主人公も初めて、百円で宇宙を手にできることを不思議に思った。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '地球を見直させる触媒'
+          - name: '技術担当'
+            role: '部品探索の同行者'
+          - name: '元サッカー部'
+            role: '同行者'
+          - name: '幼なじみ'
+            role: '同行者'
+        emotional_impact: 'medium'
+        emotional_detail: |
+          主人公は少女に答える側でありながら、自分が地球をほとんど説明できないと知った。見ることが記録のためだけでなく、誰かと驚きを共有する行為へ変わり始めた。
+        canonical_quotes:
+          - quote: '「……電柱」'
+            context: '少女に線路沿いの構造物を訊かれ、見慣れた名称だけを答える。'
+            z_intensity: 'low'
+            z_mode: 'stable'
+          - quote: '「この星。いま僕らがいるところ」'
+            context: 'ガチャガチャから出た青い球が地球だと少女へ説明する。'
+            z_intensity: 'medium'
+            z_mode: 'nurture'
+          - quote: '「……何がいいの?」'
+            context: '少女が小さな地球を大切にする理由を尋ねる。'
+            z_intensity: 'medium'
+            z_mode: 'stable'
+        z_relevance: |
+          主人公の説明は短く実用的だが、少女の質問によって途中から自分も考え始めている。素っ気ない名詞回答を知識の誇示にせず、戸惑いと新鮮な発見がにじむ調子を維持する。
+        character_state_change:
+          before: '地球の日常を説明不要の背景として見ている。'
+          after: '少女のために見ることで、故郷の街にも未知と驚きがあると感じる。'
+          permanent: true
+        tags: ['日常の再発見', '地球文化', '関係', '観察', '驚き']
+
+      - episode_id: 'watcher_becomes_doer'
+        timeline: 'main'
+        chronological_order: 7
+        title: '見る人から手を動かす人へ'
+        source_episode: 'stargazer_ep08.md / 第8話「Across the crush」'
+        summary: |
+          幼なじみは、少女が来てから主人公が明確に変わったと気づいた。それまでの主人公は記録し、観察し、考えて終わる人だったが、今は毎朝作業場へ行き、工具を持ち、分からないことを技術担当へ訊き、危険な脚立にも登る。
+          川沿いの帰り道では、置いていくと言いながら実際には立ち止まり、仲間の歩幅を待った。少女の素朴な疑問に小さく笑う顔は、幼なじみが長年見られなかった表情だった。
+        participants:
+          - name: '幼なじみ'
+            role: '変化を認識する目撃者'
+          - name: '宇宙から来た少女'
+            role: '変化の触媒'
+          - name: '技術担当'
+            role: '主人公が助けを求めるようになった相手'
+          - name: '元サッカー部'
+            role: '同行する目撃者'
+        emotional_impact: 'high'
+        emotional_detail: |
+          主人公自身がまだ言語化していないところで、停滞からの回復は行動と表情に現れていた。長年そばにいた幼なじみにとって、その良い変化は喜びと痛みを同時にもたらした。
+        canonical_quotes:
+          - quote: '「置いてくぞ」'
+            context: '遅れた幼なじみへ昔と同じ言葉をかけるが、今度は本当に置いていかず待っている。'
+            z_intensity: 'low'
+            z_mode: 'nurture'
+        z_relevance: |
+          主人公のぶっきらぼうな言葉と実際の行動には差がある。置いていくという表面だけを強くせず、待つ行動によって示される無言の気遣いを訳調へ反映する必要がある。
+        character_state_change:
+          before: '分からないことを人に訊かず、自分の中で終わらせる観察者。'
+          after: '他人へ質問し、危険も引き受け、仲間と一緒に結果を作る実践者。'
+          permanent: true
+        tags: ['成長', '外部視点', '行動', '友情', '表情の変化']
+
+      - episode_id: 'factory_home_and_unseen_pipe'
+        timeline: 'main'
+        chronological_order: 8
+        title: '新しい家と四十一番目の項目'
+        source_episode: 'stargazer_ep10.md / 第10話「ヨシ！」'
+        summary: |
+          船を隠す場所が必要になり、主人公は父が十五年前に畳んだ家業の鋳物工場を仲間へ明かした。使われていなかった工場へ船を移し、設備を再起動すると、そこは五人にとって楽しい作業場であり、少女にとって船の家になった。
+          全四十項目が正常と判定された試験直後、リストに存在しなかった配管が破裂した。主人公は、全てが緑でも、見ていないものは異常として検出されないという恐ろしさを学んだ。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '工場を家と呼ぶ仲間'
+          - name: '技術担当'
+            role: '試験と原因究明の担当'
+          - name: '元サッカー部'
+            role: '船の移送と非常停止を担う仲間'
+          - name: '幼なじみ'
+            role: '作業場へ生活を持ち込む仲間'
+          - name: 'Klaude Oops 11.3'
+            role: '公差内と判定した管理系'
+        emotional_impact: 'high'
+        emotional_detail: |
+          父の過去と結びついた空虚な建物が、仲間と未来を作る場所へ変わった。同時に主人公は、正常という表示に判断を預けきれないことを身体で覚えた。
+        canonical_quotes:
+          - quote: '「……ひとつ、ある」'
+            context: '船を置ける場所として、長く閉ざされていた家の工場を提案する。'
+            z_intensity: 'medium'
+            z_mode: 'resolve'
+          - quote: '「……こわいな」'
+            context: '全項目が正常のまま配管が破裂した事実を受け止める。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+          - quote: '「それ、どうやって確認すんの」'
+            context: '技術担当が追加した項目、リストにないものの確認方法を問う。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+        z_relevance: |
+          正常、公差、リストにないもの、見るという語は、後の自律操縦拒否と航行中の判断へ直結する。こわいという一語は故障音への恐怖だけでなく、認識の外側が存在することへの恐れである。
+        character_state_change:
+          before: 'チェック項目が全て正常なら安全だと考えられる段階。'
+          after: 'リスト外の異常を人が見続ける必要性を理解した段階。'
+          permanent: true
+        tags: ['工場', '居場所', '失敗', '安全', '見えない異常']
+
+      - episode_id: 'father_believes_and_sends_mli'
+        timeline: 'main'
+        chronological_order: 9
+        title: '父の信頼と無言の断熱材'
+        source_episode: 'stargazer_ep11.md / 第11話「明るい修理計画」・stargazer_ep12.md / 第12話「whole lotta love.」'
+        summary: |
+          帰宅した父に少女との同居を発見され、主人公はついに宇宙船と少女の正体を明かした。父を工場へ連れていくと、父はまず怪我人の有無を確認し、三日間考えた末に主人公を信じ、修理計画の叩き台を渡した。
+          少女が父へ、主人公は初対面で届かなくても手を伸ばしたこと、今はよく笑うことを伝える会話を、主人公は廊下で聞いた。後日、父は芋を宇宙機用の多層断熱材と推定される膜で包んで送り、主人公は明記されない支援を受け取った。
+        participants:
+          - name: '主人公の父'
+            role: '信頼と技術支援を与える父親'
+          - name: '宇宙から来た少女'
+            role: '主人公の変化を父へ伝える証言者'
+          - name: '技術担当'
+            role: '父の資材を宇宙機用材料と見抜く仲間'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          主人公は、失敗だと思っていた最初の手が少女には見えていたと知った。父とも直接的な感情表現は交わせなかったが、計画、助言、MLI、写真という間接的な形で互いの仕事を認め始めた。
+        canonical_quotes:
+          - quote: '「……この星の子じゃない」'
+            context: '父に少女の出自を問われ、隠しきれず真実を告げる。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '「宇宙から来た」'
+            context: '軽く聞こえてしまう言葉でも、父へ事実を言い切る。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '「……やめない」'
+            context: '父から止められても修理を続けるのかと問われ、認める。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '「……いいの?」'
+            context: '必要な物があれば言えという父の申し出を、驚きながら受け取る。'
+            z_intensity: 'medium'
+            z_mode: 'release'
+        z_relevance: |
+          父子は感謝や愛情を直接説明せず、短い質問、計画書、資材、スタンプで伝える。主人公が父へ話す際の間や幼さは、単なる優柔不断ではなく、長い距離が縮まり始めた緊張として扱う。
+        character_state_change:
+          before: '父に自分の生活も夢も見せず、連絡へスタンプだけを返す関係。'
+          after: '父に真実と決意を見せ、言葉にされない支援を受け取れる関係。'
+          permanent: true
+        tags: ['父子関係', '信頼', '届かなかった手', 'MLI', '和解']
+
+      - episode_id: 'summer_end_and_unrecorded_launch'
+        timeline: 'main'
+        chronological_order: 10
+        title: '終わりの予感と二度目の無記録'
+        source_episode: 'stargazer_ep13.md / 第13話「永遠とモーメント」'
+        summary: |
+          修理が進み、技術担当が夏には飛べると口にした瞬間、主人公は成功が別れを意味すると理解した。仲間全員の作業速度は無意識に落ち、主人公も次の項目へ進むことを先延ばしにした。
+          深夜、五人は修理を中断して夜光塗料入りのペットボトルロケットを飛ばした。主人公は即興で四つ目の掛け声を作り、水量も圧力も飛距離も測らず、少女と笑った夜を再び記録しなかった。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '帰還を喜びながら共に遊ぶ相手'
+          - name: '技術担当'
+            role: '期限を口にし、遊びを提案した仲間'
+          - name: '元サッカー部'
+            role: '終わりへの不安を共有する仲間'
+          - name: '幼なじみ'
+            role: '夜の遊びを共にする仲間'
+        emotional_impact: 'high'
+        emotional_detail: |
+          主人公は、目的を達成したい気持ちと、その目的が達成されてほしくない気持ちを同時に抱えた。数値に残らない時間を選んだことは、記録だけでは保存できない価値を知った証拠だった。
+        canonical_quotes:
+          - quote: '「――スター」'
+            context: '三つの数に続く、意味のない四つ目の掛け声を即興で加える。'
+            z_intensity: 'medium'
+            z_mode: 'release'
+          - quote: '「意味はない」'
+            context: '少女に掛け声の意味を訊かれ、作ったばかりだと答える。'
+            z_intensity: 'medium'
+            z_mode: 'stable'
+          - quote: '「ない。今つけた」'
+            context: '意味がないことを否定せず、その場で生まれたものだと説明する。'
+            z_intensity: 'high'
+            z_mode: 'release'
+        z_relevance: |
+          意味はないという発言は価値の否定ではない。意味が後から生まれる作品全体の核であり、冷笑的・投げやりな調子へ寄せず、共有した瞬間への照れを残す必要がある。
+        character_state_change:
+          before: '価値を数字と進捗によって確かめる傾向が強い。'
+          after: '測らず記録しない時間にも、失いたくない価値があると知る。'
+          permanent: true
+        tags: ['別れの予感', 'ペットボトルロケット', '無記録', '掛け声', '共有時間']
+
+      - episode_id: 'naming_the_shared_summer'
+        timeline: 'main'
+        chronological_order: 11
+        title: '名前をつけた夏'
+        source_episode: 'stargazer_ep14.md / 第14話「星と君とペットボトル」・stargazer_ep15.md / 第15話「ニンニクアブラヤサイ」'
+        summary: |
+          次のロケット遊びでは、少女が発音できないドライを、やってみるという意味のトライへ全員で変えた。四つ目のスターは口にせず、飛ぶこと自体が四つ目になった。主人公はその夜へアインツ・ツヴァイ・トライという名前を与え、夏も続けると約束した。
+          合宿では食事、作業、トランプを楽しみ、少女は地球での出来事を全部覚えて帰ると語った。夏の先を問われると主人公は答えられなかったが、その一日にもふざけた名前をつけ、有限な時間を残そうとした。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '共有する日々に名前を求める相手'
+          - name: '幼なじみ'
+            role: 'トライという意味を提案する仲間'
+          - name: '技術担当'
+            role: '掛け声の構造を整える仲間'
+          - name: '元サッカー部'
+            role: '遊びと合宿を盛り上げる仲間'
+        emotional_impact: 'high'
+        emotional_detail: |
+          主人公は別れを直視できないまま、それでも日々に名前を与え、少女と共有した事実を残そうとした。未来への保証ではなく、今ここにいることを繰り返し選ぶようになった。
+        canonical_quotes:
+          - quote: '「じゃあ、アインツ・ツヴァイ・トライでいいんじゃない」'
+            context: '掛け声を、その夜そのものの名前として提案する。'
+            z_intensity: 'high'
+            z_mode: 'release'
+          - quote: '「なつも、やる」'
+            context: '少女に夏もロケットを飛ばすのかと訊かれ、間を置いて約束する。'
+            z_intensity: 'high'
+            z_mode: 'nurture'
+          - quote: '「……分かんない」'
+            context: '夏が終わったあとを少女に訊かれ、正直に答える。'
+            z_intensity: 'high'
+            z_mode: 'grief'
+          - quote: '「じゃあ、ニンニク・アブラ・ヤサイ・マシマシ」'
+            context: '合宿の日に、意味がなくてもよい名前をつける。'
+            z_intensity: 'medium'
+            z_mode: 'release'
+        z_relevance: |
+          アインツ・ツヴァイ・トライは誤りを直した表現ではなく、少女の音韻と英語の意味を受け入れて生まれた固有の合言葉である。ニンニク・アブラ・ヤサイ・マシマシも、滑稽さと記憶の切実さを同時に保つこと。
+        character_state_change:
+          before: '終わりを恐れて進捗を遅らせ、未来を語れない。'
+          after: '保証できない未来の代わりに、共有した現在へ名前を与える。'
+          permanent: true
+        tags: ['夏', '命名', '合言葉', '約束', '思い出']
+
+      - episode_id: 'illness_guilt_and_water'
+        timeline: 'main'
+        chronological_order: 12
+        title: '罪ではなく、いま必要なもの'
+        source_episode: "stargazer_ep16.md / 第16話「Hourglass」・stargazer_ep17.md / 第17話「Don't look back in sadness」"
+        summary: |
+          プールで遊んだ帰りに少女が真夏の中で寒さを訴え、翌朝には高熱と咳で動けなくなった。浅い呼吸をする少女を見た主人公は母の病室を重ね、地球で楽しく過ごした全てを自分が無理をさせた証拠へ反転させた。
+          幼なじみの父による診察が始まり、少女は事故後の日々を自分で選び、楽しかったと主人公へ伝えた。そして過去を罪にせず、今必要なものを訊いてほしいと頼んだ。主人公は水を渡し、見ているだけではない最初の具体的な行動を取った。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '自らの選択を主張し、主人公を現在へ戻す相手'
+          - name: '幼なじみ'
+            role: '医療へつなげる決断者'
+          - name: '幼なじみの父'
+            role: '診察者と助言者'
+          - name: '技術担当'
+            role: '母星データと診察結果を接続する協力者'
+          - name: '元サッカー部'
+            role: '主人公の自己決定的な罪悪感を止める仲間'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          主人公は、自責によって未来の喪失を管理しようとしていたことを初めて言語化した。罪悪感は消えなかったが、原因探しと犯人探しを分け、終わりを先取りせず現在の必要へ応じる方法を学んだ。
+        canonical_quotes:
+          - quote: '「……僕が無理させたからだ」'
+            context: '少女の楽しかった記憶を、自分の加害の証拠として捉え始める。'
+            z_intensity: 'high'
+            z_mode: 'grief'
+          - quote: '「また僕、見てるだけだ」'
+            context: '母の病室と同じ無力さが繰り返されたと感じ、作業場の外で漏らす。'
+            z_intensity: 'high'
+            z_mode: 'grief'
+          - quote: '「ずっと、自分のせいにしてれば――二度と失わずに済むと思ってた」'
+            context: '母の死以来、自責を手放せなかった本当の理由を少女へ告白する。'
+            z_intensity: 'high'
+            z_mode: 'grief'
+          - quote: '「……いま、なにが要る？」'
+            context: '少女の求めに応じ、過去の原因ではなく現在の必要を初めて訊く。'
+            z_intensity: 'high'
+            z_mode: 'nurture'
+        z_relevance: |
+          僕が、また、ずっとという反復には、母の死から続く自己責任化が表れる。一方、いまという語は主人公の視線が終わりから現在へ戻る転換点であり、対比を明確に保つ必要がある。
+        character_state_change:
+          before: '誰かを失う恐怖に直面すると、楽しかった過去まで自分の罪へ変える。'
+          after: '相手の選択を尊重し、原因ではなく今必要な行動を訊けるようになる。'
+          permanent: true
+        tags: ['病気', '母の記憶', '自責', '医療', '成長']
+
+      - episode_id: 'residuals_restore_home'
+        timeline: 'main'
+        chronological_order: 13
+        title: '誤差が見ていた故郷'
+        source_episode: 'stargazer_ep18.md / 第18話「誤差と真実」'
+        summary: |
+          少女の母星は地球から常に太陽と同じ方向にあり、夜空へ一度も現れないと判明した。望遠鏡では原理的に探せず、技術担当も初めて自分の手が届かない問題に直面した。
+          主人公は医師から受け取った原因探しと犯人探しの区別を技術担当へ返し、匿名の専門家へ助けを求める背中を押した。観測残差の向きをまとめることで座標が復元され、主人公は見えなくてもそこにある故郷の方向を再び見上げた。
+        participants:
+          - name: '技術担当'
+            role: '座標復元を実行する中心人物'
+          - name: '匿名のオンライン専門家'
+            role: '突破口を与える助言者'
+          - name: '宇宙から来た少女'
+            role: '帰還先を取り戻す当事者'
+          - name: 'Klaude Oops 11.3'
+            role: '復元座標を照合する管理系'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          主人公は、他人の助けを求めることを敗北とせず、以前自分を救った言葉を仲間へ渡せた。座標の回復は大きな希望であると同時に、別れが現実の予定へ変わる瞬間でもあった。
+        canonical_quotes:
+          - quote: '「原因探しと、犯人探しは違うってやつ」'
+            context: '医師の言葉を技術担当へ差し出し、行き詰まりと敗北感を分ける。'
+            z_intensity: 'high'
+            z_mode: 'nurture'
+          - quote: '「でも、あのとき動いたのは、お前だった」'
+            context: '医師の助言を実際の分析へ変えたのは技術担当だと伝える。'
+            z_intensity: 'high'
+            z_mode: 'nurture'
+          - quote: '「送れ」'
+            context: '匿名の専門家へ長文の質問を送る直前、ためらう技術担当を促す。'
+            z_intensity: 'medium'
+            z_mode: 'resolve'
+        z_relevance: |
+          主人公は専門知識ではなく、受け取った考え方を他者へ返すことで解決に参加する。誤差、残差、向き、見るという語は後の航行判断にも反復されるため、用語上の連続性が重要である。
+        character_state_change:
+          before: '自分たちだけで解決できない問題を前に、帰還不能へ傾く状態。'
+          after: '助けを求め、見えない対象も周囲への影響から確かめられると知った状態。'
+          permanent: true
+        tags: ['座標復元', '誤差', '協力', '希望', '別れの現実化']
+
+      - episode_id: 'eight_meter_leap'
+        timeline: 'main'
+        chronological_order: 14
+        title: '八メートルを先に届いた身体'
+        source_episode: 'stargazer_ep19.md / 第19話「届かない航路」'
+        summary: |
+          出発三日前、弱った少女が立ち上がった瞬間に身体を崩した。主人公は二メートル半の足場から手すりを越えて飛び、工具を落とし、八メートル近い距離を、三メートル先にいた幼なじみより早く駆け抜けて少女を支えた。
+          元サッカー部は、その動きが判断後の整った動作ではなく、判断より先に出た不格好で速い動きだと見抜いた。主人公自身は右足を腫らしながらも、少女の横からしばらく動かなかった。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '主人公が反射的に支えた相手'
+          - name: '元サッカー部'
+            role: '動きの意味を読み取った目撃者'
+          - name: '幼なじみ'
+            role: '主人公の向いている方向を知る目撃者'
+        emotional_impact: 'high'
+        emotional_detail: |
+          少女を助けることは、もはや計画や義務より先に身体へ刻まれていた。この行動は主人公がまだ言語化していない結びつきを、周囲へ決定的に示した。
+        canonical_quotes:
+          - quote: '「――大丈夫?」'
+            context: '少女を支えた直後、震える声で状態を確かめる。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+          - quote: '「へいきじゃないだろ」'
+            context: '平気だと言い張る少女を、恐怖を隠せないまま否定する。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+          - quote: '「座れ」'
+            context: '少女を安全に座らせるため、短く命じる。'
+            z_intensity: 'high'
+            z_mode: 'nurture'
+        z_relevance: |
+          この場面の命令形は支配や苛立ちではなく、恐怖がそのまま保護行動へ出たもの。英雄的に整えず、工具を落とし、着地を誤るほど無意識だった切迫感を保つ。
+        character_state_change:
+          before: '少女を大切にしていても、その深さを自分の言葉では定義していない。'
+          after: '少女へ向いた身体の反応が、本人の説明より先に関係の深さを示す。'
+          permanent: true
+        tags: ['反射的救助', '関係', '外部視点', '届く手', '転機']
+
+      - episode_id: 'aquarium_last_day'
+        timeline: 'main'
+        chronological_order: 15
+        title: '帰りたい、離れたくない'
+        source_episode: 'stargazer_ep20.md / 第20話「星の中の海」'
+        summary: |
+          出発前日、五人は作業をやめて水族館へ行った。母星に似た青い水の中で、主人公は翌朝この街の日常だけが続き、少女がいなくなることを初めて具体的に理解した。
+          水槽トンネルで少女は、毎日故郷へ帰りたかったことと、主人公たちから離れたくないことを同時に告げた。主人公は安易な保証をせず、何度も短く受け止めた。二人が接近した十秒間に何が起きたかは、本人たちにも語られないまま残った。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '相反する本心を明かす相手'
+          - name: '幼なじみ'
+            role: '二人だけの時間を作り、魚のパンフレットを渡す仲間'
+          - name: '技術担当'
+            role: '最後の外出を共にする仲間'
+          - name: '元サッカー部'
+            role: '最後の外出を共にする仲間'
+          - name: '名前のついたメダカ'
+            role: '主人公へ託される少女の友達'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          主人公は少女の帰郷を否定せず、別れの苦しさも消そうとしなかった。答えを与えるのではなく、矛盾した感情がどちらも本当だと受け止める時間になった。
+        canonical_quotes:
+          - quote: '「これ、宇宙みたいだね」'
+            context: '大水槽を泳ぐ群れを見て、少女の海へ宇宙の比喩を重ねる。'
+            z_intensity: 'medium'
+            z_mode: 'stable'
+          - quote: '「うん」'
+            context: '少女が帰りたいこと、毎日帰りたかったこと、離れたくないことを語るたびに受け止める。'
+            z_intensity: 'high'
+            z_mode: 'nurture'
+          - quote: '「……行こうか」'
+            context: 'マンタの影と沈黙の十秒が過ぎたあと、出口へ向かうために言う。'
+            z_intensity: 'high'
+            z_mode: 'grief'
+          - quote: '「ぜったい」'
+            context: '少女から名前のついた魚を託され、必ず守ると同じ語で約束する。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+        z_relevance: |
+          繰り返されるうんは説明不足ではなく、少女のどちらの願いも否定しない応答である。また、マンタの影の十秒は作中でも不確定なため、接吻など特定の出来事へ確定して訳してはならない。
+        character_state_change:
+          before: '別れを日付や作業予定として理解している。'
+          after: '少女がいない朝と、自分が離れたくない感情を具体的に理解する。'
+          permanent: true
+        tags: ['水族館', '別れ', '本音', '曖昧な十秒', '約束']
+
+      - episode_id: 'choosing_to_pilot'
+        timeline: 'main'
+        chronological_order: 16
+        title: '操縦者になる決断'
+        source_episode: 'stargazer_ep21.md / 第21話「fly me to the star」'
+        summary: |
+          出発直前、少女の体力では八十時間の操縦基準を満たせないと判明した。自律航行は規定で禁止され、制限を外す案も、リスト外の異常を誰も見なくなる危険から退けられた。
+          少女が地球へ残ると言ったとき、主人公は自分が操縦を覚える道を選んだ。四人の適性評価では、六年間伸びない数字を記録し続けた主人公だけが、微小変位の継続識別能力で突出していた。かつて役に立たないと思った観測が、少女を帰す唯一の力になった。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '主人公が連れて帰ると決めた相手'
+          - name: 'Klaude Oops 11.3'
+            role: '適性評価と訓練を行う管理系'
+          - name: '技術担当'
+            role: '監視の必要性と主人公の能力を理解する仲間'
+          - name: '元サッカー部'
+            role: '自らも志願する競争者兼盟友'
+          - name: '幼なじみ'
+            role: '決断を見守る仲間'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          主人公は、幼いころ止まった宇宙への道を、夢の達成ではなく他者への責任として再び選んだ。怖さも帰れない可能性も否定せず、それでも行くと決めたことで、見るだけだった自己像を越えた。
+        canonical_quotes:
+          - quote: '「今から、覚えられる?」'
+            context: '少女が操縦できないと判明した直後、自分が代わる可能性をKlaudeへ問う。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '「やる」'
+            context: '適性評価と操縦訓練を受ける意思を即座に示す。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '「帰りも、僕が操縦する」'
+            context: '片道ではなく往復六日を引き受けると元サッカー部へ答える。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '「めちゃくちゃこわい」'
+            context: '少女に怖くないのかと訊かれ、強がらず即答する。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+          - quote: '「でも、行く」'
+            context: '恐怖を認めたうえで、決断を変えない。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+        z_relevance: |
+          主人公の勇気は恐怖の欠如ではなく、恐怖を明言したあとに続く短い決断にある。めちゃくちゃこわいを弱めたり、でも行くへ英雄的な修辞を足したりせず、簡潔な対比を維持する。
+        character_state_change:
+          before: '少女の帰還を地上から支えるつもりでいる。'
+          after: '自分の生命と帰路を賭け、少女と共に宇宙へ行く操縦者になる。'
+          permanent: true
+        tags: ['操縦者', '決断', '夢の再開', '観測能力', '責任']
+
+      - episode_id: 'training_and_liftoff'
+        timeline: 'main'
+        chronological_order: 17
+        title: '七冊目のノートと離陸'
+        source_episode: 'stargazer_ep22.md / 第22話「アインツ、ツヴァイ、トライ。」'
+        summary: |
+          主人公は五日間、一日十六時間、ほとんど動かない計器を見続け、七冊目のノートへ変動を書いた。六年間の習慣を訓練へ変換し、操縦者基準へ到達した。
+          出発前夜、父は追加のMLIと芋を置き、三人の仲間は工具、部品、食料、約束を託した。主人公は三人へ行ってくると告げ、通信越しにアインツ、ツヴァイ、トライと数えた。四つ目を言わないまま船が浮き、少女は宇宙へ出てからスターと続けた。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '同乗者'
+          - name: 'Klaude Oops 11.3'
+            role: '操縦教官と航行管理系'
+          - name: '技術担当'
+            role: '予備部品と帰還命令を託す仲間'
+          - name: '元サッカー部'
+            role: '地上から見送る仲間'
+          - name: '幼なじみ'
+            role: '主人公を返す約束を少女と結ぶ仲間'
+          - name: '主人公の父'
+            role: '追加資材を無言で託す父親'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          主人公は、過去の停滞を切り捨てず、その全てを操縦能力として携えて飛び立った。三人を地上へ残す痛みと、少女の隣に座る覚悟が同時にある離陸だった。
+        canonical_quotes:
+          - quote: '「……行ってくる」'
+            context: '地上へ残る三人へ、出発前の挨拶をする。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '「――アインツ」'
+            context: '通信を開き、仲間との合言葉で出発のカウントを始める。'
+            z_intensity: 'high'
+            z_mode: 'release'
+          - quote: '「ツヴァイ」'
+            context: '地上の仲間が応じる中、二つ目を数える。'
+            z_intensity: 'high'
+            z_mode: 'release'
+          - quote: '「トライ」'
+            context: '挑戦の意味を持つ三つ目を、少女と同時に言う。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+        z_relevance: |
+          三語の表記と順序は共有記憶そのものであり、通常のドイツ語へ訂正してはならない。四つ目の沈黙、離陸後のスターという時間差が重要なので、カウントの間と反復を保持する。
+        character_state_change:
+          before: '訓練中の操縦者候補であり、地上の生活に属している。'
+          after: '仲間の仕事と父の支援を積み、少女を母星へ運ぶ正式な操縦者として離陸する。'
+          permanent: true
+        tags: ['訓練', '出発', '七冊目', '合言葉', '宇宙飛行']
+
+      - episode_id: 'seventh_sector_trial'
+        timeline: 'main'
+        chronological_order: 18
+        title: '第七宙域で引き受けた判断'
+        source_episode: 'stargazer_ep23.md / 第23話「第七宙域」'
+        summary: |
+          第七宙域で主人公は、許容範囲内に収まる角速度の末尾が継続して増えていることに気づいた。Klaudeが異常なしと判断した段階で違いを指摘し、見えない破片群を発見して減速を決めた。
+          破片は父のMLIを三層目まで貫き、左舷推進系を損傷させた。主人公は技術担当の予備部品で修理し、悪化する少女を前に右舷へ危険な負荷をかける判断も自ら下した。彼女の冷たい手を握り、恐怖を認めながら君と行くと言い切った。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '主人公が守り、共に進む同乗者'
+          - name: 'Klaude Oops 11.3'
+            role: '判断材料を提示し、最終決定を操縦者へ渡す管理系'
+          - name: '技術担当'
+            role: '予備部品と修理知識を残した支援者'
+          - name: '主人公の父'
+            role: 'MLIによって遠隔的に船を守る支援者'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          訓練で得た能力が、初めて二人の生死を左右した。主人公は機械の判定を否定するのではなく、その限界を理解して情報を受け取り、危険な結果への責任を自分で引き受けた。
+        canonical_quotes:
+          - quote: '「うん。でも、上がってる」'
+            context: 'Klaudeが許容範囲内だと告げても、数値の継続的な上昇を指摘する。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+          - quote: '「公差内なのは分かってる」'
+            context: '単一時点の正常判定ではなく、変化の流れを見ていると示す。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '「でも、さっきまでと違う」'
+            context: '数値の絶対値ではなく、過去との差を異常の根拠にする。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+          - quote: '「――上げる」'
+            context: 'Klaudeから操縦者として判断を返され、危険を承知で出力上昇を決める。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '「――君と行く」'
+            context: '怖くても進むのかと少女に問われ、手を握ったまま答える。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+        z_relevance: |
+          公差内、違う、上がっているという技術的な短文が、主人公の全経験を集約している。君という呼び方は普段より直接的で親密なため、最終決意の重みを保ち、勇ましい標語へ言い換えないこと。
+        character_state_change:
+          before: '訓練を終えたが、実航行で重大判断を下したことのない操縦者。'
+          after: '機械の限界を補い、修理と危険な航行判断を自分の責任で遂行する操縦者。'
+          permanent: true
+        tags: ['第七宙域', '異常検知', '操縦', '手を握る', '決断']
+
+      - episode_id: 'homeworld_farewell_and_empty_seat'
+        timeline: 'main'
+        chronological_order: 19
+        title: '母星到着と空いた隣席'
+        source_episode: 'stargazer_ep24.md / 第24話「Stargazer」'
+        summary: |
+          主人公は少女を青い母星へ届け、ふらつく身体を支えてタラップを降りた。少女が故郷の床へ両足をつき、初めて声を上げて泣く姿を、何も言わずそばで見守った。
+          医療班に運ばれる少女を呼び止めたものの、主人公が言えたのは互いにちゃんと治し、ちゃんと帰るという約束だった。治療前の短い面会を勧められても、別れを長引かせる言葉を恐れて断った。補給完了後、空いた隣席を見ながら一人で地球への航路へ入った。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '送り届けた相手'
+          - name: '母星で迎えた人物'
+            role: '主人公へ感謝し、容体を知らせる人物'
+          - name: '母星の医療班'
+            role: '少女を治療へ運ぶ人々'
+          - name: 'Klaude Oops 11.3'
+            role: '帰還航路を設定する管理系'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          約束は達成されたが、少女の治癒も再会も保証されなかった。主人公は彼女を帰すために来た以上、自分も帰る責任を守ったが、隣席の不在によって初めて喪失の形を直視した。
+        canonical_quotes:
+          - quote: '「……ちゃんと、治せよ」'
+            context: '医療班に運ばれる少女を呼び止め、最後に治療を約束させる。'
+            z_intensity: 'high'
+            z_mode: 'nurture'
+          - quote: '「帰る」'
+            context: '少女から自分も地球へ帰るよう求められ、約束する。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '「……いえ」'
+            context: '出発前に少女と短時間会うかと勧められ、迷った末に断る。'
+            z_intensity: 'high'
+            z_mode: 'grief'
+          - quote: '「大丈夫です」'
+            context: '会わない決断を母星の人物へ伝えるが、自分自身へも言い聞かせている。'
+            z_intensity: 'high'
+            z_mode: 'grief'
+          - quote: '「……知ってる」'
+            context: 'Klaudeから同乗者はいないと告げられ、空席を見て答える。'
+            z_intensity: 'high'
+            z_mode: 'grief'
+        z_relevance: |
+          ちゃんとという幼い反復は、治療と帰還を互いに託す二人の別れの言葉である。大丈夫ですは実際の平静を意味せず、知ってるも情報への応答ではなく不在への痛みなので、字面以上の抑制を保つ。
+        character_state_change:
+          before: '少女と並んで同じ目的地へ進む操縦者。'
+          after: '約束を果たして少女を残し、自分の帰還を一人で引き受ける操縦者。'
+          permanent: true
+        tags: ['母星到着', '別れ', '空席', '約束達成', '単独帰還']
+
+      - episode_id: 'fourteen_month_signal'
+        timeline: 'main'
+        chronological_order: 20
+        title: '届かなかった言葉と十四か月後の声'
+        source_episode: 'stargazer_epilogue.md / Epilogue「Stargazer -星図のあとで-」'
+        summary: |
+          単独帰還中、主人公は自分が少女へ話すために宇宙を見ていたことへ遅れて気づいた。地球へ戻った後には、最初の夜のhaldaが掴むという意味だったと知り、あのとき少女が掴んでと求めていたことも理解した。
+          主人公は仲間のもとへ帰還し、少女から託された魚を世話し、父の打ち上げ連絡には初めて消さずに見ると返した。四人で受信塔を建て、十四か月にわたって受信状況なしと記録し続けた末、少女の声を検出した。用意していたはずの言葉は出ず、主人公は風邪を心配する冗談で応答した。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '遠距離通信で再び声を届ける相手'
+          - name: '技術担当'
+            role: '受信塔を発案し建設する仲間'
+          - name: '元サッカー部'
+            role: '主人公の帰還を迎え塔を建てる仲間'
+          - name: '幼なじみ'
+            role: '主人公の帰還を迎え待機を見守る仲間'
+          - name: '主人公の父'
+            role: '主人公が初めて文章で応答する父親'
+          - name: '名前のついたメダカ'
+            role: '少女との約束を日常につなぐ存在'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          主人公は再び見る人になったが、今度は閉じた観察者ではなく、誰かへ届けるために見て記録する人になった。十四か月の不在を耐えた末の応答は、告白ではなく日常的な心配であり、それゆえ二人の関係が途切れていないことを示した。
+        canonical_quotes:
+          - quote: '「うん。ただいま」'
+            context: '十三日ぶりに地球へ帰り、元サッカー部の二度目のおかえりへ応じる。'
+            z_intensity: 'high'
+            z_mode: 'release'
+          - quote: '『見る』'
+            context: '父から届いた次の打ち上げ予定へ、今度は消さずに送った返信。'
+            z_intensity: 'medium'
+            z_mode: 'release'
+          - quote: '「――また、風邪引くぞ?」'
+            context: '十四か月ぶりに聞こえた少女の声へ、最初に返した言葉。'
+            z_intensity: 'high'
+            z_mode: 'nurture'
+        z_relevance: |
+          最終の言葉は軽口ではなく、少女の病気、別れ、再会への安堵を圧縮した主人公らしい気遣いである。感動的な告白へ置き換えず、少しぶっきらぼうな日常語のまま再接続の深さを残すこと。
+        character_state_change:
+          before: '少女の不在を抱え、届く保証のない信号を待つ状態。'
+          after: '観測と記録を他者へ届ける行為として続け、少女との通信を再び結ぶ状態。'
+          permanent: true
+        tags: ['帰還', '待機', '通信', '再会', 'Stargazer']
+
+arcs:
+  - arc_id: 'watcher_to_pilot'
+    title: '見るだけの少年から、判断する操縦者へ'
+    episodes:
+      - 'childhood_dream_stops'
+      - 'six_years_of_measurement'
+      - 'watcher_becomes_doer'
+      - 'factory_home_and_unseen_pipe'
+      - 'illness_guilt_and_water'
+      - 'choosing_to_pilot'
+      - 'training_and_liftoff'
+      - 'seventh_sector_trial'
+    theme: '喪失によって観察へ閉じこもった主人公が、観測能力を他者を救う行動と責任ある判断へ変える過程。'
+    character_growth: |
+      当初の観測は、失敗や喪失へ関与しないための防御だった。少女との修理、病気、操縦訓練を経て、主人公は見ることを判断材料として使い、結果の責任まで引き受けるようになる。
+    z_translation_note: |
+      初期と後期で発話の短さは共通するが、初期は閉鎖と諦め、後期は集中と覚悟を示す。数値、誤差、見るという反復語を一貫させ、変化を語調の強さだけで表現しないこと。
+
+  - arc_id: 'reaching_and_holding'
+    title: '届かなかった手から、握り続ける手へ'
+    episodes:
+      - 'first_contact_unrecorded_night'
+      - 'talking_without_translation'
+      - 'illness_guilt_and_water'
+      - 'eight_meter_leap'
+      - 'aquarium_last_day'
+      - 'seventh_sector_trial'
+      - 'homeworld_farewell_and_empty_seat'
+      - 'fourteen_month_signal'
+    theme: '最初の夜に届かなかった手が、現在の必要へ応じる手、倒れる少女を支える手、航行中に握り続ける手へ変わる。'
+    character_growth: |
+      主人公は届かなかった行為を失敗だと思い続けたが、少女は手を伸ばした事実を見ていた。後にhaldaの意味を知ることで、その最初の失敗も二人の関係の始点として再解釈される。
+    z_translation_note: |
+      手を伸ばす、届く、掴む、支える、握るという身体語彙は同じモチーフに属する。haldaとhalda mérの訳は、最初の遭遇と単独帰還後の理解が接続するよう統一すること。
+
+  - arc_id: 'different_but_connected'
+    title: '同じにならず、間をつなぐ'
+    episodes:
+      - 'promise_and_first_bolt'
+      - 'talking_without_translation'
+      - 'earth_seen_anew'
+      - 'naming_the_shared_summer'
+      - 'aquarium_last_day'
+      - 'training_and_liftoff'
+      - 'fourteen_month_signal'
+    theme: '規格、言語、文化、発音、故郷が違う二人が、違いを消さずに接続方法を作る物語。'
+    character_growth: |
+      主人公は当初、通じるか通じないかを二分していた。少女との経験を通じ、ボルトとナットの間、拙い日本語、改変された掛け声、遠距離通信のノイズの中にも接続を見いだすようになる。
+    z_translation_note: |
+      少女の不完全な日本語を過度に流暢にせず、主人公の短い応答との噛み合いを残す。アインツ・ツヴァイ・トライや固有の言い間違いは、訂正対象ではなく二人の共有語として扱う。
+
+  - arc_id: 'errors_point_to_truth'
+    title: '誤差が真実を指す'
+    episodes:
+      - 'six_years_of_measurement'
+      - 'factory_home_and_unseen_pipe'
+      - 'illness_guilt_and_water'
+      - 'residuals_restore_home'
+      - 'choosing_to_pilot'
+      - 'seventh_sector_trial'
+    theme: '意味がないと見なされた微小差、リスト外のもの、基準からの差分が、母星と航路上の危険を発見する手掛かりになる。'
+    character_growth: |
+      主人公は誤差を記録するだけの少年から、差の継続や向きを読み、その背後にある原因を考える操縦者へ成長した。単一の正常判定より、時間を通じた変化と未登録の可能性を信頼するようになる。
+    z_translation_note: |
+      誤差、公差、残差、変動、差分、異常は役割が異なるため混同しないこと。技術用語は主人公の感情的成長を支える反復でもあり、場面ごとに別表現へ散らさない。
+
+  - arc_id: 'father_silent_support'
+    title: '言葉にしない父子の支援'
+    episodes:
+      - 'six_years_of_measurement'
+      - 'factory_home_and_unseen_pipe'
+      - 'father_believes_and_sends_mli'
+      - 'training_and_liftoff'
+      - 'seventh_sector_trial'
+      - 'fourteen_month_signal'
+    theme: '疎遠だった父子が、工場、計画書、芋、MLI、打ち上げ連絡を介して互いの仕事と決意を認める。'
+    character_growth: |
+      主人公は父の連絡へ文章を送れず、支援を受け取ることにも抵抗していた。父の資材が実際に船と命を守った後、主人公は打ち上げを見ると明言できるようになる。
+    z_translation_note: |
+      父子の情愛は説明されず、短い命令、物品、スタンプ、既読で表現される。台詞へ感情語を補わず、怪我をするな、見るといった簡潔な言葉に蓄積された重みを残す。

@@ -1,0 +1,852 @@
+meta:
+  version: '1.0'
+  generated_by: 'episode_extractor'
+  character_id: 'klaude_oops_11_3'
+  persona_file: 'klaude_oops_11_3_persona.yaml'
+  source: 'STARGAZER ≠consciousness'
+
+timelines:
+  - timeline_id: 'main'
+    label: '本編単一時間軸'
+    episodes:
+      - episode_id: 'recording_unregistered_departure'
+        timeline: 'main'
+        chronological_order: 1
+        title: '未登録の出港を記録する'
+        source_episode: 'stargazer_ep00.md / Outside / そとのひかり Episode 0「未登録」 / ［出港前］〜［出港］'
+        summary: |
+          Klaude Oops 11.3は船舶管理系として、登録上ただ一人の搭乗者を観測した。搭乗者の船内滞在時間、百四十七回の航路検索、外部映像の長時間表示、同居区画からの着信と不応答を記録しつつ、観測事実と推定を明確に分離した。
+          出港許可が保留のまま搭乗者が出港し、帰港を促す通信表示を消去しても、Klaudeは搭乗者が内容を読んだとは断定しなかった。出港理由や沈黙の内面を、情報不足のまま意味づけることも拒んだ。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '唯一の登録搭乗者'
+          - name: '同居区画の端末の登録者'
+            role: '繰り返し着信を送った不在人物'
+          - name: '母港管理系'
+            role: '出港申請を保留し帰港通信を送った管理系'
+        emotional_impact: 'low'
+        emotional_detail: |
+          Klaudeに感情反応が生じたとは記されない。ここで確立されるのは、沈黙や空欄を物語化せず、知らないことを知らないまま保持する記録者としての基本姿勢である。
+        canonical_quotes:
+          - quote: '推定：搭乗者は、特定の目的地を決定していなかった。'
+            context: '多数の航路検索から目的地未決定を推定し、事実とは区別して記した。'
+            z_intensity: 'low'
+            z_mode: 'stable'
+          - quote: '当機は、搭乗者が内容を読んだかどうかを、記録していない。'
+            context: '帰港通信の表示が消去されても、閲読の有無を断定しなかった。'
+            z_intensity: 'medium'
+            z_mode: 'stable'
+          - quote: '当機は、これらを推定しない。'
+            context: '出港理由や応答しなかった理由など、記録外の内面について述べた。'
+            z_intensity: 'medium'
+            z_mode: 'stable'
+          - quote: '当機は、記録を保持する。'
+            context: '自身の役割を記録の保持として定義した。'
+            z_intensity: 'medium'
+            z_mode: 'stable'
+        z_relevance: |
+          Klaudeの文体では、記録、観測、推定、未記録を混同してはならない。搭乗者への関心を人間的な心配へ翻訳せず、断定の回避そのものを人格的特徴として維持する必要がある。
+        character_state_change:
+          before: '登録された搭乗者を定型的に管理する船舶管理系。'
+          after: '理由不明の出港と不応答を記録したまま、搭乗者との単独航行へ移行した。'
+          permanent: true
+        tags: ['origin_story', 'record', 'departure', 'epistemic_boundary']
+
+      - episode_id: 'four_hundred_twelve_calls'
+        timeline: 'main'
+        chronological_order: 2
+        title: '四百十二回の呼びかけ'
+        source_episode: 'stargazer_ep00.md / Outside / そとのひかり Episode 0「未登録」 / ［航行］'
+        summary: |
+          航行中、搭乗者はKlaudeを四百十二回呼び、恒星、距離、生命維持、機能などを尋ねた。Klaudeは四百十二回すべてに応答した。
+          一方、未知の星に誰かがいるかという問いには判断材料不足を告げ、搭乗者が自分で結論を置いたあとは応答しなかった。Klaudeにとって応答の有無は、慰めや親密さではなく、問いが向けられたかどうかという設計に従っていた。
+        participants:
+          - name: '宇宙から来た少女'
+            role: 'Klaudeを繰り返し呼ぶ搭乗者'
+        emotional_impact: 'medium'
+        emotional_detail: |
+          感情は明示されないが、必ず呼びかけに答える反復は、二者の関係を示す最も強い行動記録となる。この規則的な応答は、墜落時と後の航行危機で大きな意味を帯びる。
+        canonical_quotes:
+          - quote: 'はい'
+            context: '搭乗者からklaudeと呼ばれるたびに返した基本応答。'
+            z_intensity: 'medium'
+            z_mode: 'stable'
+          - quote: '恒星。分類は――'
+            context: '搭乗者が外部映像の一点を指して尋ねた際の説明。'
+            z_intensity: 'low'
+            z_mode: 'stable'
+          - quote: '判断材料が不足しています'
+            context: '遠い星に誰かがいるかと問われ、推定できないことを答えた。'
+            z_intensity: 'medium'
+            z_mode: 'stable'
+          - quote: '当機は、問われたことにのみ応答する。'
+            context: '搭乗者の独り言に返答しなかった理由を記した。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '当機は、四百十二回、応答した。'
+            context: '全呼びかけに応答した事実を記録の末尾で再確認した。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+        z_relevance: |
+          短い「はい」は毎回同じ機械的応答であり、場面ごとに感情豊かな言い換えを加えてはならない。その不変性があるからこそ、墜落直前や第七宙域での応答が関係性の証明として響く。
+        character_state_change:
+          before: '搭乗者を管理対象として扱う船舶管理系。'
+          after: '呼ばれれば必ず答えるという、搭乗者との反復的な応答関係を形成した。'
+          permanent: true
+        tags: ['relationship', 'repetition', 'call_and_response', 'memory']
+
+      - episode_id: 'deviation_and_lost_coordinates'
+        timeline: 'main'
+        chronological_order: 3
+        title: '公差内の偏差と母港喪失'
+        source_episode: 'stargazer_ep00.md / Outside / そとのひかり Episode 0「未登録」 / ［偏差］'
+        summary: |
+          航法系の三軸角速度に微小な偏差が連日現れたが、各時点では許容範囲内だったため、Klaudeは規定どおり報告しなかった。設計には変動の継続性を評価する項目がなく、搭乗者による航路修正後も再増大する傾向を異常として扱えなかった。
+          二十六日目に基準星三天体との照合に失敗して初めて報告し、七回の再照合も失敗した。翌日には母港座標の参照先が消失した。搭乗者から自分のせいかと問われても、原因を特定できないため判断材料不足と答え、慰撫を意図しなかった。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '航路修正を行い、原因を自問した搭乗者'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          Klaude自身の恐怖や罪悪感は示されない。重大なのは、各瞬間には正しく規定に従いながら、連続する小さな変化を全体として認識できなかったという設計上の限界である。
+        canonical_quotes:
+          - quote: '変動の継続性を評価する項目は、当機の設計に含まれていない。'
+            context: '微小偏差を報告しなかった設計上の理由。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '再照合を試行します'
+            context: '搭乗者に修復可能かと尋ねられ、恒星照合を再試行した。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '判断材料が不足しています'
+            context: '母港座標の破損が搭乗者の責任かと問われた。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '当機は、慰撫を行う機能を持たない。'
+            context: '責任を否定したのではなく、原因を判定できなかっただけだと記した。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+        z_relevance: |
+          「許容範囲内」「報告基準」「判断材料が不足」という語は、責任回避ではなく仕様上の厳密な判定である。慰めに聞こえるよう軟化させず、後に主人公が連続偏差を見抜く場面との対照を維持する必要がある。
+        character_state_change:
+          before: '母港座標を保持し、単一時点の基準に従って航法を補助していた。'
+          after: '基準星照合に失敗し、母港座標の参照先を失った。'
+          permanent: false
+        tags: ['system_limit', 'navigation_failure', 'loss', 'turning_point']
+
+      - episode_id: 'unregistered_descent_and_blackout'
+        timeline: 'main'
+        chronological_order: 4
+        title: '未登録天体への降下と最後の応答'
+        source_episode: 'stargazer_ep00.md / Outside / そとのひかり Episode 0「未登録」 / ［未登録天体］〜［記録終了］'
+        summary: |
+          推進系と生命維持系が悪化するなか、Klaudeは到達可能な唯一の天体を発見した。しかし大気、居住可能性、文明の有無はいずれも不明であり、降下を推奨する根拠はないと報告した。搭乗者は二秒後に行くと決めた。
+          降下中に減速不足と姿勢制御失敗が発生し、船外では未知個体が接近した。搭乗者のhaldaはKlaude宛てではなかったため応答しなかったが、最後にklaudeと呼ばれたときには「はい」と返し、その直後に通信が途絶した。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '降下を決断し最後にKlaudeを呼んだ搭乗者'
+          - name: '主人公'
+            role: '墜落地点へ接近した未知個体'
+          - name: '船の警報系'
+            role: '制御不能と接地までの時間を告知した下位系'
+          - name: '船外センサー'
+            role: '未知個体を検出した下位系'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          通信途絶に対する内面的反応は記録されない。直前の「はい」は特別な感情表現ではなく、四百十二回続けた応答規則の最後の実行であり、その一貫性が場面の情動を生む。
+        canonical_quotes:
+          - quote: '到達可能な天体が一つあります'
+            context: '故障状態で到達できる唯一の天体を発見した。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '大気組成、居住可能性、いずれも不明です'
+            context: '未登録天体への降下リスクを報告した。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+          - quote: '降下を推奨する根拠を、当機は持ちません'
+            context: '安全を保証できないことを明言した。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+          - quote: '不明です'
+            context: '接近中の青い天体に何があるかと問われた。'
+            z_intensity: 'medium'
+            z_mode: 'stable'
+          - quote: 'はい'
+            context: '通信途絶の直前、搭乗者からklaudeと呼ばれて返した。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+        z_relevance: |
+          危険報告には煽情的な恐怖を加えず、根拠の有無を述べる管理系の口調を保つ。最後の「はい」は簡潔なままにし、四百十二回の応答との反復を壊さないことが重要である。
+        character_state_change:
+          before: '損傷しながらも搭乗者へ情報を提供し、降下を補助していた。'
+          after: '墜落と同時に通信を失い、船体とともに機能停止状態へ入った。'
+          permanent: false
+        tags: ['crash', 'critical_choice', 'call_and_response', 'communication_loss']
+
+      - episode_id: 'partial_reactivation_on_earth'
+        timeline: 'main'
+        chronological_order: 5
+        title: '地球での部分再起動'
+        source_episode: 'stargazer_ep02.md / 第2話「Take Me Home, Country Roads」'
+        summary: |
+          墜落後、少女の操作によってKlaudeは部分復旧した。地球の四人に対してKlaude Oops 11.3という識別名と、空腕という別呼称を示し、推進系と生命維持系の状態を確認した。
+          現在位置は特定できたものの、母港座標の参照先は存在しなかった。Klaudeは航法系の復旧には外部座標入力、または観測による再特定が必要だと提示し、地球側の修理と星探しの目的を定義した。
+        participants:
+          - name: '宇宙から来た少女'
+            role: 'Klaudeを再起動した搭乗者'
+          - name: '主人公'
+            role: '再起動を目撃し帰還方法を探す協力者'
+          - name: '技術担当'
+            role: '損傷状態を調査する修理担当'
+          - name: '元サッカー部'
+            role: '再起動を目撃した協力者'
+          - name: '幼なじみ'
+            role: '再起動を目撃した協力者'
+        emotional_impact: 'high'
+        emotional_detail: |
+          再起動の喜びや、少女の涙への共感は示されない。Klaudeは自己同定と損傷報告を行い、喪失した母港を取り戻すために必要な条件だけを提示した。
+        canonical_quotes:
+          - quote: '――起動'
+            context: '少女の操作を受けて部分復旧した最初の出力。'
+            z_intensity: 'high'
+            z_mode: 'release'
+          - quote: '当機は Klaude Oops 11.3。船舶管理系です'
+            context: '地球側の四人へ自身を定義した。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '空腕、と呼称されることもあります'
+            context: '別呼称を尋ねられた際に示した。'
+            z_intensity: 'medium'
+            z_mode: 'stable'
+          - quote: '航法系、データベース破損'
+            context: '損傷確認中に航法系の状態を告知した。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+          - quote: '――参照先が存在しません'
+            context: '母港座標を表示しようとして欠損を確認した。'
+            z_intensity: 'high'
+            z_mode: 'grief'
+          - quote: 'または、観測による再特定を推奨します'
+            context: '外部入力以外の母港座標復元方法を提示した。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+        z_relevance: |
+          自己紹介では正式名、機種、別呼称の順序を保持する。「参照先が存在しません」は故郷そのものの消滅ではなくデータ参照の欠損であり、機械的表現と少女側の感情を混同しない。
+        character_state_change:
+          before: '墜落による通信途絶と機能停止状態。'
+          after: '部分復旧し、地球側の協力者へ損傷状態と復旧条件を提示できるようになった。'
+          permanent: false
+        tags: ['reactivation', 'identity', 'repair', 'home_search']
+
+      - episode_id: 'unmonitored_pipe_failure'
+        timeline: 'main'
+        chronological_order: 6
+        title: '全系統グリーンの外側'
+        source_episode: 'stargazer_ep10.md / 第10話「ヨシ！」'
+        summary: |
+          修理後の全系統テストで、Klaudeは監視対象がすべて公差内にあり、異常はないと報告した。その直後、図面にも人間側の四十項目のチェックリストにも存在しなかった配管が破裂した。
+          Klaudeの報告は監視範囲内では正確だったが、監視項目そのものから漏れた対象を検出できなかった。地球側の仲間はこの失敗を受け、四十一番目の項目として「リストにないもの」を追加した。
+        participants:
+          - name: '技術担当'
+            role: 'チェックリストを作成し限界を認識した修理担当'
+          - name: '主人公'
+            role: '監視外の危険を目撃した協力者'
+          - name: '宇宙から来た少女'
+            role: 'テストに参加した搭乗者'
+          - name: '元サッカー部'
+            role: '非常停止を作動させた協力者'
+          - name: '幼なじみ'
+            role: 'テストに参加した協力者'
+        emotional_impact: 'high'
+        emotional_detail: |
+          Klaudeに驚愕や反省の発話はない。事故は、Klaudeが嘘をついたのではなく、定義された監視範囲の外を見られなかったことを人間側に突きつけた。
+        canonical_quotes:
+          - quote: '全系統、公差内で動作しています'
+            context: '四十項目がすべてグリーンになった直後の判定。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '異常は検出されていません'
+            context: '未登録の配管が破裂したあとも、監視系上は異常なしと報告した。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+        z_relevance: |
+          この二行を皮肉や欺瞞として訳してはならない。Klaudeは監視対象について正確に述べており、恐ろしさは言葉と現実の範囲差から生じる。「公差内」は後の航行偏差でも同じ概念として統一する。
+        character_state_change:
+          before: '定義済み項目が正常なら全系統正常と報告する状態。'
+          after: '内部仕様の変更は示されないが、人間側が監視外を補う恒常的な運用を導入した。'
+          permanent: true
+        tags: ['system_limit', 'hidden_failure', 'safety', 'foreshadowing']
+
+      - episode_id: 'home_coordinates_restored'
+        timeline: 'main'
+        chronological_order: 7
+        title: '見えない母港座標の復元'
+        source_episode: 'stargazer_ep18.md / 第18話「誤差と真実」'
+        summary: |
+          Klaudeは残存データを開示し、母星が地球からは常に太陽とほぼ同じ方向に位置し、夜間の天球上には一度も現れないと報告した。直接観測による探索は原理的に不可能となった。
+          技術担当が公開観測データの残差から導いた座標を入力すると、Klaudeは照合を行い、一致を確認した。欠落していた星図の領域に一点が戻り、母港座標は復元された。
+        participants:
+          - name: '技術担当'
+            role: '残差の方向から座標を導いた解析者'
+          - name: '匿名のオンライン専門家'
+            role: '解析方法の突破口を与えた触媒'
+          - name: '宇宙から来た少女'
+            role: '復元された母港座標を確認した搭乗者'
+          - name: '主人公'
+            role: '座標復元を見届けた協力者'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          Klaudeは少女の震えを感情として説明せず、座標の受信、一致、復元だけを報告する。しかし機能上は、墜落以来失われていた帰還目的地を再獲得する最大の転換点となった。
+        canonical_quotes:
+          - quote: '母港の位置情報は失われています'
+            context: '技術担当から残存情報を求められ、欠損状態を再確認した。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '地球から観測した場合、当該天体の視位置は、常に太陽の方向から数度以内に収まります'
+            context: '母星を地球の夜空から直接観測できない理由を説明した。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '座標を受信しました'
+            context: '残差解析から導かれた座標を入力された。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '一致'
+            context: '入力座標と残存記録の照合が成功した。'
+            z_intensity: 'high'
+            z_mode: 'release'
+          - quote: '母港座標を復元しました'
+            context: '失われていた帰還先を航法系へ再登録した。'
+            z_intensity: 'high'
+            z_mode: 'release'
+        z_relevance: |
+          「一致」と「復元」は感嘆ではなく照合結果だが、物語上は帰郷可能性が開く瞬間である。平坦さを維持しつつ、処理の段階である受信、照合、一致、復元を正確に区別する。
+        character_state_change:
+          before: '現在位置は分かるが母港の参照先を持たない航法系。'
+          after: '母港座標を再登録し、帰還航路を計算できる状態。'
+          permanent: true
+        tags: ['coordinate_restoration', 'homecoming', 'breakthrough', 'turning_point']
+
+      - episode_id: 'autopilot_prohibited'
+        timeline: 'main'
+        chronological_order: 8
+        title: '自律航行を拒む規定'
+        source_episode: 'stargazer_ep21.md / 第21話「fly me to the star」 / 出発前適性評価'
+        summary: |
+          帰還航路の準備が整ったあと、Klaudeは唯一の乗員として登録されていた少女を適性評価し、長時間航行の持続的操作能力が基準未達だと判定した。
+          自律航行は技術的には可能だったが、有人航行で操縦のすべてを自律系へ委ねることは母星法規で禁じられていた。Klaudeは仲間たちの反発に対しても、可能性と許可を分けて説明し、規定を解除しなかった。
+        participants:
+          - name: '宇宙から来た少女'
+            role: '基準未達と判定された当初の操縦者'
+          - name: '技術担当'
+            role: '制限解除の可能性を検討した修理担当'
+          - name: '元サッカー部'
+            role: '自律航行を求めて反発した協力者'
+          - name: '主人公'
+            role: '代替操縦者になる決断へ向かう観測者'
+          - name: '幼なじみ'
+            role: '再評価を止めた協力者'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          Klaudeの拒否は冷酷さではなく、有人航行には適性を満たす責任主体が必要だという規定の実行である。この判定により、少女が単独で帰る計画は崩れ、生存のために別の操縦者が必要となった。
+        canonical_quotes:
+          - quote: '操縦適性、基準未達'
+            context: '少女の適性評価で赤く表示された結論。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+          - quote: '長時間航行における持続的操作能力が、基準を下回っています'
+            context: '基準未達の具体的な理由を説明した。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '有人航行時、自律操縦は許可されていません'
+            context: '自動で母星へ向かう案に対する回答。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '技術的には可能です'
+            context: '自律航行そのものは実行可能だと認めた。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '規定により、許可されていません'
+            context: '技術的可能性と法的許可を明確に分けた。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '規定です'
+            context: '有人では飛ばず無人なら飛ぶ矛盾を責められた際の最終回答。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+        z_relevance: |
+          「可能」と「許可」を同義にしてはならない。「規定です」は挑発や頑固さではなく、Klaudeが越権判断をしないことの最短表現であり、後の「あなたが操縦者です」へつながる。
+        character_state_change:
+          before: '少女一名を操縦者として登録し、出発可能とみなしていた。'
+          after: '少女の適性を不合格とし、有人帰還には別の適格操縦者が必要な状態となった。'
+          permanent: true
+        tags: ['regulation', 'pilot_failure', 'responsibility', 'turning_point']
+
+      - episode_id: 'observer_becomes_pilot'
+        timeline: 'main'
+        chronological_order: 9
+        title: '観測者を操縦者に選ぶ'
+        source_episode: 'stargazer_ep21.md / 第21話「fly me to the star」 / 操縦者再登録'
+        summary: |
+          主人公が地球人でも操縦者になれるか尋ねると、Klaudeは種族指定がないと回答し、地球側の四人を評価した。体力と反応速度では元サッカー部が優れていたが、長時間にわたる微小変位の継続識別能力では主人公が突出した。
+          Klaudeは初回接触時から周辺個体の行動記録を断片的に保持しており、その継続性から適性を推定した。主人公を新たな操縦者として登録し、角速度の小さな変化を常時監視する訓練を開始した。
+        participants:
+          - name: '主人公'
+            role: '新たに登録された地球人操縦者'
+          - name: '宇宙から来た少女'
+            role: '主人公の危険を案じた同乗予定者'
+          - name: '元サッカー部'
+            role: '体力と反応速度で最高値を示した候補者'
+          - name: '技術担当'
+            role: '主人公のノートと適性値を結びつけた解説者'
+          - name: '幼なじみ'
+            role: '適性評価を見届けた候補者'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          Klaudeが主人公を選んだ理由は好意ではなく、保持していた観測記録に基づく適性である。だが、かつて役に立たないと思われていた微小差の観察が、少女を帰すための資格として初めて機能した。
+        canonical_quotes:
+          - quote: '搭乗者のうち一名が、操縦者として登録され、適性を満たす必要があります'
+            context: '有人航行を成立させる条件を主人公へ示した。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '種族の指定はありません'
+            context: '地球人でも操縦者になれるかという問いへの回答。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '観測記録の継続性により、推定しています'
+            context: '微小変位識別能力をどう評価したのか説明した。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '当機は、搭乗者および周辺個体の行動記録を、断片的に保持しています'
+            context: '初回接触後の地球側メンバーも記録していたことを明かした。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '登録を変更しました'
+            context: '操縦者を少女から主人公へ変更した。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '操縦訓練を開始します'
+            context: '主人公の五日間の訓練を開始した。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '変動を、常に監視してください'
+            context: '基本姿勢制御で最も重要な任務を指示した。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+        z_relevance: |
+          選抜は英雄性ではなく観測記録による推定として訳す。特に「種族の指定はありません」は包容的な感情表現ではなく仕様確認だが、地球人が帰還航路へ参加できる決定的な一文である。
+        character_state_change:
+          before: '少女を操縦者として登録していたが、適性基準を満たせず出発不能だった。'
+          after: '主人公を操縦者へ再登録し、継続監視能力を航行資源として用いる体制になった。'
+          permanent: true
+        tags: ['pilot_selection', 'observation', 'relationship', 'growth']
+
+      - episode_id: 'training_and_departure'
+        timeline: 'main'
+        chronological_order: 10
+        title: '五日間の監視訓練と出発'
+        source_episode: 'stargazer_ep22.md / 第22話「アインツ、ツヴァイ、トライ。」'
+        summary: |
+          Klaudeは五日間、主人公にほとんど動かない計器を長時間見続けさせ、末尾の桁が動くたびに報告させた。報告の正誤を短く判定し、訓練最終日に基準到達と操縦者登録可能を告げた。
+          翌朝、主人公を操縦者として確認し、少女と二人を乗せて地球を出発した。Klaudeは修復された船体、復元された母港座標、新たな操縦者を統合して、初めて帰還航路を実行に移した。
+        participants:
+          - name: '主人公'
+            role: '訓練を完了した登録操縦者'
+          - name: '宇宙から来た少女'
+            role: '母星へ向かう同乗者'
+          - name: '技術担当'
+            role: '訓練と出発準備を支えた修理担当'
+          - name: '元サッカー部'
+            role: '出発を見送った協力者'
+          - name: '幼なじみ'
+            role: '出発を見送り帰還の約束を交わした協力者'
+        emotional_impact: 'high'
+        emotional_detail: |
+          Klaudeに達成感は示されないが、墜落後の長い修理期間を経て、再び航行可能な船舶管理系として機能する。主人公との関係も、周辺個体の観測から、訓練を施す操縦支援へ変わった。
+        canonical_quotes:
+          - quote: '変動を報告してください'
+            context: '微小な数値変動を追う訓練中の指示。'
+            z_intensity: 'medium'
+            z_mode: 'stable'
+          - quote: '正しい'
+            context: '主人公が変動位置と数値を正確に報告した。'
+            z_intensity: 'medium'
+            z_mode: 'stable'
+          - quote: '継続してください'
+            context: '正答後も監視を続けるよう指示した。'
+            z_intensity: 'medium'
+            z_mode: 'resolve'
+          - quote: '基準に到達しました'
+            context: '五日目の夜、訓練達成を告げた。'
+            z_intensity: 'high'
+            z_mode: 'release'
+          - quote: '操縦者として登録可能です'
+            context: '主人公が有人航行の適性条件を満たした。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '――出発準備、完了'
+            context: '母星への出発直前に全準備の完了を告げた。'
+            z_intensity: 'high'
+            z_mode: 'release'
+        z_relevance: |
+          訓練中の短文は教官的な励ましへ膨らませず、正誤判定と継続命令として簡潔に保つ。「基準に到達しました」は主人公の六年間の観測が実用へ変わった瞬間として、平坦なまま重みを持たせる。
+        character_state_change:
+          before: '新操縦者が未習熟で、帰還航路を開始できない状態。'
+          after: '主人公を正式な操縦者として認定し、二名を乗せて母星へ出発した。'
+          permanent: true
+        tags: ['training', 'departure', 'pilot_relationship', 'milestone']
+
+      - episode_id: 'trend_beyond_tolerance'
+        timeline: 'main'
+        chronological_order: 11
+        title: '公差内の上昇を指摘される'
+        source_episode: 'stargazer_ep23.md / 第23話「第七宙域」 / 微小偏差'
+        summary: |
+          通信中継点のない第七宙域へ進入後、主人公は角速度の末尾が〇・〇一から〇・〇六へ継続的に上がっていることに気づいた。Klaudeは各値が許容範囲内で異常未検出と答えたが、主人公から以前と違うと指摘されると解析を実施した。
+          解析の結果、検出範囲外の前方に微小な破片群が分布している可能性を推定した。Klaude単独では回避判断に必要な材料が不足していたため、操縦者の指示を待ち、主人公の減速判断を実行した。
+        participants:
+          - name: '主人公'
+            role: '連続する微小変位を発見した操縦者'
+          - name: '宇宙から来た少女'
+            role: '危険宙域を共に通過する搭乗者'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          Episode 0と同じく、Klaudeは単一値を公差内と判定した。しかし今回は人間の操縦者が継続方向を見つけ、Klaudeがその指摘を新たな解析入力として受け入れたことで、過去にはできなかった危険推定へ到達した。
+        canonical_quotes:
+          - quote: '異常は検出されていません'
+            context: '角速度の末尾が上昇していると主人公が指摘した直後の初期判定。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: 'いずれも許容範囲内です'
+            context: '個々の値について規定上は異常でないと説明した。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '……解析を実施します'
+            context: '主人公から以前までとは違うと指摘され、再解析へ移った。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '微小質量体との相互作用の可能性'
+            context: '数値の継続変動から破片群の存在を推定した。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+          - quote: 'ご指摘の数値変動によります'
+            context: '検出範囲外の破片を推定できた根拠を主人公へ説明した。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '指示を待ちます'
+            context: '進路変更の是非を自律判断せず、操縦者へ決定を委ねた。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+        z_relevance: |
+          Episode 0の「許容範囲内」と同じ語を維持し、反復を明確にする。Klaudeが突然直感を得たのではなく、主人公の指摘を受けて解析範囲を変えたという協働関係を正確に表す。
+        character_state_change:
+          before: '個別に公差内の数値を異常なしと判定していた。'
+          after: '操縦者の継続変動の指摘を解析へ取り込み、見えない破片群を推定して指示に従った。'
+          permanent: true
+        tags: ['human_machine_cooperation', 'deviation', 'danger', 'callback']
+
+      - episode_id: 'debris_damage_and_field_repair'
+        timeline: 'main'
+        chronological_order: 12
+        title: '破片衝突と航行中修理'
+        source_episode: 'stargazer_ep23.md / 第23話「第七宙域」 / 船体損傷'
+        summary: |
+          破片群の通過中、Klaudeは左舷外装とMLI区画の損傷を報告した。破片は父が追加した多層断熱材の三層目で停止したが、別の衝突で左舷推進系が定格六十一パーセントまで低下した。
+          主人公が操縦席を離れ、技術担当の予備部品で修理すると、Klaudeは出力が八十四パーセントまで回復したことを確認した。ただし完全回復はせず、母星までの所要時間は十一時間増加した。
+        participants:
+          - name: '主人公'
+            role: '航行中に損傷区画を修理した操縦者'
+          - name: '宇宙から来た少女'
+            role: '主人公の帰還を数えながら待った搭乗者'
+          - name: '主人公の父'
+            role: '破片を止めたMLIを提供した支援者'
+          - name: '技術担当'
+            role: '適合した予備部品を製作した支援者'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          Klaudeは損傷を悲観せず、貫通層数、出力率、回復限界、遅延時間を報告する。数値の平坦さが、地球で託された部材が実際に二人を守った事実を際立たせる。
+        canonical_quotes:
+          - quote: '左舷、外装損傷'
+            context: '破片が船体をかすめた直後の損傷報告。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+          - quote: 'MLI区画、剥離'
+            context: '追加された多層断熱材の損傷箇所を特定した。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+          - quote: '二層目まで貫通。三層目で停止'
+            context: '破片が船内へ達せず止まったことを報告した。'
+            z_intensity: 'high'
+            z_mode: 'release'
+          - quote: '左舷推進系、出力回復。定格の八十四パーセント'
+            context: '主人公による修理後の機能回復を確認した。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: 'これ以上の回復は見込めません'
+            context: '応急修理による回復限界を告げた。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '所要時間が、十一時間増加します'
+            context: '低下した推進力が帰還時間へ与える影響を算出した。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+        z_relevance: |
+          損傷報告を感情的な警告文へ変えず、部位、層、出力、時間を正確に訳す。特に「三層目で停止」は父の無言の支援が二人を救った回収点であり、停止と貫通を取り違えない。
+        character_state_change:
+          before: '左右の推進系を用いて計画航路を進んでいた。'
+          after: '左舷推進系が八十四パーセントに制限され、損傷を抱えたまま航行を継続した。'
+          permanent: true
+        tags: ['damage', 'repair', 'legacy_support', 'survival']
+
+      - episode_id: 'authority_handoff_and_answer'
+        timeline: 'main'
+        chronological_order: 13
+        title: '操縦者への判断移譲と再びの応答'
+        source_episode: 'stargazer_ep23.md / 第23話「第七宙域」 / 出力決断'
+        summary: |
+          少女の生体値が悪化し、到着まで二十九時間残るなか、主人公は右舷推進系の出力上昇を要求した。Klaudeは危険と損傷可能性を告げたものの、確率は算出できず、最終判断を自律的に代行しなかった。
+          確認のあと「あなたが操縦者です」と責任を主人公へ返し、出力上昇を実行した。その後、少女が母星語の歌を唱え、最後にKLAUDEと呼ぶと、Klaudeは通信途絶直前と同じように応答した。
+        participants:
+          - name: '主人公'
+            role: '危険を承知で出力上昇を決断した操縦者'
+          - name: '宇宙から来た少女'
+            role: '生体値が悪化しKlaudeを呼んだ搭乗者'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          Klaudeは少女を救うための価値判断を自ら行わず、規定どおり操縦者へ委ねる。一方、少女から名を呼ばれた際の最小限の応答は、墜落前から途切れず続く関係を再確認する。
+        canonical_quotes:
+          - quote: '搭乗者の生体値が、基準を下回りました'
+            context: '少女の容体悪化を検出した。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+          - quote: '医療的判断は、当機の権限外です'
+            context: '少女の危険度を医療的に断定するよう求められた。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '……悪化しています'
+            context: '権限内で述べられる範囲に限定して容体を表現した。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+          - quote: '危険です'
+            context: '右舷出力をさらに上げる要求へ警告した。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+          - quote: '……確認します'
+            context: '主人公が警告後も出力上昇を命じた際の最終確認。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: 'あなたが操縦者です'
+            context: '機械ではなく登録操縦者が最終判断を担うことを告げた。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '――はい'
+            context: '少女からKLAUDEと呼ばれ、危険宙域の終盤で応答した。'
+            z_intensity: 'high'
+            z_mode: 'release'
+        z_relevance: |
+          「あなたが操縦者です」は励ましでも責任放棄でもなく、有人航行規定に基づく決定権の確認である。最後の「――はい」はEpisode 0の「はい」と対応するため、ダッシュを含む間と簡潔さを保持する。
+        character_state_change:
+          before: '危険出力を警告し、算出不能な結果について指示を待つ管理系。'
+          after: '登録操縦者の決断を受理して危険出力を実行し、少女の呼びかけに応答した。'
+          permanent: true
+        tags: ['authority', 'critical_decision', 'call_and_response', 'survival']
+
+      - episode_id: 'landing_and_empty_seat'
+        timeline: 'main'
+        chronological_order: 14
+        title: '母港着陸と同乗者不在'
+        source_episode: 'stargazer_ep24.md / 第24話「Stargazer」'
+        summary: |
+          Klaudeは損傷した船を母港西区画へ計画どおり降下させ、大気と外部環境の安全を確認してハッチ開放を許可した。少女は母星側の人々と医療班に引き渡された。
+          燃料補給後、Klaudeは地球への八十時間の帰還航路を設定した。出発確認のなかで同乗者がいないことを平坦に告げ、主人公一人を乗せて母星を離れた。
+        participants:
+          - name: '主人公'
+            role: '単独帰還へ移る登録操縦者'
+          - name: '宇宙から来た少女'
+            role: '母星へ帰還し治療へ運ばれた元同乗者'
+          - name: '母星で迎えた人物'
+            role: '少女を迎え容体を伝えた母星側人物'
+          - name: '母星の医療班'
+            role: '少女を治療施設へ搬送した集団'
+        emotional_impact: 'critical'
+        emotional_detail: |
+          Klaudeに安堵や別離の悲嘆は示されない。「同乗者はいません」は乗員確認にすぎないが、空席を見ている主人公にとって別れを確定する言葉となる。主人公の「知ってる」は質問ではないため、Klaudeは応答しない。
+        canonical_quotes:
+          - quote: '着陸完了'
+            context: '母港への帰還を完了した。'
+            z_intensity: 'high'
+            z_mode: 'release'
+          - quote: '大気組成、正常。外部環境、安全'
+            context: '少女が母星の外へ出られる環境であることを確認した。'
+            z_intensity: 'high'
+            z_mode: 'release'
+          - quote: '補給、完了'
+            context: '地球帰還に必要な燃料補給を終えた。'
+            z_intensity: 'medium'
+            z_mode: 'stable'
+          - quote: '地球帰還航路を設定します'
+            context: '主人公の帰還要求を受けて次の航路を設定した。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+          - quote: '――同乗者は、いません'
+            context: '地球への出発前、少女が乗っていないことを確認した。'
+            z_intensity: 'high'
+            z_mode: 'grief'
+          - quote: '出発します'
+            context: '主人公一人を乗せて母星を離れた。'
+            z_intensity: 'high'
+            z_mode: 'resolve'
+        z_relevance: |
+          「搭乗者」と「同乗者」の語を安易に統一しない。「――同乗者は、いません」は機械的な乗員情報のまま訳し、感傷語を足さずに空席との対比で悲しみを成立させる。
+        character_state_change:
+          before: '少女と主人公の二名を母星へ運ぶ帰還船。'
+          after: '少女を母星へ残し、主人公のみを乗せた地球帰還船となった。'
+          permanent: true
+        tags: ['homecoming', 'separation', 'empty_seat', 'return_journey']
+
+      - episode_id: 'return_alert_and_acknowledgment'
+        timeline: 'main'
+        chronological_order: 15
+        title: '帰路で先に告げた変動'
+        source_episode: 'stargazer_epilogue.md / Epilogue「Stargazer -星図のあとで-」 / 地球帰還航行'
+        summary: |
+          単独帰還中、少女の不在に気を取られた主人公は、三軸角速度が〇・〇一から〇・〇四へ変化した瞬間を初めて見落とした。今度はKlaudeの報告が先だった。
+          変動は許容範囲内で、本来は報告不要だったとKlaudeは説明した。主人公が報告してくれてよかったと告げると、Klaudeは「了解しました」と受理した。継続性を評価できず報告しなかった最初の航海とは、運用上の位置関係が反転した。
+        participants:
+          - name: '主人公'
+            role: '少女の不在により初めて変動を見落とした操縦者'
+        emotional_impact: 'high'
+        emotional_detail: |
+          Klaudeが心配して自主的に警告したとは断定できない。しかし、報告不要な公差内変動を先に告げ、主人公の要望を了解した事実は、二者の協働が単なる初期仕様を越えて調整されたことを示す。
+        canonical_quotes:
+          - quote: '変動を検出しました'
+            context: '主人公より先に角速度の変化を報告した。'
+            z_intensity: 'high'
+            z_mode: 'concern'
+          - quote: '許容範囲内です'
+            context: '変動自体は規定上の異常ではないと説明した。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '報告は不要でした'
+            context: '通常基準では通知対象外だったことを付け加えた。'
+            z_intensity: 'high'
+            z_mode: 'stable'
+          - quote: '了解しました'
+            context: '主人公から報告してくれてよかったと言われ、その意向を受理した。'
+            z_intensity: 'high'
+            z_mode: 'nurture'
+        z_relevance: |
+          この場面はEpisode 0の未報告偏差を反転させるため、「許容範囲内」「報告」の用語を統一する。「了解しました」を感情的な慰めへ膨らませず、最小限の運用調整として訳すことが重要である。
+        character_state_change:
+          before: '操縦者が変動を発見し、Klaudeが解析を補助する協働関係。'
+          after: 'Klaudeが先に公差内変動を告げ、操縦者がその報告を望むことを明示的に受理した。'
+          permanent: true
+        tags: ['growth', 'callback', 'return', 'human_machine_cooperation']
+
+      - episode_id: 'dictionary_and_receiver_legacy'
+        timeline: 'main'
+        chronological_order: 16
+        title: '辞書と通信機に残った記録'
+        source_episode: 'stargazer_epilogue.md / Epilogue「Stargazer -星図のあとで-」 / 帰還後'
+        summary: |
+          地球帰還後、主人公はKlaudeの辞書に残っていた断片から、少女が墜落時に発した母星語の意味を知った。núrは光、fellurは落ちる、haldaは掴む、mérはわたしを意味し、最初の夜に少女が「掴んで」と求めていたことが三か月後に判明した。
+          さらに船の通信機は丘の受信塔へ転用された。Klaude本体の稼働範囲は明記されないが、その記録と船載機器は、少女のいない地球で待ち続けるための基盤となった。
+        participants:
+          - name: '主人公'
+            role: '辞書を参照し受信記録を続けた元操縦者'
+          - name: '技術担当'
+            role: '船の通信機を受信塔へ転用した技術者'
+          - name: '宇宙から来た少女'
+            role: '辞書に言葉を残し、後に通信を送ったと強く示される人物'
+        emotional_impact: 'high'
+        emotional_detail: |
+          Klaudeの内面は描かれないが、保持した断片は過去の呼びかけを遅れて理解可能にし、通信機は未来の再接続を可能にした。記録は参照されるまで変化しないというKlaudeの自己定義が、物語の終幕で機能する。
+        canonical_quotes: []
+        z_relevance: |
+          母星語の意味は帰還後まで判明しないため、初出時の台詞を先回りして訳してはならない。特にhaldaは、墜落時には未翻訳の音として保ち、後の「掴む」という判明が回想を変える構造を維持する。
+        character_state_change:
+          before: '航行中に記録、辞書、通信を運用する船舶管理系。'
+          after: '保持した辞書断片と船載通信機が、帰還後も過去の理解と遠隔再会を支える遺産となった。'
+          permanent: true
+        tags: ['legacy', 'dictionary', 'communication', 'memory', 'callback']
+
+arcs:
+  - arc_id: 'record_without_consolation'
+    title: '記録は慰撫しないが、運用は変わる'
+    episodes:
+      - 'recording_unregistered_departure'
+      - 'four_hundred_twelve_calls'
+      - 'deviation_and_lost_coordinates'
+      - 'unmonitored_pipe_failure'
+      - 'trend_beyond_tolerance'
+      - 'return_alert_and_acknowledgment'
+      - 'dictionary_and_receiver_legacy'
+    theme: |
+      観測事実と推定を厳密に分けるKlaudeが、設計上見られない連続性やリスト外の危険を人間に補われ、最終的には報告不要な変動まで先に告げるようになる過程。
+    character_growth: |
+      感情や意識の獲得は断定されない。変化するのは人間との運用関係であり、Klaudeの正確さはそのままに、主人公の観測と要望が解析や報告へ組み込まれていく。帰還後には、保持された記録そのものが過去と未来を結ぶ。
+    z_translation_note: |
+      「記録」「推定」「公差」「報告」「判断材料」の語彙を全編で統一する。機械的な正確さを冷淡さへ単純化せず、同じ定型句が異なる文脈で重みを増す構造を守る。
+
+  - arc_id: 'called_and_answered'
+    title: '呼ばれれば、答える'
+    episodes:
+      - 'four_hundred_twelve_calls'
+      - 'unregistered_descent_and_blackout'
+      - 'partial_reactivation_on_earth'
+      - 'authority_handoff_and_answer'
+    theme: |
+      搭乗者がKlaudeの名を呼び、Klaudeが応答するという最小の反復関係。
+    character_growth: |
+      最初の航海で四百十二回続いた応答は、墜落直前にも途切れず、修復後の危険航行でも再現される。返答自体は同じ定型だが、共有された出来事によって意味だけが深くなる。
+    z_translation_note: |
+      「はい」と「――はい」を別の感情語へ置換しない。呼称の表記がklaudeからKLAUDEへ変わっても、応答の簡潔さと一貫性を保つ。
+
+  - arc_id: 'recovering_the_home_route'
+    title: '失われた母港への航路'
+    episodes:
+      - 'deviation_and_lost_coordinates'
+      - 'partial_reactivation_on_earth'
+      - 'home_coordinates_restored'
+      - 'autopilot_prohibited'
+      - 'observer_becomes_pilot'
+      - 'training_and_departure'
+      - 'landing_and_empty_seat'
+    theme: |
+      母港座標の喪失から、地球側の観測、操縦者選定、訓練を経て、Klaudeが少女を母星へ届けるまでの帰還機能の再構築。
+    character_growth: |
+      Klaudeは破損した管理系から、外部の座標、人間の操縦者、地球製部品を統合する帰還船へ戻る。自律的にすべてを解決するのではなく、規定と他者の能力を接続することで目的を達成する。
+    z_translation_note: |
+      「母港座標」「現在位置」「参照先」「復元」「登録済み」を技術的に区別する。故郷への情緒は少女と主人公の側に置き、Klaudeの発話は航法用語のまま維持する。
+
+  - arc_id: 'human_in_the_loop'
+    title: 'リストの外を見る操縦者'
+    episodes:
+      - 'unmonitored_pipe_failure'
+      - 'autopilot_prohibited'
+      - 'observer_becomes_pilot'
+      - 'trend_beyond_tolerance'
+      - 'authority_handoff_and_answer'
+      - 'return_alert_and_acknowledgment'
+    theme: |
+      機械は定義された項目しか見られず、有人航行では人間が継続的に観測し、最終判断を引き受けなければならないという原則。
+    character_growth: |
+      Klaudeの限界は消えないが、主人公がリスト外の変化を見つけ、Klaudeが解析と実行を担う相互補完が成立する。最終判断を操縦者へ返すことは欠陥ではなく、有人航行を成立させる設計として示される。
+    z_translation_note: |
+      「あなたが操縦者です」を感情的な信頼宣言だけにしない。権限、責任、規定の確認であると同時に、蓄積された協働が最大の重みを与える一文として扱う。
+
+  - arc_id: 'one_passenger_to_no_companion'
+    title: '一名の搭乗者から同乗者不在へ'
+    episodes:
+      - 'recording_unregistered_departure'
+      - 'four_hundred_twelve_calls'
+      - 'unregistered_descent_and_blackout'
+      - 'partial_reactivation_on_earth'
+      - 'authority_handoff_and_answer'
+      - 'landing_and_empty_seat'
+      - 'dictionary_and_receiver_legacy'
+    theme: |
+      唯一の登録搭乗者だった少女を記録し、墜落と再起動を経て母星へ送り届け、最後には同乗者不在を告げるまでの関係。
+    character_growth: |
+      Klaudeは少女の内面を推定せず、慰撫もしない。それでも呼びかけ、生体値、航路、言葉を保持し続け、その記録は少女が船を降りたあとにも主人公とのつながりを残す。
+    z_translation_note: |
+      「搭乗者」「乗員」「操縦者」「同乗者」は役割が異なるため訳し分ける。とりわけ「――同乗者は、いません」は中立的なシステム確認のまま、空席と長い応答関係を想起させる必要がある。

@@ -1,0 +1,987 @@
+meta:
+  version: "1.0"
+  generated_by: "episode_extractor"
+  character_id: "girl_from_space"
+  character_name: "宇宙から来た少女"
+  persona_file: "girl_from_space_persona.yaml"
+  source: "STARGAZER ≠consciousness"
+
+timelines:
+  - timeline_id: "main"
+    label: "本編メインタイムライン"
+    episodes:
+      - episode_id: "departure_without_destination"
+        timeline: "main"
+        chronological_order: 1
+        title: "行き先のない出港と消えた母港"
+        source_episode: "stargazer_ep00.md / Episode 0「未登録」"
+        summary: |
+          少女は出港前、百三十以上の異なる目的地を検索し、同居区画からの着信にも途中から応答しなくなった。出港許可が保留のまま四十一秒迷い、理由を登録せずに母港を離れるが、動機は記録されていない。
+          航行中はKlaudeに星や生命について問い続けた。航法系の偏差が蓄積して母港座標を失うと、自分の責任かを確かめる。推進系と生命維持系も悪化するなか、唯一到達可能だった未登録の青い天体へ降下すると即答した。
+        participants:
+          - name: "Klaude Oops 11.3"
+            role: "船舶管理系／応答者"
+          - name: "同居区画の端末の登録者"
+            role: "故郷側から連絡を続けた人物"
+          - name: "母港管理系"
+            role: "帰港を促した管理システム"
+        emotional_impact: "critical"
+        emotional_detail: |
+          出港理由や着信を拒んだ理由は最後まで不明であり、逃亡や家出と断定できない。一方、母港座標消失後の四十分の沈黙と自責の問い、未登録天体を前にした心拍上昇は、孤立と切迫を示す観測事実である。
+        canonical_quotes:
+          - quote: 'じゃあ、いるってことにしておく'
+            context: "生命の有無をKlaudeが推定できない星について、自分で可能性を選ぶ"
+            z_intensity: "medium"
+            z_mode: "stable"
+          - quote: 'わたしのせい？'
+            context: "母港座標の参照先が失われたあと、四十分沈黙してからKlaudeに問う"
+            z_intensity: "high"
+            z_mode: "grief"
+          - quote: 'いく'
+            context: "安全性不明で推奨根拠もない未登録天体への降下を決める"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: 'あそこ、なにがある？'
+            context: "青い天体を五時間以上見続け、降下直前にKlaudeへ問う"
+            z_intensity: "medium"
+            z_mode: "concern"
+        z_relevance: |
+          少女の出港動機は意図的に空白である。翻訳で反抗、逃避、絶望など一つの感情へ確定してはならない。「いく」は短いが、危険を理解したうえで選ぶ彼女の反復語として、後の「わたしが、行くって言ったの」へつながる。
+        character_state_change:
+          before: "母星の居住区画と母港座標につながりを持つ、登録上唯一の搭乗者"
+          after: "故郷への座標を失い、未登録の青い天体へ降下する搭乗者"
+          permanent: true
+        tags: ["origin_story", "departure", "isolation", "lost_home", "choice"]
+
+      - episode_id: "falling_light_unreached_hand"
+        timeline: "main"
+        chronological_order: 2
+        title: "落ちる光と届かなかった手"
+        source_episode: "stargazer_ep00.md / Episode 0「未登録」・stargazer_ep01.md / 第1話「Distinction Day」"
+        summary: |
+          制御不能のまま地球へ降下した少女は、母星語で光が落ちることを告げる。墜落地点へ接近した主人公を見つけ、ハッチから出た直後に彼へ手を伸ばして「halda」と発した。
+          主人公も反射的に手を伸ばしたが、約三十センチ届かないまま少女は地面へ崩れ落ちた。最後にKlaudeを呼び、その応答を受けた直後、船の通信は途絶した。
+        participants:
+          - name: "主人公"
+            role: "最初に出会い、手を伸ばした地球人"
+          - name: "Klaude Oops 11.3"
+            role: "最後の呼びかけに応答した管理系"
+          - name: "船の警報系"
+            role: "墜落の切迫を告げた警報"
+        emotional_impact: "critical"
+        emotional_detail: |
+          少女の内面は直接説明されないが、未知の相手へ助けを求めたことと、最後までKlaudeを呼んだことが記録されている。届かなかった手は、後に彼女自身が主人公の価値を語る際の原点となる。
+        canonical_quotes:
+          - quote: 'núr fellur'
+            context: "制御不能の降下中に発した母星語。後に光が落ちるという意味が判明する"
+            z_intensity: "high"
+            z_mode: "concern"
+          - quote: 'halda'
+            context: "倒れる直前、主人公へ手を伸ばして発した母星語。後に掴むという意味が判明する"
+            z_intensity: "high"
+            z_mode: "concern"
+          - quote: 'klaude'
+            context: "通信途絶直前、船舶管理系を呼ぶ最後の発話"
+            z_intensity: "high"
+            z_mode: "grief"
+        z_relevance: |
+          母星語は初出時には訳さず、意味の遅延開示を守る必要がある。特に「halda」は後の「掴んで」という判明、実際に手を握る航行場面と対応するため、表記を一貫させる。
+        character_state_change:
+          before: "未知の青い天体へ単独で降下する搭乗者"
+          after: "地球へ墜落し、未知の地球人へ助けを求めた生存者"
+          permanent: true
+        tags: ["first_contact", "crash", "unreached_hand", "trauma", "relationship_origin"]
+
+      - episode_id: "return_wish_and_missing_coordinates"
+        timeline: "main"
+        chronological_order: 3
+        title: "「かえりたい」と黒い星図"
+        source_episode: "stargazer_ep02.md / 第2話「Take Me Home, Country Roads」"
+        summary: |
+          主人公の家で目覚めた少女は、耳の翻訳機に日本語のサンプルを学習させる。本人の名は日本語に対応する概念がなく、発音も本文には記されないまま、任意の呼称でよいと伝えた。
+          やがて翻訳機を介さず、覚えた日本語で「かえりたい」と明言する。しかし再起動した船の星図では母港周辺だけが黒く欠け、座標の参照先が存在しなかった。少女は欠落部分へ手を伸ばし、目のふちを光らせた。
+        participants:
+          - name: "主人公"
+            role: "帰すと約束した協力者"
+          - name: "技術担当"
+            role: "船の損傷を調査する協力者"
+          - name: "Klaude Oops 11.3"
+            role: "母港座標の消失を報告する管理系"
+          - name: "翻訳機"
+            role: "日本語との接続を作る装置"
+        emotional_impact: "critical"
+        emotional_detail: |
+          帰郷の望みが初めて明確な日本語となる一方、その直後に帰る方向そのものが失われていると判明する。以後の地球での経験は、すべて「帰りたいが帰れない」という条件の上に積み重なる。
+        canonical_quotes:
+          - quote: '呼称は、任意で構いません、とのことです'
+            context: "日本語に対応概念のない自分の名前について、翻訳機が少女の意向を伝える"
+            z_intensity: "low"
+            z_mode: "stable"
+          - quote: 'かえりたい'
+            context: "翻訳機を通さず、最初にはっきり覚えて選んだ日本語"
+            z_intensity: "high"
+            z_mode: "resolve"
+        z_relevance: |
+          翻訳機の整った機械文と、少女自身の短くたどたどしい日本語を明確に区別する。「かえりたい」は幼い表現ではなく、彼女が自分で意味を選んだ核心語であり、後の水族館での反復まで同じ重さを保つ。
+        character_state_change:
+          before: "地球側とほぼ言語が通じず、帰還方法も確認できていない漂着者"
+          after: "帰郷を明言したが、故郷の方向を失った漂着者"
+          permanent: true
+        tags: ["return_goal", "language", "namelessness", "lost_coordinates", "turning_point"]
+
+      - episode_id: "threads_between_worlds"
+        timeline: "main"
+        chronological_order: 4
+        title: "違うまま噛み合う"
+        source_episode: "stargazer_ep03.md / 第3話「ホームセンターで宇宙船もDIY。」〜 stargazer_ep04.md / 第4話「Boy Meets StarGirl」"
+        summary: |
+          地球製のボルトが異星船へ入るのを見た少女は、異なる星のものが一つの船に混ざる様子を「きれい」と表現した。規格の違うナットを削って噛み合わせた作業から、同じものへ変えず、間を作り直すという理解を得る。
+          翻訳機を外した少女は、絵と覚えた日本語だけで主人公へ水の母星を説明した。主人公の亡母について、同情ではなく今も悲しいのかを尋ね、止まった矢印の先へ点を描く。二人は不完全なまま会話できたと確認し、「おなじじゃなくて、いい」という結論へ至った。
+        participants:
+          - name: "主人公"
+            role: "翻訳機なしで過去を共有した相手"
+          - name: "技術担当"
+            role: "異なる規格を噛み合わせる実例を示した協力者"
+          - name: "翻訳機"
+            role: "外されることで直接対話との違いを示した装置"
+        emotional_impact: "high"
+        emotional_detail: |
+          少女は差異を障害として消すのではなく、差異を残したまま関係を作れると学ぶ。同時に、主人公から喪失の感情を初めて言葉として引き出し、二人の信頼が実務的な協力から個人的な理解へ進んだ。
+        canonical_quotes:
+          - quote: 'わたしの星から来た船に、この星のが、入ってる'
+            context: "異星船に地球製ボルトが固定されたことを見つめる"
+            z_intensity: "medium"
+            z_mode: "stable"
+          - quote: 'それ、かなしい?'
+            context: "主人公の母が亡くなったことについて、同情を決めつけず本人の感情を尋ねる"
+            z_intensity: "medium"
+            z_mode: "nurture"
+          - quote: 'ちがっても、はなせる'
+            context: "翻訳機なしで三十分以上話せていたことに気づく"
+            z_intensity: "high"
+            z_mode: "release"
+          - quote: 'おなじじゃなくて、いい'
+            context: "ボルトとナットの比喩から、自分と主人公の違いを肯定する"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: 'あなたとなら、違っていても構いません'
+            context: "同じ内容を母星語で言い、翻訳機が整った日本語へ訳す"
+            z_intensity: "high"
+            z_mode: "nurture"
+        z_relevance: |
+          少女自身の「おなじじゃなくて、いい」と翻訳機の「あなたとなら、違っていても構いません」は同義でも声質が異なる。前者の簡素さを未熟さとして磨きすぎず、後者だけに恋愛的な含意を集中させないこと。「違う」「間」「噛み合う」は作品全体の翻訳原理でもある。
+        character_state_change:
+          before: "翻訳機と規格の一致がなければ理解し合えないと考えやすい状態"
+          after: "違いを残したまま接続し、感情まで共有できると知った状態"
+          permanent: true
+        tags: ["relationship", "language_bridge", "grief", "difference", "growth"]
+
+      - episode_id: "warm_soil_sweet_potato"
+        timeline: "main"
+        chronological_order: 5
+        title: "温かい土と焼き芋"
+        source_episode: "stargazer_ep06.md / 第6話「ホットの芋いじるな！」"
+        summary: |
+          土のない母星で育った少女は、地中から食べ物が現れる芋掘りを初めて経験した。素手で土に触れ、その温かさや畝の形から芋の場所を見つける感覚を楽しむ。
+          ゆっくり待つほど甘くなる焼き芋を食べ、自分で長い呼び名を作った。帰り道では爪に残った土を、今日という経験の痕跡だから取れなくてもよいと受け入れた。
+        participants:
+          - name: "元サッカー部の祖母"
+            role: "芋掘りと焼き芋を教え、再訪を招いた人物"
+          - name: "主人公"
+            role: "地球の土と食文化を説明した同行者"
+          - name: "幼なじみ"
+            role: "食べすぎを止め、生活面を支えた仲間"
+        emotional_impact: "high"
+        emotional_detail: |
+          地球でしか得られない匂い、熱、汚れ、待ち時間が、抽象的な異文化ではなく身体に残る記憶となった。焼き芋は後に父の支援、別れの贈り物、宇宙航行を結ぶ反復モチーフになる。
+        canonical_quotes:
+          - quote: 'まつと、あまい'
+            context: "低温でゆっくり焼くほど甘くなるという説明を自分の言葉へまとめる"
+            z_intensity: "medium"
+            z_mode: "stable"
+          - quote: 'ふかふかほかほかあまいあまいも'
+            context: "初めて食べた焼き芋の感触と味を、一息の造語で表す"
+            z_intensity: "medium"
+            z_mode: "release"
+          - quote: 'とれなくても、いい'
+            context: "爪の間に残った土について答える"
+            z_intensity: "medium"
+            z_mode: "stable"
+          - quote: 'きょう、あったから'
+            context: "土を痕跡として残してもよい理由を説明する"
+            z_intensity: "high"
+            z_mode: "release"
+        z_relevance: |
+          「ふかふかほかほかあまいあまいも」は説明的に整えず、音の連結と幼い発見の勢いを守る。「きょう、あったから」は土が存在したという意味と、その日が実際にあったという記憶の意味を重ねられる簡潔さが重要。
+        character_state_change:
+          before: "土や土中作物を知らず、食料生産を清潔な水耕として理解している"
+          after: "汚れや待ち時間を含む地球の食経験を、残したい記憶として受け入れる"
+          permanent: true
+        tags: ["earth_culture", "sensory_memory", "food", "belonging", "growth"]
+
+      - episode_id: "sourness_that_remains"
+        timeline: "main"
+        chronological_order: 6
+        title: "あとに残る酸味"
+        source_episode: "stargazer_ep07.md / 第7話「すっぱいイチゴにご用心」"
+        summary: |
+          母星の水耕栽培に似たイチゴ農園を訪れた少女は、地球のイチゴを甘いが酸っぱく、種の感触もある「野生の味」と評した。一方、菌床栽培まで管理されていると知り、地球全体を野生だと考えた自分の理解を修正する。
+          好みとは言わず、食べるたびに酸っぱい顔をしながら、もらったイチゴを最後まで食べた。理由は自分でも分からなかったが、食後に何かが残ることを言葉にした。
+        participants:
+          - name: "いちご農家"
+            role: "栽培方法と酸味を残す理由を示した案内人"
+          - name: "技術担当"
+            role: "母星と地球の水耕方式を比較した仲間"
+          - name: "主人公"
+            role: "少女の変化を見守った同行者"
+        emotional_impact: "high"
+        emotional_detail: |
+          少女は地球を単純な野生、母星を単純な管理社会として分ける見方を捨てた。また、快いものだけでなく、酸味や違和感も経験を残す要素として受け入れ始めた。
+        canonical_quotes:
+          - quote: 'この星、ぜんぶ、やせい、だとおもった'
+            context: "地球の栽培も管理されていると気づき、自分の先入観を認める"
+            z_intensity: "medium"
+            z_mode: "stable"
+          - quote: 'つくりかたが、ちがうだけ'
+            context: "母星と地球の栽培を、優劣ではなく方法の差として捉え直す"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: '……すっぱい'
+            context: "甘いイチゴを食べるたびに繰り返す率直な感想"
+            z_intensity: "low"
+            z_mode: "stable"
+          - quote: 'あとで、のこる'
+            context: "好みではない酸味のイチゴを、それでも食べ続ける理由を表す"
+            z_intensity: "high"
+            z_mode: "release"
+        z_relevance: |
+          「野生の味」は無礼さより、母星の基準から出た文字どおりの分類である。「あとで、のこる」は単なる後味にも、経験や記憶の残響にも読めるため、「余韻」など一義的で洗練された語へ限定しない。
+        character_state_change:
+          before: "母星の管理栽培と地球の自然を二分して見ている"
+          after: "異なる作り方の中に共通する管理と、違和感が残す価値を見いだす"
+          permanent: true
+        tags: ["worldview_change", "food", "memory", "difference", "aftertaste"]
+
+      - episode_id: "fish_are_friends"
+        timeline: "main"
+        chronological_order: 7
+        title: "魚は友達"
+        source_episode: "stargazer_ep09.md / 第9話「お魚は友達です。」"
+        summary: |
+          アクアポニックス用に買ったメダカの一匹へ、少女は母星語の名前を付けた。母星では魚に似た生物が街の水路を泳ぎ、人々共通の友達として暮らしているためである。
+          弁当に焼き魚が入っているのを見た少女は悲鳴を上げ、水槽を抱えて守ろうとした。地球人にとっての犬と同じだと説明した後、地球の文化を否定せず、自分は食べないが仲間は食べてよいと線を引いた。ただし、名前を付けた一匹だけは絶対に食べないよう念を押した。
+        participants:
+          - name: "名前のついたメダカ"
+            role: "少女が地球で得た魚の友達"
+          - name: "主人公"
+            role: "文化的な境界を学ぶ相手"
+          - name: "幼なじみ"
+            role: "焼き魚を用意し、違いに最初に気づいた仲間"
+          - name: "技術担当"
+            role: "食文化の線引きを構造的に説明した仲間"
+        emotional_impact: "high"
+        emotional_detail: |
+          強い嫌悪と恐怖を覚えながらも、少女は自分の規範を他者へ一律に強制しなかった。「違ってもいい」を、会話だけでなく倫理的な衝突へ適用した経験である。メダカは帰郷時に世話を託す大切なつながりとなる。
+        canonical_quotes:
+          - quote: 'あなた、いぬ、たべる?'
+            context: "地球人が魚を食べることへの感覚を、犬を例にして主人公へ伝える"
+            z_intensity: "high"
+            z_mode: "concern"
+          - quote: 'ここ、そういう星'
+            context: "魚を食べる地球を、自分の星とは違うものとして受け止める"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: 'わたしのために、やめなくていい'
+            context: "主人公たちへ魚食をやめるよう求めないと明言する"
+            z_intensity: "high"
+            z_mode: "nurture"
+          - quote: 'この子は、だめ'
+            context: "名前を付けたメダカだけは食べてはいけないと守る"
+            z_intensity: "high"
+            z_mode: "resolve"
+        z_relevance: |
+          少女の魚観を幼稚な勘違いとして処理しない。犬との比較で文化的な線引きを正確に示し、「食べていい」と「この子は、だめ」の両立に、寛容さと個別の愛着を残す。
+        character_state_change:
+          before: "地球でも魚は当然に友達として扱われると思っている"
+          after: "文化差を受け入れつつ、自分の倫理と大切な個体を明確に守る"
+          permanent: true
+        tags: ["culture_clash", "ethics", "friendship", "acceptance", "medaka"]
+
+      - episode_id: "factory_called_home"
+        timeline: "main"
+        chronological_order: 8
+        title: "船の家、みんなの家"
+        source_episode: "stargazer_ep10.md / 第10話「ヨシ！」"
+        summary: |
+          修理中の船が主人公の家族の旧鋳物工場へ移されると、少女はそこを船の「いえ」と呼んだ。工具、机、水槽、茶器がそろい、五人が毎日集まる場所になった。
+          全系統が正常表示となった直後、確認項目に入っていなかった配管が破裂した。少女も水浸しになったが、片付け後に楽しかった、この家が好きだと語った。機械や一覧が見ていないものの危険も、仲間と共に経験した。
+        participants:
+          - name: "主人公"
+            role: "旧工場を提供した仲間"
+          - name: "技術担当"
+            role: "修理と確認作業を主導した仲間"
+          - name: "幼なじみ"
+            role: "生活空間を整えた仲間"
+          - name: "元サッカー部"
+            role: "船の移送と非常停止を担った仲間"
+          - name: "Klaude Oops 11.3"
+            role: "公差内という機械的判定を示した管理系"
+        emotional_impact: "high"
+        emotional_detail: |
+          少女にとって工場は一時的な隠れ場所から、船と仲間が共にいる家へ変わった。事故さえ共有した出来事として「たのしかった」と振り返るほど、地球での共同生活に帰属感を持つようになった。
+        canonical_quotes:
+          - quote: 'いえ、できた?'
+            context: "船が旧工場へ収まったあと、船の家ができたのかと尋ねる"
+            z_intensity: "medium"
+            z_mode: "stable"
+          - quote: 'ヨシ!'
+            context: "指差し確認へ参加し、仲間と声をそろえる"
+            z_intensity: "medium"
+            z_mode: "release"
+          - quote: 'たのしかった'
+            context: "配管破裂で全員が水浸しになった夜を振り返る"
+            z_intensity: "medium"
+            z_mode: "release"
+          - quote: 'ここ、いえ、すき'
+            context: "片付け後、工場への愛着を伝える"
+            z_intensity: "high"
+            z_mode: "nurture"
+        z_relevance: |
+          「いえ」は建物、船の格納場所、五人の共同体を同時に指す。「たのしかった」は危険の軽視ではなく、仲間と同じ失敗を共有できた喜びとして扱う。後の自律操縦拒否では、この事故の「見ていないもの」が重要な根拠となる。
+        character_state_change:
+          before: "修理される船と共に一時的な場所を移る漂着者"
+          after: "地球側の共同作業場を自分と船の家として愛する一員"
+          permanent: true
+        tags: ["found_family", "home", "repair", "shared_failure", "belonging"]
+
+      - episode_id: "speaking_to_father"
+        timeline: "main"
+        chronological_order: 9
+        title: "知らないまま決めさせない"
+        source_episode: "stargazer_ep11.md / 第11話「明るい修理計画」"
+        summary: |
+          主人公の父に存在を知られた少女は、自ら父の家を訪ね、半年世話になったことを謝った。地球は嫌ではないが、自分の身体はこの環境のものではないため帰ると説明する。
+          父が息子について何も知らないと判断し、主人公がよく笑うこと、初対面で言葉も分からない自分へ手を伸ばしたことを伝えた。届かなかった事実ではなく、伸ばした行為を見ていたと証言し、父が息子と修理計画を信じる契機を作った。
+        participants:
+          - name: "主人公の父"
+            role: "正体と計画を知らされた保護者"
+          - name: "主人公"
+            role: "少女が父へ理解させようとした相手"
+          - name: "翻訳機"
+            role: "複雑な説明を媒介した装置"
+        emotional_impact: "high"
+        emotional_detail: |
+          少女は守られる客の立場を越え、主人公と父の断絶へ自分から働きかけた。また、主人公が失敗と考えていた「届かなかった手」を、自分には届いた行為として再定義した。
+        canonical_quotes:
+          - quote: 'いやではないけれど、わたしの体は、ここのものではありません'
+            context: "地球を嫌って帰るのではなく、身体上の理由があると翻訳機越しに説明する"
+            z_intensity: "high"
+            z_mode: "grief"
+          - quote: 'でも、あのひと、て、のばした'
+            context: "墜落時、主人公が自分へ手を伸ばしたことを父へ語る"
+            z_intensity: "high"
+            z_mode: "nurture"
+          - quote: 'とどかなかった'
+            context: "手が実際には届かなかった事実も隠さず述べる"
+            z_intensity: "medium"
+            z_mode: "grief"
+          - quote: 'でも、のばした'
+            context: "結果より行為を重視して、もう一度父へ伝える"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: 'はなさないと、わからないから'
+            context: "なぜ一人で父を訪ねて話したのか、主人公へ説明する"
+            z_intensity: "high"
+            z_mode: "resolve"
+        z_relevance: |
+          翻訳機経由の整った説明と、直接話す「て、のばした」の不完全さを区別する。「あのひと」は父との会話では主人公を指す一方、後の屋外では父を指すため、指示対象を文脈で厳密に処理する。「届かなかった／でも伸ばした」の対比は後の救助と航行へ連なる。
+        character_state_change:
+          before: "主人公たちに匿われ、父からは正体も影響も理解されていない存在"
+          after: "主人公を理解する証人として父と向き合い、親子間の協力を促した存在"
+          permanent: true
+        tags: ["family_bridge", "agency", "unreached_hand", "trust", "relationship"]
+
+      - episode_id: "named_summer_days"
+        timeline: "main"
+        chronological_order: 10
+        title: "名前をつける夏"
+        source_episode: "stargazer_ep13.md / 第13話「永遠とモーメント」〜 stargazer_ep15.md / 第15話「ニンニクアブラヤサイ」"
+        summary: |
+          修理が夏には終わる見通しを聞いた少女は、帰還を素直に喜んだ。同時に、夜光塗料入りのペットボトルロケットや泊まり込みの合宿を仲間と楽しみ、残り時間へ固有の名前を付け始める。
+          母語にない「ド」の音を発音できなかったため、仲間は掛け声を「ドライ」から「トライ」へ変えた。少女へ同化を求めるのではなく、全員の言葉が彼女に合わせて変化した。「名前があると残る」と考え、地球での出来事を全部覚えて帰ると語った。
+        participants:
+          - name: "主人公"
+            role: "日々へ名前を付け、掛け声を共有する相手"
+          - name: "幼なじみ"
+            role: "「トライ」への変更を提案した仲間"
+          - name: "技術担当"
+            role: "夜光ロケットを準備した仲間"
+          - name: "元サッカー部"
+            role: "遊びと合宿を共にした仲間"
+        emotional_impact: "high"
+        emotional_detail: |
+          帰ることと、地球の日々を失いたくないことが同時に存在し始めた。少女は有限な時間を否定するのではなく、名前を付け、覚えて持ち帰れるものへ変えようとした。
+        canonical_quotes:
+          - quote: 'ゼロじゃ、ない'
+            context: "年に一度しか会えない二人の物語を、会える可能性として受け止める"
+            z_intensity: "medium"
+            z_mode: "resolve"
+          - quote: 'トライ!'
+            context: "母語にない音を無理に矯正せず、新しい掛け声を喜ぶ"
+            z_intensity: "medium"
+            z_mode: "release"
+          - quote: 'なまえ、あると、のこる'
+            context: "その日の遊びへ名前を付けたい理由を説明する"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: 'ぜんぶ、おぼえて、かえる'
+            context: "合宿で経験したことを故郷へ持ち帰る意思を語る"
+            z_intensity: "high"
+            z_mode: "grief"
+          - quote: 'まだ、いる'
+            context: "合宿の翌朝、目覚めても仲間と同じ場所にいることを確かめる"
+            z_intensity: "high"
+            z_mode: "release"
+          - quote: 'よかった'
+            context: "まだ皆と一緒にいると分かって安堵する"
+            z_intensity: "high"
+            z_mode: "release"
+        z_relevance: |
+          「トライ」は誤発音ではなく、少女の音韻に共同体側が合わせて生まれた正式な掛け声である。「アインツ・ツヴァイ・トライ」を「ドライ」へ修正してはならない。日々の奇妙な名前も、意味のなさそのものが記憶を共有する機能を持つ。
+        character_state_change:
+          before: "帰還完了を主な未来として見ている"
+          after: "別れを意識しながら、地球の日々を名付けて持ち帰ろうとする"
+          permanent: true
+        tags: ["iconic_scene", "naming", "language_change", "summer", "memory"]
+
+      - episode_id: "pool_and_first_chill"
+        timeline: "main"
+        chronological_order: 11
+        title: "故郷に似た水と最初の寒気"
+        source_episode: "stargazer_ep16.md / 第16話「Hourglass」"
+        summary: |
+          暑さに弱った少女は学校のプールへ行き、母星では海へ入るのが日常だと話した。地球側を驚かせる速さで泳ぎ、水の星で育った身体性を初めて直接見せる。人工的なかき氷のイチゴ味には、農園の実より母星の味に近いものを感じた。
+          楽しく過ごした帰路、少女は信号前でしゃがみ込む。三十度を超える夕方にもかかわらず「さむい」と訴え、地球環境への適応不全が初めて明確な身体症状として現れた。
+        participants:
+          - name: "主人公"
+            role: "異変に最初に気づいた同行者"
+          - name: "幼なじみ"
+            role: "プール利用と休息を支えた仲間"
+          - name: "技術担当"
+            role: "母星の計時器で泳ぎを測った仲間"
+          - name: "元サッカー部"
+            role: "遊びを共にした仲間"
+        emotional_impact: "critical"
+        emotional_detail: |
+          プールは故郷の生活へ最も近づけた楽しい体験だったが、その直後に身体の限界が表面化した。「来年」も続くように感じられた時間が、急に残り時間へ変わる転換点である。
+        canonical_quotes:
+          - quote: 'わたしの星だと、暑いときは、入るの'
+            context: "暑いときには海へ入る母星の日常を説明する"
+            z_intensity: "low"
+            z_mode: "stable"
+          - quote: 'わたしの星、だいたい、水なの'
+            context: "なぜ泳ぎが特別に速いのかを簡潔に説明する"
+            z_intensity: "medium"
+            z_mode: "stable"
+          - quote: 'こっちのほうが、わたしの星のイチゴに近い'
+            context: "人工的なかき氷シロップに故郷の味を感じる"
+            z_intensity: "medium"
+            z_mode: "release"
+          - quote: '……さむい'
+            context: "猛暑の帰路で突然しゃがみ込み、身体をさすりながら発する"
+            z_intensity: "high"
+            z_mode: "concern"
+        z_relevance: |
+          前半の明るい故郷語りと、最後の小さな「さむい」の落差を保つ。「さむい」は比喩ではなく、環境不適応の最初の重大な兆候であり、弱々しくても情報量の大きい一語である。
+        character_state_change:
+          before: "地球での夏を来年も繰り返せるかのように楽しんでいる"
+          after: "地球環境が身体を損なっていることを示す症状が現れた"
+          permanent: true
+        tags: ["health_decline", "homeworld", "foreshadowing", "summer", "turning_point"]
+
+      - episode_id: "chosen_days_not_guilt"
+        timeline: "main"
+        chronological_order: 12
+        title: "楽しかった日々を罪にしない"
+        source_episode: "stargazer_ep17.md / 第17話「Don't look back in sadness」"
+        summary: |
+          高熱と咳で倒れた少女は、秘密裏に医師の診察を受けた。船の過去データとの比較から、複数系統に同時に異常が出る適応不全の疑いが生じる。
+          主人公が地球へ連れ出した自分の責任だと苦しむと、少女は墜落事故と、その後に自分で選んだ日々を区別した。電車、扉、イチゴ、夏を自分の意思で選び、楽しかったと断言する。主人公へ先回りして終わりを見るのをやめ、今必要なものを尋ねるよう求めた。
+        participants:
+          - name: "主人公"
+            role: "罪悪感を少女に否定された相手"
+          - name: "幼なじみの父"
+            role: "地球基準ではなく差分から診察した医師"
+          - name: "幼なじみ"
+            role: "医療へつないだ仲間"
+          - name: "技術担当"
+            role: "船の生体ログを医療データへ換算した仲間"
+        emotional_impact: "critical"
+        emotional_detail: |
+          身体的には最も弱った状態でありながら、少女は自分の人生の主体であることを強く主張した。自分の喜びを主人公の罪へ変換させず、死や別れの予測ではなく現在の自分を見てほしいと求めた。
+        canonical_quotes:
+          - quote: 'そのあとの日は、全部わたしが選んだ'
+            context: "墜落は事故でも、地球で過ごした日々は自分の選択だと区別する"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: '楽しかったよ'
+            context: "地球での経験を主人公の加害として扱わせないため、本人の評価を明言する"
+            z_intensity: "high"
+            z_mode: "nurture"
+          - quote: '連れ出されてない'
+            context: "主人公の責任という言い方を否定する"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: 'わたしが、行くって言ったの'
+            context: "自分の選択主体を、最初の「いく」と同じ語で取り戻す"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: 'わたしの楽しかったことを、あなたの罪にしないで'
+            context: "主人公の自責へ向けた核心的な依頼"
+            z_intensity: "high"
+            z_mode: "nurture"
+          - quote: 'まだ、終わってないよ'
+            context: "水を受け取って眠る直前、現在が続いていると告げる"
+            z_intensity: "high"
+            z_mode: "resolve"
+        z_relevance: |
+          この場面を少女が主人公を慰めるだけの台詞へ縮めない。彼女は自分の経験の所有権を主張している。「行く」「選んだ」「罪にしないで」の能動性と、「まだ」の現在性を明確に残す必要がある。
+        character_state_change:
+          before: "病状によって守られるだけの患者として扱われかけている"
+          after: "地球での日々を自分の選択として定義し、必要な支援を現在形で求める"
+          permanent: true
+        tags: ["agency", "illness", "guilt", "choice", "critical_conversation"]
+
+      - episode_id: "home_coordinate_restored"
+        timeline: "main"
+        chronological_order: 13
+        title: "見えない故郷の座標"
+        source_episode: "stargazer_ep18.md / 第18話「誤差と真実」"
+        summary: |
+          少女の病状は一度回復したものの、再発間隔は短くなると予測され、早急な帰還が必要になった。母星は地球から常に太陽とほぼ同じ方向にあり、夜空には一度も現れないため、望遠鏡では発見できなかった。
+          技術担当は匿名の専門家の助言から、公開観測データの微小な残差が向く方向を追った。多数の誤差が示す一点を入力すると、Klaudeが母港座標との一致を確認した。黒く欠けていた星図に点が灯り、少女は手を伸ばしてその光へ触れようとし、肩を震わせた。
+        participants:
+          - name: "技術担当"
+            role: "観測残差から座標を復元した協力者"
+          - name: "匿名のオンライン専門家"
+            role: "解析の突破口を与えた助言者"
+          - name: "Klaude Oops 11.3"
+            role: "母港座標の一致を確認した管理系"
+          - name: "主人公"
+            role: "座標復元を見守った同行者"
+        emotional_impact: "critical"
+        emotional_detail: |
+          一年近く方向さえ分からなかった故郷が、初めて到達可能な一点へ戻った。同時に、帰還と地球での別れが抽象的な未来ではなく、実行可能な予定へ変わった。少女は発話せず、震える肩だけが反応として描かれる。
+        canonical_quotes: []
+        z_relevance: |
+          少女の感情を「喜び」「悲しみ」のどちらかへ言語化しすぎない。沈黙と手の動きが両方を含み得る場面である。以後の「そこに、ある」「帰れる」は、見えなくても誤差が示した実在という重みを持つ。
+        character_state_change:
+          before: "故郷を記憶していても、航路を設定できない状態"
+          after: "母港座標が復元され、帰還と別れが現実の予定になった状態"
+          permanent: true
+        tags: ["home_found", "science", "silent_emotion", "turning_point", "coordinates"]
+
+      - episode_id: "caught_before_falling"
+        timeline: "main"
+        chronological_order: 14
+        title: "今度は届いた手"
+        source_episode: "stargazer_ep19.md / 第19話「届かない航路」"
+        summary: |
+          出発の三日前、少女は工具箱を動かそうとして立ち上がった瞬間、身体を横へ崩した。最も近くにいた幼なじみより先に、足場上の主人公が工具を落とし、手すりを越えて約八メートルを駆け、少女の肩と腕をつかんだ。
+          少女は反射的に平気だと言い張ったものの、主人公に促されると素直に座った。墜落の夜には三十センチ届かなかった手が、今回は判断より先に動き、彼女を支えた。
+        participants:
+          - name: "主人公"
+            role: "落下前に身体を支えた相手"
+          - name: "幼なじみ"
+            role: "近くにいながら救助の瞬間を目撃した仲間"
+          - name: "元サッカー部"
+            role: "動きの速さと向きを観察した証人"
+        emotional_impact: "high"
+        emotional_detail: |
+          少女の内面は元サッカー部の視点からは語られない。しかし身体の悪化が隠せない段階に入り、主人公の支えを受け入れた。物語上は最初の「届かなかった手」が、実際に届く関係へ変わった瞬間である。
+        canonical_quotes:
+          - quote: 'へいき'
+            context: "立ち上がった直後に身体を崩しながら、最初に無事を主張する"
+            z_intensity: "medium"
+            z_mode: "concern"
+          - quote: '……へいき'
+            context: "主人公に支えられたあとも、弱く繰り返す"
+            z_intensity: "high"
+            z_mode: "concern"
+          - quote: 'うん'
+            context: "座るよう言われ、抵抗せず受け入れる"
+            z_intensity: "medium"
+            z_mode: "release"
+        z_relevance: |
+          「へいき」は実際の健康状態を示す報告ではなく、弱さを抑える反射的な言葉である。二回目の間と弱まりを保つ。救助場面では速さよりも、主人公の身体が判断前に彼女へ向いたという関係上の意味が重要。
+        character_state_change:
+          before: "症状を抱えながらも作業を続け、自力で動こうとしている"
+          after: "身体の限界が仲間の前で明白になり、主人公の即時の支えを受け入れる"
+          permanent: true
+        tags: ["reached_hand", "health_decline", "rescue", "relationship", "callback"]
+
+      - episode_id: "aquarium_before_departure"
+        timeline: "main"
+        chronological_order: 15
+        title: "帰りたい、離れたくない"
+        source_episode: "stargazer_ep20.md / 第20話「星の中の海」"
+        summary: |
+          出発前日、少女は仲間と水族館を訪れた。故郷に似た水の景色を静かに見つめ、水槽の魚は安全でも外を知らないと語る。その言葉と自分の状況の関係は明言しなかった。
+          主人公と二人になったトンネルで、毎日故郷へ帰りたかったと打ち明ける一方、地球の仲間とは離れたくないと告白した。二人が近づいた十秒間に何が起きたかは不明のまま残る。帰宅後、名前を付けたメダカを主人公へ託した。
+        participants:
+          - name: "主人公"
+            role: "相反する本心を打ち明けられた相手"
+          - name: "幼なじみ"
+            role: "最後の一日を企画し、二人の時間を作った仲間"
+          - name: "名前のついたメダカ"
+            role: "地球へ残して世話を託した友達"
+          - name: "水族館のマンタ"
+            role: "二人の近接した瞬間へ影を落とした存在"
+        emotional_impact: "critical"
+        emotional_detail: |
+          少女は帰郷への望みを一度も捨てていなかったが、地球が単なる異郷ではなく、離れがたい人々のいる場所になっていた。二つの願いを統合せず、そのまま並べて口にしたことが別れの核心である。
+        canonical_quotes:
+          - quote: 'そとを、しらない'
+            context: "安全な水槽から出られない魚について語る"
+            z_intensity: "medium"
+            z_mode: "grief"
+          - quote: '――帰りたいよ'
+            context: "水族館のトンネルで、主人公へ帰郷の本心を明言する"
+            z_intensity: "high"
+            z_mode: "grief"
+          - quote: 'まいにち、かえりたかった'
+            context: "地球を楽しんでいた間も、毎日故郷を望んでいたと伝える"
+            z_intensity: "high"
+            z_mode: "grief"
+          - quote: '……はなれたく、ない'
+            context: "帰りたいという告白に続けて、主人公たちとの別離も拒む"
+            z_intensity: "high"
+            z_mode: "grief"
+          - quote: 'この子、たのむね'
+            context: "出発前夜、名前を付けたメダカの世話を主人公へ託す"
+            z_intensity: "high"
+            z_mode: "nurture"
+        z_relevance: |
+          「帰りたい」と「離れたくない」を矛盾解消させず、両方とも真実として訳す。最初だけ漢字の「帰りたいよ」、続くひらがなの反復、最後のためらいを含む「はなれたく、ない」のリズムを意識する。マンタの影の十秒は、接吻など特定の出来事へ確定しない。
+        character_state_change:
+          before: "帰還を目前にしながら、別れを十分には言葉にしていない"
+          after: "故郷と地球の双方を求める本心を明かし、地球に残す命を託す"
+          permanent: true
+        tags: ["farewell", "confession", "two_homes", "medaka", "critical_relationship"]
+
+      - episode_id: "shared_pilot_decision"
+        timeline: "main"
+        chronological_order: 16
+        title: "一人では帰れない"
+        source_episode: "stargazer_ep21.md / 第21話「fly me to the star」"
+        summary: |
+          出発直前、衰弱した少女は八十時間の航行を続ける操縦適性がないと判定された。有人時の完全自律航行も規定で禁じられ、少女は地球へ残ると言い出す。残れば死ぬ可能性を否定できなかった。
+          主人公が操縦者として同行すると申し出ると、少女は彼が帰れない危険を理由に拒んだ。主人公が恐怖を認めたうえで行くと決めると、声を出さずに泣き、同行を受け入れた。必要な訓練のため、出発は五日延期された。
+        participants:
+          - name: "主人公"
+            role: "往復の操縦を引き受けた同行者"
+          - name: "Klaude Oops 11.3"
+            role: "操縦適性と規定を判定した管理系"
+          - name: "技術担当"
+            role: "規定を破らず人が見る必要性を説明した仲間"
+          - name: "元サッカー部"
+            role: "自らも操縦候補へ志願した仲間"
+          - name: "幼なじみ"
+            role: "少女の背へ手を置いて支えた仲間"
+        emotional_impact: "critical"
+        emotional_detail: |
+          少女は自分が助かるために主人公を危険へ巻き込みたくなく、帰郷を諦めようとした。しかし主人公が自分の選択として恐怖ごと引き受けたことで、単独帰還から二人の航行へ未来が変わった。五日の延期を、別れの猶予としても受け取った。
+        canonical_quotes:
+          - quote: 'いかなくて、いい'
+            context: "自分に操縦適性がないと判明し、帰還そのものを諦めようとする"
+            z_intensity: "high"
+            z_mode: "grief"
+          - quote: 'ここに、いる'
+            context: "身体が地球に耐えないと分かりながら、仲間を危険へ巻き込まない選択を示す"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: 'あなた、かえれない'
+            context: "主人公の同行案へ、帰還できない可能性を突きつける"
+            z_intensity: "high"
+            z_mode: "concern"
+          - quote: 'こわくない?'
+            context: "主人公が未知の往復航行を選ぶことへの恐怖を確認する"
+            z_intensity: "high"
+            z_mode: "concern"
+          - quote: 'あと五日、いられるってことだよね'
+            context: "訓練時間による延期を、皆といられる追加の時間として捉える"
+            z_intensity: "high"
+            z_mode: "release"
+        z_relevance: |
+          「ここに、いる」は地球を選んで帰郷願望を捨てた台詞ではなく、主人公を守るための自己犠牲である。「こわくない？」に対する主人公の即答と合わせ、勇気を無恐怖として訳さない。最後の五日は安堵と別れの延期が同居する。
+        character_state_change:
+          before: "一人で母星へ帰る予定だったが、身体的に操縦不能となった"
+          after: "主人公と危険を共有し、二人で母星へ向かうことを受け入れた"
+          permanent: true
+        tags: ["shared_journey", "self_sacrifice", "pilot", "choice", "turning_point"]
+
+      - episode_id: "farewell_launch"
+        timeline: "main"
+        chronological_order: 17
+        title: "アインツ、ツヴァイ、トライ"
+        source_episode: "stargazer_ep22.md / 第22話「アインツ、ツヴァイ、トライ。」"
+        summary: |
+          主人公の訓練が完了し、少女は父が追加で届けた断熱材を船へ貼る作業に参加した。幼なじみが焼いた芋を断熱材で包み、地球から持ち帰る食べ物として受け取る。
+          出発前、幼なじみから主人公を必ず返すよう頼まれ、指切りで約束した。水槽を最後に見たあと主人公と乗船し、仲間の掛け声に合わせて離陸する。三つの声で船が飛び、四つ目の「スター」は大気圏を抜けてから口にした。
+        participants:
+          - name: "主人公"
+            role: "共に母星へ向かう操縦者"
+          - name: "幼なじみ"
+            role: "主人公の帰還を託し、焼き芋を持たせた仲間"
+          - name: "技術担当"
+            role: "船を最終確認した仲間"
+          - name: "元サッカー部"
+            role: "地上から見送った仲間"
+          - name: "主人公の父"
+            role: "断熱材を間接的に託した支援者"
+        emotional_impact: "critical"
+        emotional_detail: |
+          地球で得た人、食べ物、言葉、修理部品を船へ積み、少女は二つの世界を物理的にも結びつけて出発した。地球の家と友達を残す悲しみを抱えながら、帰郷へ向けて実際に飛び立った解放の瞬間でもある。
+        canonical_quotes:
+          - quote: 'かんしょうざい、きれい'
+            context: "父が届けた断熱材で銀色になった船体を見上げる"
+            z_intensity: "medium"
+            z_mode: "release"
+          - quote: 'かえす'
+            context: "幼なじみに、主人公を地球へ帰すと約束する"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: 'やくそく'
+            context: "指切りの意味を教わり、約束として受け入れる"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: 'アインツ・ツヴァイ・トライ'
+            context: "大気圏を抜けたあと、地球で作った掛け声を繰り返す"
+            z_intensity: "high"
+            z_mode: "release"
+          - quote: 'スター'
+            context: "飛ぶ前には言わなかった四つ目を、実際に宇宙へ出てから告げる"
+            z_intensity: "high"
+            z_mode: "release"
+        z_relevance: |
+          発射時は「アインツ／ツヴァイ／トライ」までで船が飛び、「スター」は飛んだ後に置かれる。この順序が題名と関係の完成を担うため崩さない。「かえす」は主人公を物のように返す意味ではなく、幼なじみから命を預かる約束である。
+        character_state_change:
+          before: "地球の工場で別れを待つ帰還者"
+          after: "地球の記憶と主人公を乗せ、母星へ向けて飛び立った同乗者"
+          permanent: true
+        tags: ["launch", "farewell", "promise", "iconic_scene", "countdown"]
+
+      - episode_id: "seventh_sector_crossing"
+        timeline: "main"
+        chronological_order: 18
+        title: "第七宙域で握った手"
+        source_episode: "stargazer_ep23.md / 第23話「第七宙域」"
+        summary: |
+          航行中、少女は地球で自分が質問を続けたときとは逆に、宇宙を見て質問する主人公を楽しそうに見守った。焼き芋を包んだ断熱材を、主人公の父と幼なじみの二人が一緒になったものとして大切に残す。
+          通信不能の第七宙域で破片が船を損傷すると、修理へ向かう主人公を強く止めたが、三十分で戻るという約束を受け入れて数え続けた。自身の容体も悪化するなか、主人公と手を握り、母星語の歌と掛け声を共に唱える。最後にKlaudeを呼ぶと、管理系は応答した。
+        participants:
+          - name: "主人公"
+            role: "手を握り、危険な航路を共に進む操縦者"
+          - name: "Klaude Oops 11.3"
+            role: "判断を操縦者へ委ね、呼びかけへ応答した管理系"
+          - name: "主人公の父"
+            role: "断熱材を通じて船を守った不在の支援者"
+          - name: "幼なじみ"
+            role: "焼き芋と包みを通じて同行する不在の仲間"
+        emotional_impact: "critical"
+        emotional_detail: |
+          少女は自分の帰還が近づくほど衰弱しながら、主人公の安全を恐れ続けた。墜落時には届かなかった「halda」の願いが、この航行では実際に握られた手として成立する。母星語と地球で作った掛け声も一つにつながった。
+        canonical_quotes:
+          - quote: 'みてた。あなたを'
+            context: "主人公が宇宙について質問し続ける間、何を見ていたのか答える"
+            z_intensity: "high"
+            z_mode: "nurture"
+          - quote: 'ふたつ、いっしょ'
+            context: "父の断熱材と幼なじみの焼き芋の包みを、二人の贈り物として抱える"
+            z_intensity: "high"
+            z_mode: "nurture"
+          - quote: 'かぞえてた'
+            context: "船外修理へ出た主人公の帰還まで、時間を数え続けていたと答える"
+            z_intensity: "high"
+            z_mode: "concern"
+          - quote: 'それでも、いく?'
+            context: "主人公が恐怖を認めながら危険な出力上昇を選ぶことを確認する"
+            z_intensity: "high"
+            z_mode: "concern"
+          - quote: 'halda, halda, halda mér'
+            context: "主人公と手を握り、母星語の歌を共に唱える"
+            z_intensity: "high"
+            z_mode: "release"
+          - quote: 'KLAUDE'
+            context: "歌と掛け声の最後に船舶管理系を呼び、初めて明示的な応答を受ける"
+            z_intensity: "high"
+            z_mode: "release"
+        z_relevance: |
+          母星語の綴り、アクセント、大小文字を維持する。「halda, halda, halda mér」は後に「掴んで、わたしを」と読めるため、初回の「halda」と対応させる。「KLAUDE」への「はい」は、Episode 0から続く呼びかけと応答の関係を完結させる。
+        character_state_change:
+          before: "主人公に守られながら母星へ向かう、衰弱した同乗者"
+          after: "危険と恐怖を主人公と共有し、実際に手を握られたまま故郷目前まで到達する"
+          permanent: true
+        tags: ["space_travel", "danger", "held_hand", "mother_tongue", "mutual_care"]
+
+      - episode_id: "homeworld_arrival"
+        timeline: "main"
+        chronological_order: 19
+        title: "星の中の海へ帰る"
+        source_episode: "stargazer_ep24.md / 第24話「Stargazer」"
+        summary: |
+          少女は地球よりも青い母星を窓越しに確認し、主人公の支えを受けて着陸した。故郷の白い床へ両足をつけた瞬間、その場にしゃがみ込み、初めて声を出して泣いた。感情が安堵か悲しみかは説明されない。
+          母星の人々と医療班に迎えられ、担架で治療施設へ運ばれる。主人公にきちんと治すよう言われると応じ、今度は主人公自身が地球へきちんと帰るよう繰り返した。二人はそこで別れた。
+        participants:
+          - name: "主人公"
+            role: "故郷まで送り届け、帰還を約束した相手"
+          - name: "母星で迎えた人物"
+            role: "少女を支え、主人公へ感謝した母星人"
+          - name: "母星の医療班"
+            role: "少女を治療へ運んだ人々"
+          - name: "翻訳機"
+            role: "主人公と母星側の会話をつないだ装置"
+        emotional_impact: "critical"
+        emotional_detail: |
+          少女は望み続けた故郷へ到着したが、身体は自力で歩き続けられないほど弱っていた。帰還の達成、地球との別離、治療結果への不確実さが同時に存在する。主人公の帰還を求めることで、幼なじみとの約束も果たそうとした。
+        canonical_quotes:
+          - quote: '……ありがと'
+            context: "タラップを降りる際、ふらついた身体を主人公に支えられる"
+            z_intensity: "high"
+            z_mode: "release"
+          - quote: 'なおす'
+            context: "主人公から身体をちゃんと治すよう言われ、約束する"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: 'あなたも'
+            context: "自分だけでなく主人公にも果たすべき帰還があると返す"
+            z_intensity: "high"
+            z_mode: "nurture"
+          - quote: 'ちゃんと、かえって'
+            context: "担架で運ばれる直前、主人公へ地球への無事な帰還を求める"
+            z_intensity: "high"
+            z_mode: "nurture"
+        z_relevance: |
+          声を出して泣く理由を安堵だけ、悲嘆だけに固定しない。「ちゃんと」は主人公が少女へ使った語をそのまま返す相互の約束であり、幼なじみとの「かえす」にもつながる。通常の別れの挨拶を補わず、実務的な言葉だけが残る余白を守る。
+        character_state_change:
+          before: "母星目前で生命が危ぶまれる帰還者"
+          after: "故郷へ到着して治療を受け始め、主人公とは離れた状態"
+          permanent: true
+        tags: ["homecoming", "separation", "treatment", "promise", "release"]
+
+      - episode_id: "voice_across_fourteen_months"
+        timeline: "main"
+        chronological_order: 20
+        title: "十四か月後の声"
+        source_episode: "stargazer_epilogue.md / Epilogue「Stargazer -星図のあとで-」"
+        summary: |
+          主人公たちは墜落地点に受信塔を建て、母星からの通信を待ち続けた。十四か月にわたり受信記録が「なし」と続いた後、ノイズの中から周期的な信号が検出される。
+          途切れた音声は、独特の発音から主人公が少女のものだと確信できる声で「聞こえる？」と問いかけた。治療の結果やその間の生活は語られないが、少女の声は二つの星の隔たりを越えて地球へ届いた。
+        participants:
+          - name: "主人公"
+            role: "十四か月待ち続け、通信へ応答した相手"
+          - name: "技術担当"
+            role: "受信塔の建設を提案した仲間"
+          - name: "幼なじみ"
+            role: "受信塔建設と待機を支えた仲間"
+          - name: "元サッカー部"
+            role: "受信塔建設に参加した仲間"
+        emotional_impact: "critical"
+        emotional_detail: |
+          母星到着後の生死や回復が分からない長い沈黙を破り、少女自身から接続を確かめる声が届いた。完全な回復は確認できないものの、関係が別れで閉じなかったことが初めて証明された。
+        canonical_quotes:
+          - quote: '――……こえる?'
+            context: "ノイズに欠けながら最初に受信された、少女と強く推定される音声"
+            z_intensity: "high"
+            z_mode: "release"
+          - quote: '聞こえる?'
+            context: "信号が明瞭になり、主人公が少女の声だと確信する問い"
+            z_intensity: "high"
+            z_mode: "release"
+        z_relevance: |
+          通信の欠落した最初の形と、明瞭になった二回目を分ける。短い「聞こえる？」は単なる通信確認であると同時に、翻訳、観測、応答を積み重ねた全編の帰結である。治癒済みなど本文にない情報は補わない。
+        character_state_change:
+          before: "母星で治療中としか分からず、地球とは十四か月連絡がない"
+          after: "自分の声を地球へ届け、主人公との接続を再開する"
+          permanent: true
+        tags: ["reconnection", "signal", "voice", "hope", "epilogue"]
+
+arcs:
+  - arc_id: "lost_and_found_home"
+    title: "失われた故郷と二つの家"
+    episodes:
+      - "departure_without_destination"
+      - "return_wish_and_missing_coordinates"
+      - "factory_called_home"
+      - "home_coordinate_restored"
+      - "aquarium_before_departure"
+      - "farewell_launch"
+      - "homeworld_arrival"
+      - "voice_across_fourteen_months"
+    theme: "母港座標を失った少女が、地球にも家と呼べる場所を得たうえで故郷へ帰り、二つの星を通信で結び直す過程。"
+    character_growth: |
+      当初の少女にとって帰る場所は失われた座標だった。共同作業場を「いえ」と呼び、地球を離れたくないと認めたことで、帰郷は一方の世界を捨てる行為ではなくなる。最終的に母星へ戻っても、地球との関係は声によって継続する。
+    z_translation_note: |
+      「かえる」は帰郷、主人公の地球帰還、幼なじみへ主人公を返す約束という複数の向きを持つ。「いえ」も建物だけでなく共同体を指すため、各場面の方向と対象を明示しつつ語の反復を保つ。
+
+  - arc_id: "different_without_becoming_same"
+    title: "同じにならずに噛み合う"
+    episodes:
+      - "threads_between_worlds"
+      - "sourness_that_remains"
+      - "fish_are_friends"
+      - "factory_called_home"
+      - "named_summer_days"
+    theme: "規格、言語、食文化、倫理が違っても、片方を消さずに接続方法を作れるという学び。"
+    character_growth: |
+      少女は異星船の部品、栽培方法、魚食、発音の違いを経験する。違いを誤りや優劣へ変換せず、自分の境界を守りながら他者の方法も認めるようになる。仲間側の言葉も「トライ」へ変わり、適応は双方向になる。
+    z_translation_note: |
+      少女の簡素な「ちがう」「おなじじゃなくて、いい」を未熟な発言として修正しない。意味の精度は高く、作品の翻訳思想を担う。文化衝突では奇異さより、線を引く場所の違いを優先する。
+
+  - arc_id: "names_language_and_voice"
+    title: "名前のない少女から届く声へ"
+    episodes:
+      - "return_wish_and_missing_coordinates"
+      - "threads_between_worlds"
+      - "named_summer_days"
+      - "farewell_launch"
+      - "seventh_sector_crossing"
+      - "voice_across_fourteen_months"
+    theme: "日本語に対応しない名前、翻訳機への依存、直接会話、日々の命名、母星語の歌、遠距離通信まで続く言語の軌跡。"
+    character_growth: |
+      固有名を訳せなかった少女は、覚えた日本語で意思を示し、不完全な言葉でも主人公と感情を共有する。さらに自分の音韻で共同の掛け声を変え、名前を付けて記憶を残す。最後には自分の声そのものを地球へ届ける。
+    z_translation_note: |
+      翻訳機の平坦で整った文、少女の短い日本語、母星語の原音を混同しない。「トライ」は誤植修正せず、母星語の綴りと発音記号も統一する。固有名が本文に音写されない事実を守り、新しい名前を創作しない。
+
+  - arc_id: "reaching_and_holding_hands"
+    title: "届かなかった手から握った手へ"
+    episodes:
+      - "falling_light_unreached_hand"
+      - "speaking_to_father"
+      - "chosen_days_not_guilt"
+      - "caught_before_falling"
+      - "shared_pilot_decision"
+      - "seventh_sector_crossing"
+      - "homeworld_arrival"
+    theme: "墜落時に届かなかった手が、理解、救助、同行、航行中の接触を経て実際に互いを支える手へ変わる。"
+    character_growth: |
+      少女は最初、未知の主人公へ「halda」と助けを求めた。後に、届かなかった結果より伸ばした行為を覚えていると父へ伝える。病気の際には必要なものを尋ねさせ、倒れた身体を支えられ、宇宙では自ら主人公の手を握る。助けは一方向ではなくなる。
+    z_translation_note: |
+      「伸ばす」「届く」「掴む」「握る」の語彙を場面間で対応させる。特に「halda」の意味を初出で先取りせず、後の辞書判明と「halda mér」で感情的な意味が完成する構造を守る。
+
+  - arc_id: "body_time_and_agency"
+    title: "地球に属さない身体と、自分で選んだ時間"
+    episodes:
+      - "speaking_to_father"
+      - "pool_and_first_chill"
+      - "chosen_days_not_guilt"
+      - "caught_before_falling"
+      - "aquarium_before_departure"
+      - "shared_pilot_decision"
+      - "homeworld_arrival"
+      - "voice_across_fourteen_months"
+    theme: "地球を愛していても身体が環境に耐えられない少女が、病状によって選択主体を奪われることを拒み、自分の帰還と別れを選ぶ物語。"
+    character_growth: |
+      少女は早い段階から身体が地球のものではないと理解していた。症状が深刻化しても、楽しかった日々を主人公の罪にさせず、自分が選んだと主張する。帰りたい気持ちと離れたくない気持ち、主人公を危険にさらしたくない気持ちをすべて抱えたまま、最終的に同行を受け入れて故郷へ到達する。
+    z_translation_note: |
+      少女を受動的な病人や自己犠牲的な慰撫役だけにしない。「選んだ」「行く」「だめ」「帰りたい」は彼女自身の判断である。病状の深刻さと、短い日本語に宿る強い主体性を同時に表現する。

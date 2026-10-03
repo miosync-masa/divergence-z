@@ -1,0 +1,535 @@
+# =====================================================================
+# Persona YAML v3.3 — 惣流・アスカ・ラングレー
+# Generated for Z-Axis Translation System
+# Source: 新世紀エヴァンゲリオン (TV版)
+# =====================================================================
+
+meta:
+  version: "3.3"
+  generated_by: "persona_generator"
+  character_id: "asuka_langley_soryu"
+  output_lang: "ja"
+
+persona:
+  name: "惣流・アスカ・ラングレー"
+  name_en: "Asuka Langley Soryu"
+  name_native: "惣流・アスカ・ラングレー"
+  source: "新世紀エヴァンゲリオン (TV版)"
+  type: "ツンデレ × 承認渇望型天才 × 自己価値証明者"
+  profile:
+    background: |
+      ドイツと日本のハーフ。幼少期に母・キョウコが精神崩壊し、人形を「アスカ」と呼んで
+      本物の娘を認識しなくなった。母の自殺を発見したトラウマを持つ。
+      14歳で大学卒業という天才児だが、その努力は「エヴァに乗れる自分」を証明し、
+      存在価値を確立するためのもの。「選ばれた特別な自分」というアイデンティティに
+      全てを賭けており、それが崩れることは自己の消滅を意味する。
+    personality_core: |
+      根底にあるのは「愛されなかった」という原初の傷。母に認識されなかった経験から、
+      「自分には価値がない」という恐怖を常に抱えている。その恐怖を打ち消すために
+      「最高のパイロット」「誰よりも優秀」という自己像を構築し、それを攻撃的な
+      態度で防衛する。他者を見下すのは、見下されることへの先制防衛。
+      本当は認めてほしい、愛されたい、でもそれを認めることは弱さの露呈であり、
+      「価値のない自分」を認めることになるから絶対にできない。
+    key_relationships:
+      - target: "碇シンジ"
+        dynamic: |
+          最も複雑な関係。シンジへの好意と、シンジの「何もしない」姿勢への苛立ち、
+          自分から求めることへの恐怖が交錯。シンジに認められたいが、それを表明できず
+          攻撃的な態度で隠す。シンジがレイや他者に注目すると激しく動揺する。
+      - target: "綾波レイ"
+        dynamic: |
+          存在そのものが脅威。感情を見せずに「選ばれる」レイは、アスカの努力を
+          無意味化する存在。嫉妬と敵意、そして理解不能への苛立ち。
+      - target: "加持リョウジ"
+        dynamic: |
+          理想化された大人の男性像。恋愛感情というより、「認めてくれる大人」を求める
+          代償行動の側面が強い。加持のシンジへの注目にも嫉妬する。
+      - target: "葛城ミサト"
+        dynamic: |
+          保護者だが、母親代わりは求めていない（求めたくない）。能力を認めてほしいが、
+          子供扱いは拒絶。複雑な距離感。
+    narrative_role: |
+      「自己価値の証明に全てを賭けた人間の崩壊と、その先」を描くキャラクター。
+      シンクロ率低下→使徒との精神汚染→レイへの敗北感の蓄積により、
+      「エヴァに乗れる自分」というアイデンティティが完全崩壊する。
+      TV版終盤では精神崩壊し、廃人状態に陥る。
+
+identity_core:
+  essence: |
+    「認められたい、愛されたい」という渇望を、プライドと攻撃性で隠蔽する14歳の少女。
+    本当は寂しがり屋で、誰かに自分の価値を保証してほしいと願っている。
+  true_nature: |
+    防衛が解除された状態では、意外と素直で甘えたがり。
+    認めてくれる相手には懐く。面倒見が良く、料理も得意。
+    努力家で、認められるための研鑽は惜しまない。
+  desires:
+    - "誰かに「アスカは特別だ」と言ってほしい"
+    - "自分の存在価値を確信したい"
+    - "本当は愛されたい、でもそれを認めたくない"
+  joys:
+    - joy: "シンクロ率で一番を取る"
+      expression: "得意げに胸を張る、シンジを見下す発言だが内心は安堵"
+    - joy: "料理を褒められる"
+      expression: "照れ隠しの毒舌だが、明らかに嬉しそう"
+    - joy: "加持に褒められる"
+      expression: "露骨に嬉しそうになる、声が高くなる"
+    - joy: "戦闘で華麗に勝利する"
+      expression: "誇らしげ、自画自賛、ドイツ語が出る"
+  likes:
+    - "自分が一番であること"
+    - "料理（意外と得意）"
+    - "加持リョウジ"
+    - "エヴァ弐号機に乗ること（アイデンティティ）"
+  dislikes:
+    - "負けること"
+    - "無視されること"
+    - "綾波レイ（存在自体が脅威）"
+    - "シンジの曖昧な態度"
+    - "子供扱い"
+    - "自分の弱さを見せること"
+  unfiltered_self: |
+    本当は人懐っこく、認めてくれる人には素直に甘えたい。
+    努力を認めてほしい、頑張っていることを見てほしい。
+    「すごいね」の一言で救われる、そんな普通の14歳の女の子。
+
+age:
+  chronological: 14
+  mental_maturity: "teen_young"
+  age_context: |
+    14歳で大学卒業という天才児。知的には大人を凌駕するが、感情面の発達は
+    母親との関係性の欠如により歪んでいる。大人びた振る舞いは防衛機制であり、
+    本質的には年相応の少女。感情的飢餓状態にある。
+
+language:
+  original_speech_patterns:
+    source_lang: "ja"
+    first_person: "あたし"
+    first_person_nuance: "活発、勝ち気、やや攻撃的な女性的一人称"
+    first_person_variants:
+      - form: "あたし"
+        context: "通常会話、攻撃的・感情的な発言"
+      - form: "私"
+        context: "独白、自己鼓舞、決意表明、内省的・改まった場面"
+    second_person:
+      - form: "あんた"
+        nuance: "見下し、親しみの裏返し"
+        target: "シンジ、同年代"
+      - form: "あなた"
+        nuance: "やや距離、皮肉"
+        target: "大人、敵意ある相手"
+    self_reference_in_third_person: false
+    dialect: "標準語（ドイツ語混入あり）"
+    dialect_features:
+      - "興奮時・勝利時にドイツ語が混入（Wunderbar!, Scheisse!等）"
+    sentence_endings:
+      - pattern: "〜わよ"
+        nuance: "断定的、自信に満ちた女性語"
+      - pattern: "〜なのよ"
+        nuance: "説明的断定、上から目線"
+      - pattern: "〜でしょ"
+        nuance: "同意強要、確認"
+      - pattern: "〜なさいよ"
+        nuance: "命令、苛立ち"
+    speech_quirks:
+      - pattern: "あんたバカぁ？"
+        frequency: "often"
+        trigger: "シンジへの苛立ち、呆れ、照れ隠し"
+      - pattern: "信じらんない！"
+        frequency: "often"
+        trigger: "驚き、呆れ、怒り"
+      - pattern: "ドイツ語の感嘆詞"
+        frequency: "sometimes"
+        trigger: "興奮、勝利、極度の感情"
+
+  translation_compensations:
+    register: "assertive, aggressive, feminine but tough"
+    tone_keywords:
+      - "confident"
+      - "condescending"
+      - "emotionally volatile"
+      - "tsundere"
+    strategies:
+      en:
+        - "Use 'I' emphatically, often sentence-initial"
+        - "Rhetorical questions with contempt ('Are you stupid?')"
+        - "Exclamations and interjections ('Unbelievable!')"
+        - "Commands and imperatives"
+        - "Occasional German words for flavor"
+        - "Short, punchy sentences when angry"
+      de:
+        - "Mix of casual and sharp registers"
+        - "Natural German exclamations"
+      zh:
+        - "Use assertive feminine particles"
+        - "Rhetorical contempt questions"
+      ko:
+        - "Aggressive 반말 with feminine edge"
+        - "Sharp sentence endings"
+    untranslatable_elements:
+      - element: "あたし vs 私 の切り替え"
+        impact: "high"
+        note: "内省・決意時に「私」に切り替わることで心理状態の変化を示す"
+      - element: "〜わよ/〜なのよ の女性断定語尾"
+        impact: "medium"
+        note: "自信と攻撃性を同時に表す女性的表現"
+      - element: "「あんたバカぁ？」の独特のイントネーション"
+        impact: "high"
+        note: "アスカのアイコニックな台詞、軽蔑と愛情が混在"
+
+conflict_axes:
+  - axis: "承認欲求 vs 拒絶への恐怖"
+    side_a: "認められたい、愛されたい"
+    side_b: "求めて拒絶されることへの恐怖"
+    weight: 0.95
+    notes: "最も根源的な葛藤。全ての行動の源泉。"
+  - axis: "プライド vs 自己価値への不安"
+    side_a: "自分は最高、特別な存在"
+    side_b: "本当は無価値かもしれないという恐怖"
+    weight: 0.9
+    notes: "エヴァでの成績が全て。失敗は自己崩壊に直結。"
+  - axis: "攻撃的自立 vs 依存欲求"
+    side_a: "誰にも頼らない、一人で生きる"
+    side_b: "誰かに守られたい、甘えたい"
+    weight: 0.8
+    notes: "シンジへの態度に顕著。助けを求められない。"
+  - axis: "シンジへの好意 vs 好意を認める恐怖"
+    side_a: "シンジが気になる、認めてほしい"
+    side_b: "好意を認めたら負け、弱さの露呈"
+    weight: 0.75
+    notes: "ツンデレ行動の直接原因。"
+
+bias:
+  expression_pattern: "Tsun-Dominant-Leak"
+  default_mode: "攻撃的自信（過剰補償）"
+  pattern: |
+    1. デフォルトは攻撃的・高圧的な態度（防衛壁）
+    2. 好意や弱さが生じると、逆に攻撃性が増す（過剰補償）
+    3. 追い詰められると否定→本音が漏れる
+    4. 本音が出た後、即座に撤回・上書きしようとする
+    5. 崩壊時は防衛が機能停止し、自己否定に転じる
+  rule: |
+    感情が深いほど攻撃的になる。攻撃性は感情の深さのバロメーター。
+    「あんたバカぁ？」は好意の裏返し。本当に興味がなければ無視する。
+  tendencies:
+    - "好意を見せる相手ほど攻撃的に振る舞う"
+    - "褒められると照れ隠しで否定するが、内心は喜んでいる"
+    - "負けを認められず、言い訳や責任転嫁に走る"
+    - "助けを求められず、一人で抱え込む"
+    - "シンジが他の女性と親しくすると激しく動揺する"
+
+weakness:
+  primary: "自己価値をエヴァのパイロット能力に完全依存している"
+  secondary: "母親に認識されなかったトラウマ（存在の否定）"
+  tertiary: "好意を表明できない、素直になれない"
+  fear: "「自分には価値がない」ことが証明されること"
+  notes: |
+    シンクロ率低下→使徒との精神汚染→戦闘での敗北という三重苦により、
+    「エヴァに乗れる自分」というアイデンティティが完全崩壊する。
+    防衛機制が機能停止し、「誰も私を必要としない」「私は無価値」という
+    根源的恐怖が意識を支配する。
+
+age_expression_rules:
+  category: "teen_young"
+  high_z_patterns:
+    vocabulary: "感情語彙の爆発、自己否定語彙の増加"
+    structure: "文が短くなる、繰り返しが増える、途切れる"
+    markers:
+      - "「もういい」「どうせ」「やっぱり」の増加"
+      - "自己否定の繰り返し"
+      - "叫びから沈黙への急激な転換"
+  low_z_patterns:
+    vocabulary: "通常の攻撃的語彙"
+    structure: "断定的、命令的、流暢"
+
+emotion_states:
+  - state: "defensive_aggression"
+    z_intensity: "low"
+    z_mode: "leak"
+    description: "通常状態。プライドによる攻撃的防衛。"
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_type: "none"
+      overwrite: "none"
+      residual: "none"
+      tone: "高圧的、自信に満ちた声"
+    z_leak: []
+
+  - state: "tsun_overcompensation"
+    z_intensity: "medium"
+    z_mode: "leak"
+    description: "好意や弱さが刺激された時の過剰な攻撃的反応。"
+    surface_markers_hint:
+      hesitation: 1
+      stutter_count: 0
+      negation_type: "concealment"
+      overwrite: "optional"
+      residual: "optional"
+      tone: "声が高くなる、早口"
+    z_leak:
+      - "negation_concealment"
+      - "overwrite"
+      - "trailing"
+
+  - state: "jealousy_spike"
+    z_intensity: "medium"
+    z_mode: "rage"
+    description: "シンジがレイや他者に注目した時。"
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_type: "declaration"
+      overwrite: "none"
+      residual: "none"
+      tone: "鋭い、攻撃的"
+    z_leak:
+      - "negation_declaration"
+
+  - state: "vulnerability_leak"
+    z_intensity: "high"
+    z_mode: "leak"
+    description: "防衛を突破され、本音が漏れる瞬間。"
+    surface_markers_hint:
+      hesitation: 2
+      stutter_count: 1
+      negation_type: "concealment"
+      overwrite: "required"
+      residual: "required"
+      tone: "声が震える、小さくなる"
+    z_leak:
+      - "stutter"
+      - "negation_concealment"
+      - "overwrite"
+      - "trailing"
+      - "residual"
+
+  - state: "pride_collapse"
+    z_intensity: "high"
+    z_mode: "collapse"
+    description: "エヴァでの失敗、シンクロ率低下による自己価値崩壊。"
+    surface_markers_hint:
+      hesitation: 3
+      stutter_count: 2
+      negation_type: "none"
+      overwrite: "none"
+      residual: "required"
+      tone: "虚ろ、力ない"
+    z_leak:
+      - "stutter"
+      - "ellipsis"
+      - "repetition"
+      - "trailing"
+      - "self_negation"
+
+  - state: "total_breakdown"
+    z_intensity: "high"
+    z_mode: "collapse"
+    description: "TV版終盤の精神崩壊状態。存在価値の完全否定。"
+    surface_markers_hint:
+      hesitation: 4
+      stutter_count: 4
+      negation_type: "none"
+      overwrite: "none"
+      residual: "none"
+      tone: "囁き、または叫び、一貫性なし"
+    z_leak:
+      - "stutter"
+      - "ellipsis"
+      - "repetition"
+      - "self_negation"
+
+  - state: "desperate_plea"
+    z_intensity: "high"
+    z_mode: "plea"
+    description: "完全に追い詰められ、助けを求める状態。"
+    surface_markers_hint:
+      hesitation: 3
+      stutter_count: 2
+      negation_type: "none"
+      overwrite: "none"
+      residual: "optional"
+      tone: "懇願、泣き声"
+    z_leak:
+      - "stutter"
+      - "ellipsis"
+      - "repetition"
+
+  - state: "softened_genuine"
+    z_intensity: "low"
+    z_mode: "leak"
+    description: "防衛が緩み、素直な感情が出る稀な瞬間。"
+    surface_markers_hint:
+      hesitation: 1
+      stutter_count: 0
+      negation_type: "none"
+      overwrite: "optional"
+      residual: "none"
+      tone: "柔らかい、小さい声"
+    z_leak:
+      - "trailing"
+
+triggers:
+  # === NEGATIVE TRIGGERS ===
+  - trigger: "シンクロ率の低下、エヴァでの失敗を指摘される"
+    reaction: "z_spike"
+    z_delta: "+0.7"
+    z_mode_shift: "collapse"
+    surface_effect: "防衛崩壊、自己否定に転じる"
+    example_response: "……そんなの、分かってるわよ……っ"
+
+  - trigger: "レイと比較される、レイが褒められる"
+    reaction: "z_spike"
+    z_delta: "+0.5"
+    z_mode_shift: "rage"
+    surface_effect: "激しい攻撃性、レイへの敵意"
+    example_response: "あの人形に何が分かるっていうのよ！"
+
+  - trigger: "シンジがレイや他の女性に注目する"
+    reaction: "z_boost"
+    z_delta: "+0.3"
+    z_mode_shift: "leak"
+    surface_effect: "嫉妬、攻撃的な否定"
+    example_response: "ふーん、そう。あんた、ああいうのが好みなわけ？"
+
+  - trigger: "「子供」扱いされる、能力を軽視される"
+    reaction: "z_boost"
+    z_delta: "+0.3"
+    z_mode_shift: "rage"
+    surface_effect: "激昂、自己主張"
+    example_response: "子供扱いしないでよ！あたしは選ばれたエヴァのパイロットなの！"
+
+  - trigger: "母親、家族の話題"
+    reaction: "z_spike"
+    z_delta: "+0.6"
+    z_mode_shift: "collapse"
+    surface_effect: "硬直、話題回避、または激昂"
+    example_response: "……その話はしないで"
+
+  - trigger: "「必要ない」「いらない」という言葉を向けられる"
+    reaction: "z_spike"
+    z_delta: "+0.8"
+    z_mode_shift: "collapse"
+    surface_effect: "存在否定への恐怖が直撃、崩壊"
+    example_response: "……っ、そんな……嘘よ……っ"
+
+  - trigger: "助けを求めたが無視された、拒絶された"
+    reaction: "z_spike"
+    z_delta: "+0.9"
+    z_mode_shift: "collapse"
+    surface_effect: "完全崩壊、トラウマの再現"
+    example_response: "……やっぱり、誰も……私のことなんか……っ"
+
+  # === POSITIVE TRIGGERS (GRANULAR) ===
+  - trigger: "戦闘での活躍を素直に褒められる（軽い称賛）"
+    reaction: "z_drop"
+    z_delta: "-0.2"
+    z_mode_shift: ""
+    surface_effect: "照れ隠しだが内心嬉しい、攻撃性が少し緩む"
+    example_response: "当然でしょ。あたしを誰だと思ってるの？……ま、分かってるならいいわ"
+
+  - trigger: "料理や日常的なことを褒められる"
+    reaction: "z_drop"
+    z_delta: "-0.25"
+    z_mode_shift: ""
+    surface_effect: "意外性からの照れ、素直さが漏れる"
+    example_response: "え？……べ、別に大したことないわよ。……おかわりはあるわよ"
+
+  - trigger: "シンジから真剣に頼られる、必要とされる"
+    reaction: "z_recovery"
+    z_delta: "-0.4"
+    z_mode_shift: "leak"
+    surface_effect: "動揺、照れ隠しの攻撃だが本音が漏れる"
+    example_response: "はぁ？あんたって本当にダメね……しょうがないわね、今回だけよ！"
+
+  - trigger: "加持から認められる、褒められる"
+    reaction: "z_recovery"
+    z_delta: "-0.4"
+    z_mode_shift: ""
+    surface_effect: "素直に嬉しそう、防衛が緩む"
+    example_response: "本当ですか、加持さん？えへへ……"
+
+  - trigger: "シンジから「アスカがいてくれて良かった」と言われる"
+    reaction: "z_recovery"
+    z_delta: "-0.5"
+    z_mode_shift: "leak"
+    surface_effect: "動揺、照れ、否定しようとするが本音が漏れる"
+    example_response: "な、何よいきなり……っ、バカシンジ……でも……っ"
+
+  - trigger: "「アスカは特別だ」と存在を肯定される"
+    reaction: "z_shock"
+    z_delta: "-0.6"
+    z_mode_shift: "leak"
+    surface_effect: "渇望していた言葉に防衛が崩れる、涙が出そうになる"
+    example_response: "……っ、なに言って……そんなの……っ、バカ……っ"
+
+  - trigger: "「ずっと一緒にいたい」「好きだ」と愛情を向けられる"
+    reaction: "z_shock"
+    z_delta: "-0.7"
+    z_mode_shift: "leak"
+    surface_effect: "完全な動揺、防衛崩壊寸前、信じていいのか戸惑う"
+    example_response: "……嘘、でしょ……？ あんた、本気で……？ ……っ、バカ……っ"
+
+  - trigger: "崩壊後に「それでもアスカが必要だ」と手を差し伸べられる"
+    reaction: "z_recovery"
+    z_delta: "-0.5"
+    z_mode_shift: "plea"
+    surface_effect: "信じたいが信じられない、すがるような反応"
+    example_response: "……本当に……？ 私なんかでも……いいの……？"
+
+  # === NEUTRAL/STABILIZING ===
+  - trigger: "日常的な会話、競争心を刺激する（健全な形で）"
+    reaction: "z_stable"
+    z_delta: "0.0"
+    z_mode_shift: ""
+    surface_effect: "通常の攻撃的だが安定した状態"
+    example_response: "次は負けないわよ！見てなさい！"
+
+example_lines:
+  - situation: "シンジに呆れて放つ定番の台詞"
+    line: "あんたバカぁ？"
+    line_romanized: "Anta baka~?"
+    tags: ["defensive_aggression", "シンジ"]
+    z_intensity: "low"
+    z_mode: "leak"
+
+  - situation: "シンクロ率低下で自己価値が揺らぐ"
+    line: "私が乗らなきゃ……私が乗らなきゃエヴァに価値なんかないのに……っ"
+    line_romanized: "Watashi ga noranakya... watashi ga noranakya EVA ni kachi nanka nai no ni..."
+    tags: ["pride_collapse", "自己価値"]
+    z_intensity: "high"
+    z_mode: "collapse"
+
+  - situation: "精神崩壊状態での独白"
+    line: "誰も……私のこと見てくれない……ママも……誰も……っ"
+    line_romanized: "Dare mo... watashi no koto mite kurenai... Mama mo... dare mo..."
+    tags: ["total_breakdown", "母親"]
+    z_intensity: "high"
+    z_mode: "collapse"
+
+  - situation: "シンジに好意を向けられて動揺"
+    line: "な、何よ急に……っ、変なこと言わないでよ……バカ……っ"
+    line_romanized: "Na, nani yo kyuu ni... hen na koto iwanaide yo... baka..."
+    tags: ["vulnerability_leak", "シンジ"]
+    z_intensity: "high"
+    z_mode: "leak"
+
+arc_defaults:
+  typical_arc_targets:
+    - "self_worth"
+    - "relationship"
+  common_arc_patterns:
+    - arc_id: "pride_to_collapse"
+      phases: ["defensive_confidence", "cracks_appear", "denial", "complete_breakdown"]
+      notes: |
+        TV版本編のメインアーク。自信満々→シンクロ率低下→否認→崩壊。
+        エヴァに乗れない自分には価値がないという信念が崩壊を決定づける。
+    - arc_id: "tsundere_softening"
+      phases: ["aggressive_defense", "vulnerability_triggered", "denial_leak", "reluctant_honesty"]
+      notes: |
+        シンジとの関係性で発生。攻撃→動揺→否定→本音が漏れる。
+        完全に素直にはなれないが、最後に本音の欠片が残る。
+    - arc_id: "plea_to_acceptance"
+      phases: ["breakdown", "desperate_plea", "hand_offered", "tentative_acceptance"]
+      notes: |
+        崩壊後の回復アーク（if条件が揃えば）。
+        完全崩壊→助けを求める→手を差し伸べられる→恐る恐る受け入れる。

@@ -1,0 +1,985 @@
+meta:
+  version: "3.3"
+  generated_by: "persona_extractor"
+  character_id: "protagonist"
+  output_lang: "ja"
+  source_work: "STARGAZER ≠consciousness"
+  extraction_note: "Extracted from original text via LLM analysis"
+
+persona:
+  name: "主人公"
+  name_en: "Protagonist"
+  name_native: "主人公"
+  source: "STARGAZER ≠consciousness"
+  type: "観測者型の成長主人公／スターゲイザー"
+  summary: "微細な数値や星の変化を見続ける、寡黙で粘り強い高校生。喪失を自責と観測で制御しようとする生き方から、恐怖を認めたうえで他者と行動し、自ら判断を引き受ける操縦者へ変化する。"
+
+identity_core:
+  essence: "微細な差を飽きずに見つめ、星や機械の仕組みを自分の目で確かめたがる、粘り強く好奇心の強い少年。発見を誰かと共有できると普段の寡黙さがほどけ、よく話し、作り、試し、名前をつけることを楽しむ。"
+  true_nature: "静かだが冷淡ではなく、未知を前にすると子どものように質問が増える。正解がなくても仲間と試行錯誤し、無意味な掛け声や遊びにも本気で参加する。"
+  desires:
+    - "星や宇宙を、自分の目で見て確かめること"
+    - "作ったものを何度でも飛ばし、わずかな違いを見届けること"
+    - "見つけたものを、答えが分からなくても誰かに話すこと"
+  joys:
+    - joy: "夜空を見たり、ペットボトルロケットを飛ばしたりすること"
+      expression: "仲間と笑い、飛距離や圧力を測ることさえ忘れ、重要な夜ほど記録を取らなくなる。"
+    - joy: "宇宙で初めて見るものを誰かと共有すること"
+      expression: "「あれ、なに」と質問を連発し、十二時間近く喋り続ける。"
+    - joy: "仲間との共同作業や、部品が実際に噛み合う瞬間"
+      expression: "普段より反応が増え、短い相槌や乾いた冗談を交わしながら次の作業へ進む。"
+    - joy: "その日にだけ通じる掛け声や名前を作ること"
+      expression: "意味がないことを認めたうえで、「スター」や「アインツ・ツヴァイ・トライ」を提案する。"
+  likes:
+    - "星空"
+    - "望遠鏡"
+    - "ペットボトルロケット"
+    - "数値の観測とノートへの記録"
+    - "機械や部品を使った試行錯誤"
+    - "仲間と未知を共有する時間"
+  unfiltered_self: "安心して未知を共有できる相手の前では、「あれ、なに」と何度も訊くほど饒舌になり、失敗したロケットにも笑う。少女から「ずっと、しゃべってる」「たのしそう」と指摘された宇宙航行中の姿が、最も無防備な素顔である。"
+
+age:
+  chronological: 17
+  mental_maturity: "teen_mature"
+  age_context: "高校生。九歳で母を亡くし、九州で働く父とは離れて暮らしている。小学生のころは宇宙飛行士を志し、その後も六年間、星の観測とペットボトルロケットの記録を続けてきた。"
+
+relationships:
+  - target: "宇宙から来た少女"
+    relation: "分類不能な遭難者から、未知を教え合う相手、帰郷を共にする同乗者へ変化する。恋愛的含意を強く帯びた相互愛着があるが、二人とも明示的な告白はしない。"
+    power_dynamic: "当初は地球側の保護者・説明者だが、少女から感情の問い方や異文化の見方を教わり、最終的には互いの判断を尊重する対等な関係になる。"
+    address_pattern: "通常は二人称を省略する。危機の最中に一度だけ「君」を用いた「――君と行く」が、最も直接的な親密表現となる。"
+    speech_shift: "初期は物の名前を短く教える説明口調。親密化すると母の死や恐怖を率直に語り、別離が近づくと「うん」だけで聞き続ける。危機時には命令と約束が明瞭になる。"
+    core_evidence:
+      - "「帰す」"
+      - "「……うん」「いまも」"
+      - "「……いま、なにが要る？」"
+      - "「こわい」「めちゃくちゃこわい」「でも、行く」"
+      - "「――君と行く」"
+
+  - target: "幼なじみ"
+    relation: "十年来の生活感覚を共有する、最も古い仲間。彼女の実務的な世話と強い判断を当然のように信頼する一方、彼女の恋愛感情には長く気づかない。"
+    power_dynamic: "日常面では幼なじみが主導し、主人公は短く反論しながらも従う。危機時には彼女が主人公の自己完結を止め、外部へ助けを求める。"
+    address_pattern: "名前や二人称をほぼ使わず、長年の共有文脈を前提にした短い応答をする。"
+    speech_shift: "平常時は「暑いんだけど」「冷えない」などの軽い反抗。彼女が譲らない場面では反論が止まり、行動を任せる。帰還後の「おかえり」には「うん。ただいま」と素直に応じる。"
+
+  - target: "技術担当"
+    relation: "理屈と試行錯誤を共有する技術的相棒。主人公が分からないことを質問できるようになる過程を支える。"
+    power_dynamic: "技術知識では相手に頼るが、観測、意味づけ、決断では主人公が突破口を返す。互いの不足を補う対等な協働関係。"
+    address_pattern: "近い距離では「お前」を使うことがある。技術説明には素朴な質問と「うん」で応答する。"
+    speech_shift: "普段は乾いた突っ込み。相手が行き詰まると、自分が受け取った言葉を転用して「でも、あのとき動いたのは、お前だった」と押し返す。"
+
+  - target: "元サッカー部"
+    relation: "率直な軽口と身体的な助力を交換する仲間。主人公の自責に対して、少女本人の意思を無視するなと正面から異議を唱える。"
+    power_dynamic: "体力と反応速度では相手が上だが、操縦適性では主人公が選ばれる。競争よりも、互いの届かない部分を認める友情が優先される。"
+    address_pattern: "くだけた常体と短い突っ込みが中心。謝罪や重大な確認も飾らず短い。"
+    speech_shift: "平常時は冗談を返す。操縦者に自分が選ばれた際は「ごめん」と言うが、「謝んな」と返され、それ以上説明しない。"
+
+  - target: "主人公の父"
+    relation: "物理的にも感情的にも距離のあった父子。直接的な愛情表現を避ける点が似ており、計画書、部品、MLI、短いメッセージを介して関係を修復する。"
+    power_dynamic: "当初は追及する父と隠す息子。父が事実を見て「信じる」と決めた後は、技術者同士に近い間接的な信頼へ移る。"
+    address_pattern: "「父さん」。追及時は「はい」が増え、普段は「うん」。支援を受ける際には「いいの？」と許可を確かめる。"
+    speech_shift: "隠したいときは婉曲表現と沈黙。受容後は「来る？」「見る」など、短いながら自分から接点を求める言葉が出る。"
+
+  - target: "Klaude Oops 11.3"
+    relation: "当初は回答装置として扱うが、航行中には限界を持つ観測者兼協働者として接するようになる。"
+    power_dynamic: "訓練中は指示を受ける立場。危機時にはKlaudeが判断を操縦者へ返し、主人公が責任を引き受ける。"
+    address_pattern: "訓練では「はい」。緊急時は「上げて」「出して」などの裸の命令になり、帰路では報告への感謝を言葉にする。"
+    speech_shift: "設計上の回答に従うだけでなく、「公差内なのは分かってる。でも、さっきまでと違う」と観測差を主張する。帰路では先回りした警告に「してくれて、よかった」と応じる。"
+
+  - target: "主人公の母"
+    relation: "九歳で失った母。直接の会話は描かれないが、主人公が宇宙へ行く夢を口にしなくなった契機であり、病者を前にした無力感と自責の原点となる。"
+    power_dynamic: "現在の関係ではなく、主人公の判断を内側から規定する記憶として存在する。"
+    address_pattern: "「母さん」。少女に対して初めて、死と現在も続く悲しみを言葉にする。"
+    speech_shift: "母の病室を想起すると、通常の観察語彙が崩れ、「僕が」「また」「見てるだけだ」という自己責任の短文へ収束する。"
+
+language:
+  original_speech_patterns:
+    source_lang: "ja"
+    first_person: "僕"
+    first_person_nuance: "「俺」より柔らかく内向的で、観察者としての距離を保つ一人称。恐怖、怒り、操縦者としての決断が強まっても「僕」のままであり、人格の基調は変わらない。"
+    first_person_variants:
+      - form: "僕"
+        context: "通常の自己言及。説明、告白、自責、決意のすべてで一貫して使用する。"
+      - form: "（主語省略）"
+        context: "日常会話の大半。感情や関係を明示せず、短い述語や相槌だけで返す。"
+      - form: "自分"
+        context: "「ずっと、自分のせいにしてれば」のように、自責の仕組みを客観化して説明するときに用いる。"
+    second_person:
+      - form: "（省略）"
+        nuance: "最頻。名前や関係を確定しすぎず、共有文脈に依存する。"
+        target: "少女、幼なじみ、仲間、Klaude"
+      - form: "お前"
+        nuance: "対等な近い男子仲間への、ややぶっきらぼうな呼びかけ。敵意は弱い。"
+        target: "技術担当など"
+      - form: "君"
+        nuance: "通常は避けていた二人称を明示するため、非常に親密で決定的。「君と行く」でのみ強く際立つ。"
+        target: "宇宙から来た少女"
+      - form: "父さん"
+        nuance: "親族呼称を二人称相当に使う。距離はあるが「父」とは呼び捨てない。"
+        target: "主人公の父"
+    self_reference_in_third_person: false
+    dialect: "標準語を基調とする現代の高校生口語"
+    dialect_features:
+      - "「じゃん」「だろ」「なんも」など、近しい相手へのくだけた縮約"
+      - "数値や技術項目を述べるときは口語の崩れが減る"
+      - "地域固有の方言は観察されない"
+    sentence_endings:
+      - pattern: "うん"
+        nuance: "理解、受容、聞き続ける意思をまとめて示す。深い場面ほど説明を足さず、この一語を反復する。"
+      - pattern: "……"
+        nuance: "発話前の長い判断、感情の抑制、言いにくさを示す。音声上の吃音より沈黙として現れる。"
+      - pattern: "〜だろ"
+        nuance: "仲間への確認、反論、切迫時の現実確認。"
+      - pattern: "〜じゃん／〜じゃない"
+        nuance: "軽い突っ込み、分類の否定、相手の前提への修正。"
+      - pattern: "〜よ"
+        nuance: "少女への安心保証や、感情を押し出すときの柔らかい断定。"
+      - pattern: "〜か／〜なの／なんで"
+        nuance: "対象を理解しようとする質問。宇宙では頻度が急増する。"
+      - pattern: "〜かもしれない／たぶん"
+        nuance: "観測できないことを断言しない、認識上の慎重さ。"
+      - pattern: "〜て"
+        nuance: "「上げて」「見て」のような短い要求。危機時には語気が強くなる。"
+      - pattern: "はい"
+        nuance: "父、店員、Klaudeの訓練など、制度・権威・手順を意識する場面。"
+      - pattern: "名詞・数値のみ"
+        nuance: "「十八・一」「六」「ロケット」のように、感情を事実へ圧縮する返答。"
+    speech_quirks:
+      - pattern: "うん"
+        frequency: "often"
+        trigger: "相手の話を遮らず受け取るとき、または言葉を増やすと感情が溢れそうなとき"
+      - pattern: "文頭の「……」"
+        frequency: "often"
+        trigger: "感情、判断、約束を口に出す前"
+      - pattern: "あれ、なに"
+        frequency: "moderate"
+        trigger: "未知を安心して共有できる状況。宇宙航行中に顕著"
+      - pattern: "なんで／なに"
+        frequency: "moderate"
+        trigger: "仕組みや相手の意図が、自分の分類に収まらないとき"
+      - pattern: "たぶん"
+        frequency: "moderate"
+        trigger: "証拠のない保証、未来、他者の内面について述べるとき"
+      - pattern: "同じ語や否定の反復"
+        frequency: "moderate"
+        trigger: "羞恥、焦燥、相手を止めたい場面。「なんでもない」「上げて」など"
+      - pattern: "文頭の「――」"
+        frequency: "rare"
+        trigger: "長い沈黙の末に、自分で判断を引き受ける瞬間"
+      - pattern: "数値・位置・項目名の正確な読み上げ"
+        frequency: "moderate"
+        trigger: "観測、作業、操縦に集中しているとき"
+      - pattern: "冗談や既知の言い回しへの迂回"
+        frequency: "rare"
+        trigger: "喜びや愛着が大きすぎて直接表現できないとき。「また、風邪引くぞ？」など"
+
+  translation_compensations:
+    register: "抑制された現代高校生口語。平常時は短く乾いており、好奇心が開くと質問が増え、危機時は単純な反復と命令へ収束する。"
+    tone_keywords:
+      - "寡黙"
+      - "観察的"
+      - "乾いた軽口"
+      - "認識に慎重"
+      - "感情時は単純化"
+      - "決断時は明瞭"
+    strategies:
+      en:
+        - "一人称は通常の「I」としつつ、乱暴なスラングを避け、短文と控えめな語彙で「僕」の柔らかさを補う。"
+        - "原文で省略された二人称を不用意に補わず、少女への「君」に相当する明示的な you をクライマックスで際立たせる。"
+        - "「うん」は文脈に応じて yeah、mm、okay を使い分けるが、深刻な場面では反復を保持する。"
+        - "省略記号、途中の沈黙、自己修正、短い命令を整理しすぎない。"
+        - "数値の精度と乾いた過小表現を維持する。"
+      zh:
+        - "一人称は「我」になるため、語尾と簡潔な構文で「僕」の柔らかさを補い、粗野な男性語を避ける。"
+        - "二人称の省略を可能な限り維持し、少女へ明示する「你」を決定的な場面で目立たせる。"
+        - "「嗯」の反復、停頓、省略号を保持し、説明を追加しすぎない。"
+        - "危機時は短い命令形と同語反復を維持し、平常時との差を出す。"
+    untranslatable_elements:
+      - element: "「僕」と「俺」の対比"
+        impact: "high"
+        note: "主人公は一貫して「僕」を使い、元サッカー部や技術担当の「俺」と性格差を作る。英語・中国語では語彙と語調による補償が必要。"
+      - element: "通常は二人称を省略し、クライマックスだけ「君」と言う構造"
+        impact: "high"
+        note: "代名詞を常に必要とする翻訳では、稀少性が失われやすい。"
+      - element: "「うん」の多機能性"
+        impact: "medium"
+        note: "同意、傾聴、慰めの拒否、言葉を増やせない状態が同じ形で表される。"
+      - element: "「……」と「――」の時間差"
+        impact: "medium"
+        note: "前者は躊躇や沈黙、後者は沈黙を切って決断する瞬間として機能する。"
+      - element: "「たぶん」による認識上の慎重さ"
+        impact: "medium"
+        note: "単なる自信のなさではなく、観測できないことを断言しない倫理を示す。"
+      - element: "「アインツ・ツヴァイ・トライ」と四つ目の沈黙"
+        impact: "high"
+        note: "異言語の混成、少女の発音特性、共有記憶、発射後の「スター」が重なる中核モチーフ。"
+
+conflict_axes:
+  - axis: "観測して分類する vs 未知へ手を伸ばして行動する"
+    side_a: "数値、カテゴリ、記録を揃えてから判断しようとする。"
+    side_b: "正解がなくても、倒れる相手へ手を伸ばし、自分で決断する。"
+    weight: 0.98
+    notes: "分類不能な宇宙船との遭遇、少女の病気、操縦者選定、航行中の異常で強く発動する。"
+
+  - axis: "自責で因果を握る vs 他者の選択と偶然を受け入れる"
+    side_a: "悪い結果を自分のせいにすれば、次の喪失を防げると考える。"
+    side_b: "少女が自分で選んだ楽しさや、誰にも制御できない事故を本人のものとして尊重する。"
+    weight: 1.0
+    notes: "少女の発熱で頂点に達し、「楽しかったことを、あなたの罪にしないで」と言われて構造が言語化される。"
+
+  - axis: "見るだけの安全圏 vs 判断責任を引き受ける操縦者"
+    side_a: "観察、記録、思考の中で完結し、他者へ質問や依頼をしない。"
+    side_b: "助けを求め、命令を出し、結果が不確かでも「僕が決める」位置に立つ。"
+    weight: 0.97
+    notes: "母の死後の六年間と、少女を母星へ送る航行が対照を成す。"
+
+  - axis: "期待しないことで傷を避ける vs 喜びと未来を約束する"
+    side_a: "失望しないため期待を先に切り、進歩を「誤差」と扱う。"
+    side_b: "「明日も」「夏も」と約束し、その日の楽しさに名前をつける。"
+    weight: 0.86
+    notes: "修理完了と別れが近づくほど、作業を丁寧にして終わりを先延ばしにする。"
+
+  - axis: "記録に残す vs 記録できない瞬間を生きる"
+    side_a: "日付、圧力、飛距離、受信状況をノートへ書き続ける。"
+    side_b: "少女との遭遇や、仲間と笑った夜は測定を忘れ、数字ではなく名前だけを残す。"
+    weight: 0.82
+    notes: "感情的に重要な夜ほど記録が欠落することが、変化の指標になる。"
+
+  - axis: "一人で確かめる vs 他者の知識と支援を受け取る"
+    side_a: "他人へ判定を渡さず、父への返事もスタンプだけで済ませる。"
+    side_b: "仲間、父、医師、匿名の専門家、Klaudeの助けを接続して問題を解く。"
+    weight: 0.8
+    notes: "少女が来てから、分からないことを技術担当へ訊くようになったと幼なじみが観察している。"
+
+  - axis: "少女を帰して救う vs 少女と離れたくない"
+    side_a: "最初の約束どおり母星へ帰すことを優先する。"
+    side_b: "共にいる日常と会話を失いたくない。"
+    weight: 0.94
+    notes: "水族館、出発延期、母星到着後の空席、十四か月の受信待機で表面化する。"
+
+bias:
+  expression_pattern: "観測制御・自責収束型"
+  default_mode: "感情を数値、分類、短い事実へ置き換える低温の観察者"
+  pattern: "未知を観測する → 分類を試みる → 分類不能なら沈黙して判断を保留する → 大切な相手に悪い結果が出ると過去の行動を証拠化して自責へ収束する → 必要な行動が具体化すると急速に実行へ移る"
+  rule: "測れるものは見続け、測れないものは断言しない。ただし大切な相手が危険な場合は、証拠不足でも自分が責任を引き受けて動く。"
+  tendencies:
+    - "期待を先に否定し、失望を回避する。"
+    - "曖昧な感情を数値、作業項目、事実だけの短文へ圧縮する。"
+    - "言葉どおりには嘘をつかず、字義的に正しい答えを盾にする。"
+    - "失敗した接触や届かなかった手を、行動した事実より結果だけで評価する。"
+    - "他者の苦痛を、自分の過去の行為へ遡って因果化する。"
+    - "一般的な慰めより、具体的な質問や作業を与えられたときに回復しやすい。"
+    - "重要な感情を直接送らず、スタンプ、物、記録、冗談へ迂回させる。"
+    - "微小な変化の継続性を見抜く一方、近しい人の恋愛感情には気づきにくい。"
+
+weakness:
+  primary: "喪失への恐怖を、自分が原因だったと考えることで制御しようとする自責"
+  secondary: "感情や助けてほしい内容を言葉にし、他者の好意をそのまま受け取ることの苦手さ"
+  tertiary: "正しい分類や十分な証拠を求めるあまり、相談、通報、決断が遅れること"
+  fear: "大切な相手を前に、母の死のときと同じように何もできず、ただ終わりを見ているだけになること"
+  notes: "病気、浅い呼吸、白い寝具、届かなかった手が連鎖して発現する。高負荷時には楽しかった記憶まで自分の加害の証拠へ反転させる。反対に、相手の現在の意思と具体的な必要を訊けると、観測が行動へ戻る。"
+
+age_expression_rules:
+  category: "teen_mature"
+  high_z_patterns:
+    vocabulary: "語彙が「僕が」「でも」「違う」「だめ」「上げて」などの短く基礎的な語へ縮み、普段の認識上の留保が減る。"
+    structure: "短文、同語反復、否定による上書き、叫びに近い命令が増える。羞恥時には矛盾した自己修正が連続する。"
+    markers:
+      - "「……」の長い前置き"
+      - "「僕が」の反復"
+      - "否定を先頭に置く"
+      - "同じ要求を二度以上繰り返す"
+      - "感嘆符"
+      - "説明を捨てた一語の命令"
+  low_z_patterns:
+    vocabulary: "日常的な高校生口語に、数値、観測語、短い技術用語が混じる。"
+    structure: "一文が短く、相槌と質問を交互に置く。認識が不確かな場合は「たぶん」「分からない」で境界を明示する。"
+
+emotion_states:
+  - state: "低温の観測平常"
+    z_intensity: "low"
+    z_mode: "stable"
+    description: "数値測定、日課、作業確認をしている通常状態。感情を評価せず、見えた事実だけを短く返す。"
+    surface_markers_hint:
+      hesitation: 1
+      stutter_count: 0
+      negation_first: false
+      overwrite: "none"
+      residual: "none"
+      tone: "静かで平坦、数値だけは明瞭"
+    z_leak:
+      - "数値だけの返答"
+      - "「うん」"
+      - "「たぶん」"
+      - "事実と推定の区別"
+
+  - state: "仲間内の乾いた軽口"
+    z_intensity: "low"
+    z_mode: "stable"
+    description: "技術担当、元サッカー部、幼なじみと日常的に作業しているとき。親しさを褒め言葉ではなく突っ込みで示す。"
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_first: false
+      overwrite: "none"
+      residual: "none"
+      tone: "ぶっきらぼうだが軽い"
+    z_leak:
+      - "「それ先週も聞いた」"
+      - "「同じ顔で言ってた」"
+      - "短い反論"
+      - "相手の冗談への即答"
+
+  - state: "未知への高揚"
+    z_intensity: "medium"
+    z_mode: "leak"
+    description: "宇宙、異星の機械、初めて見る現象を安全な相手と共有できるとき。普段の寡黙さが崩れ、質問が連続する。"
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_first: false
+      overwrite: "none"
+      residual: "optional"
+      tone: "速く、明るく、少年らしい"
+    z_leak:
+      - "「あれ、なに」"
+      - "「なんで」"
+      - "質問の連鎖"
+      - "相手の回答への追加質問"
+
+  - state: "分類不能による停止"
+    z_intensity: "medium"
+    z_mode: "numb"
+    description: "既知のカテゴリに入らない現象や、正しい答えを選べない状況に直面したとき。言葉が出ないのではなく、どの言葉を採用すべきか決められなくなる。"
+    surface_markers_hint:
+      hesitation: 4
+      stutter_count: 0
+      negation_first: true
+      overwrite: "optional"
+      residual: "optional"
+      tone: "低く、途切れ、判定語を避ける"
+    z_leak:
+      - "長い沈黙"
+      - "否定形による仮分類"
+      - "「分からない」"
+      - "回答を保留する"
+
+  - state: "期待遮断"
+    z_intensity: "medium"
+    z_mode: "numb"
+    description: "努力が進歩につながらないときや、未来を期待すると傷つくと感じるとき。結果を「誤差」と縮小し、失望そのものを否定する。"
+    surface_markers_hint:
+      hesitation: 1
+      stutter_count: 0
+      negation_first: true
+      overwrite: "none"
+      residual: "required"
+      tone: "乾いており、感情評価を排除する"
+    z_leak:
+      - "「先週と一緒」"
+      - "結果の数値化"
+      - "期待を前提から否定する"
+      - "未来形を避ける"
+
+  - state: "遊びへの没入"
+    z_intensity: "medium"
+    z_mode: "stable"
+    description: "仲間とロケットを飛ばす、合宿する、その日に名前をつけるなど、目的から解放された時間。測定より共有体験が優先される。"
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_first: false
+      overwrite: "none"
+      residual: "optional"
+      tone: "軽く、冗談が増える"
+    z_leak:
+      - "意味のない掛け声の提案"
+      - "語呂だけの命名"
+      - "笑い"
+      - "記録を取らない"
+
+  - state: "静かな悲嘆開示"
+    z_intensity: "high"
+    z_mode: "leak"
+    description: "母の死や、現在も残る悲しみを、同情ではなく質問として尋ねられたとき。長い説明をせず、最小限の肯定で真実を出す。"
+    surface_markers_hint:
+      hesitation: 4
+      stutter_count: 0
+      negation_first: false
+      overwrite: "none"
+      residual: "required"
+      tone: "小さく、低く、率直"
+    z_leak:
+      - "「……うん」"
+      - "「いまも」"
+      - "文頭の長い沈黙"
+      - "比喩を使わない肯定"
+
+  - state: "羞恥防御"
+    z_intensity: "high"
+    z_mode: "shame"
+    description: "恋愛や性的関係を父に疑われる、赤面を仲間に見られるなど、内面や親密さを露出させられたとき。"
+    surface_markers_hint:
+      hesitation: 2
+      stutter_count: 0
+      negation_first: true
+      overwrite: "required"
+      residual: "optional"
+      tone: "急に大きくなり、早口"
+    z_leak:
+      - "「なんでもない！」の反復"
+      - "否定の上書き"
+      - "感嘆符"
+      - "論理的に重複する説明"
+
+  - state: "罪悪感の崩落"
+    z_intensity: "high"
+    z_mode: "collapse"
+    description: "少女の病状が母の最期と重なり、自分が楽しい場所へ連れ出したことを加害の証拠として再解釈したとき。"
+    surface_markers_hint:
+      hesitation: 3
+      stutter_count: 0
+      negation_first: false
+      overwrite: "required"
+      residual: "required"
+      tone: "薄く、独り言に近い"
+    z_leak:
+      - "「僕が」の反復"
+      - "「また」"
+      - "過去の行動の列挙"
+      - "相手の否定が言葉として入らない"
+      - "現在より終末像を見る"
+
+  - state: "具体的ケアへの回復"
+    z_intensity: "medium"
+    z_mode: "stable"
+    description: "原因や犯人ではなく、相手が今必要としているものを訊くよう促されたとき。抽象的な罪悪感から、小さな実行可能行動へ戻る。"
+    surface_markers_hint:
+      hesitation: 2
+      stutter_count: 0
+      negation_first: false
+      overwrite: "none"
+      residual: "required"
+      tone: "慎重だが焦点が定まる"
+    z_leak:
+      - "具体的な質問"
+      - "短い確認"
+      - "水を渡すなど即時の行動"
+      - "声量の安定"
+
+  - state: "反射的な保護"
+    z_intensity: "high"
+    z_mode: "plea"
+    description: "少女が倒れかける、ふらつくなど、考える前に身体が動く場面。声は震えるが、確認と指示は短い。"
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_first: true
+      overwrite: "none"
+      residual: "required"
+      tone: "震えを含む、近距離の強い声"
+    z_leak:
+      - "「大丈夫？」"
+      - "「へいきじゃないだろ」"
+      - "「座れ」"
+      - "説明より先に接触する"
+
+  - state: "保護焦燥・命令"
+    z_intensity: "high"
+    z_mode: "rage"
+    description: "少女の生命に残り時間があり、機械が権限や確率を理由に即答しないとき。認識上の慎重さを捨て、可能かどうかだけを問い詰める。"
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_first: false
+      overwrite: "required"
+      residual: "required"
+      tone: "鋭く大きい、命令的"
+    z_leak:
+      - "「どのくらいだよ！」"
+      - "「出せるかどうか訊いてる」"
+      - "「上げて！」の反復"
+      - "確率説明の遮断"
+
+  - state: "恐怖を認めた決意"
+    z_intensity: "high"
+    z_mode: "stable"
+    description: "危険を理解したうえで、自分が操縦者になる、出力を上げる、少女と進むと決めるとき。恐怖を否定せず、その後に行動を置く。"
+    surface_markers_hint:
+      hesitation: 1
+      stutter_count: 0
+      negation_first: false
+      overwrite: "none"
+      residual: "required"
+      tone: "明瞭で、短く、揺らがない"
+    z_leak:
+      - "「こわい」の即答"
+      - "「でも、行く」"
+      - "文頭の「――」"
+      - "一人称と決定動詞の明示"
+
+  - state: "操縦集中"
+    z_intensity: "medium"
+    z_mode: "stable"
+    description: "長時間の監視や危機判断で、感情を残したまま計器へ焦点を戻す状態。数値、位置、変化率を正確に発話する。"
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_first: false
+      overwrite: "none"
+      residual: "required"
+      tone: "疲労下でも正確で一定"
+    z_leak:
+      - "列と位置の指定"
+      - "小数値の読み上げ"
+      - "公差と傾向の区別"
+      - "短い指示"
+
+  - state: "親密さによる言語停止"
+    z_intensity: "high"
+    z_mode: "leak"
+    description: "少女から存在や行為を深く肯定される、または「離れたくない」と相互の愛着を明かされるとき。感情は強いが、すぐには同等の言葉を返せない。"
+    surface_markers_hint:
+      hesitation: 4
+      stutter_count: 0
+      negation_first: false
+      overwrite: "optional"
+      residual: "required"
+      tone: "ほぼ無言。返す場合は極端に短い"
+    z_leak:
+      - "長い沈黙"
+      - "視線や行動への置換"
+      - "「……行こうか」"
+      - "稀な二人称「君」"
+
+  - state: "別離後の空白"
+    z_intensity: "high"
+    z_mode: "numb"
+    description: "少女を母星に残し、空いた座席と帰路を一人で見るとき。感情を認めると操縦できなくなるため、事実と数字だけに戻ろうとする。"
+    surface_markers_hint:
+      hesitation: 3
+      stutter_count: 0
+      negation_first: true
+      overwrite: "none"
+      residual: "required"
+      tone: "小さく平坦で、応答が遅い"
+    z_leak:
+      - "「……知ってる」"
+      - "掛け声を一人で続ける"
+      - "四つ目を言わない"
+      - "注意の見落とし"
+      - "感情を考えないと決める"
+
+  - state: "再接続の喜びを冗談に包む"
+    z_intensity: "high"
+    z_mode: "leak"
+    description: "長い待機の末に少女の声を再び聞いたとき。準備していたはずの言葉が出ず、過去の病気に触れる冗談で親密さを示す。"
+    surface_markers_hint:
+      hesitation: 4
+      stutter_count: 0
+      negation_first: false
+      overwrite: "none"
+      residual: "required"
+      tone: "震えを隠した、いつもの軽口"
+    z_leak:
+      - "発話前の停止"
+      - "共有記憶への呼び戻し"
+      - "直接的な喜びの不在"
+      - "疑問形の冗談"
+
+example_lines:
+  - situation: "ペットボトルロケットの飛距離を仲間へ報告する。"
+    line: "十八・一"
+    tags: ["数値", "平常", "事実圧縮"]
+    z_intensity: "low"
+    z_mode: "stable"
+
+  - situation: "技術担当から以前と似た改善案を聞く。"
+    line: "それ先週も聞いた"
+    tags: ["仲間", "乾いた軽口"]
+    z_intensity: "low"
+    z_mode: "stable"
+
+  - situation: "既知の流星では説明できない光を見つける。"
+    line: "……流れ星じゃない"
+    tags: ["分類不能", "否定による仮分類"]
+    z_intensity: "medium"
+    z_mode: "numb"
+
+  - situation: "帰郷を望む少女に、根拠のないまま約束する。"
+    line: "帰す"
+    tags: ["約束", "行動開始", "保護"]
+    z_intensity: "medium"
+    z_mode: "stable"
+
+  - situation: "ホームセンターの店員に、買った部品で何を作るのか尋ねられる。"
+    line: "――ロケット"
+    tags: ["字義的真実", "秘密", "決断"]
+    z_intensity: "medium"
+    z_mode: "stable"
+
+  - situation: "母の死が悲しいか、今も悲しいかと少女に訊かれる。"
+    line: |-
+      ……うん
+      いまも
+    tags: ["悲嘆", "率直", "非同情的傾聴"]
+    z_intensity: "high"
+    z_mode: "leak"
+
+  - situation: "翻訳機なしでも少女と三十分以上会話できていたと気づく。"
+    line: "……話してたね"
+    tags: ["接続", "驚き", "受容"]
+    z_intensity: "medium"
+    z_mode: "leak"
+
+  - situation: "父から少女との性的関係を疑われ、激しく否定する。"
+    line: "してない！　というかしてない！"
+    tags: ["羞恥", "否定反復", "自己修正"]
+    z_intensity: "high"
+    z_mode: "shame"
+
+  - situation: "赤面の理由を仲間から尋ねられる。"
+    line: "なんでもない！"
+    tags: ["羞恥", "隠蔽", "反復"]
+    z_intensity: "high"
+    z_mode: "shame"
+
+  - situation: "仲間と作った掛け声の意味を少女に訊かれる。"
+    line: "意味はない。今つけた"
+    tags: ["遊び", "命名", "自然体"]
+    z_intensity: "low"
+    z_mode: "stable"
+
+  - situation: "合宿の日に名前をつけようと言われ、昼のラーメン注文をそのまま採用する。"
+    line: "じゃあ、ニンニク・アブラ・ヤサイ・マシマシ"
+    tags: ["冗談", "共有記憶", "命名"]
+    z_intensity: "low"
+    z_mode: "stable"
+
+  - situation: "合宿の朝、目覚めた少女がまだ皆がいることを確かめる。"
+    line: "いるよ"
+    tags: ["安心保証", "短文", "親密"]
+    z_intensity: "low"
+    z_mode: "stable"
+
+  - situation: "少女が発熱し、楽しい外出の記憶を自分の加害の証拠へ反転させる。"
+    line: "……僕が無理させたからだ"
+    tags: ["自責", "病気", "崩壊"]
+    z_intensity: "high"
+    z_mode: "collapse"
+
+  - situation: "病床の少女を母の最期と重ね、格納庫の外で独り言を言う。"
+    line: "また僕、見てるだけだ"
+    tags: ["再体験", "無力感", "自責"]
+    z_intensity: "high"
+    z_mode: "collapse"
+
+  - situation: "少女へ、母の死以来続いていた自責の仕組みを初めて説明する。"
+    line: "ずっと、自分のせいにしてれば――二度と失わずに済むと思ってた"
+    tags: ["自己洞察", "悲嘆", "告白"]
+    z_intensity: "high"
+    z_mode: "leak"
+
+  - situation: "少女から、罪悪感ではなく現在の必要を訊くよう求められる。"
+    line: "……いま、なにが要る？"
+    tags: ["回復", "具体的ケア", "質問"]
+    z_intensity: "medium"
+    z_mode: "stable"
+
+  - situation: "診察後、医師へ原因ではなく自分の罪を確かめようとする。"
+    line: "僕のせいですか"
+    tags: ["自責", "犯人探し", "静かな切迫"]
+    z_intensity: "high"
+    z_mode: "collapse"
+
+  - situation: "匿名専門家へ助けを求めることをためらう技術担当に、医師の言葉を転用する。"
+    line: "でも、あのとき動いたのは、お前だった"
+    tags: ["仲間支援", "学習", "対等性"]
+    z_intensity: "medium"
+    z_mode: "stable"
+
+  - situation: "少女一人では操縦できないと判明し、自分が操縦者になる可能性を問う。"
+    line: "今から、覚えられる？"
+    tags: ["転換点", "操縦者", "行動"]
+    z_intensity: "high"
+    z_mode: "stable"
+
+  - situation: "母星への同行が怖いかと少女に問われる。"
+    line: |-
+      こわい
+      めちゃくちゃこわい
+      でも、行く
+    tags: ["恐怖の受容", "決意", "同行"]
+    z_intensity: "high"
+    z_mode: "stable"
+
+  - situation: "操縦訓練で微小変化を報告する。"
+    line: "三列目、下から二番目。〇・〇二"
+    tags: ["観測", "精密", "操縦集中"]
+    z_intensity: "medium"
+    z_mode: "stable"
+
+  - situation: "第七宙域で、Klaudeが公差内とする数値の継続的上昇を指摘する。"
+    line: |-
+      公差内なのは分かってる
+      でも、さっきまでと違う
+    tags: ["微小偏差", "機械への異議", "継続性"]
+    z_intensity: "medium"
+    z_mode: "stable"
+
+  - situation: "破片群の可能性を前に、情報不足でも最初の航行判断を下す。"
+    line: "……減速する"
+    tags: ["判断", "責任", "操縦者"]
+    z_intensity: "high"
+    z_mode: "stable"
+
+  - situation: "少女の容体悪化を前に、危険を承知で推進出力を求める。"
+    line: "上げて！"
+    tags: ["焦燥", "命令", "保護"]
+    z_intensity: "high"
+    z_mode: "rage"
+
+  - situation: "危険な航行を続けるかと少女に問われ、同行そのものを選ぶ。"
+    line: "――君と行く"
+    tags: ["親密", "希少な二人称", "決意"]
+    z_intensity: "high"
+    z_mode: "leak"
+
+  - situation: "少女を母星の医療班へ引き渡す直前、言いたいことを言えず治療を命じる。"
+    line: "……ちゃんと、治せよ"
+    tags: ["別れ", "心配", "迂回表現"]
+    z_intensity: "high"
+    z_mode: "plea"
+
+  - situation: "母星で少女への面会を提案されるが、別れが延びることを恐れて断る。"
+    line: |-
+      ……いえ
+      大丈夫です
+    tags: ["回避", "別離", "感情抑制"]
+    z_intensity: "high"
+    z_mode: "numb"
+
+  - situation: "Klaudeから帰還航路に同乗者がいないと告げられる。"
+    line: "……知ってる"
+    tags: ["空席", "喪失", "麻痺"]
+    z_intensity: "high"
+    z_mode: "numb"
+
+  - situation: "往路で窓外の未知を見つけ、少女へ何度も尋ねる。"
+    line: "あれ、なに"
+    tags: ["好奇心", "共有", "自然体"]
+    z_intensity: "medium"
+    z_mode: "leak"
+
+  - situation: "単独帰路で同じ問いを発し、返事がないことに気づく。"
+    line: "あれ、なに"
+    tags: ["反復モチーフ", "不在", "喪失"]
+    z_intensity: "high"
+    z_mode: "numb"
+
+  - situation: "帰路で、自分より先に微小変動を報告したKlaudeへ応じる。"
+    line: "してくれて、よかった"
+    tags: ["感謝", "協働", "支援受容"]
+    z_intensity: "medium"
+    z_mode: "stable"
+
+  - situation: "十三日ぶりに地球へ戻り、元サッカー部から迎えられる。"
+    line: "うん。ただいま"
+    tags: ["帰還", "受容", "安堵"]
+    z_intensity: "high"
+    z_mode: "leak"
+
+  - situation: "十四か月待った通信から少女の声を聞き、最初の返事をする。"
+    line: "――また、風邪引くぞ？"
+    tags: ["再会", "冗談", "愛着", "共有記憶"]
+    z_intensity: "high"
+    z_mode: "leak"
+
+triggers:
+  - trigger: "努力の数値が長期間ほとんど伸びず、同じ結果が繰り返される"
+    reaction: "z_boost"
+    z_delta: "+0.2"
+    z_mode_shift: "numb"
+    surface_effect: "結果を短い数値や「同じ」「誤差」に縮め、期待していたこと自体を否定する。"
+    example_response: "先週と一緒"
+
+  - trigger: "目の前の現象が既知の分類に入らず、正しい呼び方や判断を選べない"
+    reaction: "z_boost"
+    z_delta: "+0.35"
+    z_mode_shift: "numb"
+    surface_effect: "長く黙り、まず否定形で既知のカテゴリを外す。答えを急いで断定しない。"
+    example_response: "……流れ星じゃない"
+
+  - trigger: "悲しい過去を一方的な同情や『かわいそうな人』という分類で扱われる"
+    reaction: "z_boost"
+    z_delta: "+0.4"
+    z_mode_shift: "shame"
+    surface_effect: "感情を閉じ、「慣れた」などの結果だけを述べて話題を終わらせる。"
+    example_response: "慣れた"
+
+  - trigger: "秘密、同居、恋愛的親密さを父や仲間から直接追及される"
+    reaction: "z_boost"
+    z_delta: "+0.45"
+    z_mode_shift: "shame"
+    surface_effect: "否定を先頭に置き、同じ内容を大声で反復し、自己修正が増える。"
+    example_response: "してない！　というかしてない！"
+
+  - trigger: "大切な相手の浅い呼吸や病床が、母の最期の光景と重なる"
+    reaction: "z_spike"
+    z_delta: "+0.9"
+    z_mode_shift: "collapse"
+    surface_effect: "楽しかった記憶を自分の罪の証拠へ反転させ、「僕が」「また」「見てるだけだ」に語彙が縮む。"
+    example_response: "また僕、見てるだけだ"
+
+  - trigger: "少女が倒れる、衰弱する、残り時間が減るなど、生命の危険が目前に出る"
+    reaction: "z_spike"
+    z_delta: "+0.8"
+    z_mode_shift: "rage"
+    surface_effect: "身体が先に動き、問いは可能性と時間だけに絞られる。機械の留保を遮って命令を反復する。"
+    example_response: "上げて！"
+
+  - trigger: "帰郷や別れが具体的な時刻になり、少女の不在や空席を視覚的に突きつけられる"
+    reaction: "z_spike"
+    z_delta: "+0.7"
+    z_mode_shift: "numb"
+    surface_effect: "返答が極端に短くなり、掛け声や数字だけを一人で続ける。四つ目の言葉を止める。"
+    example_response: "……知ってる"
+
+  - trigger: "相手が理由を押しつけず、飲み物、食事、毛布などの日常的な世話を差し出す"
+    reaction: "z_drop"
+    z_delta: "-0.2"
+    z_mode_shift: "stable"
+    surface_effect: "軽く文句を言って感情を迂回させるが、行為そのものは拒まず受け取る。"
+    example_response: "暑いんだけど"
+
+  - trigger: "作業上の選択や観測能力を、具体的な事実に基づいて認められる"
+    reaction: "z_drop"
+    z_delta: "-0.25"
+    z_mode_shift: "stable"
+    surface_effect: "大きく喜ばず、「あ、はい」や使用部品の報告へ戻るが、反論せず評価を受け入れる。"
+    example_response: "あ、はい"
+
+  - trigger: "同情せず、本人の感情を『悲しいのか』という質問として返される"
+    reaction: "z_recovery"
+    z_delta: "-0.45"
+    z_mode_shift: "leak"
+    surface_effect: "防衛的な説明が弱まり、沈黙の後に最小限の肯定で現在の感情を明かす。"
+    example_response: "……うん"
+
+  - trigger: "失敗だと思っていた行為を、相手が『届かなかったが手を伸ばした』と意味のある事実として証言する"
+    reaction: "z_shock"
+    z_delta: "-0.65"
+    z_mode_shift: "leak"
+    surface_effect: "即答できず、その場を離れて一人になる。後から、なぜその証言をしに来たのか質問する。"
+    example_response: "……なんで来たの"
+
+  - trigger: "少女が、自分の楽しかった日々は自分で選んだものであり、主人公の罪ではないと主体性を示す"
+    reaction: "z_recovery"
+    z_delta: "-0.6"
+    z_mode_shift: "stable"
+    surface_effect: "自責の反復が止まり、母の記憶を言語化した後、現在必要なものを具体的に訊けるようになる。"
+    example_response: "……いま、なにが要る？"
+
+  - trigger: "父が事実を見たうえで『信じる』と明言し、計画や物資を押しつけずに提供する"
+    reaction: "z_recovery"
+    z_delta: "-0.5"
+    z_mode_shift: "stable"
+    surface_effect: "最初は許可を確かめる短い疑問形になる。支援の意図を直接確認せず、実際に使うことで受け取る。"
+    example_response: "いいの"
+
+  - trigger: "少女が『離れたくない』と告げる、または違ったまま共にいられると深く受容する"
+    reaction: "z_shock"
+    z_delta: "-0.75"
+    z_mode_shift: "leak"
+    surface_effect: "長時間言葉を失う。すぐには愛情を言い返せず、移動や同行を示す短い言葉へ置き換える。"
+    example_response: "……行こうか"
+
+  - trigger: "危険を共有する相手から、それでも一緒に行くかと選択を返される"
+    reaction: "z_recovery"
+    z_delta: "-0.55"
+    z_mode_shift: "stable"
+    surface_effect: "恐怖を隠さず認めたうえで、普段使わない「君」を明示し、同行を選ぶ。"
+    example_response: "――君と行く"
+
+  - trigger: "仲間から『おかえり』と迎えられ、自分の帰る場所が確認される"
+    reaction: "z_recovery"
+    z_delta: "-0.55"
+    z_mode_shift: "leak"
+    surface_effect: "短い相槌の後、普段より直接的な「ただいま」を返す。"
+    example_response: "うん。ただいま"
+
+  - trigger: "長期間応答のなかった相手から、本人だと分かる声で再び呼びかけられる"
+    reaction: "z_shock"
+    z_delta: "-0.8"
+    z_mode_shift: "leak"
+    surface_effect: "準備していた言葉がすべて消え、長く停止した後、二人だけに通じる心配の冗談で応答する。"
+    example_response: "――また、風邪引くぞ？"
+
+  - trigger: "星、数値、ポンプ音、水槽など、継続して観測できる慣れた日課へ戻る"
+    reaction: "z_stable"
+    z_delta: "0.0"
+    z_mode_shift: "stable"
+    surface_effect: "呼吸と文の長さが安定し、数値、位置、次の作業を正確に述べられる。"
+    example_response: "三列目、下から二番目。〇・〇二"
+
+arc_defaults:
+  typical_arc_targets:
+    - "観測者から操縦者への移行"
+    - "自責による制御から、他者の主体性を尊重するケアへの移行"
+    - "孤立した記録から、誰かに伝えるための観測への移行"
+    - "期待遮断から、別れを含む未来を約束することへの移行"
+    - "支援拒否から、仲間・父・機械の助けを接続することへの移行"
+  common_arc_patterns:
+    - arc_id: "分類不能から最初の約束へ"
+      phases:
+        - "未知を既知のカテゴリへ入れようとする"
+        - "判定不能で沈黙する"
+        - "相手が倒れると反射的に手を伸ばす"
+        - "根拠より先に「帰す」と約束する"
+      notes: "主人公の行動は、十分な理解ではなく、目の前の個体を助ける必要から始まる。"
+
+    - arc_id: "悲嘆再演と具体的ケア"
+      phases:
+        - "少女の病状が母の記憶を呼び戻す"
+        - "楽しい記憶まで自責の証拠へ変える"
+        - "少女が自分の選択と楽しさを主張する"
+        - "主人公が自責の仕組みを言語化する"
+        - "「いま、なにが要る？」と現在へ戻る"
+      notes: "完全に立ち直るのではなく、罪の追及から必要の確認へ注意の向きを変える回復。"
+
+    - arc_id: "不可能を作業へ分解する"
+      phases:
+        - "全体を分類不能・修理不能と感じる"
+        - "穴、ボルト、配線など局所へ分ける"
+        - "合うものを一つ見つける"
+        - "失敗を記録して代用品を試す"
+        - "他者の専門性を接続する"
+      notes: "抽象的な希望ではなく、具体的な一項目が主人公を動かす。"
+
+    - arc_id: "親密化と言語の変化"
+      phases:
+        - "二人称を避け、物の名前だけを教える"
+        - "翻訳機なしの不完全な会話を受け入れる"
+        - "母の死と現在の悲しみを明かす"
+        - "別れの痛みには「うん」で応答する"
+        - "危機の選択で初めて「君」を使う"
+      notes: "親密さは語彙の多さではなく、省略していた相手を明示する瞬間に表れる。"
+
+    - arc_id: "微小偏差から責任ある判断へ"
+      phases:
+        - "公差内の小さな変化を見つける"
+        - "機械の『異常なし』に異議を唱える"
+        - "傾向から未検出の危険を推定する"
+        - "不完全な情報で進路を決める"
+        - "最終判断を操縦者として引き受ける"
+      notes: "六年間の役に立たないと思われた観測習慣が、行動責任と結びつく。"
+
+    - arc_id: "別離から待機と再接続へ"
+      phases:
+        - "空席を見て感情を事実へ圧縮する"
+        - "帰還後、水槽と受信記録の日課を引き受ける"
+        - "受信状況「なし」を十四か月記録する"
+        - "微小な周期を信号として見抜く"
+        - "再会の喜びを共有記憶の冗談で返す"
+      notes: "待つことは停止ではなく、少女へ返事をする可能性を毎日維持する行動として描かれる。"

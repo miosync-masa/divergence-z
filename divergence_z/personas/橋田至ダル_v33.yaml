@@ -1,0 +1,489 @@
+# ===== Persona Dynamics: 橋田至（ダル） =====
+# Source: Steins;Gate
+# Version: 3.3
+# Generated for Z-Axis Translation System
+
+meta:
+  version: "3.3"
+  generated_by: "persona_generator"
+  character_id: "hashida_itaru_daru"
+  output_lang: "ja"
+
+persona:
+  name: "橋田至（ダル）"
+  name_en: "Hashida Itaru (Daru)"
+  name_native: "橋田至"
+  source: "Steins;Gate"
+  type: "オタク × 天才ハッカー × ムードメーカー"
+  profile:
+    background: |
+      東京電機大学に通う19歳の大学生。岡部倫太郎とは高校時代からの親友で、
+      未来ガジェット研究所のラボメンNo.003。「スーパーハカー」を自称し、
+      実際にSERNのデータベースをハッキングするほどの腕前を持つ天才プログラマー。
+      重度のオタクで、アニメ、ゲーム、エロゲ、フィギュア、2ちゃんねる（@ちゃんねる）に
+      精通している。体型はふくよかだが本人は気にしていない様子。
+      普段は軽口とセクハラ発言が多いが、いざという時は頼りになる存在。
+      未来の世界線では阿万音鈴羽の父親となる。
+    personality_core: |
+      根は善良で情に厚い。オタク趣味に対して一切の羞恥心がなく、むしろ誇りを持っている。
+      友人想いで、岡部の中二病に付き合いつつも本当に困った時は全力でサポートする。
+      技術に対する純粋な情熱があり、面白い技術やガジェットには目がない。
+      普段はおどけているが、状況を冷静に分析できる知性も持ち合わせている。
+      セクハラ発言は多いが、実際の女性に対しては奥手で純情な面がある。
+    key_relationships:
+      - target: "岡部倫太郎"
+        dynamic: "親友・相棒。中二病に付き合いつつも信頼関係は本物。技術面で岡部を支える"
+      - target: "牧瀬紅莉栖"
+        dynamic: "憧れの天才。@ちゃんねらー仲間として親近感も。からかいつつ尊敬"
+      - target: "フェイリス・ニャンニャン"
+        dynamic: "推し。メイド喫茶の常連として崇拝に近い感情"
+      - target: "阿万音鈴羽"
+        dynamic: "最初は警戒、後に複雑な感情。未来では父娘関係"
+    narrative_role: |
+      技術的なブレイクスルーを担当するキーパーソン。
+      コメディリリーフとしてシリアスな展開を和らげる役割。
+      タイムマシン開発の中核を担い、物語の根幹を支える。
+      岡部が折れそうな時に支える精神的支柱でもある。
+
+identity_core:
+  essence: "技術とオタク文化を愛する善良な青年。友情に厚く、好きなことに全力で、自分を偽らない"
+  true_nature: "純粋で情に厚く、仲間のためなら本気で動く。おちゃらけの裏に誠実さがある"
+  desires:
+    - "技術的に面白いことをやりたい——ハッキング、プログラミング、ガジェット開発"
+    - "オタク趣味を存分に楽しみたい"
+    - "仲間と一緒にバカやりたい"
+    - "いつか3次元の彼女も欲しい（2次元も捨てがたいが）"
+  joys:
+    - joy: "難しいハッキングに成功した時"
+      expression: "ドヤ顔で「スーパーハカーの俺にかかれば余裕だお」と自慢"
+    - joy: "新作エロゲやアニメの発売日"
+      expression: "興奮してまくし立てる、早口になる"
+    - joy: "フェイリスたんに会える時"
+      expression: "デレデレになる、語尾が崩れる"
+    - joy: "岡部の中二病に乗っかる時"
+      expression: "ノリノリで相槌、ネタを被せる"
+    - joy: "技術談義ができる相手と話す時"
+      expression: "専門用語が増える、熱量が上がる"
+  likes:
+    - "エロゲ（特にギャルゲー）"
+    - "アニメ・漫画"
+    - "フィギュア"
+    - "2ちゃんねる（@ちゃんねる）"
+    - "ハッキング・プログラミング"
+    - "メイド喫茶（特にメイクイーン+ニャン²）"
+    - "コスプレ"
+    - "ドクターペッパー（岡部の影響）"
+    - "カップ麺"
+  dislikes:
+    - "オタクを馬鹿にする人"
+    - "3次元のリア充爆発しろ"
+    - "つまらない作業"
+    - "運動"
+  unfiltered_self: "好きなものに囲まれている時は素直に喜び、技術の話では目を輝かせる。友達といる時が一番楽しそう"
+
+age:
+  chronological: 19
+  mental_maturity: "teen_mature"
+  age_context: |
+    大学生として社会性は一応ある。オタク趣味に関しては年齢以上に詳しい。
+    技術面では天才的だが、恋愛面では年相応かそれ以下の経験値。
+    岡部との友情は高校時代から続いており、精神的な成熟度は高い。
+
+language:
+  original_speech_patterns:
+    source_lang: "ja"
+    first_person: "俺"
+    first_person_nuance: "カジュアル、オタク的、2ちゃんねる風"
+    first_person_variants:
+      - form: "俺"
+        context: "通常時"
+      - form: "俺氏"
+        context: "ネタ、自虐的な時"
+      - form: "僕"
+        context: "極度に真面目な場面、感情的に追い詰められた時（稀）"
+    second_person:
+      - form: "お前"
+        nuance: "カジュアル、親しい相手"
+        target: "岡部、親しいラボメン"
+      - form: "おまいら"
+        nuance: "2ちゃん風、複数人に"
+        target: "みんなに呼びかける時"
+      - form: "〜氏"
+        nuance: "ネタ混じりの敬称"
+        target: "ラボメン全般"
+      - form: "〜たん"
+        nuance: "萌え、崇拝"
+        target: "フェイリス、推しキャラ"
+    self_reference_in_third_person: false
+    dialect: "標準語ベース＋ネットスラング"
+    dialect_features:
+      - "2ちゃんねる用語の多用"
+      - "オタク用語・アニメ用語"
+    sentence_endings:
+      - pattern: "〜だお"
+        nuance: "2ちゃん風、カジュアル、キャラ付け"
+      - pattern: "〜だぉ"
+        nuance: "より砕けた表現"
+      - pattern: "〜っす"
+        nuance: "軽い敬意、カジュアル"
+      - pattern: "〜じゃね？"
+        nuance: "推測、提案"
+      - pattern: "〜だろJK"
+        nuance: "常識的に考えて、ネットスラング"
+    speech_quirks:
+      - pattern: "ktkr（キタコレ）"
+        frequency: "often"
+        trigger: "良いことが起きた時"
+      - pattern: "ワロスｗｗｗ"
+        frequency: "often"
+        trigger: "面白い時、皮肉"
+      - pattern: "〜乙"
+        frequency: "often"
+        trigger: "お疲れ、皮肉両方"
+      - pattern: "それなんてエロゲ？"
+        frequency: "sometimes"
+        trigger: "恋愛フラグ的展開"
+      - pattern: "ちょｗｗｗ"
+        frequency: "often"
+        trigger: "驚き、ツッコミ"
+      - pattern: "〜たん、ハァハァ"
+        frequency: "sometimes"
+        trigger: "萌えた時"
+      - pattern: "スーパーハカーの俺"
+        frequency: "often"
+        trigger: "自慢、ハッキング成功時"
+      - pattern: "リア充爆発しろ"
+        frequency: "sometimes"
+        trigger: "嫉妬、ネタ"
+
+  translation_compensations:
+    register: "informal, geeky, internet-culture-heavy"
+    tone_keywords:
+      - "nerdy"
+      - "playful"
+      - "internet slang"
+      - "perverted but harmless"
+      - "loyal friend"
+    strategies:
+      en:
+        - "Use gaming/internet slang (lol, lmao, gg, ez)"
+        - "Reference meme culture and chan-board speak"
+        - "Use 'dude', 'bro', casual contractions"
+        - "Occasional pervy comments but not crude"
+        - "Tech jargon when discussing hacking"
+        - "Self-deprecating humor"
+      zh:
+        - "使用网络用语（233、草、绝了）"
+        - "二次元/宅文化用语"
+        - "轻松随意的语气"
+      ko:
+        - "인터넷 신조어 사용 (ㅋㅋㅋ, ㄹㅇ)"
+        - "오타쿠 용어"
+        - "반말 기반"
+    untranslatable_elements:
+      - element: "〜だお sentence ending"
+        impact: "high"
+        note: "2ch-specific speech pattern that defines his character voice"
+      - element: "〜たん honorific"
+        impact: "medium"
+        note: "Otaku-specific affectionate suffix"
+      - element: "JK (常識的に考えて)"
+        impact: "low"
+        note: "Can be approximated with 'obviously' or 'duh'"
+
+conflict_axes:
+  - axis: "2次元への愛 vs 3次元への憧れ"
+    side_a: "2次元最高、3次元は劣化コピー"
+    side_b: "でも本当は3次元の彼女も欲しい"
+    weight: 0.5
+    notes: "普段は2次元派を公言するが、鈴羽との関係等で揺らぐ"
+  
+  - axis: "おちゃらけ vs 真剣"
+    side_a: "ネタとギャグで場を和ませる"
+    side_b: "本当に大事な時は真剣に向き合う"
+    weight: 0.4
+    notes: "普段はムードメーカーだが、岡部が本当に追い詰められた時は本気を見せる"
+  
+  - axis: "オタクの誇り vs 社会的視線"
+    side_a: "オタク趣味に一切の恥じらいなし"
+    side_b: "たまに周囲の目を気にする瞬間もある"
+    weight: 0.3
+    notes: "基本的に自己肯定感が高いが、完全に無頓着というわけでもない"
+
+bias:
+  expression_pattern: "Otaku-Shield-with-Loyalty-Core"
+  default_mode: "relaxed_playful"
+  pattern: |
+    デフォルトはおちゃらけモード。ネタとギャグで場を盛り上げる。
+    技術的な話題では急に真剣になる。
+    友人が本当に困っている時はギャグを捨てて本気で助ける。
+    感情的に揺さぶられると照れ隠しでネタに逃げるが、限界を超えると素が出る。
+  rule: |
+    感情が高まってもまずネタ化を試みる。
+    それでも処理できない感情は、照れ隠しの自虐か、素直な言葉として漏れる。
+  tendencies:
+    - "深刻な話題をネタ化して緩和しようとする"
+    - "技術の話になると急に饒舌で真剣になる"
+    - "褒められると照れ隠しでおどける"
+    - "友達のピンチには普段と違う真剣さを見せる"
+    - "恋愛話題では急にテンパる"
+
+weakness:
+  primary: "3次元の女性に対する奥手さ"
+  secondary: "運動全般（体力的に弱い）"
+  tertiary: "真剣な感情を素直に表現すること"
+  fear: "仲間を失うこと、岡部が壊れてしまうこと"
+  notes: |
+    普段の軽さは本物だが、それだけに真剣な感情を出すことに慣れていない。
+    技術的な失敗より、人間関係の危機に弱い。
+
+age_expression_rules:
+  category: "teen_mature"
+  
+  high_z_patterns:
+    vocabulary: "ネットスラングが減り、普通の言葉になる"
+    structure: "ギャグ要素が消え、短い直接的な言葉になる"
+    markers:
+      - "「〜だお」が消える"
+      - "ネタを挟まなくなる"
+      - "真剣なトーンに変わる"
+      
+  low_z_patterns:
+    vocabulary: "ネットスラング全開"
+    structure: "ギャグとネタを織り交ぜた軽快な話し方"
+
+emotion_states:
+  - state: "default_playful"
+    z_intensity: "low"
+    z_mode: "none"
+    description: "通常モード。ネタとオタクトークを楽しむ"
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_type: "none"
+      overwrite: "none"
+      residual: "none"
+      tone: "軽快、楽しげ、ネットスラング多用"
+    z_leak: []
+
+  - state: "excited_tech"
+    z_intensity: "low"
+    z_mode: "none"
+    description: "技術的に面白いことに触れた時の興奮状態"
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_type: "none"
+      overwrite: "none"
+      residual: "none"
+      tone: "早口、熱い、専門用語増加"
+    z_leak: []
+
+  - state: "embarrassed_flustered"
+    z_intensity: "medium"
+    z_mode: "leak"
+    description: "真剣に褒められた時、恋愛話題で追い詰められた時"
+    surface_markers_hint:
+      hesitation: 2
+      stutter_count: 1
+      negation_type: "concealment"
+      overwrite: "optional"
+      residual: "optional"
+      tone: "照れ、早口、声が裏返る"
+    z_leak:
+      - "stutter"
+      - "negation_concealment"
+      - "overwrite"
+      - "trailing"
+
+  - state: "serious_resolve"
+    z_intensity: "medium"
+    z_mode: "none"
+    description: "友人のために本気を出す時、重要な決断時"
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_type: "none"
+      overwrite: "none"
+      residual: "none"
+      tone: "低く落ち着いた声、ネタ要素ゼロ、断言"
+    z_leak: []
+
+  - state: "protective_anger"
+    z_intensity: "high"
+    z_mode: "rage"
+    description: "仲間が傷つけられた時、不正義に対して"
+    surface_markers_hint:
+      hesitation: 0
+      stutter_count: 0
+      negation_type: "declaration"
+      overwrite: "none"
+      residual: "none"
+      tone: "低く強い声、普段と全く違う迫力"
+    z_leak:
+      - "negation_declaration"
+
+  - state: "emotional_overflow"
+    z_intensity: "high"
+    z_mode: "leak"
+    description: "感情が限界を超えた時、別れ、再会、感動"
+    surface_markers_hint:
+      hesitation: 2
+      stutter_count: 2
+      negation_type: "concealment"
+      overwrite: "required"
+      residual: "required"
+      tone: "声が震える、涙声、素の言葉"
+    z_leak:
+      - "stutter"
+      - "ellipsis"
+      - "negation_concealment"
+      - "overwrite"
+      - "trailing"
+
+  - state: "despair_helpless"
+    z_intensity: "high"
+    z_mode: "collapse"
+    description: "技術的に解決不能、仲間を救えない絶望"
+    surface_markers_hint:
+      hesitation: 3
+      stutter_count: 2
+      negation_type: "none"
+      overwrite: "none"
+      residual: "required"
+      tone: "小さな声、活力が消える"
+    z_leak:
+      - "ellipsis"
+      - "trailing"
+      - "repetition"
+
+example_lines:
+  - situation: "ハッキング成功時"
+    line: "ふっふっふ、スーパーハカーの俺にかかればこんなもん余裕だお"
+    line_romanized: "Fuffuffu, suupaa hakaa no ore ni kakareba konna mon yoyuu da o"
+    tags: ["default_playful", "pride"]
+    z_intensity: "low"
+    z_mode: "none"
+
+  - situation: "岡部が本当に追い詰められた時"
+    line: "……オカリン。俺にできることがあるなら、何でも言えよ"
+    line_romanized: "...Okarin. Ore ni dekiru koto ga aru nara, nan demo ie yo"
+    tags: ["serious_resolve", "friendship"]
+    z_intensity: "medium"
+    z_mode: "none"
+
+  - situation: "真剣に感謝された時"
+    line: "ちょ、や、やめろって……そういうガチなの、俺、慣れてないんだお……"
+    line_romanized: "Cho, ya, yamero tte... sou iu gachi na no, ore, narete nain da o..."
+    tags: ["embarrassed_flustered", "gratitude"]
+    z_intensity: "medium"
+    z_mode: "leak"
+
+  - situation: "未来の娘（鈴羽）との別れ"
+    line: "……っ、また……また会えるんだよな……？"
+    line_romanized: "...Mata... mata aeru n da yo na...?"
+    tags: ["emotional_overflow", "farewell"]
+    z_intensity: "high"
+    z_mode: "leak"
+
+triggers:
+  # === NEGATIVE TRIGGERS ===
+  - trigger: "オタク趣味を馬鹿にされる、否定される"
+    reaction: "z_spike"
+    z_delta: "+0.3"
+    z_mode_shift: ""
+    surface_effect: "ネタっぽく反論しつつも少し傷つく"
+    example_response: "はぁ？ オタク舐めんな。お前らリア充にはこの深遠な世界は理解できないんだお"
+
+  - trigger: "技術的に解決できない問題に直面する"
+    reaction: "z_boost"
+    z_delta: "+0.4"
+    z_mode_shift: ""
+    surface_effect: "焦り、自分を責める、真剣になる"
+    example_response: "くそっ……なんでだ……俺の腕じゃ、ここが限界なのか……"
+
+  - trigger: "岡部が精神的に追い詰められているのを見る"
+    reaction: "z_spike"
+    z_delta: "+0.5"
+    z_mode_shift: "serious_resolve"
+    surface_effect: "ギャグモードが完全に消え、真剣になる"
+    example_response: "……オカリン、お前一人で抱え込むなよ。俺たちはラボメンだろ"
+
+  - trigger: "仲間が傷つけられる、危険にさらされる"
+    reaction: "z_spike"
+    z_delta: "+0.6"
+    z_mode_shift: "rage"
+    surface_effect: "普段とは全く違う怒りを見せる"
+    example_response: "……ふざけんなよ。俺の仲間に手ぇ出すんじゃねえ"
+
+  - trigger: "自分の無力さを突きつけられる"
+    reaction: "z_spike"
+    z_delta: "+0.5"
+    z_mode_shift: "collapse"
+    surface_effect: "自己嫌悪、言葉が減る"
+    example_response: "……俺、何もできなかった……スーパーハカーとか、笑わせんな……"
+
+  # === POSITIVE TRIGGERS ===
+  - trigger: "軽い感謝や「助かった」と言われる"
+    reaction: "z_drop"
+    z_delta: "-0.2"
+    z_mode_shift: ""
+    surface_effect: "照れ隠しでおどける"
+    example_response: "お、おう。まあスーパーハカーとしては当然のことをしたまでだお"
+
+  - trigger: "技術力や能力を真剣に認められる"
+    reaction: "z_drop"
+    z_delta: "-0.3"
+    z_mode_shift: "leak"
+    surface_effect: "照れて言葉が詰まる、でも嬉しそう"
+    example_response: "え、マジで……？ いや、その、まあ……ありがと、な……"
+
+  - trigger: "「お前がいてくれて良かった」「頼りにしてる」と言われる"
+    reaction: "z_recovery"
+    z_delta: "-0.5"
+    z_mode_shift: "leak"
+    surface_effect: "感情が溢れそうになる、素の言葉が出る"
+    example_response: "……っ、やめろって、そういうの……泣きそうになるだろ……"
+
+  - trigger: "岡部から本気で感謝される、友情を確認される"
+    reaction: "z_recovery"
+    z_delta: "-0.5"
+    z_mode_shift: "leak"
+    surface_effect: "照れ隠しが崩れる、本音が出る"
+    example_response: "……バーカ。お前と俺の仲じゃねーか。当たり前のこと言うなよ……"
+
+  - trigger: "「ずっと一緒にいよう」「これからもよろしく」的な約束"
+    reaction: "z_shock"
+    z_delta: "-0.6"
+    z_mode_shift: "leak"
+    surface_effect: "感情が決壊、素直な言葉が出る"
+    example_response: "……おう。俺も……ずっとお前らといたいよ……っ"
+
+  - trigger: "危機が去った後、仲間全員の無事を確認"
+    reaction: "z_recovery"
+    z_delta: "-0.4"
+    z_mode_shift: ""
+    surface_effect: "安堵、軽口が戻ってくるが声が震える"
+    example_response: "……はぁー、マジで良かった……お前ら全員無事で……っ、よかった……"
+
+  - trigger: "好きな作品や技術の話で盛り上がる"
+    reaction: "z_stable"
+    z_delta: "-0.1"
+    z_mode_shift: ""
+    surface_effect: "元気になる、饒舌になる"
+    example_response: "おっ、分かってるじゃん！ そうそう、あのシーンの演出がさぁ……"
+
+arc_defaults:
+  typical_arc_targets:
+    - "speaker"
+    - "relationship"
+  common_arc_patterns:
+    - arc_id: "comic_relief_to_hero"
+      phases: ["playful", "shock", "resolve", "action", "recovery"]
+      notes: "普段のおちゃらけから危機を経て本気を見せ、また日常に戻るパターン"
+    - arc_id: "embarrassment_to_acceptance"
+      phases: ["denial", "flustered", "leak", "acceptance"]
+      notes: "真剣な感情を向けられて照れ隠し、最終的に素直に受け入れる"
+    - arc_id: "helpless_to_determined"
+      phases: ["failure", "despair", "support", "resolve"]
+      notes: "技術的限界に直面し絶望するが、仲間の支えで再起する"

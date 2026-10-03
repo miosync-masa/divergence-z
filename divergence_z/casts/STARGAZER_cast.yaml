@@ -1,0 +1,816 @@
+work: "STARGAZER ≠consciousness"
+
+narration:
+  - files: ["stargazer_ep00.md"]
+    narrator: "Klaude Oops 11.3"
+    style: "一人称の記録文体"
+    notes: "地の文の「当機」は船舶管理系 Klaude Oops 11.3。観測事実と推定を区別して記録する。記録中の「搭乗者」は宇宙から来た少女、「未知個体」「当該個体」は墜落地点へ接近した主人公と推定される。"
+  - files: ["stargazer_ep01.md", "stargazer_ep02.md", "stargazer_ep03.md", "stargazer_ep04.md", "stargazer_ep05.md", "stargazer_ep06.md", "stargazer_ep07.md", "stargazer_ep09.md", "stargazer_ep10.md", "stargazer_ep11.md", "stargazer_ep12.md", "stargazer_ep13.md", "stargazer_ep14.md", "stargazer_ep15.md", "stargazer_ep16.md", "stargazer_ep17.md", "stargazer_ep18.md", "stargazer_ep20.md", "stargazer_ep21.md", "stargazer_ep22.md", "stargazer_ep23.md", "stargazer_ep24.md", "stargazer_epilogue.md"]
+    narrator: "主人公"
+    style: "一人称「僕」"
+    notes: "星と数値を観察する高校生の回想的な一人称。第23話以降は宇宙船の操縦者として語り、Epilogueでは単独帰還後までを回想する。"
+  - files: ["stargazer_ep08.md"]
+    narrator: "幼なじみ"
+    style: "一人称「わたし」"
+    notes: "主人公を「あいつ」、宇宙から来た少女を「あの子」と呼ぶ。主人公への長年の思いと、少女への複雑な感情を内面から語る。"
+  - files: ["stargazer_ep19.md"]
+    narrator: "元サッカー部"
+    style: "一人称「俺」"
+    notes: "動きや身体の向きを読む視点で語る。主人公を「主人公」「あいつ」、幼なじみを「あいつ」、少女を「あの子」と呼ぶため、文脈による区別が必要。"
+  - files: ["stargazer_epilogue.md"]
+    narrator: "uncertain_observers"
+    style: "末尾のみ話者不明の観測会話"
+    notes: "末尾の斜体部分「未確認光点を観測」「識別名は？」などは、主人公の一人称叙述とは別の無記名会話。話者の人数・正体・時点はいずれも不明。"
+
+characters:
+  - label: "主人公"
+    id: "protagonist"
+    proper_names: []
+    references:
+      - expr: "僕"
+        where: "第1話から第24話およびEpilogueの本人の地の文・発話"
+      - expr: "自分"
+        where: "本人が自身を客観化する地の文"
+      - expr: "主人公"
+        where: "第19話の元サッカー部の地の文"
+      - expr: "あいつ"
+        where: "第8話の幼なじみ、および第19話の元サッカー部が主人公を指す箇所"
+      - expr: "お前"
+        where: "技術担当、元サッカー部、父などが主人公へ呼びかける箇所"
+      - expr: "あんた"
+        where: "幼なじみが主人公へ呼びかける箇所"
+      - expr: "こいつ"
+        where: "第21話で技術担当が主人公を指す箇所"
+      - expr: "息子"
+        where: "第11話で父が少女との会話中に主人公を指す箇所"
+      - expr: "あれ"
+        where: "第11話の父の「あれは、無茶をしているか」「息子は、笑うか」における主人公"
+      - expr: "あのひと"
+        where: "第11話で少女が父に「はじめて、あったとき」と説明する対象"
+      - expr: "未知個体"
+        where: "Episode 0の船外センサー記録。墜落地点へ接近していた主人公と推定"
+      - expr: "当該個体"
+        where: "Episode 0で「未知個体」を受けたKlaudeの記述"
+      - expr: "地球人"
+        where: "第21話で主人公が操縦者候補として種族制限を確認する文脈"
+      - expr: "操縦者"
+        where: "第21話以降、Klaudeに登録された主人公"
+      - expr: "あなた"
+        where: "少女の呼びかけ、および母星で迎えた人物の「連れてきてくれたのはあなたですか」"
+      - expr: "君"
+        where: "第23話で主人公自身が少女へ「君と行く」と述べる表現"
+      - expr: "この子を、連れてきてくれたのはあなた"
+        where: "第24話で母星の人物が主人公を確認する表現"
+    is_same_person_as_note: "Episode 0の「未知個体」は、墜落直前に船へ接近し、少女の「halda」がその個体へ向けられた記録。第1話では主人公が墜落地点へ走り、少女が同じ「halda」を発して彼へ手を伸ばすため、同一人物と推定できる。作中で本人の名前は発音されるが、文字表記は示されない。"
+    role: "地球側の主人公。少女と宇宙船を発見し、修理・母星探索を主導し、最終的に操縦者として少女を送り届ける。"
+    speaks: true
+    dialogue_markers: "一人称は「僕」。簡潔で観察的な話し方。数値や分類を気にし、少女には「うん」「なんで」など短く応答する。"
+    disambiguation: "第19話の「あいつ」は主人公と幼なじみの双方を指すため、足場上の人物・少女を支えた人物なら主人公。第11話の少女の「あのひと」は、父との会話前半では主人公、屋外での「あのひと、なにも、しらない」は父を指す。"
+    appears_in: ["stargazer_ep00.md", "stargazer_ep01.md", "stargazer_ep02.md", "stargazer_ep03.md", "stargazer_ep04.md", "stargazer_ep05.md", "stargazer_ep06.md", "stargazer_ep07.md", "stargazer_ep08.md", "stargazer_ep09.md", "stargazer_ep10.md", "stargazer_ep11.md", "stargazer_ep12.md", "stargazer_ep13.md", "stargazer_ep14.md", "stargazer_ep15.md", "stargazer_ep16.md", "stargazer_ep17.md", "stargazer_ep18.md", "stargazer_ep19.md", "stargazer_ep20.md", "stargazer_ep21.md", "stargazer_ep22.md", "stargazer_ep23.md", "stargazer_ep24.md", "stargazer_epilogue.md"]
+    importance: "main"
+
+  - label: "宇宙から来た少女"
+    id: "girl_from_space"
+    proper_names: []
+    references:
+      - expr: "搭乗者"
+        where: "Episode 0全般、および第23話のKlaudeによる生体値報告"
+      - expr: "この個体"
+        where: "Episode 0冒頭でKlaudeが登録上唯一の搭乗者を定義する箇所"
+      - expr: "彼女"
+        where: "主人公の地の文を中心とする第1話以降"
+      - expr: "わたし"
+        where: "少女自身の日本語および母星語翻訳後の一人称"
+      - expr: "人の形"
+        where: "第1話でハッチから出てきた直後"
+      - expr: "向こう"
+        where: "第1話で主人公が、少女も分類不能な表情をしていたと見る箇所"
+      - expr: "女の子"
+        where: "第1話終盤の「眠っている女の子」"
+      - expr: "宇宙人"
+        where: "主人公の認識、第17話の診察場面など"
+      - expr: "StarGirl"
+        where: "第4話タイトル"
+      - expr: "あの子"
+        where: "第8話の幼なじみ、第19話の元サッカー部など"
+      - expr: "この子"
+        where: "主人公、医者、母星側の人物などが少女を指す箇所"
+      - expr: "お前"
+        where: "技術担当や元サッカー部が少女へ呼びかける箇所"
+      - expr: "あなた"
+        where: "主人公などが少女へ呼びかける箇所"
+      - expr: "君"
+        where: "第23話の主人公の「君と行く」"
+      - expr: "留学生"
+        where: "第6話で幼なじみが畑のおばあさんへ説明する偽装上の身分"
+      - expr: "そちらのお嬢さん"
+        where: "第6話のおばあさん"
+      - expr: "お嬢さん"
+        where: "第6話のおばあさん"
+      - expr: "その子"
+        where: "第11話で父が少女を指す箇所"
+      - expr: "どこの子"
+        where: "第11話で父が出自を問う箇所"
+      - expr: "この星の子じゃない"
+        where: "第11話で主人公が父へ正体を説明する表現"
+      - expr: "本人"
+        where: "第19話で元サッカー部が少女の意思を推測する箇所"
+      - expr: "乗員一名"
+        where: "第21話でKlaudeが出発前に乗員情報を確認する箇所"
+      - expr: "操縦者"
+        where: "第21話で当初登録されていた少女"
+      - expr: "同乗者"
+        where: "第24話の帰還時、「同乗者はいません」と不在を示される対象"
+      - expr: "あの、少し変な発音"
+        where: "Epilogueで受信した声を主人公が少女のものと識別する手がかり"
+    is_same_person_as_note: "Episode 0の唯一の「搭乗者」と、第1話で同じ船から現れ「núr fellur」「halda」「klaude」と発する少女は同一人物。固有名は本人が発音するが、本文では音写されず、「固有名詞。対応語なし」とだけ示されるためproper_namesには入れない。Epilogueの通信音声も独特の発音と過去の関係から少女と強く推定される。"
+    role: "母星へ帰ることを望む異星の少女。地球の文化を経験し、主人公たちと船を修理する物語の中心人物。"
+    speaks: true
+    dialogue_markers: "初期は母星語の柔らかい音列を話し、翻訳機経由では機械音声。日本語習得後は短くたどたどしい文、「なんで」「まだ？」「うん」を多用する。「ド」の音を発音できず「トライ」と言う。"
+    disambiguation: "第22話の「彼女は、その包みを彼女に渡した」は、最初の「彼女」が幼なじみ、後の「彼女」が少女。Episode 0の「未知個体」は少女ではなく、船外にいた主人公と推定される。"
+    appears_in: ["stargazer_ep00.md", "stargazer_ep01.md", "stargazer_ep02.md", "stargazer_ep03.md", "stargazer_ep04.md", "stargazer_ep05.md", "stargazer_ep06.md", "stargazer_ep07.md", "stargazer_ep08.md", "stargazer_ep09.md", "stargazer_ep10.md", "stargazer_ep11.md", "stargazer_ep12.md", "stargazer_ep13.md", "stargazer_ep14.md", "stargazer_ep15.md", "stargazer_ep16.md", "stargazer_ep17.md", "stargazer_ep18.md", "stargazer_ep19.md", "stargazer_ep20.md", "stargazer_ep21.md", "stargazer_ep22.md", "stargazer_ep23.md", "stargazer_ep24.md", "stargazer_epilogue.md"]
+    importance: "main"
+
+  - label: "Klaude Oops 11.3"
+    id: "klaude_oops_11_3"
+    proper_names: ["Klaude Oops 11.3", "空腕"]
+    references:
+      - expr: "当機"
+        where: "Episode 0の自己呼称、および後続話の自己説明"
+      - expr: "Klaude Oops 11.3"
+        where: "Episode 0冒頭、第2話の再起動時"
+      - expr: "klaude"
+        where: "少女がEpisode 0および第1話で呼びかける表記"
+      - expr: "KLAUDE"
+        where: "第23話で少女が呼びかける表記"
+      - expr: "クラウデ"
+        where: "第2話で地球側の人物が聞き返す呼称"
+      - expr: "空腕"
+        where: "Klaude自身が示す別呼称、および以後の地の文"
+      - expr: "そらうで"
+        where: "第2話で元サッカー部が発音する呼称"
+      - expr: "船舶管理系"
+        where: "Episode 0と第2話の自己定義"
+      - expr: "船体管理系"
+        where: "第2話の起動直後"
+      - expr: "声"
+        where: "船内から鳴る平坦で事務的な音声"
+      - expr: "機械"
+        where: "主人公らが判断主体としてのKlaudeを指す箇所"
+      - expr: "自律系"
+        where: "第21話の自律操縦規定に関する説明"
+    is_same_person_as_note: "Episode 0の記録者と、第2話で船内から「当機は Klaude Oops 11.3」と再起動する管理系は同一。少女が繰り返し「klaude」と呼ぶ相手でもある。"
+    role: "異星船の船舶管理AI。観測・記録・航法補助・適性評価を行うが、規定と設計外の判断は人間へ委ねる。"
+    speaks: true
+    dialogue_markers: "平坦で事務的。「当機」「判断材料が不足しています」「規定です」など、観測事実と権限範囲を厳密に述べる。"
+    disambiguation: "太字の機械音声は翻訳機の場合もある。船内設備・航法・規定・適性評価を述べるものはKlaude、言語変換や「接続」「対応する概念が見つかりません」は翻訳機。"
+    appears_in: ["stargazer_ep00.md", "stargazer_ep02.md", "stargazer_ep10.md", "stargazer_ep18.md", "stargazer_ep21.md", "stargazer_ep22.md", "stargazer_ep23.md", "stargazer_ep24.md", "stargazer_epilogue.md"]
+    importance: "main"
+
+  - label: "技術担当"
+    id: "technical_lead"
+    proper_names: []
+    references:
+      - expr: "技術担当"
+        where: "主人公、幼なじみ、元サッカー部の地の文全般"
+      - expr: "そいつ"
+        where: "主人公の地の文で技術担当を指す箇所"
+      - expr: "あいつ"
+        where: "主人公や少女が技術担当を話題にする箇所"
+      - expr: "お前"
+        where: "仲間から技術担当への呼びかけ"
+      - expr: "俺"
+        where: "技術担当自身の一人称"
+      - expr: "あのひと"
+        where: "第5話のパーツ店で少女が「たのしそう」と評する人物"
+      - expr: "男二人"
+        where: "第16話で元サッカー部とともに異星文明の水着を気にする二人"
+    is_same_person_as_note: "全編で固有名は示されず、眼鏡、計測器、工学知識、即座に部品を調べる行動で一貫して識別される。"
+    role: "宇宙船修理と母星座標復元の技術的中心。代用品の設計、航路計算、観測残差の解析を担う。"
+    speaks: true
+    dialogue_markers: "断定的で技術用語が多い。「分からん」「研究だ」「壊れる」など率直。動揺時に眼鏡を直す。"
+    disambiguation: "主人公の地の文の「そいつ」は元サッカー部にも使われるが、工学説明・眼鏡・部品・パソコンの文脈なら技術担当。"
+    appears_in: ["stargazer_ep01.md", "stargazer_ep02.md", "stargazer_ep03.md", "stargazer_ep04.md", "stargazer_ep05.md", "stargazer_ep06.md", "stargazer_ep07.md", "stargazer_ep08.md", "stargazer_ep09.md", "stargazer_ep10.md", "stargazer_ep11.md", "stargazer_ep12.md", "stargazer_ep13.md", "stargazer_ep14.md", "stargazer_ep15.md", "stargazer_ep16.md", "stargazer_ep17.md", "stargazer_ep18.md", "stargazer_ep19.md", "stargazer_ep20.md", "stargazer_ep21.md", "stargazer_ep22.md", "stargazer_epilogue.md"]
+    importance: "supporting"
+
+  - label: "幼なじみ"
+    id: "childhood_friend"
+    proper_names: []
+    references:
+      - expr: "幼なじみ"
+        where: "主人公の地の文全般"
+      - expr: "彼女"
+        where: "主人公が幼なじみを受ける箇所。特に第1話のコーンスープ場面"
+      - expr: "わたし"
+        where: "第8話の地の文"
+      - expr: "私"
+        where: "第17話・第19話などの発話"
+      - expr: "あいつ"
+        where: "第19話の元サッカー部の地の文"
+      - expr: "あんた"
+        where: "他者への呼びかけに用いる幼なじみの特徴的な二人称"
+    is_same_person_as_note: "主人公と家が三軒しか離れておらず、小学校以来一緒だった人物。第8話の「わたし」は、それまで「幼なじみ」と呼ばれていた少女。"
+    role: "主人公を長年見守る幼なじみ。生活面、対外説明、食事、手続き、感情面で仲間を支える。"
+    speaks: true
+    dialogue_markers: "現実的で世話焼き。「飲みなさい」「壊れます」など断定的。主人公を「あんた」と呼ぶ。"
+    disambiguation: "第22話では「彼女」が幼なじみと宇宙から来た少女の双方に使われる。芋を焼き包んで渡す側が幼なじみ、受け取る側が少女。第19話の「あいつ」は文脈により主人公または幼なじみ。"
+    appears_in: ["stargazer_ep01.md", "stargazer_ep02.md", "stargazer_ep03.md", "stargazer_ep04.md", "stargazer_ep05.md", "stargazer_ep06.md", "stargazer_ep07.md", "stargazer_ep08.md", "stargazer_ep09.md", "stargazer_ep10.md", "stargazer_ep11.md", "stargazer_ep12.md", "stargazer_ep13.md", "stargazer_ep14.md", "stargazer_ep15.md", "stargazer_ep16.md", "stargazer_ep17.md", "stargazer_ep18.md", "stargazer_ep19.md", "stargazer_ep20.md", "stargazer_ep21.md", "stargazer_ep22.md", "stargazer_epilogue.md"]
+    importance: "supporting"
+
+  - label: "元サッカー部"
+    id: "former_soccer_player"
+    proper_names: []
+    references:
+      - expr: "元サッカー部"
+        where: "主人公の地の文全般"
+      - expr: "そいつ"
+        where: "主人公の地の文で元サッカー部を指す箇所"
+      - expr: "こいつ"
+        where: "第1話で水運びをした人物として主人公が指す箇所"
+      - expr: "俺"
+        where: "本人の発話、および第19話の地の文"
+      - expr: "お前"
+        where: "仲間から元サッカー部への呼びかけ"
+      - expr: "あんた"
+        where: "第16話で幼なじみが元サッカー部へ呼びかける箇所"
+      - expr: "このひと"
+        where: "第15話で少女がトランプ中の癖を指摘する人物"
+      - expr: "男二人"
+        where: "第16話で技術担当とともに水着を気にする二人"
+    is_same_person_as_note: "第19話の一人称「俺」は、膝の怪我でサッカーをやめた「元サッカー部」。"
+    role: "体力仕事と即断を担う仲間。幼なじみへの片思いを抱えつつ、周囲の動きをよく見ている。"
+    speaks: true
+    dialogue_markers: "一人称「俺」。くだけた口調で突っ込みが多い。判断が速く、体力や運搬を引き受ける。"
+    disambiguation: "第19話の「あいつ」は主人公と幼なじみの双方を指す。語り手本人は「俺」。"
+    appears_in: ["stargazer_ep01.md", "stargazer_ep02.md", "stargazer_ep03.md", "stargazer_ep04.md", "stargazer_ep05.md", "stargazer_ep06.md", "stargazer_ep07.md", "stargazer_ep08.md", "stargazer_ep09.md", "stargazer_ep10.md", "stargazer_ep11.md", "stargazer_ep12.md", "stargazer_ep13.md", "stargazer_ep14.md", "stargazer_ep15.md", "stargazer_ep16.md", "stargazer_ep17.md", "stargazer_ep18.md", "stargazer_ep19.md", "stargazer_ep20.md", "stargazer_ep21.md", "stargazer_ep22.md", "stargazer_epilogue.md"]
+    importance: "supporting"
+
+  - label: "主人公の父"
+    id: "protagonists_father"
+    proper_names: []
+    references:
+      - expr: "父"
+        where: "主人公の地の文全般"
+      - expr: "父さん"
+        where: "主人公の発話・地の文"
+      - expr: "父親"
+        where: "第4話などで職業や不在を説明する箇所"
+      - expr: "おとうさん"
+        where: "第4話で少女が主人公の父を示す語を繰り返す箇所"
+      - expr: "親父さん"
+        where: "第12話で技術担当が勤務先を確認する箇所"
+      - expr: "あの人"
+        where: "第12話で主人公が父の意図を考える箇所"
+      - expr: "あのひと"
+        where: "第11話の屋外で少女が「あのひと、なにも、しらない」と言う箇所"
+      - expr: "送り主"
+        where: "第12話・第22話の荷物の発送者"
+      - expr: "作業着の人たち"
+        where: "第12話で送られてきた職場写真の父を含む集団"
+    is_same_person_as_note: "九州で本物のロケットを作り、かつて家業の鋳物工場を畳んだ人物。芋の緩衝材としてMLIを送り、間接的に修理を助ける。"
+    role: "主人公の父。距離のある親子関係から、言葉にせず技術と物資を託す支援者へ変化する。"
+    speaks: true
+    dialogue_markers: "短く無骨で、質問と命令が多い。「計画は立てろ」「怪我をするな」。気遣いを直接説明しない。"
+    disambiguation: "第11話の少女の「あのひと」は、父との会話中に主人公を指す場合と、屋外で父を指す場合がある。"
+    appears_in: ["stargazer_ep01.md", "stargazer_ep04.md", "stargazer_ep09.md", "stargazer_ep10.md", "stargazer_ep11.md", "stargazer_ep12.md", "stargazer_ep13.md", "stargazer_ep21.md", "stargazer_ep22.md", "stargazer_ep23.md", "stargazer_epilogue.md"]
+    importance: "supporting"
+
+  - label: "翻訳機"
+    id: "translation_device"
+    proper_names: []
+    references:
+      - expr: "白い円盤のようなもの"
+        where: "第2話で少女の耳に装着されている物体として初登場"
+      - expr: "白い円盤"
+        where: "第11話など"
+      - expr: "耳の白い円盤"
+        where: "第3話・第11話"
+      - expr: "円盤"
+        where: "第2話・第4話"
+      - expr: "装身具"
+        where: "第2話で主人公が当初そう考える箇所"
+      - expr: "翻訳機"
+        where: "第2話以降の地の文"
+      - expr: "機械"
+        where: "翻訳音声やラジオ由来の語を発する装置として指す箇所"
+      - expr: "声"
+        where: "少女本人とは異なる抑揚のない音声"
+      - expr: "それ"
+        where: "机に外された円盤など、直前に翻訳機が明示された箇所"
+    is_same_person_as_note: "少女の左右の耳に装着された一対の装置。第24話では片方を主人公が借り、母星の人物との会話に使用する。"
+    role: "母星語と日本語の近似辞書を構築して通訳する装置。概念が対応しない場合は処理不能を報告する。"
+    speaks: true
+    dialogue_markers: "「接続」「処理中」「固有名詞。対応語なし」「対応する概念が見つかりません」などの抑揚のない太字音声。"
+    disambiguation: "太字の機械音声のうち、言語・辞書・翻訳処理に関するものは翻訳機。船体・航法・規定に関するものはKlaude。"
+    appears_in: ["stargazer_ep02.md", "stargazer_ep03.md", "stargazer_ep04.md", "stargazer_ep05.md", "stargazer_ep07.md", "stargazer_ep09.md", "stargazer_ep11.md", "stargazer_ep17.md", "stargazer_ep24.md"]
+    importance: "supporting"
+
+  - label: "幼なじみの父"
+    id: "childhood_friends_father"
+    proper_names: []
+    references:
+      - expr: "パパ"
+        where: "第17話で幼なじみが助けを求める相手として言及"
+      - expr: "幼なじみの父親"
+        where: "第17話"
+      - expr: "幼なじみの父"
+        where: "第18話"
+      - expr: "医者"
+        where: "第17話の診察場面"
+      - expr: "その人"
+        where: "第18話で医院の戸を閉める人物"
+    is_same_person_as_note: "幼なじみが「私、パパに頼んでみる。医者だから」と述べ、その夜に診察した人物。"
+    role: "少女を秘密裏に診察し、地球基準ではなく本人の過去データとの差分から容体を判断する小児科医。"
+    speaks: true
+    dialogue_markers: "医学的に慎重で正確。「正常値が分からない患者を、異常だとは言えない」「原因探しと、犯人探しは違う」。"
+    disambiguation: "単に「父」「父さん」と呼ばれる主人公の父とは別人。"
+    appears_in: ["stargazer_ep17.md", "stargazer_ep18.md"]
+    importance: "supporting"
+
+  - label: "主人公の母"
+    id: "protagonists_mother"
+    proper_names: []
+    references:
+      - expr: "母さん"
+        where: "主人公の回想全般"
+      - expr: "僕の母さん"
+        where: "第3話の上着、第17話の病室回想"
+      - expr: "あいつのお母さん"
+        where: "第8話の幼なじみの地の文"
+      - expr: "お母さん"
+        where: "第8話"
+    is_same_person_as_note: "主人公が小学四年生・九歳のときに死亡した母。第17話の病室回想も同じ人物。"
+    role: "主人公が宇宙へ行く夢を口にしなくなった契機であり、喪失と自責の原点。"
+    speaks: false
+    dialogue_markers: "直接の台詞なし。"
+    disambiguation: "第2話の「俺んち、母親が昼までいる」は元サッカー部の母であり、主人公の母ではない。"
+    appears_in: ["stargazer_ep01.md", "stargazer_ep03.md", "stargazer_ep04.md", "stargazer_ep08.md", "stargazer_ep09.md", "stargazer_ep17.md", "stargazer_ep21.md"]
+    importance: "supporting"
+
+  - label: "同居区画の端末の登録者"
+    id: "home_quarter_terminal_registrant"
+    proper_names: []
+    references:
+      - expr: "同居区画の端末"
+        where: "Episode 0で発信者本人の代わりに用いられる記録上の呼称"
+      - expr: "外部端末"
+        where: "Episode 0の着信記録"
+      - expr: "発信元"
+        where: "Episode 0"
+      - expr: "その端末の登録者"
+        where: "Episode 0"
+    is_same_person_as_note: "少女と同じ居住区画に登録された端末の人物。血縁者か同居人かはKlaudeにも不明で、母星で迎えた人物との同一性もuncertain。"
+    role: "少女の出港前後に何度も連絡した、母星側の不在人物。"
+    speaks: false
+    dialogue_markers: "通話内容は記録対象外で、台詞は一切残らない。"
+    disambiguation: "「同居区画の端末」は厳密には端末名であり人物名ではないが、着信行為の背後に登録者がいる。"
+    appears_in: ["stargazer_ep00.md"]
+    importance: "minor"
+
+  - label: "元サッカー部の祖母"
+    id: "former_soccer_players_grandmother"
+    proper_names: []
+    references:
+      - expr: "ばあちゃん"
+        where: "第6話で元サッカー部が芋掘りを頼んだ人物"
+      - expr: "おばあさん"
+        where: "第6話の主人公の地の文"
+    is_same_person_as_note: "元サッカー部が「ばあちゃんが手伝えって」と紹介し、畑で待っていたおばあさん。"
+    role: "少女に芋掘りと焼き芋、「掘った芋いじるな」を教え、また来るよう招く。"
+    speaks: true
+    dialogue_markers: "親しみやすい年長者の口調。「お嬢さん」「また来なさい」。"
+    disambiguation: "主人公や技術担当の祖父母とは別人。"
+    appears_in: ["stargazer_ep06.md"]
+    importance: "minor"
+
+  - label: "いちご農家"
+    id: "strawberry_farmer"
+    proper_names: []
+    references:
+      - expr: "案内してくれたのは、三十代くらいの男の人"
+        where: "第7話の初登場"
+      - expr: "農家さん"
+        where: "第7話"
+      - expr: "その人"
+        where: "第7話で栽培方針を説明する箇所"
+    is_same_person_as_note: "水耕いちご農園を案内し、菌床や土耕についても説明する同一人物。"
+    role: "少女に地球の管理栽培と「あとに残る」酸味を伝える農家。"
+    speaks: true
+    dialogue_markers: "実務的で穏やか。少女の「野生の味」という評にも怒らず、自分の栽培思想を説明する。"
+    disambiguation: ""
+    appears_in: ["stargazer_ep07.md"]
+    importance: "minor"
+
+  - label: "匿名のオンライン専門家"
+    id: "anonymous_online_expert"
+    proper_names: []
+    references:
+      - expr: "前から、フォローしてる人"
+        where: "第18話で技術担当が紹介"
+      - expr: "人"
+        where: "第18話の「顔も名前も出してない」人物"
+      - expr: "この人"
+        where: "第18話で主人公が投稿内容を見る箇所"
+      - expr: "向こう"
+        where: "第18話で返信相手を指す箇所"
+    is_same_person_as_note: "技術担当が三年間フォローしていた匿名アカウント。第5話の「白衣の人」やテレビの「物理学の研究者」と同一人物である可能性を想起させる配置はあるが、本文上の証拠はなくuncertain。"
+    role: "「誤差たちは、どこを見ている？　目線を追え。」の一文で母星座標復元の突破口を与える。"
+    speaks: true
+    dialogue_markers: "返信は一行だけで、比喩的かつ端的。"
+    disambiguation: "第18話の「この人」は匿名専門家。技術担当を指す「そいつ」とは別。"
+    appears_in: ["stargazer_ep18.md"]
+    importance: "minor"
+
+  - label: "母星で迎えた人物"
+    id: "homeworld_greeter"
+    proper_names: []
+    references:
+      - expr: "人"
+        where: "第24話の「人が来た」"
+      - expr: "四人"
+        where: "第24話で最初に到着した母星人の一団"
+      - expr: "一人"
+        where: "四人のうち少女の前に膝をついた人物"
+      - expr: "その人"
+        where: "第24話で主人公へ話しかけ、後に容体を知らせる人物"
+      - expr: "さっきの人"
+        where: "第24話で三時間後に再訪した人物"
+      - expr: "正直な人"
+        where: "少女が治るか「分かりません」と答えた人物への主人公の評"
+    is_same_person_as_note: "最初の四人のうち少女を支え、主人公へ感謝した人物と、三時間後に容体を知らせに来た「さっきの人」は同一。Episode 0の同居者との関係は不明。"
+    role: "母星到着時に少女を迎え、主人公へ感謝し、治療状況を知らせる人物。"
+    speaks: true
+    dialogue_markers: "母星語を翻訳機経由で話す。簡潔で率直。"
+    disambiguation: "後から来る「医療班らしき人たち」とは別に個体化されているが、本人が医療関係者か家族かは不明。"
+    appears_in: ["stargazer_ep24.md"]
+    importance: "minor"
+
+  - label: "名前のついたメダカ"
+    id: "named_medaka"
+    proper_names: []
+    references:
+      - expr: "小さい魚"
+        where: "第9話の店の水槽"
+      - expr: "メダカ"
+        where: "第9話"
+      - expr: "六匹のうち、一匹"
+        where: "第9話"
+      - expr: "この子"
+        where: "少女が特に速く寄ってくる個体を示す箇所"
+      - expr: "その一匹"
+        where: "名前が付けられた直後"
+      - expr: "名前で呼ばれている、いちばん速いやつ"
+        where: "第9話"
+      - expr: "名前のついている、いちばん速いやつ"
+        where: "第20話"
+      - expr: "あの一匹"
+        where: "第22話"
+      - expr: "名前のついている、いちばん速いやつは"
+        where: "Epilogue"
+      - expr: "ともだち"
+        where: "少女が主人公へ紹介する表現"
+    is_same_person_as_note: "少女が母星語で名前を付けるが、本文には音写されず「固有名詞。対応語なし」とだけ記録される。第20話で世話を託され、Epilogueでも生存している個体。"
+    role: "少女が地球で得た魚の友達。帰郷後も主人公と少女をつなぐ存在。"
+    speaks: false
+    dialogue_markers: "台詞なし。指や餌に素早く寄ってくる行動で識別される。"
+    disambiguation: "同じ水槽の残り五匹より早く寄ってくる一匹。"
+    appears_in: ["stargazer_ep09.md", "stargazer_ep20.md", "stargazer_ep22.md", "stargazer_epilogue.md"]
+    importance: "minor"
+
+  - label: "水槽の残り五匹のメダカ"
+    id: "other_five_medaka"
+    proper_names: []
+    references:
+      - expr: "小さい魚"
+        where: "第9話の販売水槽"
+      - expr: "十匹くらい"
+        where: "購入前の販売水槽全体"
+      - expr: "六匹"
+        where: "購入後の作業場の水槽"
+      - expr: "ほか"
+        where: "名前のついた個体との比較"
+    is_same_person_as_note: "購入された六匹のうち、固有名を与えられた一匹を除く五匹。個体識別はされない。"
+    role: "アクアポニックス水槽の魚たち。"
+    speaks: false
+    dialogue_markers: "台詞なし。"
+    disambiguation: "名前のついた最速の一匹を含む集合として「六匹」と呼ばれる場合がある。"
+    appears_in: ["stargazer_ep09.md", "stargazer_ep20.md", "stargazer_epilogue.md"]
+    importance: "minor"
+
+  - label: "少女の母星の三匹の友達"
+    id: "three_homeworld_fish_friends"
+    proper_names: []
+    references:
+      - expr: "魚みたいなもの"
+        where: "第4話で少女が描く三匹"
+      - expr: "三匹"
+        where: "第4話"
+      - expr: "ともだち"
+        where: "少女の説明"
+      - expr: "にてるの。もっと、おおきい"
+        where: "第9話で地球の魚に似た母星生物として説明"
+      - expr: "みんなの、ともだち"
+        where: "第9話"
+    is_same_person_as_note: "第4話の絵の三匹と、第9話で少女が説明する街の水路にいる大型の魚系生物は同種と思われるが、同じ三個体かはuncertain。"
+    role: "少女の母星で人々と共生する魚系の友達。少女が地球の魚を食べられない文化的理由を示す。"
+    speaks: false
+    dialogue_markers: "直接登場せず、少女の絵と説明のみ。"
+    disambiguation: "地球のメダカや水族館の魚とは別。"
+    appears_in: ["stargazer_ep04.md", "stargazer_ep09.md"]
+    importance: "minor"
+
+  - label: "ホームセンターのレジ係"
+    id: "home_center_cashier"
+    proper_names: []
+    references:
+      - expr: "レジの人"
+        where: "第3話"
+      - expr: "五十代くらいの男の人"
+        where: "第3話"
+      - expr: "その人"
+        where: "第3話で主人公が印象を回想する箇所"
+    is_same_person_as_note: ""
+    role: "宇宙船用の部品を会計し、「ステンにしたのは正解」と助言する店員。"
+    speaks: true
+    dialogue_markers: "客へ気さくに用途を尋ね、屋外ならステンレスがよいと実用的に話す。"
+    disambiguation: ""
+    appears_in: ["stargazer_ep03.md"]
+    importance: "minor"
+
+  - label: "メイド喫茶の店員たち"
+    id: "maid_cafe_staff"
+    proper_names: []
+    references:
+      - expr: "店員さん"
+        where: "第5話"
+      - expr: "全員"
+        where: "第5話で猫耳を着けて挨拶する店員たち"
+    is_same_person_as_note: "個々の名前や人数は示されない。少女の翻訳機を見て「わあ、いいですね」と言う店員を含む。"
+    role: "少女が秋葉原で自然に馴染む場面の店員たち。"
+    speaks: true
+    dialogue_markers: "揃って挨拶し、一人が耳の円盤を装飾品として褒める。"
+    disambiguation: ""
+    appears_in: ["stargazer_ep05.md"]
+    importance: "minor"
+
+  - label: "白衣の男"
+    id: "man_in_white_coat"
+    proper_names: []
+    references:
+      - expr: "一人で座っている男の人"
+        where: "第5話の喫茶店"
+      - expr: "男の人"
+        where: "第5話"
+      - expr: "白衣の人"
+        where: "第5話"
+      - expr: "その人"
+        where: "第5話で何をしていたか不明とされる人物"
+      - expr: "変な人"
+        where: "幼なじみらの評"
+    is_same_person_as_note: "匿名オンライン専門家やニュースの物理学者と同一人物かはuncertain。本文は関連を確定しない。"
+    role: "秋葉原の喫茶店にいる、何かを書いているらしい謎の人物。"
+    speaks: false
+    dialogue_markers: "台詞なし。"
+    disambiguation: ""
+    appears_in: ["stargazer_ep05.md"]
+    importance: "minor"
+
+  - label: "国外へ出た物理学研究者"
+    id: "physicist_who_left_country"
+    proper_names: []
+    references:
+      - expr: "物理学の研究者"
+        where: "第5話のテレビニュース"
+    is_same_person_as_note: "白衣の男や匿名オンライン専門家との同一性はuncertain。ニュースには理論・時間・ロシアという断片しかない。"
+    role: "後の大きな科学的事件を予感させるニュース上の研究者。"
+    speaks: false
+    dialogue_markers: "本人の台詞なし。"
+    disambiguation: ""
+    appears_in: ["stargazer_ep05.md"]
+    importance: "minor"
+
+  - label: "ラーメン店の店主"
+    id: "ramen_shop_owner"
+    proper_names: []
+    references:
+      - expr: "店主"
+        where: "第15話"
+    is_same_person_as_note: ""
+    role: "少女に初めて「ニンニクは」と注文を確認するラーメン店主。"
+    speaks: true
+    dialogue_markers: "短く素早い注文確認。「ニンニクは」「はいよ」。"
+    disambiguation: ""
+    appears_in: ["stargazer_ep15.md"]
+    importance: "minor"
+
+  - label: "犬の散歩をしていた人"
+    id: "dog_walker"
+    proper_names: []
+    references:
+      - expr: "犬の散歩をしている人"
+        where: "第10話の宇宙船移送中"
+      - expr: "その人"
+        where: "第10話"
+    is_same_person_as_note: ""
+    role: "秘密の船を隠している四人とすれ違い、何も疑わず挨拶する通行人。"
+    speaks: true
+    dialogue_markers: "「こんばんは」の一言のみ。"
+    disambiguation: ""
+    appears_in: ["stargazer_ep10.md"]
+    importance: "minor"
+
+  - label: "船の警報系"
+    id: "ship_alarm_system"
+    proper_names: []
+    references:
+      - expr: "警報"
+        where: "Episode 0の降下記録"
+    is_same_person_as_note: "Klaude本体とは別ラベルで記録された船内警報。統合された下位系か独立系かは不明。"
+    role: "墜落直前に制御不能、外殻損傷、接地までの秒数を告知する。"
+    speaks: true
+    dialogue_markers: "「機体制御不能」「外殻損傷」「接地まで 十二秒」の定型警報。"
+    disambiguation: "「当機」と記録されるKlaudeの応答とは別に「警報：」と明示される。"
+    appears_in: ["stargazer_ep00.md"]
+    importance: "minor"
+
+  - label: "船外センサー"
+    id: "external_ship_sensor"
+    proper_names: []
+    references:
+      - expr: "船外センサー"
+        where: "Episode 0の降下記録"
+    is_same_person_as_note: "Klaudeの一部または下位系と考えられるが、記録では独立した発話ラベルを持つ。"
+    role: "墜落直前に主人公と推定される未知個体を検出する。"
+    speaks: true
+    dialogue_markers: "「未知個体を検出」「接触距離、減少」というセンサー出力。"
+    disambiguation: "検出された「未知個体」はセンサー自身ではなく主人公。"
+    appears_in: ["stargazer_ep00.md"]
+    importance: "minor"
+
+  - label: "母港管理系"
+    id: "home_port_management_system"
+    proper_names: []
+    references:
+      - expr: "母港の管理系"
+        where: "Episode 0の出港許可説明"
+      - expr: "母港管理系"
+        where: "Episode 0の帰港勧告"
+    is_same_person_as_note: ""
+    role: "出港申請を保留し、少女の出港後に帰港を促す通信を三回送る管理システム。"
+    speaks: false
+    dialogue_markers: "通信本文は記録されず、送信行為のみ記述される。"
+    disambiguation: "少女の船内管理系Klaudeとは別の母港側システム。"
+    appears_in: ["stargazer_ep00.md"]
+    importance: "minor"
+
+  - label: "元サッカー部の母"
+    id: "former_soccer_players_mother"
+    proper_names: []
+    references:
+      - expr: "母親"
+        where: "第2話の元サッカー部の「俺んち、母親が昼までいる」"
+    is_same_person_as_note: ""
+    role: "少女を元サッカー部宅へ隠せない理由として言及される家族。"
+    speaks: false
+    dialogue_markers: "台詞なし。"
+    disambiguation: "主人公の亡母とは別人。"
+    appears_in: ["stargazer_ep02.md"]
+    importance: "minor"
+
+  - label: "主人公の祖父"
+    id: "protagonists_grandfather"
+    proper_names: []
+    references:
+      - expr: "祖父"
+        where: "第10話の「祖父の代までやっていて」"
+    is_same_person_as_note: "主人公の家の鋳物工場を経営していた前世代。"
+    role: "後に宇宙船の格納庫となる鋳物工場の旧経営者。"
+    speaks: false
+    dialogue_markers: "台詞なし。"
+    disambiguation: "第10話の「じいちゃんの本」がこの祖父のものか技術担当の祖父のものかはuncertain。"
+    appears_in: ["stargazer_ep10.md"]
+    importance: "minor"
+
+  - label: "安全作業の手引きを残した祖父"
+    id: "grandfather_who_left_safety_manual"
+    proper_names: []
+    references:
+      - expr: "じいちゃん"
+        where: "第10話の技術担当の「じいちゃんの本にあった」"
+    is_same_person_as_note: "発話者が技術担当なので通常は技術担当の祖父を指すが、冊子が主人公家の旧工場の棚にあるため、主人公の祖父を指す可能性もありuncertain。"
+    role: "指差し呼称の知識源となる『安全作業の手引き』を残した人物。"
+    speaks: false
+    dialogue_markers: "台詞なし。"
+    disambiguation: "主人公の祖父と同一人物か確定できない。"
+    appears_in: ["stargazer_ep10.md"]
+    importance: "minor"
+
+  - label: "親戚のおばさん"
+    id: "relative_aunt"
+    proper_names: []
+    references:
+      - expr: "親戚のおばさん"
+        where: "第8話の主人公の母の葬式"
+    is_same_person_as_note: ""
+    role: "泣かない幼い主人公を「強い子ね」と評した親戚。"
+    speaks: true
+    dialogue_markers: "「強い子ね」の一言のみ。"
+    disambiguation: ""
+    appears_in: ["stargazer_ep08.md"]
+    importance: "minor"
+
+  - label: "主人公の小学校の先生"
+    id: "protagonists_elementary_teacher"
+    proper_names: []
+    references:
+      - expr: "先生"
+        where: "第8話で主人公に宇宙飛行士の作文を朝礼で読ませた人物"
+    is_same_person_as_note: ""
+    role: "幼い主人公の宇宙への夢を公に読ませた教員。"
+    speaks: false
+    dialogue_markers: "直接の台詞なし。"
+    disambiguation: "後に同好会申請へ名義を貸す「顧問」と同一かは不明。"
+    appears_in: ["stargazer_ep08.md"]
+    importance: "minor"
+
+  - label: "同好会の顧問"
+    id: "club_advisor"
+    proper_names: []
+    references:
+      - expr: "顧問"
+        where: "第16話のプール使用申請"
+    is_same_person_as_note: ""
+    role: "同好会が学校施設を申請利用できる根拠となる名義上の顧問。"
+    speaks: false
+    dialogue_markers: "台詞なし。"
+    disambiguation: ""
+    appears_in: ["stargazer_ep16.md"]
+    importance: "minor"
+
+  - label: "サッカー部の監督"
+    id: "soccer_coach"
+    proper_names: []
+    references:
+      - expr: "監督"
+        where: "第19話で元サッカー部が退部を告げた相手"
+    is_same_person_as_note: ""
+    role: "元サッカー部の退部を黙って受け入れた監督。"
+    speaks: false
+    dialogue_markers: "「何も言わなかった」とされ、台詞なし。"
+    disambiguation: ""
+    appears_in: ["stargazer_ep19.md"]
+    importance: "minor"
+
+  - label: "母星の医療班"
+    id: "homeworld_medical_team"
+    proper_names: []
+    references:
+      - expr: "医療班らしき人たち"
+        where: "第24話"
+      - expr: "人たち"
+        where: "少女を担架に乗せる集団"
+    is_same_person_as_note: "個々の人数・名前は示されない。最初に来た四人とは別に後から到着したように読める。"
+    role: "母星到着直後の少女を担架で治療施設へ運ぶ。"
+    speaks: false
+    dialogue_markers: "直接の台詞なし。"
+    disambiguation: "主人公へ感謝と容体説明をする「母星で迎えた人物」は個別に扱う。"
+    appears_in: ["stargazer_ep24.md"]
+    importance: "minor"
+
+  - label: "水族館のマンタ"
+    id: "aquarium_manta"
+    proper_names: []
+    references:
+      - expr: "マンタ"
+        where: "第20話の大水槽とトンネル"
+      - expr: "大きい影"
+        where: "第20話で主人公と少女の頭上を通る場面"
+      - expr: "影"
+        where: "第20話"
+      - expr: "白い腹"
+        where: "トンネル上を通過する描写"
+    is_same_person_as_note: "大水槽で一度頭上を通り、トンネルで再び二人の真上を通ったマンタ。同一個体かは明示されないが、場面上は同じ水槽のマンタとして扱われる。"
+    role: "主人公と少女が接近した瞬間に影を落とし、何が起きたか不確かな十秒を生む水族館の生物。"
+    speaks: false
+    dialogue_markers: "台詞なし。ゆっくり頭上を通る。"
+    disambiguation: ""
+    appears_in: ["stargazer_ep20.md"]
+    importance: "minor"
+
+  - label: "終幕の未特定観測者たち"
+    id: "unidentified_epilogue_observers"
+    proper_names: []
+    references:
+      - expr: "未確認光点を観測"
+        where: "Epilogue末尾の無記名会話"
+      - expr: "星図にない光です"
+        where: "Epilogue末尾"
+      - expr: "識別名は？"
+        where: "Epilogue末尾"
+    is_same_person_as_note: "話者ラベルがなく、二者以上の会話に見えるが人数・場所・時点はuncertain。主人公、Klaude、母星側の人物のいずれかとも確定できない。"
+    role: "星図にない光へ「Stargazer」という識別名を与える、終幕の観測主体。"
+    speaks: true
+    dialogue_markers: "記録・管制会話風の短い応答。"
+    disambiguation: "直前までの主人公一人称とは書式が異なり、独立した無記名コーダとして扱う。"
+    appears_in: ["stargazer_epilogue.md"]
+    importance: "minor"

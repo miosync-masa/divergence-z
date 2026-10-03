@@ -195,6 +195,94 @@ def load_epub(path: Path) -> str:
     return "\n".join(text_parts)
 
 
+DEFAULT_EXTENSIONS = [".txt", ".text", ".md", ".pdf", ".epub"]
+
+
+def _natural_key(path: Path) -> List[Any]:
+    """自然順ソート用キー（ep2 < ep10）"""
+    return [int(t) if t.isdigit() else t.lower()
+            for t in re.split(r"(\d+)", str(path))]
+
+
+def collect_source_files(source: str, extensions: List[str] = DEFAULT_EXTENSIONS,
+                         recursive: bool = True) -> List[Path]:
+    """source がファイルならそれ1つ、フォルダなら対象拡張子のファイルを自然順で返す"""
+    path = Path(source)
+    if not path.exists():
+        raise FileNotFoundError(f"Source not found: {source}")
+    if path.is_file():
+        return [path]
+
+    exts = {e.lower() if e.startswith(".") else f".{e.lower()}" for e in extensions}
+    pattern = "**/*" if recursive else "*"
+    files = [
+        p for p in path.glob(pattern)
+        if p.is_file()
+        and p.suffix.lower() in exts
+        and not any(part.startswith(".") for part in p.relative_to(path).parts)
+    ]
+    return sorted(files, key=lambda p: _natural_key(p.relative_to(path)))
+
+
+def load_source_corpus(source: str, extensions: List[str] = DEFAULT_EXTENSIONS,
+                       recursive: bool = True) -> tuple[str, List[tuple[str, int]]]:
+    """
+    ファイル or フォルダを読み込み、`=== FILE: 相対パス ===` 区切りで1本に連結する。
+    Returns (corpus_text, [(相対パス, 文字数), ...])
+    """
+    files = collect_source_files(source, extensions, recursive)
+    if not files:
+        raise FileNotFoundError(
+            f"No source files ({', '.join(extensions)}) found in: {source}"
+        )
+
+    base = Path(source) if Path(source).is_dir() else Path(source).parent
+    parts: List[str] = []
+    manifest: List[tuple[str, int]] = []
+
+    for f in files:
+        rel = str(f.relative_to(base))
+        print(f"   📄 {rel}")
+        text = load_source_file(str(f))
+        if not text.strip():
+            print("      (empty — skipped)")
+            continue
+        parts.append(f"=== FILE: {rel} ===\n{text.strip()}\n")
+        manifest.append((rel, len(text)))
+
+    return "\n".join(parts), manifest
+
+
+def build_cast_note(cast_text: str, character_name: str) -> str:
+    """
+    人物表（cast_extractor.py の出力など）をプロンプト用の注記にする。
+    名前ではなく「宇宙から落ちてきた少女」「彼女」のような記述で人物を指す作品向け。
+    """
+    if not cast_text.strip():
+        return ""
+    return f"""## CHARACTER REFERENCE GUIDE (CAST SHEET)
+
+In this work, characters are often referred to NOT by proper names but by descriptions,
+roles, or pronouns (e.g. "宇宙から落ちてきた少女", "彼女", "搭乗者"). The same person may be
+referred to differently depending on the chapter or the narrator, and the same pronoun
+may point to different people.
+
+Use the cast sheet below to resolve every reference in the source text.
+The TARGET CHARACTER is the entry labeled "{character_name}" — collect ALL lines and
+scenes that belong to this person under ANY of their references, and do NOT attribute
+lines of other characters to them. Where the cast sheet gives disambiguation hints,
+follow them. If the cast sheet is wrong in a specific scene, trust the text.
+
+Use "{character_name}" as the character's name in the output (name / character_id),
+unless the text reveals an actual proper name — then use that name and keep the label
+as an alias.
+
+```yaml
+{cast_text.strip()}
+```
+"""
+
+
 # =============================================================================
 # SYSTEM PROMPT FOR PERSONA EXTRACTION — v3.3
 # =============================================================================
@@ -588,6 +676,7 @@ class OpenAIResponsesClient:
         reasoning_effort: str = DEFAULT_REASONING,
         background: Optional[bool] = None,
         max_output_tokens: int = 65536,
+        cast_text: str = "",
     ) -> Dict[str, Any]:
         """
         原作テキストからペルソナを抽出
@@ -600,6 +689,7 @@ class OpenAIResponsesClient:
             reasoning_effort: minimal/low/medium/high/xhigh
             background: バックグラウンドモード。None=自動（Pro/SOLティアは自動ON）
             max_output_tokens: 生成上限（推論モデルは reasoning トークンも含む）
+            cast_text: 人物表YAML（名前でなく記述で人物を指す作品用。空なら無し）
 
         Returns:
             抽出されたペルソナYAML（dict形式）
@@ -610,6 +700,7 @@ class OpenAIResponsesClient:
 
 {source_text}
 
+{build_cast_note(cast_text, character_name)}
 ## TARGET CHARACTER
 
 {character_name}
@@ -924,7 +1015,12 @@ Examples:
         """
     )
 
-    parser.add_argument("--source", "-s", help="Source file path (txt, pdf, epub)")
+    parser.add_argument("--source", "-s",
+                        help="Source file or folder (txt, md, pdf, epub). "
+                             "Folders are loaded in natural order (ep2 < ep10)")
+    parser.add_argument("--cast",
+                        help="Cast sheet YAML (from cast_extractor.py) for works that refer to "
+                             "characters by description instead of name")
     parser.add_argument("--character", "-c", help="Character name to extract")
     parser.add_argument("--characters", help="Comma-separated list of character names")
     parser.add_argument("--lang", "-l", default="en",
@@ -975,8 +1071,16 @@ Examples:
 
     # ソースファイル読み込み
     print(f"📖 Loading source file: {args.source}")
-    source_text = load_source_file(args.source)
-    print(f"   Loaded {len(source_text):,} characters")
+    if Path(args.source).is_dir():
+        source_text, manifest = load_source_corpus(args.source)
+        print(f"   Loaded {len(manifest)} file(s), {len(source_text):,} characters")
+    else:
+        source_text = load_source_file(args.source)
+        print(f"   Loaded {len(source_text):,} characters")
+    cast_text = ""
+    if args.cast:
+        cast_text = Path(args.cast).read_text(encoding="utf-8")
+        print(f"   Cast sheet: {args.cast} ({len(cast_text):,} chars)")
     print()
 
     # クライアント初期化
@@ -996,6 +1100,7 @@ Examples:
             reasoning_effort=args.reasoning,
             background=args.background,
             max_output_tokens=args.max_output_tokens,
+            cast_text=cast_text,
         )
 
         yaml_text = result["yaml_text"]
