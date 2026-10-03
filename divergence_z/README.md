@@ -1,408 +1,53 @@
-# Divergence-Z 🌀
+# divergence_z — ライブラリ / Library reference
 
-> "Don't Kill the Tsundere"  
-> — Action-Preserving Translation for Fictional Speech
+使い方のマニュアルはリポジトリ直下の [README.md](../README.md) を参照。ここはコードから使う人向けの一覧。
+For the user manual see the [top-level README](../README.md). This page lists the library API.
 
-## What's New in v3.1 🌐
+## 共通層 `core/`
 
-### Multi-Language Support
-- **Persona generation** in 10 languages (ja/en/zh/ko/fr/es/de/pt/it/ru)
-- **Bidirectional translation** (ja→en, en→ja, zh→en, etc.)
-- **Original speech patterns preserved** — Japanese pronouns (俺/私/僕) kept in source language
-- **Translation compensations** — Strategies for preserving character voice across languages
+```python
+from divergence_z.core import LLM, Keys, load_source_corpus, get_model, check_fit
+
+llm = LLM(Keys(openai="sk-...", anthropic="sk-ant-..."))   # BYOK（CLI は Keys.from_env()）
+result = llm.complete(system, user, model="claude-opus-5-5", effort="high")
+result.text, result.usage, llm.total_usage()
+```
+
+| モジュール | 中身 |
+|---|---|
+| `core/llm.py` | `LLM.complete()`（OpenAI Responses / Anthropic Messages を同じ形で）、`Keys`、`LLMResult`、`classify_error()` |
+| `core/models.py` | モデル登録表 `get_model()` / `list_models()`。`~/.divergence_z/models.yaml`（または `$DZ_MODELS`）で上書き |
+| `core/budget.py` | `estimate_tokens()`、`check_fit(spec, prompt, output_tokens)` → トークン数・収まるか・概算費用 |
+| `core/loaders.py` | `load_source_corpus(path)`：ファイル / フォルダ（自然順）を `=== FILE: … ===` 区切りで連結。txt / md / pdf / epub |
+| `core/yamlio.py` | LLM 出力からの YAML 取り出し・クォート修復、`iter_episodes()`、原文照合用の正規化 |
+| `core/cancel.py` | `CancelToken`（`LLM(..., cancel=token)` で受信中・ポーリング中にも中止） |
+| `core/progress.py` | 進行状況コールバック（ライブラリは print せず `progress(msg)` を呼ぶ） |
+
+## 機能ごとの関数
+
+すべて `llm=` を受け取り、結果を dataclass で返す。ファイル保存は呼ぶ側の責任（翻訳だけは出力フォルダを管理する）。
+
+| モジュール | 関数 | 返り値 |
+|---|---|---|
+| `cast_extractor` | `extract_cast(corpus, llm=, work=, hint=)` | `CastResult(yaml_text, data, error)` |
+| `persona_extractor_v2` | `extract_persona(corpus, character, llm=, cast_text=, output_lang=)` | `PersonaResult(yaml_text, valid, issues)` |
+| `episode_extractor` | `extract_episodes(corpus, character, llm=, work=, cast_text=, persona_text=)` | `EpisodeExtraction(yaml_text, valid, quotes_total, quotes_missing, …)` |
+| `persona_generator` | `generate_persona(name, source, desc, llm=, web_search=True)` | `PersonaGeneration(yaml_text, valid, research, …)` |
+| `episode_generator` | `generate_episodes(name, source, desc, llm=, web_search=True)` | `EpisodeResult(yaml_text, valid, episode_count, …)` |
+| `chapter_translator` | `open_book(source, cast_path)` → `translate_chapter(book, idx, llm=, out_dir=, target_lang=)` | `ChapterResult(translated, issues, complete, output_path, …)` |
+| `chapter_translator` | `estimate_chapter(book, idx, out_dir, model)` | `FitReport`（API を呼ばない） |
+| `persona_voice` | `transform_voice(llm=, persona_data=, input_text=, context=, …)` / `respond_voice(…)` | dict（`output`, `usage`, …） |
+
+どの関数にも `model=` / `effort=` / `progress=` を渡せる。各スクリプトは同名の CLI でもある（`python cast_extractor.py --help`）。
+
+## サイドカー API `server/`
+
+デスクトップアプリ用のローカル API（FastAPI）。仕様は [server/README.md](server/README.md)。
 
 ```bash
-# Generate English persona for international users
-python persona_generator.py --name "Kurisu Makise" --source "Steins;Gate" \
-  --desc "Tsundere genius scientist" --lang en
-
-# Translate Chinese → English
-python z_axis_dialogue.py --config dialogue_zh.yaml --source-lang zh --target-lang en
+python -m divergence_z.server     # → {"event":"ready","port":…,"token":…}
 ```
 
-### 🔮 Persona Extractor (NEW)
-**Automatic persona extraction from original source texts.**
+## 旧系統 `old/`
 
-Extract character psychology, speech patterns, and emotional states directly from novels, scripts, or any text file.
-
-```bash
-# Extract Juliet's persona from Shakespeare (Tsubouchi translation)
-python persona_extractor.py \
-  --source "scripts/romeo_and_juliet.txt" \
-  --character "ヂューリエット" \
-  --model gpt-5.2-pro \
-  --reasoning high \
-  --lang ja \
-  --background
-```
-
-Features:
-- **400K context** — Entire novels processed at once (no RAG/chunking)
-- **GPT-5.2 Pro** — Extended reasoning for deep character analysis
-- **Background mode** — Handle long processing without timeout
-- **Multi-encoding** — Supports UTF-8, Shift_JIS, EUC-JP (for classical texts)
-
-### 🎭 Persona Voice Mode (NEW)
-**Transform any input into a character's voice using cognitive STEPs.**
-
-This is not simple text replacement — it's **Spirit Arrival**: the process of giving direction (Vector) to Information, creating authentic character responses.
-
-```bash
-# Transform modern text into Juliet's voice
-python persona_voice.py \
-  --persona personas/ヂューリエット_extracted_v31.yaml \
-  --input "既読無視しないで！" \
-  --context "LINEで3時間返事がない、不安で仕方ない" \
-  --thinking-steps steps/response_step_full.txt \
-  --show-thinking
-```
-
-Output:
-```
-あゝ、三時も待った……三時もぢゃ！
-何故ひと言の返事も寄越さぬ？
-おゝ、予を……予を忘れたのかいの？
-予の心がここで千々に裂けるのを知らぬのかいの？
-頼む、頼むゆゑ……ひと言でよい、返事をしてたも！
-```
-
-Features:
-- **Extended Thinking** — 13-STEP cognitive process with full traceability
-- **Emotion Tensor** — Λ (meaning density), ρT (tension), σₛ (resonance)
-- **Conflict Tensor** — Models internal character struggles (Ξ)
-- **z_mode / z_leak** — Automatic application of breakdown patterns
-
-## Model Characteristics
-
-| Model | Strength | Best For |
-|-------|----------|----------|
-| **GPT-5.2** | Strict z_leak marker application | Research demos, papers |
-| **Claude Opus 4.5** | Natural, literary quality | Production translation |
-
-```bash
-# GPT-5.2 (explicit markers, good for demos)
-USE_CLAUDE_FOR_STEP3=false python z_axis_translate.py --config your_config.yaml
-
-# Claude Opus (natural flow, production use)
-python z_axis_translate.py --config your_config.yaml
-```
-
-## Setup
-
-### 1. Install dependencies
-```bash
-pip install anthropic openai pyyaml python-dotenv requests
-```
-
-### 2. Configure API Keys
-
-Create `.env` file in the `divergence_z/` directory:
-```bash
-# .env
-ANTHROPIC_API_KEY=sk-ant-xxxxx   # For persona_generator.py, z_axis_translate.py (Claude)
-OPENAI_API_KEY=sk-xxxxx          # For z_axis_translate.py, iap_evaluator.py, zap_evaluator.py
-```
-
-## API Configuration
-| Tool | Profiler | Translator | Evaluator | Note |
-|------|----------|------------|-----------|------|
-| `persona_generator.py` | — | — | Claude | Literary quality |
-| `persona_extractor.py` | — | — | GPT-5.2 Pro | 400K context, background mode |
-| `persona_voice.py` | — | — | Claude Opus 4.5 | Extended Thinking |
-| `z_axis_translate.py` | OpenAI | Claude* | — | Hybrid pipeline |
-| `z_axis_dialogue.py` | OpenAI | Claude* | — | Multi-turn translation |
-| `iap_evaluator.py` | — | — | OpenAI | JSON stability |
-| `zap_evaluator.py` | — | — | OpenAI | JSON stability |
-| `yaml_generator.py` | — | — | OpenAI | Context generation |
-| `yaml_formatter.py` | — | — | OpenAI | Script conversion |
-
-> \* Set `USE_CLAUDE_FOR_STEP3=false` to use OpenAI only
-
-### 3. (Optional) Custom model
-```bash
-# .env
-OPENAI_MODEL=gpt-5.2        # Default model for OpenAI tools
-```
-> ⚠️ **Warning**: Model selection directly impacts translation quality.  
-> - Downgrading models will result in loss of emotional nuance  
-> - OpenAI mini models (`gpt-4o-mini`, `gpt-4.1-mini`) are **NOT RECOMMENDED**  
-> - For best results: `gpt-4.1` / `gpt-5.2` + `claude-opus-4-5`
-
-## Supported Languages 🌍
-
-| Code | Language | Native |
-|------|----------|--------|
-| `ja` | Japanese | 日本語 |
-| `en` | English | English |
-| `zh` | Chinese | 中文 |
-| `ko` | Korean | 한국어 |
-| `fr` | French | Français |
-| `es` | Spanish | Español |
-| `de` | German | Deutsch |
-| `pt` | Portuguese | Português |
-| `it` | Italian | Italiano |
-| `ru` | Russian | Русский |
-
-```bash
-# List all supported languages
-python persona_generator.py --list-languages
-python z_axis_dialogue.py --list-languages
-```
-
-## Quick Start
-
-```bash
-cd divergence_z
-
-# ============================================
-# Persona Generation (v3.1 Multi-language)
-# ============================================
-
-# Japanese output (default)
-python persona_generator.py --name "牧瀬紅莉栖" --source "Steins;Gate" \
-  --desc "ツンデレの天才科学者"
-
-# English output — descriptions in English, speech patterns in Japanese
-python persona_generator.py --name "Kurisu Makise" --source "Steins;Gate" \
-  --desc "Tsundere genius scientist" --lang en
-
-# Chinese output
-python persona_generator.py --name "牧濑红莉栖" --source "命运石之门" \
-  --desc "傲娇天才科学家" --lang zh
-
-# ============================================
-# 🔮 Persona Extraction (NEW)
-# ============================================
-
-# Extract character from novel/script (supports txt, pdf, epub)
-python persona_extractor.py \
-  --source "scripts/your_novel.txt" \
-  --character "キャラ名" \
-  --model gpt-5.2-pro \
-  --reasoning high \
-  --lang ja \
-  --background
-
-# Extract multiple characters
-python persona_extractor.py \
-  --source "scripts/your_novel.txt" \
-  --characters "キャラA,キャラB,キャラC" \
-  --model gpt-5.2-pro \
-  --reasoning high
-
-# ============================================
-# 🎭 Persona Voice Mode (NEW)
-# ============================================
-
-# Transform modern text into character's voice
-python persona_voice.py \
-  --persona personas/your_character.yaml \
-  --input "現代的な発話" \
-  --context "背景情報、状況説明"
-
-# With target persona (for relationship context)
-python persona_voice.py \
-  --persona personas/kurisu_v3.yaml \
-  --input "ちょっと待ってよ" \
-  --context "岡部が急に実験を始めようとした" \
-  --target-persona personas/okabe.yaml
-
-# Full STEP with thinking trace
-python persona_voice.py \
-  --persona personas/subaru_v3.yaml \
-  --input "もう無理..." \
-  --context "白鯨戦で仲間を失った直後" \
-  --thinking-steps steps/response_step_full.txt \
-  --show-thinking
-
-# ============================================
-# Translation (v3.1 Multi-language)
-# ============================================
-
-# Japanese → English (default)
-python z_axis_translate.py --config requests/kurisu_test.yaml
-
-# Dialogue: Japanese → English
-python z_axis_dialogue.py --config requests/rem_subaru_dialogue.yaml
-
-# Dialogue: English → Japanese
-python z_axis_dialogue.py --config requests/dialogue_en.yaml \
-  --source-lang en --target-lang ja
-
-# Dialogue: Chinese → English
-python z_axis_dialogue.py --config requests/dialogue_zh.yaml \
-  -s zh -t en
-
-# ============================================
-# Evaluation
-# ============================================
-
-python iap_evaluator.py -o "スバルくんが良いんです" -t "I want you, Subaru-kun"
-python zap_evaluator.py --config requests/rem_test.yaml --translated "I want you, Subaru-kun"
-
-# ============================================
-# Optional: Content Generation Tools
-# ============================================
-
-# [Derivative work] Generate original dialogue (LLM creates lines)
-python yaml_generator.py \
-  --persona personas/kurisu_v3.yaml \
-  --scene "ラボで岡部と二人きり" \
-  --mode solo
-
-# [Original Script] Convert existing script to YAML
-python yaml_formatter.py \
-  --script scripts/rem_subaru_zero.txt \
-  --persona-a personas/レム_v3.yaml \
-  --persona-b personas/スバル_v3.yaml \
-  --hint "白鯨戦前夜、レムの告白"
-```
-
-## Persona YAML v3.1 Structure
-
-### Key Innovation: Original Speech Patterns + Translation Compensations
-
-```yaml
-language:
-  # === PRESERVED IN SOURCE LANGUAGE ===
-  # These are UNTRANSLATABLE but kept for reference
-  original_speech_patterns:
-    source_lang: "ja"
-    first_person: "俺"                    # ← Kept in Japanese!
-    first_person_nuance: "masculine, casual, slightly rough"  # ← Explained in output lang
-    sentence_endings:
-      - pattern: "〜だぜ"                 # ← Kept in Japanese!
-        nuance: "masculine, confident"    # ← Explained in output lang
-    speech_quirks:
-      - pattern: "べ、別に〜"             # ← Iconic tsundere marker, untranslatable
-        trigger: "when caught showing care"
-
-  # === COMPENSATION STRATEGIES ===
-  # How to preserve character voice in OTHER languages
-  translation_compensations:
-    register: "informal, energetic"
-    strategies:
-      en:
-        - "Use contractions (don't, can't)"
-        - "Occasional mild profanity (damn, hell)"
-      zh:
-        - "Use casual particles (啊, 呢, 嘛)"
-      ko:
-        - "Use 반말 (informal speech)"
-    
-    # What is LOST in translation (for translator awareness)
-    untranslatable_elements:
-      - element: "俺 vs 僕 vs 私 distinction"
-        impact: "high"
-        note: "Japanese first-person pronouns encode gender, formality, and personality"
-```
-
-### Why This Matters
-
-| Problem | Traditional Approach | Divergence-Z v3.1 |
-|---------|---------------------|-------------------|
-| "俺" → "I" loses personality | Ignore it | Preserve original + explain nuance + provide compensation strategies |
-| "べ、別に" tsundere stutter | Translate literally | Mark as untranslatable + use "It's not like..." in English |
-| Character voice flattens | Accept the loss | Define per-language compensation strategies |
-
-## Workflow
-
-```
-    ┌─────────────────────────────────────────────────────────────────────────────┐
-    │                           PERSONA CREATION                                  │
-    │                                                                             │
-    │   [From Description]                          [From Source Text] 🔮 NEW     │
-    │   Character Info → persona_generator    Novel/Script → persona_extractor   │
-    │                    [Claude API]                        [GPT-5.2 Pro]        │
-    │         │                                                   │               │
-    │         └───────────────────┬───────────────────────────────┘               │
-    │                             ↓                                               │
-    │                      Persona YAML v3.1                                      │
-    └─────────────────────────────┬───────────────────────────────────────────────┘
-                                  │
-          ┌───────────────────────┼───────────────────────┐
-          ↓                       ↓                       ↓
-    ┌───────────┐         ┌─────────────┐         ┌─────────────┐
-    │ 🎭 Voice  │         │ Translation │         │ Generation  │
-    │   Mode    │         │   Pipeline  │         │    Tools    │
-    │  (NEW)    │         │             │         │             │
-    └─────┬─────┘         └──────┬──────┘         └──────┬──────┘
-          │                      │                       │
-          ↓                      ↓                       ↓
-    persona_voice.py      z_axis_translate.py      yaml_generator.py
-    [Claude Opus 4.5]     z_axis_dialogue.py       yaml_formatter.py
-    Extended Thinking     [OpenAI + Claude]        [OpenAI]
-          │                      │                       │
-          ↓                      ↓                       ↓
-    Character Voice       Translation with         Request YAML
-    Transformation        Z-Axis Preserved         for Translation
-          │                      │
-          │                      ↓
-          │               iap_evaluator.py
-          │               zap_evaluator.py
-          │                      │
-          └──────────────────────┴──────────────────────→ Quality Score
-```
-
-### Pipeline Summary
-
-| Pipeline | Input | Output | Use Case |
-|----------|-------|--------|----------|
-| **Extraction** | Novel/Script | Persona YAML | "Extract Juliet from Shakespeare" |
-| **Voice Mode** | Modern text + Persona | Character voice | "What would Juliet say?" |
-| **Translation** | Japanese dialogue | English with Z-axis | "Translate anime subtitles" |
-| **Generation** | Scene hint | Original dialogue | "Create new character lines" |
-
-## Dialogue YAML v3.1 Format
-
-```yaml
-personas:
-  A: "personas/subaru_v3.yaml"
-  B: "personas/rem_v3.yaml"
-
-scene: "白鯨戦後、精神的限界"
-
-relationships:
-  A_to_B: "信頼、依存しつつある"
-  B_to_A: "愛情、献身"
-
-# NEW in v3.1
-source_lang: "ja"    # Source language (default: ja)
-target_lang: "en"    # Target language (default: en)
-
-dialogue:
-  - speaker: A
-    line: "俺は、俺が大嫌いだ"
-  - speaker: B
-    line: "レムは、スバルくんの味方です"
-```
-
-## Temperature Settings
-
-| STEP | Temperature | Purpose |
-|------|-------------|---------|
-| STEP1 (Hamiltonian) | 0.3 | Accurate extraction of conflict axes |
-| STEP2 (Interference) | 0.3 | Stable analysis of interference patterns |
-| STEP3 (Translation) | 0.7~0.9 | Natural translation preserving emotional nuance ※Only OpenAI Model |
-
-### Design Philosophy
-- **Analysis phase (STEP1/2)**: Low temperature ensures **reproducibility**
-- **Generation phase (STEP3)**: Higher temperature preserves **expressive richness**
-- Lower than OpenAI default (1.0) to prevent hallucination while retaining emotion
-
-## TAP Framework Philosophy
-
-> **"What cannot be translated must be compensated."**
-
-Divergence-Z v3.1 implements the **Translation as Action Preservation (TAP)** framework:
-
-1. **Identify** what is untranslatable (pronouns, particles, dialect markers)
-2. **Preserve** original patterns for reference
-3. **Explain** the nuance in the target language
-4. **Compensate** using target-language-appropriate strategies
-
-This is not about perfect translation — it's about **preserving the character's voice** across language boundaries.
-
----
-
-*— Breaking language barriers through understanding, not just conversion.*
+行単位の Z軸翻訳と IAP / ZAP 評価（アーカイブ）。[old/README.md](old/README.md)。

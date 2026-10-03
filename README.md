@@ -1,524 +1,619 @@
 # Divergence-Z 🌀
 
-> **"Don't Kill the Tsundere"**
-> — Action-Preserving Translation for Fictional Speech
+> 原作から「誰が・何を経験したか」の資料を作り、その資料で **翻訳** し、**声** にする。
+> Build a character bible from the source text — then use it to **translate** and to **speak**.
 
-🇬🇧 [English](#english) | 🇫🇷 [Français](#français)
+🇯🇵 [日本語マニュアル](#日本語マニュアル) | 🇬🇧 [English manual](#english-manual)
+
+```
+原作テキスト ─┬─ CAST     人物表   誰がいて、本文でどう呼ばれているか
+              ├─ PERSONA  ペルソナ  この人は誰か（話し方・核・葛藤）
+              ├─ EPISODE  エピソード この人は何を経験したか（台詞は原文照合つき）
+              │
+              ├─▶ TRANSLATE  章ごとに資料＋訳語表＋前章を渡して翻訳
+              └─▶ VOICE      その人物の声で、原作にない台詞を言わせる
+```
 
 ---
 
-## 💡 No API? No Problem!
+# 日本語マニュアル
 
-**You don't need to be a developer to use these ideas.**
+## 目次
 
-This repository includes Python scripts for automation, but the core concepts work with any chat-based LLM (ChatGPT, Claude, etc.). The prompts and persona YAMLs can be copy-pasted directly into a chat interface.
+1. [これは何か](#1-これは何か)
+2. [必要なもの](#2-必要なもの)
+3. [インストール](#3-インストール)
+4. [デスクトップアプリの使い方](#4-デスクトップアプリの使い方)
+5. [コマンドライン（CLI）の使い方](#5-コマンドラインcliの使い方)
+6. [モデルと費用](#6-モデルと費用)
+7. [プロジェクトフォルダの中身](#7-プロジェクトフォルダの中身)
+8. [プライバシーとセキュリティ](#8-プライバシーとセキュリティ)
+9. [困ったとき](#9-困ったとき)
+10. [開発者向け](#10-開発者向け)
+11. [倫理的な制約・旧版・論文・ライセンス](#11-倫理的な制約旧版論文ライセンス)
 
-**Want to try it yourself?**
-1. Copy a persona YAML from `personas/`
-2. Paste it into ChatGPT/Claude with your line to translate
-3. Ask it to preserve the *action*, not just the meaning
+## 1. これは何か
 
-The magic is in the **prompt engineering**, not the code. Give it a try! 🚀
+小説・脚本・ゲームのテキストを丸ごと LLM に読ませて、登場人物の「設定資料」を作るツールです。
+脚本家や翻訳者が手作業で作っている人物資料を自動化し、その資料をそのまま次の用途に使います。
 
----
+| 作るもの | 中身 |
+|---|---|
+| **人物表（cast）** | 登場人物の一覧と、本文での呼ばれ方（「彼女」「搭乗者」「宇宙から来た少女」など）。名前が出てこない作品でも、誰の台詞かを判定できるようにする |
+| **ペルソナ（persona）** | その人物は誰か。一人称・語尾・口癖、核となる性格、葛藤、感情で話し方がどう崩れるか、他言語での補償方法 |
+| **エピソード（episode）** | その人物が何を経験したか。章ごとの出来事・感情の変化・原作の台詞。台詞は原文と照合して実在を確認する |
 
-## 💡 Pas d'API ? Pas de problème !
+| 使い道 | 中身 |
+|---|---|
+| **翻訳** | 1章ずつ、原文＋その章の登場人物の資料＋訳語表＋直前の訳文を渡して訳す。訳語や人物の声の決定は訳語表に溜まり、次の章に引き継がれる |
+| **ボイス** | 資料をもとに、原作にない台詞をその人物の声で言わせる。2人の掛け合いもできる |
 
-**Vous n'avez pas besoin d'être développeur pour utiliser ces idées.**
+**BYOK（Bring Your Own Key）**：API キーは自分のものを使います。原稿もキーもあなたの PC から外には出ません（送信先は OpenAI / Anthropic の API だけ）。
 
-Ce dépôt contient des scripts Python pour l'automatisation, mais les concepts de base fonctionnent avec n'importe quel LLM en mode chat (ChatGPT, Claude, etc.). Les prompts et les YAMLs de persona peuvent être copiés-collés directement dans une interface de chat.
+## 2. 必要なもの
 
-**Vous voulez essayer ?**
-1. Copiez un persona YAML depuis `personas/`
-2. Collez-le dans ChatGPT/Claude avec votre réplique à traduire
-3. Demandez-lui de préserver l'*action*, pas seulement le sens
+- macOS（Apple シリコンで動作確認）。Windows / Linux はコード上は対応していますが未検証です
+- Python 3.10 以上
+- Node.js 20 以上（デスクトップアプリを使う場合）
+- API キー（どちらか、または両方）
+  - **OpenAI**：抽出と翻訳の既定モデル `gpt-5.6-sol`
+  - **Anthropic**：Web 検索での生成とボイスの既定モデル `claude-opus-5-5`
 
-La magie est dans le **prompt engineering**, pas dans le code. Essayez ! 🚀
+  使うモデルはステップごとに変えられます（[6. モデルと費用](#6-モデルと費用)）。
 
----
-
-# English
-
-## The Problem You Already Know
-
-You've seen it. That moment when your favorite character's most powerful line gets translated and... something dies.
-
-**Rem's confession (Re:Zero):**
-```
-Japanese: 「レムは、スバルくんを愛しています。スバルくんがいいんです。スバルくんじゃなきゃ嫌なんです」
-```
-
-| Translation | Output |
-|-------------|--------|
-| **DeepL** | "Rem loves Subaru. Subaru is the one. I won't accept anyone but Subaru." |
-| **Z-Axis** | "Rem… Rem loves you, Subaru-kun. Subaru-kun is the one Rem wants. Subaru-kun… Subaru-kun is the only one— Rem can't stand it if it isn't you." |
-
-**What went wrong with DeepL?**
-
-| Issue | DeepL | Z-Axis |
-|-------|-------|--------|
-| Honorific | ❌ "Subaru" (dropped) | ✅ "Subaru-kun" |
-| Perspective | ❌ Third-person report | ✅ Direct confession |
-| First-person | ❌ "Rem... I..." (inconsistent) | ✅ "Rem... Rem..." (consistent) |
-| Repetition | ❌ None | ✅ Name repeated (emotional leak) |
-| Hesitation | ❌ Flat | ✅ "…" marks emotion |
-
-DeepL gave you the **meaning**. But the **action**—a desperate, face-to-face confession—became a Wikipedia summary. 💀
-
-The intimacy? Gone. The vulnerability? Gone. The scene where Rem looks Subaru in the eyes and bares her soul? Now it reads like someone describing the scene from outside.
-
-**This is the problem we're solving.**
-
-## What is Z-Axis Translation?
-
-Standard translation preserves **meaning** (what is said).
-
-Z-Axis translation preserves **action** (what the line *does*).
-
-| Layer | What it is | Language-dependent? |
-|-------|------------|---------------------|
-| **Text Layer** | Words, grammar, syntax | ✅ Yes |
-| **Action Layer** | Confess, threaten, deflect, deny, vow... | ❌ No |
-
-A translation succeeds when the **action** survives, even if the surface form changes completely.
-
-### The Confession Test
-
-```
-Original action:  DIRECT CONFESSION (speaker → listener, face-to-face)
-DeepL action:     REPORTED STATEMENT (narrator → audience, describing)
-
-Same meaning. Completely different action.
-```
-
-## Why Not Just Use LLMs?
-
-"Can't GPT/Claude just translate better?"
-
-Yes and no. LLMs *can* produce beautiful translations. But they don't know:
-- Who this character is (their conflicts, speech patterns, emotional tendencies)
-- Who they're talking to (and what that relationship means)
-- What emotional state they're in right now
-- What this line is supposed to *do* to the listener
-
-Without this context, even the best LLM will sometimes:
-- Turn confessions into narration
-- Flatten tsundere deflection into plain denial
-- Lose the "leak then overwrite" pattern that makes a character feel real
-
-**Z-Axis Translation gives LLMs the context they need.**
-
-## How It Works
-
-### 1. Persona Engineering
-
-Each character gets a **persona YAML** capturing:
-- **Conflict axes**: "admit feelings vs. protect self", "duty vs. desire"
-- **Bias patterns**: how emotions surface (e.g., Tsun→Dere→Overwrite)
-- **Triggers**: what makes them react (being called "assistant", being thanked)
-- **Risk flags**: where translations typically fail for this character
-
-### 2. Translation Pipeline (3 Steps)
-
-```
-STEP 1: Hamiltonian Extraction
-         → What conflicts are active? What's the emotional state?
-
-STEP 2: Interference Pattern Analysis  
-         → How do those conflicts manifest in speech?
-         → Hesitation? Denial? Self-correction? Emotional leak?
-
-STEP 3: Z-Axis Preserving Translation
-         → Generate target language text that performs the SAME ACTION
-```
-
-### 3. Evaluation: IAP & ZAP
-
-We built two evaluators to measure what matters:
-
-| Metric | What it measures |
-|--------|------------------|
-| **IAP** (Illocutionary Act Preservation) | Does the translation perform the same speech acts? (confess, refuse, threaten...) |
-| **ZAP** (Z-Axis Preservation) | Does it still sound like the character? Is the emotional intensity preserved? |
-
-## Results: What We Found
-
-### Experiment 1: Rem's Confession (Re:Zero)
-
-| System | Address Mode | IAP Score | What happened |
-|--------|--------------|-----------|---------------|
-| DeepL | direct → **reported** | 0.51 | Confession became narration |
-| Z-Axis | direct → **direct** | 0.76 | Preserved face-to-face confession |
-
-### Experiment 2: Kurisu's Tsundere (Steins;Gate)
-
-Same line: 「別に...あんたのためじゃないから」
-
-| Context | Z-Axis Output | Action |
-|---------|---------------|--------|
-| Daily | "N-not that it's for you or anything." | Standard deflection |
-| Jealous | "I— I mean, it's not like I did it for you, okay?" | Emotion leak → overwrite |
-| Monologue | "It's not for him... I mean— it's *not*." | Self-deception (double denial) |
-
-**The same words perform different actions depending on context.**
-
-### Experiment 3: Luffy's Ultimatum (One Piece)
-
-"If you tell us, I quit being a pirate."
-
-Tested EN→FR→EN round-trip. **The ultimatum survived.** (Explicit actions are robust.)
-
-But the refusal framing matters:
-- ❌ "I don't care where the treasure is" (apathy)
-- ✅ "I don't wanna hear where the treasure is" (boundary-setting to protect the journey)
-
-Same meaning. Different character voice.
-
-## Quick Start
+## 3. インストール
 
 ```bash
-# Setup
-pip install anthropic openai pyyaml python-dotenv requests
+git clone https://github.com/miosync-masa/divergence-z.git
+cd divergence-z
 
-# Create .env
-ANTHROPIC_API_KEY=sk-ant-xxxxx   # For persona generation & translation(Step3　Olny)
-OPENAI_API_KEY=sk-xxxxx          # For translation & evaluation
+# Python 側（エンジン）
+python3 -m venv .venv
+.venv/bin/pip install -e ".[server]"
 
-# Generate a persona
-python persona_generator.py \
-  --name "レム" \
-  --source "Re:ゼロから始める異世界生活" \
-  --desc "ロズワール邸で働く鬼族の少女。姉への劣等感と自己評価の低さを抱えつつ、信頼した相手には強い献身と一途な愛情を向ける。自分の価値を他者への奉仕によって見出しやすく、極限状態では感情を抑えきれず直接的・独占的な想いが表に出ることがある。" \
-  --validate \
-  --output-dir ./personas
-
-# Translate with Z-axis preservation
-python z_axis_translate.py --config requests/rem_test_a_suki.yaml
-
-# Evaluate
-python iap_evaluator.py -o "スバルくんが良いんです" -t "You're the one I choose, Subaru-kun"
-python zap_evaluator.py --config requests/rem_test.yaml --translated "I love you, Subaru-kun"
+# デスクトップアプリ
+cd app
+npm install
+npm run build
+npm start
 ```
 
-## Paper
+起動すると左下に `● ENGINE` と出れば準備完了です。2回目以降は `cd app && npm start` だけで起動できます。
 
-This repository accompanies our practice report submitted to the **Journal of Audiovisual Translation (JAT)**:
+CLI だけ使う場合は、デスクトップアプリの手順は不要です。リポジトリ直下に `.env` を作ってキーを書きます（`.env.example` をコピー）。
 
-> **Translation as Action Preservation (TAP): Evaluating Anime/Manga Translation Beyond Meaning**
->
-> We propose evaluating translations not by semantic similarity alone, but by whether they preserve the *illocutionary action*—what the line does to the listener and the scene.
+## 4. デスクトップアプリの使い方
 
-📄 [Read the full paper](#) *(link to be added upon publication)*
+### 4.1 API キーを設定する
 
-## Philosophy
+左のメニュー「**キー & モデル**」で OpenAI / Anthropic のキーを入れて保存します。
+キーは OS のキーチェーンで暗号化して保存され、画面に読み戻されることはありません。
+同じ画面の「モデル登録表」で、各モデルのコンテキスト長・推論の強さ・料金を確認できます。
 
-> "We didn't build this because machines translate badly.
-> We built this because **even good translations can kill characters**."
+### 4.2 プロジェクトを作る
 
-The goal isn't to replace translators. It's to externalize one part of expert practice: **keeping the action intact across languages**.
+作品1つ＝プロジェクト1つ＝フォルダ1つです。
 
-## A Note on Human Translators
+- **＋ 新しいプロジェクト**
+  1. 資料と訳文の**保存先**フォルダ（空のフォルダ推奨）を選ぶ
+  2. **原稿フォルダ**を選ぶ。章ごとに分かれたテキスト（`.txt` `.md`）、PDF、EPUB に対応。フォルダ内のファイルは名前の数字順（`ep2 < ep10`）に読まれます
+  3. プロジェクト名・作品名・資料の説明文の言語を入れて「作成して開く」
+- **既存のプロジェクトを開く**
+  以前のプロジェクトや、CLI で `casts/` `personas/` `episodes/` を作ったフォルダを登録します。原稿フォルダが未設定なら、開いたあと「設定」タブで指定してください。
 
-Z-Axis Translation does **not** replace human translators.
+### 4.3 パイプライン（一気通貫で実行）
 
-Consider Snape's final confession: **"Always."**
+「**パイプライン**」タブが基本の画面です。
 
-| Translation | Nuance |
-|-------------|--------|
-| 「いつも」 | Habitual, continuous |
-| 「最初からずっと」 | From the very beginning, weight of time |
+1. 上の4枚のカード（01 人物表 / 02 ペルソナ / 03 エピソード / 04 翻訳）で進み具合が分かります。カードの「このステップだけ実行」で個別にも動かせます
+2. 「**対象キャラクター**」で資料を作る人物を選びます。未選択なら人物表で `main ★` の人物が対象です（端役は「+ 端役 N人」で表示）
+3. 「**翻訳先の言語**」を選びます（複数可）
+4. 「**$ 見積もる**」で、API を呼ばずにステップごとのトークン数・モデルに収まるか・概算費用を確認します
+5. 「**▶ パイプライン実行**」で、人物表 → ペルソナ → エピソード → 翻訳 の順に実行します
+6. 人物表ができると、いったん止まって **確認待ち**（黄色のバナー）になります。「人物表を開く」で内容を確認・修正し、「**OK、続ける ▶**」で再開します（確認を挟まない設定も可）
 
-Both are "correct." Both preserve the action. But **which one hits harder** depends on context, literary judgment, and creative vision.
+実行中は下のジョブコンソールに進行状況とトークン使用量が流れます。「■ 中止」で止められ、受信中のリクエストもすぐに切ります。
+**作成済みの資料・訳済みの章は自動でスキップ**するので、中止や失敗のあとは同じ操作をもう一度するだけで続きから再開します。
 
-This system provides:
-- ✅ Consistent emotional analysis
-- ✅ Character voice preservation  
-- ✅ Quality baseline for large-scale work
+### 4.4 人物表を確認・修正する
 
-This system does **not** provide:
-- ❌ The "aha!" moment of a perfect word choice
-- ❌ Cultural intuition that comes from lived experience
-- ❌ The creative leap that makes a translation memorable
+「**人物表**」タブで、人物ごとに次を確認します。
 
-**Metrics like IAP and ZAP measure fidelity, not artistry.**
+- **ラベル**：ペルソナ / エピソードのファイル名と、翻訳時の呼び名になります。固有名が無い作品では「宇宙から来た少女」のような記述がラベルになるので、好みの呼び方に直してから先に進むのがおすすめです
+- **重要度**：`main ★` の人物が既定で資料作成の対象になります
+- **呼ばれ方（REFERENCES）**：本文でその人物を指す表現。行をクリックすると、同一人物と判定した根拠や、同じ「彼女」が別人を指す箇所の見分け方が見られます
 
-A translator who renders "Always" as 「最初からずっと」 and makes readers weep—that's not something AI can score. That's craft. That's human.
+表で直して「保存」。細かい修正は「YAML を直接編集」でもできます。
 
-> "Translation is not a math problem with one answer.  
-> It's a creative act with infinite valid solutions."
+> ラベルを変えたあとにペルソナ / エピソードを作り直したい場合は、古いファイルを消してからパイプラインを再実行してください（既存のファイルはスキップされるため）。
 
-**Z-Axis Translation raises the floor. Human translators raise the ceiling.**
+### 4.5 翻訳を確認する
 
----
+「**翻訳**」タブ：
 
-**What ZAP / IAP can do:**
-- ✅ Prevent semantic breakdown
-- ✅ Preserve character voice
-- ✅ Keep emotional direction accurate
+- 左：言語の切り替えと章の一覧（`DONE` / `PENDING` / `INCOMPLETE`）
+- 右：原文と訳文を段落番号つきで並べた対訳。「この章を再翻訳」で1章だけ訳し直せます
+- 「**訳語表**」：これまでに決まった訳語（例：当機 → this unit）と、人物の声の決め方（例：少女の片言をどう訳すか）。章を訳すたびに追記され、次の章に引き継がれます
 
-**What they cannot do:**
-- ❌ The intent to "make them cry here"
-- ❌ The resolve to "bet everything on this one word"
-- ❌ The judgment to pierce the reader's life experience
+段落の抜けがあった章は `INCOMPLETE` になります。もう一度翻訳を実行すれば訳し直します。
 
-That's not translation.  
-**That's creation.**
+### 4.6 ボイス
 
----
+「**ボイス**」タブで、ペルソナがある人物に、原作にない台詞を言わせられます。
 
-AI can produce *translation that doesn't fail*.  
-But only humans can create *translation that can't be forgotten*.
+- **話す人**・**言わせたいこと**・**状況** を入れて「▶ 声にする」
+- **聞き手**を選ぶと相手を意識した言い方になり、「デュアル」にすると聞き手が返事をします
+- **出力言語**を選ぶと、その人物らしさを保ったまま他の言語で出力します
+- 「分析を見る」で、適用された感情の状態（z_mode）や揺れの表れ方（z_leak）を確認できます
 
-Whether to choose「最初からずっと」for "Always"—  
-that depends on **where in time the translator stands to view the story**.
+### 4.7 設定
 
----
+「**設定**」タブで、プロジェクト名・原稿フォルダ・資料の説明文の言語と、**ステップごとのモデルと推論の強さ**を変えられます。
+たとえば「抽出は大きいモデル + max、試し訳は安いモデル + low」のように使い分けられます。
 
-**That's why language study will never end.**  
-**That's why translation is not over.**
+## 5. コマンドライン（CLI）の使い方
 
-In fact—  
-**it's just beginning.**
-
----
-
-# Français
-
-## Le problème que vous connaissez déjà
-
-Vous l'avez vécu. Ce moment où la réplique la plus puissante de votre personnage préféré est traduite et... quelque chose meurt.
-
-**La déclaration de Rem (Re:Zero) :**
-```
-Japonais: 「レムは、スバルくんを愛しています。スバルくんがいいんです。スバルくんじゃなきゃ嫌なんです」
-```
-
-| Traduction | Résultat |
-|------------|----------|
-| **DeepL** | "Rem aime Subaru. Subaru est le bon. Je n'accepterai personne d'autre que Subaru." |
-| **Z-Axis** | "Rem… Rem t'aime, Subaru-kun. Subaru-kun est celui que Rem veut. Subaru-kun… Subaru-kun est le seul— Rem ne peut pas le supporter si ce n'est pas toi." |
-
-**Qu'est-ce qui n'a pas marché avec DeepL ?**
-
-| Problème | DeepL | Z-Axis |
-|----------|-------|--------|
-| Honorifique | ❌ "Subaru" (supprimé) | ✅ "Subaru-kun" |
-| Perspective | ❌ Rapport à la 3e personne | ✅ Déclaration directe |
-| Première personne | ❌ "Rem... Je..." (incohérent) | ✅ "Rem... Rem..." (cohérent) |
-| Répétition | ❌ Aucune | ✅ Nom répété (fuite émotionnelle) |
-| Hésitation | ❌ Plat | ✅ "…" marque l'émotion |
-
-DeepL vous a donné le **sens**. Mais l'**action**—une déclaration désespérée, face à face—est devenue un résumé Wikipédia. 💀
-
-L'intimité ? Disparue. La vulnérabilité ? Disparue. Cette scène où Rem regarde Subaru dans les yeux et lui ouvre son cœur ? Maintenant, on dirait que quelqu'un décrit la scène de l'extérieur.
-
-**C'est le problème que nous résolvons.**
-
-## Qu'est-ce que la traduction Z-Axis ?
-
-La traduction standard préserve le **sens** (ce qui est dit).
-La traduction Z-Axis préserve l'**action** (ce que la réplique *fait*).
-
-| Couche | Ce que c'est | Dépend de la langue ? |
-|--------|--------------|------------------------|
-| **Couche Texte** | Mots, grammaire, syntaxe | ✅ Oui |
-| **Couche Action** | Déclarer, menacer, esquiver, nier, jurer... | ❌ Non |
-
-Une traduction réussit quand l'**action** survit, même si la forme de surface change complètement.
-
-## Pourquoi ne pas simplement utiliser les LLMs ?
-
-« GPT/Claude ne peut pas juste mieux traduire ? »
-
-Oui et non. Les LLMs *peuvent* produire de belles traductions. Mais ils ne savent pas :
-- Qui est ce personnage (ses conflits, ses patterns de parole, ses tendances émotionnelles)
-- À qui il parle (et ce que cette relation signifie)
-- Dans quel état émotionnel il se trouve en ce moment
-- Ce que cette réplique est censée *faire* à l'auditeur
-
-Sans ce contexte, même le meilleur LLM va parfois :
-- Transformer des déclarations en narration
-- Aplatir la défense tsundere en simple dénégation
-- Perdre le pattern « fuite émotionnelle puis correction » qui rend un personnage vivant
-
-**La traduction Z-Axis donne aux LLMs le contexte dont ils ont besoin.**
-
-## Comment ça marche
-
-### 1. Ingénierie de Persona
-
-Chaque personnage reçoit un **persona YAML** qui capture :
-- **Axes de conflit** : « avouer ses sentiments vs. se protéger », « devoir vs. désir »
-- **Patterns de biais** : comment les émotions émergent (ex: Tsun→Dere→Correction)
-- **Déclencheurs** : ce qui les fait réagir (être appelé « assistante », être remercié)
-- **Flags de risque** : où les traductions échouent typiquement pour ce personnage
-
-### 2. Pipeline de Traduction (3 étapes)
-
-```
-ÉTAPE 1 : Extraction Hamiltonienne
-          → Quels conflits sont actifs ? Quel est l'état émotionnel ?
-
-ÉTAPE 2 : Analyse du Pattern d'Interférence
-          → Comment ces conflits se manifestent dans le discours ?
-          → Hésitation ? Dénégation ? Auto-correction ? Fuite émotionnelle ?
-
-ÉTAPE 3 : Traduction avec Préservation Z-Axis
-          → Générer un texte en langue cible qui performe la MÊME ACTION
-```
-
-### 3. Évaluation : IAP & ZAP
-
-Nous avons construit deux évaluateurs pour mesurer ce qui compte :
-
-| Métrique | Ce qu'elle mesure |
-|----------|-------------------|
-| **IAP** (Illocutionary Act Preservation) | La traduction performe-t-elle les mêmes actes de parole ? (déclarer, refuser, menacer...) |
-| **ZAP** (Z-Axis Preservation) | Est-ce que ça sonne toujours comme le personnage ? L'intensité émotionnelle est-elle préservée ? |
-
-## Résultats : Ce que nous avons trouvé
-
-### Expérience 1 : La déclaration de Rem (Re:Zero)
-
-| Système | Mode d'adresse | Score IAP | Ce qui s'est passé |
-|---------|----------------|-----------|---------------------|
-| DeepL | direct → **rapporté** | 0.51 | La déclaration est devenue narration |
-| Z-Axis | direct → **direct** | 0.76 | Préservation de la déclaration face à face |
-
-### Expérience 2 : Le tsundere de Kurisu (Steins;Gate)
-
-Même réplique : 「別に...あんたのためじゃないから」
-
-| Contexte | Sortie Z-Axis | Action |
-|----------|---------------|--------|
-| Quotidien | "C-c'est pas comme si c'était pour toi..." | Défense standard |
-| Jalousie | "Je— enfin, c'est pas que je l'ai fait pour toi, hein ?" | Fuite émotionnelle → correction |
-| Monologue | "C'est pas pour lui... enfin— c'est *pas* pour lui." | Auto-tromperie (double dénégation) |
-
-**Les mêmes mots performent des actions différentes selon le contexte.**
-
-### Expérience 3 : L'ultimatum de Luffy (One Piece)
-
-« Si tu nous le dis, j'arrête d'être pirate. »
-
-Test aller-retour EN→FR→EN. **L'ultimatum a survécu.** (Les actions explicites sont robustes.)
-
-Mais le cadrage du refus compte :
-- ❌ « Je m'en fiche où est le trésor » (apathie)
-- ✅ « J'veux pas entendre où est le trésor » (poser une limite pour protéger le voyage)
-
-Même sens. Voix du personnage différente.
-
-## Démarrage Rapide
+アプリと同じ処理をコマンドでも実行できます。リポジトリ直下に `.env`（`.env.example` を参照）を置き、`divergence_z/` で実行します。
 
 ```bash
-# Installation
-pip install anthropic openai pyyaml python-dotenv requests
-
-# Créer .env
-ANTHROPIC_API_KEY=sk-ant-xxxxx   # Pour la génération de persona
-OPENAI_API_KEY=sk-xxxxx          # Pour la traduction & évaluation
-
-# Générer un persona
-python persona_generator.py --name "レム" --source "Re:Zero" --desc "献身的メイド"
-
-# Traduire avec préservation Z-axis
-python z_axis_translate.py --config requests/rem_test.yaml
-
-# Évaluer
-python iap_evaluator.py -o "スバルくんが良いんです" -t "C'est toi que je veux, Subaru-kun"
-python zap_evaluator.py --config requests/rem_test.yaml --translated "Je t'aime, Subaru-kun"
+cd divergence_z
+PY=../.venv/bin/python
 ```
 
-## Article
+### 原作テキストがある場合
 
-Ce dépôt accompagne notre rapport de pratique soumis au **Journal of Audiovisual Translation (JAT)** :
+```bash
+# 1. 人物表 → casts/STARGAZER_cast.yaml（中身を確認・修正してから次へ）
+$PY cast_extractor.py -s ../path/to/STARGAZER/ --work "STARGAZER ≠consciousness"
 
-> **Translation as Action Preservation (TAP) : Évaluer la traduction anime/manga au-delà du sens**
->
-> Nous proposons d'évaluer les traductions non seulement par la similarité sémantique, mais par leur capacité à préserver l'*action illocutoire*—ce que la réplique fait à l'auditeur et à la scène.
+# 2. ペルソナ → personas/{ラベル}_extracted_v33.yaml
+$PY persona_extractor_v2.py -s ../path/to/STARGAZER/ --cast casts/STARGAZER_cast.yaml \
+  --characters "宇宙から来た少女,主人公" --lang ja
 
-📄 [Lire l'article complet](#) *(lien à ajouter après publication)*
+# 3. エピソード → episodes/{ラベル}_Episode.yaml（台詞の原文照合結果も表示）
+$PY episode_extractor.py -s ../path/to/STARGAZER/ --cast casts/STARGAZER_cast.yaml \
+  --characters "宇宙から来た少女,主人公" --work "STARGAZER ≠consciousness"
 
-## Philosophie
+# 4. 翻訳 → translations/STARGAZER_en/
+$PY chapter_translator.py -s ../path/to/STARGAZER/ --cast casts/STARGAZER_cast.yaml \
+  -t en --chapters 0-2          # 0〜2章目。省略すると全章
+$PY chapter_translator.py ... --dry-run   # API を呼ばずにトークン数・費用だけ表示
+```
 
-> « Nous n'avons pas construit ça parce que les machines traduisent mal.
-> Nous l'avons construit parce que **même les bonnes traductions peuvent tuer des personnages**. »
+名前で呼ばれる作品なら `--cast` は省略できます。`--source` には単一ファイル（txt / md / pdf / epub）も指定できます。
 
-L'objectif n'est pas de remplacer les traducteurs. C'est d'externaliser une partie de la pratique experte : **garder l'action intacte à travers les langues**.
+### 原作テキストが無い場合（Web 検索で生成）
 
-## Une Note sur les Traducteurs Humains
+```bash
+$PY persona_generator.py --name "牧瀬紅莉栖" --source "Steins;Gate" --desc "天才脳科学者"
+$PY episode_generator.py --name "牧瀬紅莉栖" --source "Steins;Gate" --desc "天才脳科学者" \
+  --persona personas/牧瀬紅莉栖_v33.yaml
+```
 
-La traduction Z-Axis ne **remplace pas** les traducteurs humains.
+### ボイス
 
-Considérez la confession finale de Snape : **« Always. »**
+```bash
+$PY persona_voice.py --persona "personas/宇宙から来た少女_extracted_v33.yaml" \
+  --episode "episodes/宇宙から来た少女_Episode.yaml" \
+  --input "今日の夕飯はカレーにしよう" --context "主人公の家の台所"
 
-| Traduction | Nuance |
-|------------|--------|
-| « Toujours » | Habituel, continu |
-| « Depuis le tout début » | Depuis l'origine, le poids du temps |
+# 2人の掛け合い
+$PY persona_voice.py --persona A.yaml --target-persona B.yaml --dual --input "..." --context "..."
+```
 
-Les deux sont « correctes ». Les deux préservent l'action. Mais **laquelle frappe le plus fort** dépend du contexte, du jugement littéraire et de la vision créative.
+### 共通オプション
 
-Ce système fournit :
-- ✅ Analyse émotionnelle cohérente
-- ✅ Préservation de la voix du personnage
-- ✅ Base de qualité pour le travail à grande échelle
+| オプション | 説明 |
+|---|---|
+| `--model` / `-m` | 使うモデル（登録表の id。登録表に無い名前でも可） |
+| `--effort` | 推論の強さ `none/low/medium/high/xhigh/max`（モデルにより使える値が違う） |
+| `--lang` | 資料の説明文の言語（台詞・話し方は原文の言語のまま） |
+| `--help` | すべてのオプション |
 
-Ce système ne fournit **pas** :
-- ❌ Le moment « eurêka » du choix parfait d'un mot
-- ❌ L'intuition culturelle qui vient de l'expérience vécue
-- ❌ Le saut créatif qui rend une traduction mémorable
+旧オプション `--thinking N` / `--budget N` / `--reasoning` は互換のため残っています（`--thinking` / `--budget` は `--effort high` 扱い）。
 
-**Des métriques comme IAP et ZAP mesurent la fidélité, pas l'art.**
+## 6. モデルと費用
 
-Un traducteur qui rend « Always » par「最初からずっと」et fait pleurer les lecteurs — ce n'est pas quelque chose que l'IA peut noter. C'est du métier. C'est humain.
+### モデル登録表
 
-> « La traduction n'est pas un problème mathématique avec une seule réponse.
-> C'est un acte créatif avec une infinité de solutions valides. »
+アプリと CLI は同じ登録表を使います。組み込みのモデル：
 
-**La traduction Z-Axis élève le plancher. Les traducteurs humains élèvent le plafond.**
+| モデル | 用途の既定 | コンテキスト | 料金（入力 / 出力, 1M トークン） |
+|---|---|---|---|
+| `gpt-5.6-sol` | 人物表・ペルソナ・エピソード・翻訳 | 未設定（契約による） | 未設定 |
+| `claude-opus-5-5` | ボイス・Web 生成 | 1,000,000 | $4 / $20 |
+| `claude-sonnet-5-5` | — | 1,000,000 | $2 / $10 |
+| `claude-fable-5-1` | — | 1,000,000 | $10 / $50 |
+| `claude-opus-4-5-20251101` | 旧既定 | 200,000 | $5 / $25 |
+| `claude-haiku-4-5` | — | 200,000 | $1 / $5 |
+
+モデルを追加したり値を直したりするには `divergence_z/models.example.yaml` を `~/.divergence_z/models.yaml` にコピーして編集します。
+**`gpt-5.6-sol` などコンテキスト長が未設定のモデルは、ここに値を入れると見積もりで「収まるか」を判定できるようになります。**
+
+### どれくらいかかるか
+
+見積もりは日本語 1 文字 ≒ 1.4 トークンで計算します。参考（約12万字・26章の小説）：
+
+- 人物表・ペルソナ・エピソードは、毎回原作全文（約14万トークン）を入力します
+- 翻訳は1章あたり入力 7〜8万トークン（原文＋資料＋訳語表＋前章）。Claude Opus 5.5 で1章約 $0.5
+
+実行前に必ず「$ 見積もる」（CLI は `--dry-run`）で確認してください。
+
+## 7. プロジェクトフォルダの中身
+
+```
+MyProject/
+  project.yaml            プロジェクト設定（名前・原稿のパス・言語・ステップごとのモデル）
+  casts/cast.yaml         人物表
+  personas/               ペルソナ YAML
+  episodes/               エピソード YAML
+  translations/<言語>/
+    <章>.<言語>.md              訳文
+    <章>.<言語>.segments.json   原文と訳文の段落対応
+    translation_notes.yaml      訳語表（手で直してよい）
+  .dz/jobs/               ジョブの履歴（API キーは含まない）
+```
+
+すべて普通の YAML / Markdown です。エディタで直接直しても、アプリはそれを読み込みます。
+
+## 8. プライバシーとセキュリティ
+
+- API キーは OS のキーチェーン（macOS ではキーチェーン）で暗号化して保存。アプリの画面側には渡りません
+- エンジン（Python）は自分の PC の中（127.0.0.1）だけで動き、起動ごとに作るトークンが無い接続は拒否します
+- 原稿・資料・訳文はプロジェクトフォルダにだけ保存されます。外部に送るのは、各ステップで LLM に渡す内容（原稿や資料）を、あなたのキーで契約している OpenAI / Anthropic に送る分だけです
+- 他人の作品を扱う場合は、権利者の許諾の範囲で使ってください
+
+## 9. 困ったとき
+
+| 症状 | 対処 |
+|---|---|
+| 左下が `ENGINE DOWN` | `~/Library/Application Support/divergence-z-app/sidecar.log` を確認。`.venv` が無い / 依存が入っていない場合は [3. インストール](#3-インストール) をやり直す。別の Python を使うなら環境変数 `DZ_PYTHON` で指定 |
+| `ERR::auth_missing` | そのモデルのプロバイダのキーが未設定。「キー & モデル」で設定 |
+| `ERR::auth_invalid` | キーが無効、またはそのモデルを使う権限が無い |
+| `ERR::context_too_large` | 原稿＋資料がモデルに収まらない。コンテキストの大きいモデルに変更 |
+| `ERR::rate_limited` | 少し待ってから同じ操作を再実行（続きから再開します） |
+| `ERR::refusal` | モデルがリクエストを断った。内容を確認するか別のモデルで試す |
+| 章が `INCOMPLETE` | 段落の抜けを検出。再翻訳すれば訳し直します |
+| `*_BROKEN.yaml` ができた | LLM の出力が YAML として壊れていた。手で直してリネームするか、再実行 |
+| ラベルを直したのに資料が古い名前のまま | 既存ファイルはスキップされるので、古いファイルを消してから再実行 |
+
+## 10. 開発者向け
+
+```
+app/                     デスクトップアプリ（Electron + React）        → app/README.md
+divergence_z/
+  core/                  LLM 呼び出し（BYOK）・モデル登録表・読み込み・YAML 処理
+  server/                ローカル API（FastAPI、ジョブ・SSE）           → divergence_z/server/README.md
+  cast_extractor.py      人物表
+  persona_extractor_v2.py / persona_generator.py   ペルソナ（原文から / Web 検索で）
+  episode_extractor.py / episode_generator.py      エピソード（原文から / Web 検索で）
+  chapter_translator.py  章単位の翻訳
+  persona_voice.py       ボイス
+  old/                   旧 Z軸翻訳系（アーカイブ）
+```
+
+各スクリプトはライブラリ関数としても使えます（詳細は `divergence_z/README.md`）。
+
+```python
+from divergence_z.core import LLM, Keys, load_source_corpus
+from divergence_z.persona_extractor_v2 import extract_persona
+
+corpus, _ = load_source_corpus("path/to/STARGAZER/")
+result = extract_persona(corpus, "宇宙から来た少女", llm=LLM(Keys(openai="sk-...")),
+                         effort="high", output_lang="ja")
+print(result.valid, result.yaml_text)
+```
+
+## 11. 倫理的な制約・旧版・論文・ライセンス
+
+- **倫理的な制約**：ペルソナは話し方だけでなく「物事の受け取り方」まで再現します。実在の故人のペルソナ作成などは禁止しています。使う前に必ず [EthicalRestrictions.md](EthicalRestrictions.md) を読んでください
+- **旧版**：行ごとに Z軸状態を推定して訳し、IAP / ZAP で採点していた旧系統は `divergence_z/old/` にあります（[old/README.md](divergence_z/old/README.md)）。`Result/` の実験結果はこの旧系統によるものです
+- **論文**：旧系統の実践報告を *Journal of Audiovisual Translation (JAT)* に投稿しています — *Translation as Action Preservation (TAP): Evaluating Anime/Manga Translation Beyond Meaning*
+- **ライセンス**：MIT License
+
+```bibtex
+@article{tap2026,
+  title={Translation as Action Preservation: Evaluating Anime/Manga Translation Beyond Meaning},
+  author={[anonymous]},
+  journal={Journal of Audiovisual Translation},
+  year={2026},
+  note={Practice Report}
+}
+```
 
 ---
 
-**Ce que ZAP / IAP peuvent faire :**
-- ✅ Empêcher les ruptures sémantiques
-- ✅ Préserver la voix du personnage
-- ✅ Maintenir la direction émotionnelle
+# English manual
 
-**Ce qu'ils ne peuvent pas faire :**
-- ❌ L'intention de « faire pleurer ici »
-- ❌ La résolution de « tout miser sur ce seul mot »
-- ❌ Le jugement de toucher l'expérience de vie du lecteur
+## Contents
 
-Ce n'est pas de la traduction.
-**C'est de la création.**
+1. [What it is](#1-what-it-is)
+2. [Requirements](#2-requirements)
+3. [Install](#3-install)
+4. [Using the desktop app](#4-using-the-desktop-app)
+5. [Using the CLI](#5-using-the-cli)
+6. [Models and cost](#6-models-and-cost)
+7. [Project folder layout](#7-project-folder-layout)
+8. [Privacy and security](#8-privacy-and-security)
+9. [Troubleshooting](#9-troubleshooting)
+10. [For developers](#10-for-developers)
+11. [Ethics, legacy system, paper, license](#11-ethics-legacy-system-paper-license)
 
----
+## 1. What it is
 
-L'IA peut produire *une traduction qui ne faillit pas*.
-Mais seuls les humains peuvent créer *une traduction qu'on n'oublie jamais*.
+Divergence-Z has an LLM read an entire novel, script, or game text and build a **character bible** — the kind of reference material scriptwriters and translators make by hand — and then uses that bible directly.
 
-Choisir「最初からずっと」pour « Always »—
-cela dépend de **où dans le temps le traducteur se place pour regarder l'histoire**.
+| Builds | Contents |
+|---|---|
+| **Cast sheet** | Every character and every way the text refers to them ("she", "the passenger", "the girl who came from space"…), so lines can be attributed even in works that never name their characters |
+| **Persona** | Who the character is: pronouns, sentence endings, verbal tics, core identity, conflicts, how their speech breaks under emotion, and compensation strategies for other languages |
+| **Episodes** | What the character lived through, chapter by chapter, with canonical quotes **verified against the source text** |
 
----
+| Uses | Contents |
+|---|---|
+| **Translation** | One chapter at a time, with the chapter's characters' bible, a running glossary, and the previous translated chapters. Decisions about terms and each character's voice are recorded in the glossary and carried forward |
+| **Voice** | Make a character say new, non-canonical lines in their own voice — including two-character exchanges |
 
-**C'est pourquoi l'étude des langues ne finira jamais.**
-**C'est pourquoi la traduction n'est pas terminée.**
+**BYOK (Bring Your Own Key):** you use your own API keys. Neither your manuscript nor your keys leave your machine, except for the requests sent to OpenAI / Anthropic under your own account.
 
-En fait—
-**tout ne fait que commencer.**
+## 2. Requirements
 
----
+- macOS (tested on Apple silicon). Windows / Linux are supported in code but untested
+- Python 3.10+
+- Node.js 20+ (for the desktop app)
+- API keys (one or both)
+  - **OpenAI** — default model for extraction and translation: `gpt-5.6-sol`
+  - **Anthropic** — default model for web-search generation and voice: `claude-opus-5-5`
 
-## License
+  The model can be changed per step ([6. Models and cost](#6-models-and-cost)).
 
-MIT License — Use freely, preserve characters responsibly. 🌀
+## 3. Install
 
-## Citation
+```bash
+git clone https://github.com/miosync-masa/divergence-z.git
+cd divergence-z
 
-If you use this work in research, please cite:
+# Engine (Python)
+python3 -m venv .venv
+.venv/bin/pip install -e ".[server]"
+
+# Desktop app
+cd app
+npm install
+npm run build
+npm start
+```
+
+When `● ENGINE` appears at the bottom left, you're ready. Afterwards, `cd app && npm start` is enough.
+
+For CLI-only use, skip the app and put your keys in `.env` at the repo root (copy `.env.example`).
+
+## 4. Using the desktop app
+
+### 4.1 Set your API keys
+
+Open **キー & モデル (Keys & Models)** in the sidebar, enter your OpenAI and/or Anthropic key, and save.
+Keys are encrypted with the OS keychain and are never sent back to the UI.
+The model registry on the same screen shows each model's context window, effort levels, and pricing.
+
+### 4.2 Create a project
+
+One work = one project = one folder.
+
+- **＋ 新しいプロジェクト (New project)**
+  1. Pick the folder where the bible and translations will be **saved** (an empty folder is best)
+  2. Pick the **manuscript folder** — per-chapter text files (`.txt`, `.md`), PDF, or EPUB. Files are read in natural order (`ep2 < ep10`)
+  3. Enter the project name, work title, and the language for descriptions, then create
+- **既存のプロジェクトを開く (Open existing project)**
+  Registers a previous project, or a folder where you created `casts/`, `personas/`, `episodes/` with the CLI. If no manuscript folder is set, set it in the Settings tab.
+
+### 4.3 Pipeline (run everything)
+
+The **パイプライン (Pipeline)** tab is the main screen.
+
+1. The four cards (01 Cast / 02 Persona / 03 Episode / 04 Translate) show progress. "このステップだけ実行" runs a single step
+2. Choose **target characters**. If none are chosen, characters marked `main ★` in the cast sheet are used (minor characters are behind "+ 端役 N人")
+3. Choose **target languages** (multiple allowed)
+4. **$ 見積もる (Estimate)** shows tokens, context fit, and cost per step — without calling any API
+5. **▶ パイプライン実行 (Run)** runs cast → persona → episode → translation
+6. When the cast sheet is ready the job pauses for **review** (yellow banner). Check it in the Cast tab, then press **OK、続ける ▶** to resume (review can be turned off)
+
+The job console streams progress and token usage. **■ 中止 (Cancel)** stops immediately, even mid-request.
+**Existing bible files and translated chapters are skipped**, so after a cancel or failure, just run again to continue.
+
+### 4.4 Review the cast sheet
+
+In the **人物表 (Cast)** tab, check each character:
+
+- **Label** — used for persona / episode file names and as the character's name during translation. In works without proper names the label is a description (e.g. "宇宙から来た少女"), so rename it to what you want before continuing
+- **Importance** — `main ★` characters are the default targets
+- **References** — every expression the text uses for this person. Click a row to see why the model judged two references to be the same person, and how to tell apart a pronoun that refers to different people
+
+Save after editing, or use "YAML を直接編集" for raw edits.
+
+> To rebuild a persona / episode after renaming a label, delete the old file first (existing files are skipped).
+
+### 4.5 Review translations
+
+The **翻訳 (Translate)** tab:
+
+- Left: language and chapter list (`DONE` / `PENDING` / `INCOMPLETE`)
+- Right: source and translation side by side, paragraph by paragraph. "この章を再翻訳" re-translates one chapter
+- **訳語表 (Glossary)**: decided terms (e.g. 当機 → *this unit*) and voice decisions (e.g. how the girl's broken Japanese is rendered). Updated after every chapter and passed to the next
+
+Chapters with missing paragraphs are marked `INCOMPLETE`; translate again to fix them.
+
+### 4.6 Voice
+
+In the **ボイス (Voice)** tab, characters with a persona can say new lines:
+
+- Enter **speaker**, **what to say**, and **situation**, then "▶ 声にする"
+- Pick a **listener** to address someone; enable **dual** to have the listener reply
+- Pick an **output language** to keep the character's voice in another language
+- "分析を見る" shows the emotional state (z_mode) and how it leaks into speech (z_leak)
+
+### 4.7 Settings
+
+The **設定 (Settings)** tab sets the project name, manuscript folder, description language, and **the model and effort for each step** — e.g. a large model at `max` for extraction and a cheap model at `low` for trial translations.
+
+## 5. Using the CLI
+
+Everything the app does is also available from the command line. Put a `.env` at the repo root (see `.env.example`) and run from `divergence_z/`.
+
+```bash
+cd divergence_z
+PY=../.venv/bin/python
+```
+
+### With source text
+
+```bash
+# 1. Cast sheet → casts/STARGAZER_cast.yaml (review and edit it before continuing)
+$PY cast_extractor.py -s ../path/to/STARGAZER/ --work "STARGAZER ≠consciousness"
+
+# 2. Personas → personas/{label}_extracted_v33.yaml
+$PY persona_extractor_v2.py -s ../path/to/STARGAZER/ --cast casts/STARGAZER_cast.yaml \
+  --characters "宇宙から来た少女,主人公" --lang en
+
+# 3. Episodes → episodes/{label}_Episode.yaml (prints quote verification)
+$PY episode_extractor.py -s ../path/to/STARGAZER/ --cast casts/STARGAZER_cast.yaml \
+  --characters "宇宙から来た少女,主人公" --work "STARGAZER ≠consciousness" --lang en
+
+# 4. Translation → translations/STARGAZER_en/
+$PY chapter_translator.py -s ../path/to/STARGAZER/ --cast casts/STARGAZER_cast.yaml \
+  -t en --chapters 0-2          # chapters 0–2; omit for all
+$PY chapter_translator.py ... --dry-run   # tokens and cost only, no API calls
+```
+
+`--cast` can be omitted for works where characters are named. `--source` also accepts a single file (txt / md / pdf / epub).
+
+### Without source text (web search)
+
+```bash
+$PY persona_generator.py --name "Kurisu Makise" --source "Steins;Gate" --desc "genius neuroscientist" --lang en
+$PY episode_generator.py --name "Kurisu Makise" --source "Steins;Gate" --desc "genius neuroscientist" --lang en
+```
+
+### Voice
+
+```bash
+$PY persona_voice.py --persona "personas/宇宙から来た少女_extracted_v33.yaml" \
+  --episode "episodes/宇宙から来た少女_Episode.yaml" \
+  --input "Let's have curry tonight" --context "the protagonist's kitchen" --output-lang en
+
+# Two characters
+$PY persona_voice.py --persona A.yaml --target-persona B.yaml --dual --input "..." --context "..."
+```
+
+### Common options
+
+| Option | Meaning |
+|---|---|
+| `--model` / `-m` | Model id from the registry (unregistered names also work) |
+| `--effort` | `none/low/medium/high/xhigh/max` (supported values depend on the model) |
+| `--lang` | Language for descriptions (dialogue and speech patterns stay in the source language) |
+| `--help` | All options |
+
+Legacy flags `--thinking N`, `--budget N`, `--reasoning` are still accepted (`--thinking` / `--budget` map to `--effort high`).
+
+## 6. Models and cost
+
+### Model registry
+
+The app and the CLI share one registry. Built-in models:
+
+| Model | Default use | Context | Price (in / out, per 1M tokens) |
+|---|---|---|---|
+| `gpt-5.6-sol` | cast, persona, episode, translation | not set (depends on your plan) | not set |
+| `claude-opus-5-5` | voice, web generation | 1,000,000 | $4 / $20 |
+| `claude-sonnet-5-5` | — | 1,000,000 | $2 / $10 |
+| `claude-fable-5-1` | — | 1,000,000 | $10 / $50 |
+| `claude-opus-4-5-20251101` | previous default | 200,000 | $5 / $25 |
+| `claude-haiku-4-5` | — | 200,000 | $1 / $5 |
+
+To add models or fix values, copy `divergence_z/models.example.yaml` to `~/.divergence_z/models.yaml` and edit it.
+**For models without a context window (such as `gpt-5.6-sol`), filling it in enables the "does it fit" check in estimates.**
+
+### Typical cost
+
+Estimates count one Japanese character as ~1.4 tokens. For reference (a ~120k-character novel, 26 chapters):
+
+- Cast, persona, and episode steps send the whole text each time (~140k input tokens)
+- Translation sends 70–80k input tokens per chapter (source + bible + glossary + previous chapters) — about $0.5 per chapter on Claude Opus 5.5
+
+Always check with **$ 見積もる** (or `--dry-run` in the CLI) first.
+
+## 7. Project folder layout
+
+```
+MyProject/
+  project.yaml            name, manuscript path, languages, per-step models
+  casts/cast.yaml         cast sheet
+  personas/               persona YAML
+  episodes/               episode YAML
+  translations/<lang>/
+    <chapter>.<lang>.md             translation
+    <chapter>.<lang>.segments.json  source/translation paragraph alignment
+    translation_notes.yaml          glossary (safe to edit by hand)
+  .dz/jobs/               job history (never contains API keys)
+```
+
+Everything is plain YAML / Markdown. Edit files directly and the app picks the changes up.
+
+## 8. Privacy and security
+
+- API keys are encrypted with the OS keychain and never reach the app's UI layer
+- The engine (Python) listens only on 127.0.0.1 and rejects any request without the per-launch token
+- Manuscripts, bibles, and translations are stored only in your project folder. The only data that leaves your machine is what each step sends to OpenAI / Anthropic under your own key
+- Use other people's works only within what the rights holder permits
+
+## 9. Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| `ENGINE DOWN` at the bottom left | Check `~/Library/Application Support/divergence-z-app/sidecar.log`. If `.venv` or dependencies are missing, redo [3. Install](#3-install). Set `DZ_PYTHON` to use another Python |
+| `ERR::auth_missing` | No key for that model's provider — set it in Keys & Models |
+| `ERR::auth_invalid` | Invalid key, or no access to that model |
+| `ERR::context_too_large` | Text + bible don't fit — choose a model with a larger context |
+| `ERR::rate_limited` | Wait and run again (it resumes where it stopped) |
+| `ERR::refusal` | The model declined the request — check the content or try another model |
+| Chapter shows `INCOMPLETE` | Missing paragraphs were detected — translate it again |
+| A `*_BROKEN.yaml` file appeared | The model returned invalid YAML — fix and rename it, or run again |
+| Bible files keep an old label | Existing files are skipped — delete them and run again |
+
+## 10. For developers
+
+```
+app/                     desktop app (Electron + React)            → app/README.md
+divergence_z/
+  core/                  LLM layer (BYOK), model registry, loaders, YAML helpers
+  server/                local API (FastAPI, jobs, SSE)             → divergence_z/server/README.md
+  cast_extractor.py      cast sheet
+  persona_extractor_v2.py / persona_generator.py   persona (from text / via web search)
+  episode_extractor.py / episode_generator.py      episodes (from text / via web search)
+  chapter_translator.py  chapter-level translation
+  persona_voice.py       voice
+  old/                   legacy Z-axis translation system (archive)
+```
+
+Every script is also a library (see `divergence_z/README.md`):
+
+```python
+from divergence_z.core import LLM, Keys, load_source_corpus
+from divergence_z.persona_extractor_v2 import extract_persona
+
+corpus, _ = load_source_corpus("path/to/STARGAZER/")
+result = extract_persona(corpus, "宇宙から来た少女", llm=LLM(Keys(openai="sk-...")),
+                         effort="high", output_lang="en")
+print(result.valid, result.yaml_text)
+```
+
+## 11. Ethics, legacy system, paper, license
+
+- **Ethical restrictions:** a persona reproduces not only how a character speaks but how they perceive the world. Creating personas of deceased real people, among other uses, is prohibited. Read [EthicalRestrictions.md](EthicalRestrictions.md) before use
+- **Legacy system:** the earlier pipeline that estimated a Z-axis state per line and scored translations with IAP / ZAP lives in `divergence_z/old/` ([old/README.md](divergence_z/old/README.md)). The experiment results in `Result/` were produced with it
+- **Paper:** a practice report on the legacy system has been submitted to the *Journal of Audiovisual Translation (JAT)* — *Translation as Action Preservation (TAP): Evaluating Anime/Manga Translation Beyond Meaning*
+- **License:** MIT
 
 ```bibtex
 @article{tap2026,

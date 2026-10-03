@@ -8,3 +8,4 @@ translations/
 .venv/
 app/node_modules/
 app/dist/
+*.egg-info/
