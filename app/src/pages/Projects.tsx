@@ -12,7 +12,7 @@ export function ProjectsPage({ keys }: { keys: KeyStatus | null }) {
   const [formError, setFormError] = useState<string | null>(null);
 
   const openExisting = async () => {
-    const root = await window.dz.pickFolder("プロジェクトフォルダを開く");
+    const root = await window.dz.pickFolder("既存のプロジェクト（または CLI の作業フォルダ）を選ぶ");
     if (!root) return;
     const p = await api.openProject({ root });
     go("p", p.id, "pipeline");
@@ -61,8 +61,12 @@ export function ProjectsPage({ keys }: { keys: KeyStatus | null }) {
           </div>
           <div className="row" style={{ marginTop: 22 }}>
             <button className="btn big" onClick={startNew}>＋ 新しいプロジェクト</button>
-            <button className="btn ghost" onClick={openExisting}>フォルダを開く</button>
+            <button className="btn ghost" onClick={openExisting}>既存のプロジェクトを開く</button>
           </div>
+          <p className="small dim" style={{ margin: "14px 0 0" }}>
+            新規 = 資料と訳文の保存先（空のフォルダ）を選んで作成 ／ 既存 = 以前のプロジェクトや、CLI で
+            casts・personas・episodes を作ったフォルダを登録（原稿フォルダは開いたあと設定タブで指定）
+          </p>
         </div>
       </section>
 
