@@ -229,6 +229,18 @@ def _resolve_persona(project: Project, ref: str) -> Path:
     return path
 
 
+def extract_section(text: str, header: str) -> str:
+    """出力から指定セクション（例:【変換結果】）の本文だけを取り出す。無ければ全文"""
+    if header not in text:
+        return text.strip()
+    body = text.split(header, 1)[1]
+    for marker in ("【適用された", "【感情テンソル】", "【"):
+        if marker in body:
+            body = body.split(marker, 1)[0]
+            break
+    return body.strip()
+
+
 def run_voice(job: Job, keys: Keys) -> Dict[str, Any]:
     project = job.project
     p = job.params
@@ -255,7 +267,8 @@ def run_voice(job: Job, keys: Keys) -> Dict[str, Any]:
         target_ep_path = project.episode_file(p["target"])
         result["phase2"] = respond_voice(
             llm=llm, responder_data=target, speaker_data=persona,
-            speaker_utterance=phase1["output"], context=p.get("context", ""),
+            speaker_utterance=extract_section(phase1["output"], "【変換結果】"),
+            context=p.get("context", ""),
             response_steps_template=DEFAULT_RESPONSE_STEPS,
             responder_episode_data=_load_yaml(target_ep_path) if target_ep_path else None,
             model=m["model"], effort=m.get("effort"), show_thinking=bool(p.get("show_thinking")),
