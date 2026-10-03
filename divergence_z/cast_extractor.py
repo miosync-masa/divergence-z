@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Cast Extractor v1.0
+Cast Extractor v1.1
 原作テキスト（フォルダ可）から「人物表（cast sheet）」YAMLを作る前処理ツール
 
 固有名ではなく「宇宙から落ちてきた少女」「彼女」「搭乗者」のような記述・代名詞で
@@ -20,24 +20,29 @@ Usage:
       -c "宇宙から落ちてきた少女" --lang ja
     python episode_extractor.py -s scripts/STARGAZER/ --cast casts/STARGAZER_cast.yaml \\
       -c "宇宙から落ちてきた少女" --work "STARGAZER ≠consciousness"
+
+v1.1: ライブラリ化（extract_cast）、LLM 呼び出しを core.llm に統一（BYOK）
 """
 
 from __future__ import annotations
 
 import argparse
 import re
+import sys
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Any, Dict, Optional
 
 import yaml
 
-from persona_extractor_v2 import (
-    DEFAULT_MODEL,
-    REASONING_EFFORTS,
-    OpenAIResponsesClient,
-    load_source_corpus,
-)
-from episode_extractor import call_responses
-from episode_generator import _extract_yaml, _fix_yaml_quoting
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from divergence_z.core import (EFFORTS, LLM, Keys, LLMResult, Progress, clean_yaml_output,
+                               load_source_corpus, print_progress, resolve_progress)
+from divergence_z.persona_extractor_v2 import DEFAULT_MODEL
+
+DEFAULT_EFFORT = "high"
 
 SYSTEM_PROMPT = """You are a Cast Analyst for the Divergence-Z character extraction pipeline.
 
@@ -93,17 +98,59 @@ characters:
 5. Descriptions in Japanese. Output ONLY valid YAML."""
 
 
+@dataclass
+class CastResult:
+    yaml_text: str
+    data: Optional[Dict[str, Any]]      # パースできなければ None
+    error: Optional[str] = None
+    llm: Optional[LLMResult] = None
+
+    @property
+    def characters(self) -> list:
+        return (self.data or {}).get("characters") or []
+
+
+def build_user_prompt(corpus: str, work: str, hint: str = "") -> str:
+    hint_block = f"## AUTHOR HINT\n{hint}\n" if hint else ""
+    return f"""## SOURCE TEXT (COMPLETE)
+
+{corpus}
+
+## WORK
+{work}
+{hint_block}
+Produce the cast sheet YAML now."""
+
+
+def extract_cast(corpus: str, *, llm: LLM, work: str = "", hint: str = "",
+                 model: str = DEFAULT_MODEL, effort: Optional[str] = DEFAULT_EFFORT,
+                 max_output_tokens: int = 65536,
+                 progress: Optional[Progress] = None) -> CastResult:
+    """原作全文から人物表（誰がいて、本文でどう呼ばれているか）を作る"""
+    report = resolve_progress(progress)
+    report(f"🗂  Extracting cast sheet: {work} ({len(corpus):,} chars)")
+    result = llm.complete(SYSTEM_PROMPT, build_user_prompt(corpus, work, hint), model=model,
+                          effort=effort, max_output_tokens=max_output_tokens)
+    yaml_text = clean_yaml_output(result.text, progress=report)
+    try:
+        data = yaml.safe_load(yaml_text)
+        if not isinstance(data, dict):
+            raise ValueError("cast sheet root must be a mapping")
+        return CastResult(yaml_text, data, None, result)
+    except (yaml.YAMLError, ValueError) as e:
+        return CastResult(yaml_text, None, str(e), result)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Cast Extractor v1.0 — build a cast sheet (who is who, and how the text refers to them)",
+        description="Cast Extractor v1.1 — build a cast sheet (who is who, and how the text refers to them)",
     )
     parser.add_argument("--source", "-s", required=True, help="Source folder or file")
     parser.add_argument("--work", "-w", default="", help="Work title (default: folder name)")
-    parser.add_argument("--hint", default="",
-                        help="Optional hint from the author (e.g. known identities)")
+    parser.add_argument("--hint", default="", help="Optional hint from the author")
     parser.add_argument("--model", "-m", default=DEFAULT_MODEL)
-    parser.add_argument("--reasoning", "-r", default="high", choices=REASONING_EFFORTS,
-                        help="Reasoning effort (default: high)")
+    parser.add_argument("--effort", "--reasoning", "-r", dest="effort", default=DEFAULT_EFFORT,
+                        choices=EFFORTS)
     parser.add_argument("--max-output-tokens", type=int, default=65536)
     parser.add_argument("--output", "-o", default="",
                         help="Output path (default: casts/{folder}_cast.yaml)")
@@ -111,46 +158,31 @@ def main() -> int:
 
     source = Path(args.source)
     stem = source.name if source.is_dir() else source.stem
-    work = args.work or stem
-
     print(f"📖 Loading source: {args.source}")
     corpus, manifest = load_source_corpus(args.source)
-    print(f"   Loaded {len(manifest)} file(s), {len(corpus):,} characters\n")
+    print(f"   Loaded {len(manifest)} file(s), {len(corpus):,} characters")
 
-    user_prompt = f"""## SOURCE TEXT (COMPLETE)
-
-{corpus}
-
-## WORK
-{work}
-{f"## AUTHOR HINT{chr(10)}{args.hint}{chr(10)}" if args.hint else ""}
-Produce the cast sheet YAML now."""
-
-    result = call_responses(
-        OpenAIResponsesClient(), SYSTEM_PROMPT, user_prompt,
-        model=args.model, reasoning_effort=args.reasoning,
-        background=None, max_output_tokens=args.max_output_tokens,
-    )
-    yaml_text = _fix_yaml_quoting(_extract_yaml(result["text"])).strip()
+    result = extract_cast(corpus, llm=LLM(Keys.from_env(), progress=print_progress),
+                          work=args.work or stem, hint=args.hint, model=args.model,
+                          effort=args.effort, max_output_tokens=args.max_output_tokens,
+                          progress=print_progress)
 
     safe_stem = re.sub(r"[^\w.-]", "_", stem)
     out = Path(args.output or f"casts/{safe_stem}_cast.yaml")
-    out.parent.mkdir(parents=True, exist_ok=True)
-    try:
-        data = yaml.safe_load(yaml_text)
-        chars = data.get("characters") or []
-        print(f"\n✅ {len(chars)} character(s):")
-        for c in chars:
-            refs = ", ".join(r.get("expr", "") for r in (c.get("references") or []) if isinstance(r, dict))
-            print(f"   - [{c.get('importance', '?')}] {c.get('label')}  ←  {refs}")
-    except Exception as e:
-        print(f"\n⚠️  YAML parse issue: {e}")
+    if result.data is None:
+        print(f"\n⚠️  YAML parse issue: {result.error}")
         out = out.with_name(out.stem + "_BROKEN.yaml")
-
-    out.write_text(yaml_text, encoding="utf-8")
+    else:
+        print(f"\n✅ {len(result.characters)} character(s):")
+        for c in result.characters:
+            refs = ", ".join(r.get("expr", "") for r in (c.get("references") or [])
+                             if isinstance(r, dict))
+            print(f"   - [{c.get('importance', '?')}] {c.get('label')}  ←  {refs}")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(result.yaml_text, encoding="utf-8")
     print(f"\n📁 Cast sheet saved to: {out}")
     print("   ↳ 内容を確認・修正してから --cast で persona_extractor_v2 / episode_extractor に渡してください")
-    return 0
+    return 0 if result.data is not None else 1
 
 
 if __name__ == "__main__":

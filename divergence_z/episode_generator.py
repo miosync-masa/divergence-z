@@ -1,53 +1,54 @@
 #!/usr/bin/env python3
 """
-Episode Generator v1.0
+Episode Generator v1.1
 ======================
-Generates Episode Memory YAML files for characters, complementing
-persona YAML (who they ARE) with episode data (what they EXPERIENCED).
+キャラクター名から Episode Memory YAML を生成（Web 検索版）。
+原作テキストがある場合は episode_extractor.py を使う。
 
-Uses the same two-pass architecture as persona_generator v3.3:
-  Pass 1 (Research): web_search to find canonical episodes
-  Pass 2 (Generate): thinking to structure episodes into YAML
+  persona_generator → 「この人は誰か」
+  episode_generator → 「この人は何を経験したか」
 
-Architecture:
-  persona_generator → 「この人は誰か」(personality, speech, conflicts)
-  episode_generator → 「この人は何を経験したか」(memories, events, arcs)
+Two-pass:
+  Pass 1 (Research): web_search で原作のエピソード・台詞を調べる
+  Pass 2 (Generate): 調査結果をもとに YAML を構造化する
 
-Together they provide complete character understanding for Z-axis translation.
+v1.1 Changes:
+- ライブラリ化: generate_episodes() を UI / pipeline から直接呼べる関数に
+- LLM 呼び出しを core.llm に統一（BYOK・モデル登録表）。既定モデルを claude-opus-5-5 に
+- --thinking N（budget）→ --effort（low〜max）。--thinking は互換のため残し、指定時は high 扱い
+- YAML 抽出・修復を core.yamlio に移動
 
 Usage:
-  python episode_generator.py --name "椎名まゆり" --source "Steins;Gate" \
-    --desc "ラボメンNo.002、岡部倫太郎の幼馴染" --thinking 10000
-
-  python episode_generator.py --name "椎名まゆり" --source "Steins;Gate 0" \
-    --desc "ゼロの世界線のまゆり" --thinking 10000 --sequel
-
-Options:
-  --thinking N    Enable extended thinking (recommended: 10000)
-  --no-search     Skip web search (LLM knowledge only)
-  --no-wait       Skip rate limit sleep (Tier 2+ API)
-  --sequel        Include sequel/spinoff episodes
-  --max-episodes N  Maximum episodes to generate (default: 20, max: 30)
-  --persona FILE  Path to existing persona YAML for context
+  python episode_generator.py --name "椎名まゆり" --source "Steins;Gate" \\
+    --desc "ラボメンNo.002、岡部倫太郎の幼馴染" --effort high
+  python episode_generator.py --name "椎名まゆり" --source "Steins;Gate 0" --sequel \\
+    --persona personas/椎名まゆり_v33.yaml
 """
 
+from __future__ import annotations
+
 import argparse
-import json
 import os
-import re
 import sys
 import time
-import yaml
-from anthropic import Anthropic
-from dotenv import load_dotenv
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import List, Optional
 
-load_dotenv()
+import yaml
+
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from divergence_z.core import (EFFORTS, LLM, Keys, LLMResult, Progress, clean_yaml_output,
+                               print_progress, resolve_progress)
 
 # ============================================================
 # Configuration
 # ============================================================
 
-DEFAULT_MODEL = "claude-opus-4-5-20251101"
+DEFAULT_MODEL = os.getenv("EPISODE_GENERATOR_MODEL", "claude-opus-5-5")
+DEFAULT_EFFORT = "high"
 
 SUPPORTED_LANGUAGES = {
     "ja": "Japanese (日本語)",
@@ -135,7 +136,6 @@ arcs:
       What translators need to know about this arc to handle
       dialogue that references or builds on it.
 """
-
 
 # ============================================================
 # Prompt Builders
@@ -311,24 +311,23 @@ either single-quoted or use block scalar (|)."""
     
     return prompt
 
-
 # ============================================================
-# Two-Pass Architecture (same as persona_generator v3.3)
+# Two-pass: research → generate
 # ============================================================
 
-def _research_episodes(client, name: str, source: str, description: str,
-                       model: str, include_sequel: bool = False) -> str:
-    """Pass 1: Research character episodes using web search.
-    
-    Uses reason-driven prompting to explain WHY search matters,
-    which produces better search coverage than command-style prompts.
-    """
-    
+RESEARCH_SYSTEM = ("You are a research assistant. You MUST use the web_search tool for EVERY request. "
+                   "NEVER answer from your own knowledge alone. Always search first, then summarize "
+                   "findings. Perform at least 2 separate searches before answering.")
+
+
+def build_research_prompt(name: str, source: str, description: str,
+                          include_sequel: bool = False) -> str:
+    """Pass 1 の調査プロンプト（なぜ検索が必要かを説明する reason-driven 形式）"""
     sequel_instruction = ""
     if include_sequel:
         sequel_instruction = f"\n4. Search: \"{name} sequel spinoff episodes\" — for episodes from related works"
     
-    research_prompt = f"""You are a research assistant. Your ONLY job is to use web_search to find information.
+    return f"""You are a research assistant. Your ONLY job is to use web_search to find information.
 Do NOT answer from memory. You MUST search first, then report what you found.
 
 Character: {name}
@@ -378,337 +377,79 @@ Mark uncertain ones as [approximate].
 
 Only include information you actually found in search results."""
 
-    print("   📖 Pass 1: Researching character episodes via web search...")
-    
-    # Force search: tool_choice + system prompt + user prompt all insist
-    # (Same triple-force pattern that solved persona_generator search 0 problem)
-    api_kwargs = {
-        "model": model,
-        "max_tokens": 10000,
-        "system": "You are a research assistant. You MUST use the web_search tool for EVERY request. "
-                  "NEVER answer from your own knowledge alone. Always search first, then summarize findings. "
-                  "Perform at least 2 separate searches before answering.",
-        "tools": [
-            {
-                "type": "web_search_20250305",
-                "name": "web_search",
-                "max_uses": 8
-            }
-        ],
-        "messages": [
-            {"role": "user", "content": research_prompt}
-        ]
-    }
-    
-    # Try to force tool use (may not work with server-side tools)
+
+def research_episodes(name: str, source: str, description: str, *, llm: LLM,
+                      model: str = DEFAULT_MODEL, include_sequel: bool = False,
+                      progress: Optional[Progress] = None) -> LLMResult:
+    """Pass 1: web_search で原作のエピソード・台詞を調べる"""
+    resolve_progress(progress)("   📖 Pass 1: Researching character episodes via web search...")
+    result = llm.complete(RESEARCH_SYSTEM,
+                          build_research_prompt(name, source, description, include_sequel),
+                          model=model, effort="low", max_output_tokens=10000,
+                          web_search=True, max_searches=8)
+    if result.searches == 0:
+        resolve_progress(progress)("   ⚠️  Model did not use web search in research pass")
+    return result
+
+
+@dataclass
+class EpisodeResult:
+    character: str
+    yaml_text: str
+    valid: bool
+    issues: List[str] = field(default_factory=list)
+    episode_count: int = 0
+    research: Optional[LLMResult] = None
+    llm: Optional[LLMResult] = None
+
+
+def count_episodes(yaml_text: str) -> int:
     try:
-        api_kwargs["tool_choice"] = {"type": "any"}
-        response = client.messages.create(**api_kwargs)
-    except Exception as e:
-        # If tool_choice fails with web_search, retry without it
-        print(f"   ⚠️  tool_choice failed ({type(e).__name__}), retrying without...")
-        del api_kwargs["tool_choice"]
-        response = client.messages.create(**api_kwargs)
-    
-    # Extract text and count searches
-    # Debug: show all block types to diagnose search detection
-    research_text = ""
-    search_count = 0
-    block_types = []
-    for block in response.content:
-        block_types.append(block.type)
-        if block.type == "text":
-            research_text = block.text  # Last text block has the summary
-        elif block.type in ("web_search_tool_use", "server_tool_use", "tool_use"):
-            search_count += 1
-    
-    print(f"   📊 Response blocks: {block_types}")
-    print(f"   🔍 Web searches performed: {search_count}")
-    if search_count == 0:
-        print("   ⚠️  Model did not use web search in research pass")
-        # Show first 200 chars of response for debugging
-        if research_text:
-            print(f"   📄 Response preview: {research_text[:200]}...")
-    
-    return research_text
+        data = yaml.safe_load(yaml_text) or {}
+    except yaml.YAMLError:
+        return 0
+    if not isinstance(data, dict):
+        return 0
+    n = sum(len(tl.get("episodes") or []) for tl in data.get("timelines") or []
+            if isinstance(tl, dict))
+    return n + len(data.get("episodes") or [])
 
 
-def generate_episodes(name: str, source: str, description: str,
-                      output_lang: str = "ja",
-                      model: str = DEFAULT_MODEL,
-                      thinking_budget: int = 0,
-                      no_search: bool = False,
-                      no_wait: bool = False,
-                      include_sequel: bool = False,
-                      max_episodes: int = 20,
-                      persona_path: str = "") -> str:
-    """Generate Episode Memory YAML using Claude API.
-    
-    Two-pass approach (same as persona_generator v3.3):
-      Pass 1 (Research): web_search to find canonical episodes (no thinking)
-      Pass 2 (Generate): thinking to structure into YAML (no search)
-    
-    Args:
-        name: Character name
-        source: Source work (anime, game, novel, etc.)
-        description: Brief character description
-        output_lang: Output language code
-        model: Claude model to use
-        thinking_budget: Extended thinking token budget (0 = disabled)
-        no_search: Skip web search
-        no_wait: Skip rate limit sleep between passes
-        include_sequel: Include sequel/spinoff episodes
-        max_episodes: Maximum number of episodes to generate
-        persona_path: Path to companion persona YAML for context
-    """
-    
-    client = Anthropic(timeout=600.0)  # 10 minutes
-    
-    lang_name = SUPPORTED_LANGUAGES.get(output_lang, output_lang)
-    print(f"📖 Generating Episode Memory v1.0 for: {name} ({source})")
-    print(f"   Output language: {lang_name}")
-    print(f"   Model: {model}")
-    print(f"   Max episodes: {max_episodes}")
-    if include_sequel:
-        print(f"   📚 Including sequel/spinoff episodes")
-    if no_search:
-        print(f"   🔍 Web search: OFF (LLM knowledge only)")
-    else:
-        print(f"   🔍 Web search: ON (two-pass: research → generate)")
-    if thinking_budget > 0:
-        print(f"   🧠 Thinking mode: ON (budget: {thinking_budget} tokens)")
-    if persona_path:
-        print(f"   📋 Persona context: {persona_path}")
-    print()
-    
-    # Load persona YAML if provided
-    persona_context = ""
-    if persona_path:
-        try:
-            with open(persona_path, 'r', encoding='utf-8') as f:
-                persona_context = f.read()
-            print(f"   ✅ Loaded persona YAML ({len(persona_context)} chars)")
-        except FileNotFoundError:
-            print(f"   ⚠️  Persona file not found: {persona_path}")
-        except Exception as e:
-            print(f"   ⚠️  Error loading persona: {e}")
-    
-    # === PASS 1: RESEARCH (web search, no thinking) ===
-    research_context = ""
-    if not no_search:
-        research_context = _research_episodes(
-            client, name, source, description, model, include_sequel
-        )
-        
-        if not no_wait:
-            print("   ⏳ Waiting 60s for rate limit reset (Tier 1: 8K output tokens/min)...")
-            print("   💡 Use --no-wait to skip (if you have Tier 2+ API key)")
-            time.sleep(60)
-    
-    # === PASS 2: GENERATE YAML (thinking, no search) ===
-    system_prompt = build_system_prompt(output_lang)
-    user_prompt = build_user_prompt(
-        name, source, description, output_lang,
-        search_context=research_context,
-        persona_context=persona_context,
-        max_episodes=max_episodes,
-        include_sequel=include_sequel
-    )
-    
-    if not no_search:
-        print("   📝 Pass 2: Generating Episode Memory YAML...")
-    
-    api_kwargs = {
-        "model": model,
-        "max_tokens": 32000 if thinking_budget > 0 else 16000,
-        "system": system_prompt,
-        "messages": [
-            {"role": "user", "content": user_prompt}
-        ]
-    }
-    
-    if thinking_budget > 0:
-        api_kwargs["thinking"] = {
-            "type": "enabled",
-            "budget_tokens": thinking_budget
-        }
-    
-    # Use streaming for long operations (required when >10min)
-    yaml_content = ""
-    
-    with client.messages.stream(**api_kwargs) as stream:
-        full_response = stream.get_final_message()
-    
-    # Extract YAML from response (skip thinking blocks)
-    for block in full_response.content:
-        if block.type == "text":
-            yaml_content = block.text  # Last text block wins
-    
-    # === ROBUST YAML EXTRACTION ===
-    yaml_content = _extract_yaml(yaml_content)
-    
-    # === YAML QUOTE REPAIR (v1.1) ===
-    yaml_content = _fix_yaml_quoting(yaml_content)
-    
-    return yaml_content.strip()
+def generate_episodes(name: str, source: str, description: str = "", *, llm: LLM,
+                      model: str = DEFAULT_MODEL, effort: Optional[str] = DEFAULT_EFFORT,
+                      output_lang: str = "ja", web_search: bool = True,
+                      include_sequel: bool = False, max_episodes: int = 20,
+                      persona_text: str = "", rate_limit_wait: int = 0,
+                      max_output_tokens: int = 32000,
+                      progress: Optional[Progress] = None) -> EpisodeResult:
+    """キャラクター名から Episode Memory YAML を生成（web_search=False なら LLM の知識のみ）"""
+    report = resolve_progress(progress)
+    report(f"📖 Generating Episode Memory for: {name} ({source})")
+
+    research = None
+    if web_search:
+        research = research_episodes(name, source, description, llm=llm, model=model,
+                                     include_sequel=include_sequel, progress=progress)
+        if rate_limit_wait:
+            report(f"   ⏳ Waiting {rate_limit_wait}s for rate limit reset...")
+            time.sleep(rate_limit_wait)
+        report("   📝 Pass 2: Generating Episode Memory YAML...")
+
+    result = llm.complete(
+        build_system_prompt(output_lang),
+        build_user_prompt(name, source, description, output_lang,
+                          search_context=research.text if research else "",
+                          persona_context=persona_text, max_episodes=max_episodes,
+                          include_sequel=include_sequel),
+        model=model, effort=effort, max_output_tokens=max_output_tokens)
+    yaml_text = clean_yaml_output(result.text, progress=report)
+    valid, issues = validate_episode_yaml(yaml_text)
+    return EpisodeResult(name, yaml_text, valid, issues, count_episodes(yaml_text), research, result)
 
 
 # ============================================================
-# YAML Extraction (same robust 5-method approach)
+# Validation
 # ============================================================
-
-def _extract_yaml(raw: str) -> str:
-    """Extract YAML content from model output, handling various formats.
-    
-    5-method fallback (same as persona_generator v3.3):
-    1. Extract from ```yaml ... ``` code block
-    2. Extract from generic ``` ... ``` (find YAML-like content)
-    3. Find # === or meta: start marker
-    4. Find episodes: or timelines: as fallback start markers
-    5. Return as-is with warning
-    """
-    
-    # Method 1: Extract from ```yaml ... ``` code block
-    if "```yaml" in raw:
-        yaml_part = raw.split("```yaml", 1)[1]
-        if "```" in yaml_part:
-            yaml_part = yaml_part.split("```", 1)[0]
-        return yaml_part.strip()
-    
-    # Method 2: Extract from generic ``` ... ``` code block
-    if "```" in raw:
-        parts = raw.split("```")
-        for part in parts[1::2]:  # odd-indexed parts are inside code fences
-            stripped = part.strip()
-            if stripped.startswith("# ===") or "meta:" in stripped[:200]:
-                return stripped
-    
-    # Method 3: Find YAML start marker in raw text
-    lines = raw.split("\n")
-    for i, line in enumerate(lines):
-        s = line.strip()
-        if s.startswith("# ===") or s.startswith("meta:"):
-            return "\n".join(lines[i:])
-    
-    # Method 4: Find episode-specific markers
-    for i, line in enumerate(lines):
-        s = line.strip()
-        if s.startswith("timelines:") or s.startswith("episodes:"):
-            search_start = max(0, i - 5)
-            for j in range(search_start, i):
-                if lines[j].strip().startswith("meta:"):
-                    return "\n".join(lines[j:])
-            return "\n".join(lines[i:])
-    
-    # Method 5: Last resort
-    print("   ⚠️  Could not reliably extract YAML from model output")
-    return raw
-
-
-# ============================================================
-# YAML Quote Repair v1.1
-# ============================================================
-
-def _fix_yaml_quoting(yaml_content: str) -> str:
-    """Fix broken YAML quoting caused by LLM-generated values containing double quotes.
-    
-    Common failure pattern (LLM output):
-        translation: "From zero"を維持、「一からではなく」との対比を意識
-    
-    YAML parser sees "From zero" as a complete quoted string, then chokes on を維持...
-    
-    Fix strategy:
-    1. Try yaml.safe_load() — if it works, no fix needed
-    2. If parse fails, scan lines for the broken pattern:
-       key: "..."extra_text  (where extra_text follows a closing quote)
-    3. Re-wrap the entire value in single quotes (escaping internal single quotes)
-    4. Retry yaml.safe_load() to confirm fix
-    
-    This handles the most common LLM quoting error without modifying valid YAML.
-    """
-    # Step 1: Check if YAML is already valid
-    try:
-        yaml.safe_load(yaml_content)
-        return yaml_content  # Already valid, no fix needed
-    except yaml.YAMLError as initial_error:
-        print(f"   🔧 YAML parse error detected, attempting auto-repair...")
-    
-    # Step 2: Scan and fix broken lines
-    lines = yaml_content.split('\n')
-    fixed_lines = []
-    fix_count = 0
-    
-    # Pattern: key: "quoted_part"remaining_text
-    # Matches lines where a double-quoted string is followed by non-whitespace text
-    # Example: translation: "From zero"を維持
-    broken_pattern = re.compile(
-        r'^(\s+\w[\w_]*:\s+)'    # indent + key + colon + space(s)
-        r'"([^"]*)"'              # double-quoted string
-        r'(.+)$'                  # remaining text after the closing quote
-    )
-    
-    # Pattern: key: text with "quoted" in middle
-    # Example: translation: 「一からではなく」"From zero"の重みを
-    mid_quote_pattern = re.compile(
-        r'^(\s+\w[\w_]*:\s+)'    # indent + key + colon + space(s)  
-        r'([^"]*"[^"]*"[^"]*)'   # value containing quotes
-        r'$'
-    )
-    
-    for line in lines:
-        # Check for broken pattern (quotes at start of value)
-        m = broken_pattern.match(line)
-        if m:
-            prefix = m.group(1)    # "        translation: "
-            quoted = m.group(2)    # "From zero"
-            rest = m.group(3)      # "を維持、「一からではなく」との対比を意識"
-            
-            # Reconstruct: wrap entire value in single quotes
-            full_value = f'"{quoted}"{rest}'
-            # Escape any single quotes in the value
-            full_value_escaped = full_value.replace("'", "''")
-            fixed_line = f"{prefix}'{full_value_escaped}'"
-            fixed_lines.append(fixed_line)
-            fix_count += 1
-            continue
-        
-        # Check for mid-quote pattern (quotes embedded in value)
-        m2 = mid_quote_pattern.match(line)
-        if m2:
-            prefix = m2.group(1)
-            value = m2.group(2)
-            # Only fix if the value would cause a YAML parse error
-            # Test by trying to parse just this line
-            test_yaml = f"test: {value}"
-            try:
-                yaml.safe_load(test_yaml)
-                fixed_lines.append(line)  # Valid, keep as-is
-            except yaml.YAMLError:
-                value_escaped = value.replace("'", "''")
-                fixed_line = f"{prefix}'{value_escaped}'"
-                fixed_lines.append(fixed_line)
-                fix_count += 1
-            continue
-        
-        fixed_lines.append(line)
-    
-    if fix_count == 0:
-        print(f"   ⚠️  No fixable quoting patterns found (error may be elsewhere)")
-        return yaml_content
-    
-    fixed_content = '\n'.join(fixed_lines)
-    
-    # Step 3: Verify fix worked
-    try:
-        yaml.safe_load(fixed_content)
-        print(f"   ✅ Auto-repaired {fix_count} broken YAML quote(s)")
-        return fixed_content
-    except yaml.YAMLError as e:
-        print(f"   ⚠️  Auto-repair fixed {fix_count} lines but YAML still invalid")
-        print(f"   ⚠️  Remaining error: {str(e)[:200]}")
-        # Return partially fixed version (better than nothing)
-        return fixed_content
-
 
 # ============================================================
 # Validation
@@ -797,122 +538,72 @@ def validate_episode_yaml(yaml_content: str) -> tuple:
             if "episodes" not in arc and "episodes_included" not in arc:
                 issues.append(f"Arc '{arc.get('arc_id', 'unknown')}' missing episodes list (expected 'episodes' or 'episodes_included')")
     
-    # Summary
-    if episode_count > 0:
-        print(f"   📊 Episodes found: {episode_count}")
-    
     is_valid = len(issues) == 0
     return is_valid, issues
-
 
 # ============================================================
 # CLI
 # ============================================================
 
-def main():
+def save_episodes(yaml_text: str, output_path: str, valid_issues: List[str]) -> tuple:
+    """保存。パースエラーなら _BROKEN.yaml に退避して (path, False) を返す"""
+    if any("YAML parse error" in issue for issue in valid_issues):
+        output_path = output_path.replace(".yaml", "_BROKEN.yaml")
+        ok = False
+    else:
+        ok = True
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+    Path(output_path).write_text(yaml_text, encoding="utf-8")
+    return output_path, ok
+
+
+def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Episode Generator v1.0 — Generate Episode Memory YAML",
+        description="Episode Generator v1.1 — Generate Episode Memory YAML (web search)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
-  # Basic generation with web search and thinking
-  python episode_generator.py --name "椎名まゆり" --source "Steins;Gate" \\
-    --desc "ラボメンNo.002" --thinking 10000
-
-  # With persona YAML context
-  python episode_generator.py --name "椎名まゆり" --source "Steins;Gate" \\
-    --desc "ラボメンNo.002" --thinking 10000 \\
-    --persona personas/椎名まゆり_v33.yaml
-
-  # Include sequel episodes
-  python episode_generator.py --name "椎名まゆり" --source "Steins;Gate" \\
-    --desc "ラボメンNo.002" --thinking 10000 --sequel
-
-  # Fast mode (no search, Tier 2+)
-  python episode_generator.py --name "牧瀬紅莉栖" --source "Steins;Gate" \\
-    --desc "天才脳科学者" --no-search --no-wait
-"""
     )
-    
     parser.add_argument("--name", required=True, help="Character name")
     parser.add_argument("--source", required=True, help="Source work")
     parser.add_argument("--desc", default="", help="Brief character description")
-    parser.add_argument("--lang", default="ja", choices=SUPPORTED_LANGUAGES.keys(),
-                        help="Output language (default: ja)")
-    parser.add_argument("--model", default=DEFAULT_MODEL, help="Claude model")
+    parser.add_argument("--lang", default="ja", choices=SUPPORTED_LANGUAGES.keys())
+    parser.add_argument("--model", default=DEFAULT_MODEL)
+    parser.add_argument("--effort", default=DEFAULT_EFFORT, choices=EFFORTS)
     parser.add_argument("--thinking", type=int, default=0,
-                        help="Extended thinking budget (recommended: 10000)")
-    parser.add_argument("--no-search", action="store_true",
-                        help="Disable web search")
-    parser.add_argument("--no-wait", action="store_true",
-                        help="Skip rate limit sleep (Tier 2+)")
-    parser.add_argument("--sequel", action="store_true",
-                        help="Include sequel/spinoff episodes")
-    parser.add_argument("--max-episodes", type=int, default=20,
-                        help="Maximum episodes to generate (default: 20, max: 30)")
-    parser.add_argument("--persona", default="",
-                        help="Path to companion persona YAML")
-    parser.add_argument("--output", "-o", default="",
-                        help="Output file path (default: {name}_Episode.yaml)")
-    
+                        help="(deprecated) any value > 0 is treated as --effort high")
+    parser.add_argument("--no-search", action="store_true", help="Disable web search")
+    parser.add_argument("--wait", type=int, default=0,
+                        help="Seconds to sleep between passes (rate-limit tiers)")
+    parser.add_argument("--no-wait", action="store_true", help="(deprecated, now the default)")
+    parser.add_argument("--sequel", action="store_true", help="Include sequel/spinoff episodes")
+    parser.add_argument("--max-episodes", type=int, default=20)
+    parser.add_argument("--persona", default="", help="Companion persona YAML for context")
+    parser.add_argument("--output", "-o", default="")
     args = parser.parse_args()
-    
-    # Generate
-    yaml_content = generate_episodes(
-        name=args.name,
-        source=args.source,
-        description=args.desc,
-        output_lang=args.lang,
-        model=args.model,
-        thinking_budget=args.thinking,
-        no_search=args.no_search,
-        no_wait=args.no_wait,
-        include_sequel=args.sequel,
-        max_episodes=min(args.max_episodes, 30),
-        persona_path=args.persona,
-    )
-    
-    # Validate
-    print()
-    is_valid, issues = validate_episode_yaml(yaml_content)
-    
-    if is_valid:
+
+    effort = "high" if args.thinking > 0 else args.effort
+    persona_text = Path(args.persona).read_text(encoding="utf-8") if args.persona else ""
+
+    result = generate_episodes(
+        args.name, args.source, args.desc, llm=LLM(Keys.from_env(), progress=print_progress),
+        model=args.model, effort=effort, output_lang=args.lang, web_search=not args.no_search,
+        include_sequel=args.sequel, max_episodes=min(args.max_episodes, 30),
+        persona_text=persona_text, rate_limit_wait=args.wait, progress=print_progress)
+
+    print(f"\n   📊 Episodes found: {result.episode_count}")
+    if result.valid:
         print("✅ Episode YAML validation: PASSED")
     else:
-        print(f"⚠️  Episode YAML Validation Issues:")
-        for issue in issues:
+        print("⚠️  Episode YAML Validation Issues:")
+        for issue in result.issues:
             print(f"   - {issue}")
-    
-    # Determine output path
-    if args.output:
-        output_path = args.output
-    else:
-        # Generate default filename
-        safe_name = args.name.replace(" ", "_")
-        if args.sequel:
-            output_path = f"{safe_name}_Episode_full.yaml"
-        else:
-            output_path = f"{safe_name}_Episode.yaml"
-    
-    # Write output
-    has_parse_error = any("YAML parse error" in issue for issue in issues)
-    
-    if has_parse_error:
-        # パースエラー = Context限界で切れた可能性大
-        broken_path = output_path.replace(".yaml", "_BROKEN.yaml")
-        with open(broken_path, 'w', encoding='utf-8') as f:
-            f.write(yaml_content)
-        print(f"\n❌ YAML parse error detected — file may be truncated (context limit?)")
-        print(f"   Broken file saved as: {broken_path}")
-        print(f"   ↳ Fix manually or re-run with fewer episodes (--max-episodes)")
+
+    safe_name = args.name.replace(" ", "_")
+    default = f"{safe_name}_Episode_full.yaml" if args.sequel else f"{safe_name}_Episode.yaml"
+    path, ok = save_episodes(result.yaml_text, args.output or default, result.issues)
+    if not ok:
+        print(f"\n❌ YAML parse error — saved as: {path}")
         return 1
-    
-    with open(output_path, 'w', encoding='utf-8') as f:
-        f.write(yaml_content)
-    
-    print(f"\n📁 Episode Memory saved to: {output_path}")
-    print(f"   File size: {len(yaml_content):,} characters")
-    
+    print(f"\n📁 Episode Memory saved to: {path} ({len(result.yaml_text):,} chars)")
     return 0
 
 

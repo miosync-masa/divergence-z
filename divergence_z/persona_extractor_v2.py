@@ -1,92 +1,52 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Persona Extractor v2.0  (GPT-5.2+ / 5.6 SOL "Pro" ready)
-原作テキスト/PDFから直接キャラクターペルソナを抽出
+Persona Extractor v2.1
+原作テキスト（ファイル/フォルダ）からキャラクターペルソナ YAML v3.3 を抽出
 
-このファイルは persona_extractor.py (v1.2) のコピー＆改修版です。
-プロンプト構築・v3.3スキーマ検証・CLI/保存ロジックは v1.2 と同一。
-変更点は「OpenAI 呼び出し方式」のみ。
+v2.1 Changes:
+- ライブラリ化: extract_persona() を UI / pipeline から直接呼べる関数に
+- LLM 呼び出しを core.llm に統一（BYOK・OpenAI/Anthropic 両対応・モデル登録表）
+- ファイル読み込みを core.loaders に移動
+- --reasoning は --effort の別名として残す
 
-v2.0 Changes (API layer only):
-- raw `requests` 直叩き → 公式 `openai` SDK (Responses API) に移行
-- モデル判定を一般化: `"5.2" in model` のようなハードコードを廃止し、
-  gpt-5.x / gpt-6 / o1/o3/o4 / SOL 系を推論モデルとして自動検出
-- Pro / SOL ティア(= GPT PRO相当)は同期呼び出し不可のため background モードを自動有効化し
-  `responses.retrieve()` でポーリング（同期POSTだと Pro は失敗/タイムアウトするため）
-- status = incomplete/failed を明示的にハンドリング
-- reasoning effort に minimal/low を追加（前方互換）
+v2.0: OpenAI SDK (Responses API) 化、Pro/SOL ティアの background polling
+v1.x: old/persona_extractor.py
 
-なぜ v1.2 を直接編集せず別ファイルにしたか:
-  API 呼び出しの実体(requests → SDK, 同期 → background)が変わるため、
-  既存の動作を壊さず並存させる目的。プロンプトと検証はコピーで同一。
+Library:
+    from divergence_z.core import LLM, Keys, load_source_corpus
+    from divergence_z.persona_extractor_v2 import extract_persona
+    corpus, _ = load_source_corpus("scripts/STARGAZER/")
+    result = extract_persona(corpus, "宇宙から来た少女", llm=LLM(Keys(openai="sk-...")),
+                             cast_text=open("casts/STARGAZER_cast.yaml").read(), output_lang="ja")
+    result.yaml_text, result.valid, result.issues
 
-2025年スタイル: RAG? チャンク分割? 知らない子ですね。
-400K context に全部ドーン！！
-
-Usage:
-    # 基本
-    python persona_extractor_v2.py \\
-      --source "ローミオーとヂューリエット.txt" \\
-      --character "ヂューリエット" \\
-      --lang ja
-
-    # GPT-5.6 SOL (Pro相当) + max reasoning (= 旧PRO相当の最重量処理)
-    #   → SOL/Pro ティアは background が自動で有効になります
-    #   → --model / --reasoning を省略しても既定で gpt-5.6-sol + max
-    python persona_extractor_v2.py \\
-      --source "rezero_vol1.pdf" \\
-      --character "レム" \\
-      --model gpt-5.6-sol \\
-      --reasoning max \\
-      --lang en
-
-    # 軽め(コスト/時間を抑える)にしたい場合は effort を下げる
-    python persona_extractor_v2.py \\
-      --source "rezero_vol1.pdf" \\
-      --character "レム" \\
-      --reasoning high \\
-      --lang en
-
-    # 複数キャラ一括
-    python persona_extractor_v2.py \\
-      --source "steins_gate.txt" \\
-      --characters "牧瀬紅莉栖,岡部倫太郎,椎名まゆり" \\
-      --lang en
-
-Requirements:
-    pip install "openai>=2.0" python-dotenv PyPDF2
+CLI:
+    python persona_extractor_v2.py -s scripts/STARGAZER/ --cast casts/STARGAZER_cast.yaml \\
+      -c "宇宙から来た少女" --lang ja
+    python persona_extractor_v2.py -s rezero_vol1.pdf -c "レム" --model claude-opus-5-5 --effort high
+    python persona_extractor_v2.py -s steins_gate.txt --characters "牧瀬紅莉栖,岡部倫太郎" --lang en
 """
 
 from __future__ import annotations
 
 import argparse
-import json
 import os
 import re
-import time
+import sys
+from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import List, Optional
 
-from dotenv import load_dotenv
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-load_dotenv()
+from divergence_z.core import (EFFORTS, LLM, Keys, LLMResult, Progress, clean_yaml_output,
+                               load_source_corpus, print_progress, resolve_progress)
 
-# =============================================================================
-# CONFIGURATION
-# =============================================================================
-
-# 既定は 5.6 SOL(Pro相当)。別モデルにしたい場合は環境変数 PERSONA_EXTRACTOR_MODEL で上書き
+# 既定モデル。環境変数 PERSONA_EXTRACTOR_MODEL / PERSONA_EXTRACTOR_REASONING で上書き
 DEFAULT_MODEL = os.getenv("PERSONA_EXTRACTOR_MODEL", "gpt-5.6-sol")
-
-# reasoning effort の有効値（gpt-5.6-sol）: none/low/medium/high/xhigh/max
-#   max ≈ 旧 GPT PRO 相当の最重量処理
-REASONING_EFFORTS = ["none", "low", "medium", "high", "xhigh", "max"]
-# この v2 は「Pro相当処理が必要」用途なので既定を max にする（軽くしたい時は -r high 等）
-DEFAULT_REASONING = os.getenv("PERSONA_EXTRACTOR_REASONING", "max")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-# ベースURLを差し替えたい場合(プロキシ/Azure互換 等)は OPENAI_BASE_URL で上書き
-OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL")  # None = OpenAI 既定
+DEFAULT_EFFORT = os.getenv("PERSONA_EXTRACTOR_REASONING", "max")
 
 SUPPORTED_LANGUAGES = {
     "ja": "Japanese (日本語)",
@@ -100,157 +60,6 @@ SUPPORTED_LANGUAGES = {
     "it": "Italian (Italiano)",
     "ru": "Russian (Русский)",
 }
-
-# =============================================================================
-# FILE LOADING
-# =============================================================================
-
-def load_source_file(source_path: str) -> str:
-    """
-    ソースファイルを読み込む（txt, pdf対応）
-    複数エンコーディングを自動検出
-    """
-    path = Path(source_path)
-
-    if not path.exists():
-        raise FileNotFoundError(f"Source file not found: {source_path}")
-
-    suffix = path.suffix.lower()
-
-    if suffix == ".pdf":
-        return load_pdf(path)
-    elif suffix == ".epub":
-        return load_epub(path)
-    elif suffix in [".txt", ".text", ".md"]:
-        return load_text_file(path)
-    else:
-        # とりあえずテキストとして読んでみる
-        return load_text_file(path)
-
-
-def load_text_file(path: Path) -> str:
-    """
-    テキストファイルを複数エンコーディングで試行して読み込む
-    青空文庫など古いテキストはShift_JISが多い
-    """
-    # 試すエンコーディングの順序
-    encodings = [
-        "utf-8",
-        "cp932",        # Shift_JIS (Windows日本語)
-        "shift_jis",    # Shift_JIS
-        "euc-jp",       # EUC-JP
-        "iso-2022-jp",  # JIS
-        "utf-16",
-        "latin-1",      # 最後の手段（必ず読める）
-    ]
-
-    for encoding in encodings:
-        try:
-            text = path.read_text(encoding=encoding)
-            print(f"   Encoding detected: {encoding}")
-            return text
-        except (UnicodeDecodeError, UnicodeError):
-            continue
-
-    # 全部失敗したらバイナリで読んでデコードエラー無視
-    print("   Warning: Could not detect encoding, using latin-1 fallback")
-    return path.read_text(encoding="latin-1")
-
-
-def load_pdf(path: Path) -> str:
-    """PDFからテキスト抽出"""
-    try:
-        from PyPDF2 import PdfReader
-    except ImportError:
-        raise ImportError("PyPDF2 required: pip install PyPDF2")
-
-    reader = PdfReader(str(path))
-    text_parts = []
-
-    for page in reader.pages:
-        text = page.extract_text()
-        if text:
-            text_parts.append(text)
-
-    return "\n".join(text_parts)
-
-
-def load_epub(path: Path) -> str:
-    """EPUBからテキスト抽出"""
-    try:
-        import ebooklib
-        from ebooklib import epub
-        from bs4 import BeautifulSoup
-    except ImportError:
-        raise ImportError("ebooklib and beautifulsoup4 required: pip install ebooklib beautifulsoup4")
-
-    book = epub.read_epub(str(path))
-    text_parts = []
-
-    for item in book.get_items():
-        if item.get_type() == ebooklib.ITEM_DOCUMENT:
-            soup = BeautifulSoup(item.get_content(), "html.parser")
-            text_parts.append(soup.get_text())
-
-    return "\n".join(text_parts)
-
-
-DEFAULT_EXTENSIONS = [".txt", ".text", ".md", ".pdf", ".epub"]
-
-
-def _natural_key(path: Path) -> List[Any]:
-    """自然順ソート用キー（ep2 < ep10）"""
-    return [int(t) if t.isdigit() else t.lower()
-            for t in re.split(r"(\d+)", str(path))]
-
-
-def collect_source_files(source: str, extensions: List[str] = DEFAULT_EXTENSIONS,
-                         recursive: bool = True) -> List[Path]:
-    """source がファイルならそれ1つ、フォルダなら対象拡張子のファイルを自然順で返す"""
-    path = Path(source)
-    if not path.exists():
-        raise FileNotFoundError(f"Source not found: {source}")
-    if path.is_file():
-        return [path]
-
-    exts = {e.lower() if e.startswith(".") else f".{e.lower()}" for e in extensions}
-    pattern = "**/*" if recursive else "*"
-    files = [
-        p for p in path.glob(pattern)
-        if p.is_file()
-        and p.suffix.lower() in exts
-        and not any(part.startswith(".") for part in p.relative_to(path).parts)
-    ]
-    return sorted(files, key=lambda p: _natural_key(p.relative_to(path)))
-
-
-def load_source_corpus(source: str, extensions: List[str] = DEFAULT_EXTENSIONS,
-                       recursive: bool = True) -> tuple[str, List[tuple[str, int]]]:
-    """
-    ファイル or フォルダを読み込み、`=== FILE: 相対パス ===` 区切りで1本に連結する。
-    Returns (corpus_text, [(相対パス, 文字数), ...])
-    """
-    files = collect_source_files(source, extensions, recursive)
-    if not files:
-        raise FileNotFoundError(
-            f"No source files ({', '.join(extensions)}) found in: {source}"
-        )
-
-    base = Path(source) if Path(source).is_dir() else Path(source).parent
-    parts: List[str] = []
-    manifest: List[tuple[str, int]] = []
-
-    for f in files:
-        rel = str(f.relative_to(base))
-        print(f"   📄 {rel}")
-        text = load_source_file(str(f))
-        if not text.strip():
-            print("      (empty — skipped)")
-            continue
-        parts.append(f"=== FILE: {rel} ===\n{text.strip()}\n")
-        manifest.append((rel, len(text)))
-
-    return "\n".join(parts), manifest
 
 
 def build_cast_note(cast_text: str, character_name: str) -> str:
@@ -281,6 +90,8 @@ as an alias.
 {cast_text.strip()}
 ```
 """
+
+
 
 
 # =============================================================================
@@ -606,97 +417,10 @@ Output ONLY valid YAML. No explanation before or after.
 Start with the meta section."""
 
 
-# =============================================================================
-# OPENAI RESPONSES API CLIENT — v2.0 (official SDK, GPT-5.2+ / 5.6 SOL Pro)
-# =============================================================================
 
-def _is_reasoning_model(model: str) -> bool:
-    """
-    推論(reasoning)対応モデルか判定。
-    v1.2 の `"5.2" in model` を一般化し、5.2 以降 / 5.6 SOL / 将来モデルを取りこぼさない。
-    """
-    m = model.lower()
-    reasoning_markers = (
-        "gpt-5", "gpt5",   # GPT-5.x (5.2, 5.6, ...)
-        "gpt-6", "gpt6",   # 将来の GPT-6.x
-        "o1", "o3", "o4",  # o系 reasoning
-        "sol",             # SOL ティア (5.6 SOL 等)
-    )
-    return any(marker in m for marker in reasoning_markers)
-
-
-def _is_pro_tier_model(model: str) -> bool:
-    """
-    Pro / SOL ティア(= GPT PRO相当)か判定。
-    このティアは Responses API を同期POSTで呼べず、background + polling が必須のため、
-    自動で background モードを有効化する。
-    """
-    m = model.lower()
-    return ("pro" in m) or ("sol" in m)
-
-
-class OpenAIResponsesClient:
-    """
-    OpenAI Responses API クライアント（公式SDK版 / GPT-5.2+ ・ 5.6 SOL Pro対応）
-
-    v1.2 との違い:
-    - requests 直叩き → openai SDK (client.responses.create / .retrieve)
-    - Pro/SOL ティアは background を自動有効化（同期呼び出し不可のため）
-    - モデル判定を一般化
-    """
-
-    def __init__(
-        self,
-        api_key: Optional[str] = None,
-        base_url: Optional[str] = None,
-        timeout: int = 1800,  # 30分（5.6 SOL / Pro + xhigh は長時間かかる）
-    ):
-        try:
-            from openai import OpenAI
-        except ImportError:
-            raise ImportError('openai SDK required: pip install "openai>=2.0"')
-
-        resolved_key = api_key or OPENAI_API_KEY
-        if not resolved_key:
-            raise ValueError("OPENAI_API_KEY is required")
-
-        self.timeout = timeout
-        self.client = OpenAI(
-            api_key=resolved_key,
-            base_url=base_url or OPENAI_BASE_URL,  # None なら OpenAI 既定
-            timeout=timeout,
-        )
-
-    def extract_persona(
-        self,
-        source_text: str,
-        character_name: str,
-        output_lang: str = "en",
-        model: str = DEFAULT_MODEL,
-        reasoning_effort: str = DEFAULT_REASONING,
-        background: Optional[bool] = None,
-        max_output_tokens: int = 65536,
-        cast_text: str = "",
-    ) -> Dict[str, Any]:
-        """
-        原作テキストからペルソナを抽出
-
-        Args:
-            source_text: 原作の全文
-            character_name: 抽出対象のキャラクター名
-            output_lang: 出力言語
-            model: 使用モデル
-            reasoning_effort: minimal/low/medium/high/xhigh
-            background: バックグラウンドモード。None=自動（Pro/SOLティアは自動ON）
-            max_output_tokens: 生成上限（推論モデルは reasoning トークンも含む）
-            cast_text: 人物表YAML（名前でなく記述で人物を指す作品用。空なら無し）
-
-        Returns:
-            抽出されたペルソナYAML（dict形式）
-        """
-        system_prompt = build_extraction_prompt(output_lang)
-
-        user_prompt = f"""## SOURCE TEXT (COMPLETE)
+def build_user_prompt(source_text: str, character_name: str, output_lang: str,
+                      cast_text: str = "") -> str:
+    return f"""## SOURCE TEXT (COMPLETE)
 
 {source_text}
 
@@ -732,133 +456,35 @@ REMEMBER:
 
 Output ONLY valid YAML."""
 
-        is_reasoning = _is_reasoning_model(model)
-        is_pro = _is_pro_tier_model(model)
 
-        # background の決定:
-        #   明示指定があればそれを尊重。None の場合は Pro/SOL ティアで自動ON。
-        use_background = background if background is not None else is_pro
+# =============================================================================
+# LIBRARY
+# =============================================================================
 
-        # SDK 呼び出しパラメータ
-        create_params: Dict[str, Any] = {
-            "model": model,
-            "input": [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt},
-            ],
-            "max_output_tokens": max_output_tokens,
-        }
+@dataclass
+class PersonaResult:
+    character: str
+    yaml_text: str
+    valid: bool
+    issues: List[str] = field(default_factory=list)
+    llm: Optional[LLMResult] = None
 
-        # 推論モデルには reasoning effort を付与
-        if is_reasoning:
-            create_params["reasoning"] = {"effort": reasoning_effort}
 
-        # background は store 必須（後から retrieve するため）
-        if use_background:
-            create_params["background"] = True
-            create_params["store"] = True
-
-        print(f"🚀 Sending request to {model} (SDK / Responses API)...")
-        print(f"   Source text: {len(source_text):,} characters")
-        if is_reasoning:
-            print(f"   Reasoning effort: {reasoning_effort}")
-        else:
-            print(f"   Reasoning: (non-reasoning model — effort ignored)")
-        if is_pro:
-            print(f"   Pro/SOL tier detected: background auto-enabled")
-        if use_background:
-            print(f"   Background mode: enabled (polling)")
-        print()
-
-        start_time = time.time()
-
-        response = self.client.responses.create(**create_params)
-
-        # background の場合はポーリングして完了を待つ
-        if use_background:
-            print(f"   Background mode: status={getattr(response, 'status', '?')}, "
-                  f"id={getattr(response, 'id', '?')}")
-            response = self._poll_background(response, max_wait=self.timeout)
-
-        elapsed = time.time() - start_time
-        print(f"⏱️  Response received in {elapsed:.1f}s")
-
-        status = getattr(response, "status", None)
-        print(f"   DEBUG: status = {status}")
-        print(f"   DEBUG: id = {getattr(response, 'id', None)}")
-
-        # 異常ステータスの明示ハンドリング
-        if status == "failed":
-            err = getattr(response, "error", None)
-            raise RuntimeError(f"Response failed: {err}")
-        if status == "incomplete":
-            details = getattr(response, "incomplete_details", None)
-            raise RuntimeError(
-                f"Response incomplete: {details}. "
-                f"max_output_tokens({max_output_tokens}) を増やすか reasoning effort を下げてください。"
-            )
-
-        # テキスト抽出 → YAML クリーンアップ
-        yaml_text = self._extract_output_text(response)
-        yaml_text = self._clean_yaml(yaml_text)
-
-        return {
-            "yaml_text": yaml_text,
-            "model": model,
-            "reasoning_effort": reasoning_effort if is_reasoning else None,
-            "elapsed_seconds": elapsed,
-            "input_characters": len(source_text),
-            "background": use_background,
-        }
-
-    def _poll_background(self, response: Any, max_wait: int = 1800, interval: int = 10) -> Any:
-        """バックグラウンドジョブを完了までポーリング（SDK: responses.retrieve）"""
-        terminal = {"completed", "failed", "cancelled", "incomplete", "expired"}
-        start = time.time()
-
-        status = getattr(response, "status", None)
-        while status not in terminal:
-            if time.time() - start > max_wait:
-                # タイムアウト時はキャンセルを試みる（ベストエフォート）
-                try:
-                    self.client.responses.cancel(response.id)
-                except Exception:
-                    pass
-                raise TimeoutError(f"Background job timed out after {max_wait}s")
-
-            print(f"   ⏳ Still processing... ({int(time.time() - start)}s, status={status})")
-            time.sleep(interval)
-            response = self.client.responses.retrieve(response.id)
-            status = getattr(response, "status", None)
-
-        return response
-
-    def _extract_output_text(self, response: Any) -> str:
-        """レスポンスからテキスト抽出（SDK の output_text 便宜プロパティ優先）"""
-        # SDK は output_text で全 output_text を連結済み
-        text = getattr(response, "output_text", None)
-        if text:
-            return text.strip()
-
-        # フォールバック: output を手動走査
-        parts: List[str] = []
-        for item in (getattr(response, "output", None) or []):
-            for content in (getattr(item, "content", None) or []):
-                if getattr(content, "type", None) == "output_text":
-                    parts.append(getattr(content, "text", "") or "")
-        return "".join(parts).strip()
-
-    def _clean_yaml(self, text: str) -> str:
-        """YAMLをクリーンアップ"""
-        # コードブロック除去
-        if text.startswith("```yaml"):
-            text = text[7:]
-        if text.startswith("```"):
-            text = text[3:]
-        if text.endswith("```"):
-            text = text[:-3]
-
-        return text.strip()
+def extract_persona(source_text: str, character_name: str, *, llm: LLM,
+                    model: str = DEFAULT_MODEL, effort: Optional[str] = DEFAULT_EFFORT,
+                    output_lang: str = "en", cast_text: str = "",
+                    max_output_tokens: int = 65536, background: Optional[bool] = None,
+                    progress: Optional[Progress] = None) -> PersonaResult:
+    """原作全文から1キャラクターのペルソナ YAML v3.3 を抽出して検証する"""
+    report = resolve_progress(progress)
+    report(f"🎭 Extracting persona: {character_name} ({len(source_text):,} chars)")
+    result = llm.complete(build_extraction_prompt(output_lang),
+                          build_user_prompt(source_text, character_name, output_lang, cast_text),
+                          model=model, effort=effort, max_output_tokens=max_output_tokens,
+                          background=background)
+    yaml_text = clean_yaml_output(result.text, progress=report)
+    valid, issues = validate_v33_persona(yaml_text)
+    return PersonaResult(character_name, yaml_text, valid, issues, result)
 
 
 # =============================================================================
@@ -977,44 +603,16 @@ def save_persona(yaml_text: str, character_name: str, output_dir: str = "persona
     return filepath
 
 
-def main():
+
+# =============================================================================
+# CLI
+# =============================================================================
+
+def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Persona Extractor v2.0 - GPT-5.2+ / 5.6 SOL (Pro) ready (v3.3 schema)",
+        description="Persona Extractor v2.1 — extract persona YAML v3.3 from source text",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
-  # Single character extraction
-  python persona_extractor_v2.py \\
-    --source "ローミオーとヂューリエット.txt" \\
-    --character "ヂューリエット" \\
-    --lang ja
-
-  # GPT-5.6 SOL (Pro相当) + max — background は自動有効化
-  #   既定が gpt-5.6-sol + max なので --model/--reasoning は省略可
-  python persona_extractor_v2.py \\
-    --source "rezero_vol1.pdf" \\
-    --character "レム" \\
-    --lang en
-
-  # effort を明示（none/low/medium/high/xhigh/max）
-  python persona_extractor_v2.py \\
-    --source "rezero_vol1.pdf" \\
-    --character "レム" \\
-    --model gpt-5.6-sol \\
-    --reasoning max \\
-    --lang en
-
-  # Multiple characters
-  python persona_extractor_v2.py \\
-    --source "steins_gate.txt" \\
-    --characters "牧瀬紅莉栖,岡部倫太郎" \\
-    --lang en
-
-  # List supported languages
-  python persona_extractor_v2.py --list-languages
-        """
     )
-
     parser.add_argument("--source", "-s",
                         help="Source file or folder (txt, md, pdf, epub). "
                              "Folders are loaded in natural order (ep2 < ep10)")
@@ -1023,122 +621,59 @@ Examples:
                              "characters by description instead of name")
     parser.add_argument("--character", "-c", help="Character name to extract")
     parser.add_argument("--characters", help="Comma-separated list of character names")
-    parser.add_argument("--lang", "-l", default="en",
-                        choices=list(SUPPORTED_LANGUAGES.keys()),
+    parser.add_argument("--lang", "-l", default="en", choices=list(SUPPORTED_LANGUAGES.keys()),
                         help="Output language for descriptions (default: en)")
     parser.add_argument("--model", "-m", default=DEFAULT_MODEL,
                         help=f"Model to use (default: {DEFAULT_MODEL})")
-    parser.add_argument("--reasoning", "-r", default=DEFAULT_REASONING,
-                        choices=REASONING_EFFORTS,
-                        help=f"Reasoning effort (default: {DEFAULT_REASONING}). "
-                             f"max ≈ 旧GPT PRO相当の最重量処理")
+    parser.add_argument("--effort", "--reasoning", "-r", dest="effort", default=DEFAULT_EFFORT,
+                        choices=EFFORTS, help=f"Reasoning effort (default: {DEFAULT_EFFORT})")
     parser.add_argument("--background", "-b", action="store_true", default=None,
-                        help="Force background mode (Pro/SOL tiers auto-enable it anyway)")
-    parser.add_argument("--no-background", dest="background", action="store_false",
-                        help="Disable background even for Pro/SOL (may fail on Pro tiers)")
-    parser.add_argument("--max-output-tokens", type=int, default=65536,
-                        help="Max output tokens incl. reasoning (default: 65536)")
-    parser.add_argument("--output-dir", "-o", default="personas",
-                        help="Output directory (default: personas)")
-    parser.add_argument("--print-only", action="store_true",
-                        help="Print YAML without saving")
-    parser.add_argument("--list-languages", action="store_true",
-                        help="List supported output languages")
-
+                        help="Force background mode (registry decides by default)")
+    parser.add_argument("--no-background", dest="background", action="store_false")
+    parser.add_argument("--max-output-tokens", type=int, default=65536)
+    parser.add_argument("--output-dir", "-o", default="personas")
+    parser.add_argument("--print-only", action="store_true", help="Print YAML without saving")
+    parser.add_argument("--list-languages", action="store_true")
     args = parser.parse_args()
 
-    # 言語一覧表示
     if args.list_languages:
-        print("Supported output languages:")
-        print("-" * 40)
         for code, name in SUPPORTED_LANGUAGES.items():
             print(f"  {code:4} : {name}")
-        return
-
-    # 引数チェック
+        return 0
     if not args.source:
         parser.error("--source is required")
-
-    if not args.character and not args.characters:
+    characters = ([args.character] if args.character else []) + \
+        [c.strip() for c in (args.characters or "").split(",") if c.strip()]
+    if not characters:
         parser.error("--character or --characters is required")
 
-    # キャラクターリスト
-    characters = []
-    if args.character:
-        characters.append(args.character)
-    if args.characters:
-        characters.extend([c.strip() for c in args.characters.split(",")])
-
-    # ソースファイル読み込み
-    print(f"📖 Loading source file: {args.source}")
-    if Path(args.source).is_dir():
-        source_text, manifest = load_source_corpus(args.source)
-        print(f"   Loaded {len(manifest)} file(s), {len(source_text):,} characters")
-    else:
-        source_text = load_source_file(args.source)
-        print(f"   Loaded {len(source_text):,} characters")
-    cast_text = ""
-    if args.cast:
-        cast_text = Path(args.cast).read_text(encoding="utf-8")
+    print(f"📖 Loading source: {args.source}")
+    source_text, manifest = load_source_corpus(args.source)
+    print(f"   Loaded {len(manifest)} file(s), {len(source_text):,} characters")
+    cast_text = Path(args.cast).read_text(encoding="utf-8") if args.cast else ""
+    if cast_text:
         print(f"   Cast sheet: {args.cast} ({len(cast_text):,} chars)")
-    print()
 
-    # クライアント初期化
-    client = OpenAIResponsesClient()
-
-    # 各キャラクターを抽出
+    llm = LLM(Keys.from_env(), progress=print_progress)
     for character in characters:
-        print(f"{'='*60}")
-        print(f"🎭 Extracting persona for: {character}")
-        print(f"{'='*60}")
-
-        result = client.extract_persona(
-            source_text=source_text,
-            character_name=character,
-            output_lang=args.lang,
-            model=args.model,
-            reasoning_effort=args.reasoning,
-            background=args.background,
-            max_output_tokens=args.max_output_tokens,
-            cast_text=cast_text,
-        )
-
-        yaml_text = result["yaml_text"]
-
-        # v3.2 validation (always run)
-        is_valid, issues = validate_v33_persona(yaml_text)
-        if not is_valid:
-            print("⚠️  v3.3 Schema Validation Issues:")
-            for issue in issues:
-                print(f"   - {issue}")
-            print()
-        else:
+        print(f"\n{'=' * 60}")
+        result = extract_persona(source_text, character, llm=llm, model=args.model,
+                                 effort=args.effort, output_lang=args.lang, cast_text=cast_text,
+                                 max_output_tokens=args.max_output_tokens,
+                                 background=args.background, progress=print_progress)
+        if result.valid:
             print("✅ v3.3 Schema Validation: PASSED")
-
-        print()
-        print(f"📊 Extraction complete!")
-        print(f"   Model: {result['model']}")
-        print(f"   Reasoning: {result['reasoning_effort']}")
-        print(f"   Background: {result['background']}")
-        print(f"   Time: {result['elapsed_seconds']:.1f}s")
-        print()
+        else:
+            print("⚠️  v3.3 Schema Validation Issues:")
+            for issue in result.issues:
+                print(f"   - {issue}")
 
         if args.print_only:
-            print("=" * 60)
-            print("[EXTRACTED PERSONA YAML]")
-            print("=" * 60)
-            print(yaml_text)
+            print(result.yaml_text)
         else:
-            filepath = save_persona(yaml_text, character, args.output_dir)
-            print(f"✅ Saved to: {filepath}")
-            print()
-            print("=" * 60)
-            print("[EXTRACTED PERSONA YAML]")
-            print("=" * 60)
-            print(yaml_text)
-
-        print()
+            print(f"✅ Saved to: {save_persona(result.yaml_text, character, args.output_dir)}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

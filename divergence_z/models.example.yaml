@@ -1,0 +1,29 @@
+# Divergence-Z モデル登録表（ユーザー定義）
+# ~/.divergence_z/models.yaml にコピーするか、環境変数 DZ_MODELS でパスを指定する。
+# 組み込み（core/models.py の BUILTIN）と同じ id は、ここの値で上書きされる。
+#
+# context_window / max_output はトークン数。UI はこれを使って
+# 「この作品をこのモデルで処理できるか」を実行前に判定する。
+# price_in / price_out は USD / 1M tokens（費用見積もり用。不明なら省略）。
+
+models:
+  - id: gpt-5.6-sol
+    provider: openai
+    label: GPT-5.6 SOL
+    context_window: null      # ← 契約しているプランの値を入れる
+    max_output: null
+    reasoning: effort         # openai: effort / none
+    efforts: [none, low, medium, high, xhigh, max]
+    default_effort: max
+    background: true          # 同期呼び出し不可のティアは true
+
+  # 例: 別の OpenAI 系モデルを追加する
+  # - id: your-astra-model-id
+  #   provider: openai
+  #   label: Astra
+  #   context_window: 1000000
+  #   max_output: 128000
+  #   reasoning: effort
+  #   efforts: [low, medium, high, xhigh, max]
+  #   default_effort: high
+  #   background: true

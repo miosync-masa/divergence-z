@@ -38,13 +38,7 @@ dev = [
 ]
 
 [project.scripts]
-z-axis-translate = "divergence_z.z_axis_translate:main"
 persona-generator = "divergence_z.persona_generator:main"
-iap-evaluator = "divergence_z.iap_evaluator:main"
-zap-evaluator = "divergence_z.zap_evaluator:main"
-yaml-generator = "divergence_z.yaml_generator:main"
-yaml-formatter = "divergence_z.yaml_formatter:main"
-z-axis-reverse = "divergence_z.z_axis_reverse:main"
 
 [project.urls]
 Homepage = "https://github.com/miosync/divergence-z"
@@ -55,7 +49,7 @@ where = ["."]
 include = ["divergence_z*"]
 
 [tool.setuptools.package-data]
-divergence_z = ["personas/*.yaml", "requests/*.yaml", "scripts/*.txt"]
+divergence_z = ["personas/*.yaml", "episodes/*.yaml", "casts/*.yaml", "scripts/*.txt"]
 
 [tool.black]
 line-length = 100

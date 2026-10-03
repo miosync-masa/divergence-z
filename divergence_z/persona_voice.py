@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Persona Voice Mode v1.3
+Persona Voice Mode v1.4
 Spirit Arrival Engine — 「意志を声に変換する」
 
 Opus 4.5 Extended Thinking を使用して、
 任意の入力をキャラクターの声（Spirit）に変換する。
+
+v1.4 Changes:
+- ライブラリ化: transform_voice() / respond_voice() は LLM（core.llm, BYOK）を受け取る
+- 既定モデルを claude-opus-5-5 に。--budget（thinking トークン数）→ --effort（low〜max）
+- --show-thinking は思考の要約を表示（新しいモデルは思考本文を返さないため）
+- PHASE 1→2 のクールダウン既定を 0 秒に（--cooldown 60 で従来どおり）
 
 v1.3 Changes:
 - Multi-language output support (--output-lang option)
@@ -71,21 +77,23 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import yaml
-from anthropic import Anthropic
-from dotenv import load_dotenv
 
-load_dotenv()
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from divergence_z.core import EFFORTS, LLM, Keys, iter_episodes, print_progress
 
 # =============================================================================
 # Configuration
 # =============================================================================
 
-DEFAULT_MODEL = "claude-opus-4-5-20251101"
-DEFAULT_BUDGET_TOKENS = 10000  # Extended Thinking の budget
+DEFAULT_MODEL = os.getenv("PERSONA_VOICE_MODEL", "claude-opus-5-5")
+DEFAULT_EFFORT = "high"
 
 # ─────────────────────────────────────────────
 # Multi-language output support (v1.3)
@@ -443,7 +451,7 @@ def format_episode_context(episode_data: Dict[str, Any]) -> str:
     persona_voiceではExtended Thinkingが自分で必要なものを拾うため、
     中詳細（サマリー + z_relevance + canonical_quotes）を全エピソード分渡す。
     """
-    episodes = episode_data.get("episodes", [])
+    episodes = iter_episodes(episode_data)
     if not episodes:
         return ""
     
@@ -463,21 +471,26 @@ def format_episode_context(episode_data: Dict[str, Any]) -> str:
         if z_rel:
             lines.append(f"  → {z_rel}")
         
-        # verified canonical quotes のみ
-        quotes = ep.get("canonical_quotes", [])
-        for q in quotes:
-            if q.get("verified"):
-                lines.append(f'  📌 "{q.get("quote", "")}"')
+        # 検証済みの台詞のみ（旧形式は verified: true、抽出版は原文照合済みなのでフラグ無し）
+        for q in ep.get("canonical_quotes") or []:
+            if not isinstance(q, dict):
+                continue
+            quote = str(q.get("quote", ""))
+            if q.get("verified", True) and not quote.startswith("[unverified]"):
+                lines.append(f'  📌 "{quote}"')
         
         lines.append("")
     
     # cross_episode_arcs のサマリー
-    arcs = episode_data.get("cross_episode_arcs", [])
+    arcs = episode_data.get("cross_episode_arcs") or episode_data.get("arcs") or []
     if arcs:
         lines.append("### 成長の軌跡（Cross-Episode Arcs）")
         for arc in arcs:
-            arc_title = arc.get("arc_title", "")
-            arc_summary = safe_first_line(arc.get("arc_summary", ""))
+            if not isinstance(arc, dict):
+                continue
+            arc_title = arc.get("arc_title") or arc.get("title", "")
+            arc_summary = safe_first_line(arc.get("arc_summary") or arc.get("character_growth")
+                                          or arc.get("theme", ""))
             lines.append(f"  - {arc_title}: {arc_summary}")
         lines.append("")
     
@@ -618,7 +631,7 @@ def build_system_prompt(
 
 
 def transform_voice(
-    client: Anthropic,
+    llm: LLM,
     persona_data: Dict[str, Any],
     input_text: str,
     context: str,
@@ -626,7 +639,7 @@ def transform_voice(
     target_persona_data: Optional[Dict[str, Any]] = None,
     episode_data: Optional[Dict[str, Any]] = None,
     model: str = DEFAULT_MODEL,
-    budget_tokens: int = DEFAULT_BUDGET_TOKENS,
+    effort: Optional[str] = DEFAULT_EFFORT,
     show_thinking: bool = False,
     output_lang: Optional[str] = None,
 ) -> Dict[str, Any]:
@@ -634,7 +647,7 @@ def transform_voice(
     入力テキストをキャラクターの声に変換する
     
     Args:
-        client: Anthropic client
+        llm: core.LLM（BYOK のキーを保持）
         persona_data: キャラクターのペルソナYAML
         input_text: 変換する入力テキスト
         context: 背景情報
@@ -642,7 +655,7 @@ def transform_voice(
         target_persona_data: 相手キャラクターのペルソナYAML（optional）
         episode_data: キャラクターのエピソード記憶YAML（optional）
         model: 使用するモデル
-        budget_tokens: Extended Thinking の budget
+        effort: 推論の強さ（low/medium/high/xhigh/max）
         show_thinking: 思考過程を表示するか
         output_lang: 出力言語コード（例: en, fr）。Noneならソース言語と同一
     
@@ -655,7 +668,7 @@ def transform_voice(
     
     # Episode context（optional）
     episode_context = ""
-    if episode_data and episode_data.get("episodes"):
+    if episode_data and iter_episodes(episode_data):
         episode_context = format_episode_context(episode_data)
     
     system_prompt = build_system_prompt(
@@ -684,29 +697,10 @@ def transform_voice(
 Extended Thinking で各STEPを実行し、最終的な変換結果を出力してください。
 """
     
-    # API呼び出し（Extended Thinking）
-    response = client.messages.create(
-        model=model,
-        max_tokens=16000,
-        thinking={
-            "type": "enabled",
-            "budget_tokens": budget_tokens,
-        },
-        system=system_prompt,
-        messages=[
-            {"role": "user", "content": user_message}
-        ],
-    )
-    
-    # レスポンス解析
-    thinking_content = ""
-    text_content = ""
-    
-    for block in response.content:
-        if block.type == "thinking":
-            thinking_content = block.thinking
-        elif block.type == "text":
-            text_content = block.text
+    response = llm.complete(system_prompt, user_message, model=model, effort=effort,
+                            max_output_tokens=32000, show_thinking=show_thinking)
+    thinking_content = response.thinking
+    text_content = response.text
     
     result = {
         "input": input_text,
@@ -714,10 +708,10 @@ Extended Thinking で各STEPを実行し、最終的な変換結果を出力し�
         "output": text_content,
         "thinking": thinking_content if show_thinking else "[--show-thinking で表示]",
         "model": model,
-        "budget_tokens": budget_tokens,
+        "effort": response.effort,
         "usage": {
-            "input_tokens": response.usage.input_tokens,
-            "output_tokens": response.usage.output_tokens,
+            "input_tokens": response.usage.get("input_tokens", 0),
+            "output_tokens": response.usage.get("output_tokens", 0),
         }
     }
     
@@ -725,7 +719,7 @@ Extended Thinking で各STEPを実行し、最終的な変換結果を出力し�
 
 
 def respond_voice(
-    client: Anthropic,
+    llm: LLM,
     responder_data: Dict[str, Any],
     speaker_data: Dict[str, Any],
     speaker_utterance: str,
@@ -733,7 +727,7 @@ def respond_voice(
     response_steps_template: str,
     responder_episode_data: Optional[Dict[str, Any]] = None,
     model: str = DEFAULT_MODEL,
-    budget_tokens: int = DEFAULT_BUDGET_TOKENS,
+    effort: Optional[str] = DEFAULT_EFFORT,
     show_thinking: bool = False,
     output_lang: Optional[str] = None,
 ) -> Dict[str, Any]:
@@ -741,7 +735,7 @@ def respond_voice(
     PHASE 2: 相手の発話を受けて、キャラクターとして応答を生成する
     
     Args:
-        client: Anthropic client
+        llm: core.LLM（BYOK のキーを保持）
         responder_data: 応答するキャラクターのペルソナYAML
         speaker_data: PHASE 1で発話したキャラクターのペルソナYAML
         speaker_utterance: PHASE 1の出力（相手が実際に言った台詞）
@@ -749,7 +743,7 @@ def respond_voice(
         response_steps_template: R-STEPテンプレート
         responder_episode_data: 応答キャラクターのEpisode Memory（optional）
         model: 使用するモデル
-        budget_tokens: Extended Thinking の budget
+        effort: 推論の強さ（low/medium/high/xhigh/max）
         show_thinking: 思考過程を表示するか
         output_lang: 出力言語コード（例: en, fr）。Noneならソース言語と同一
     
@@ -764,7 +758,7 @@ def respond_voice(
     
     # Episode context（optional）
     episode_context = ""
-    if responder_episode_data and responder_episode_data.get("episodes"):
+    if responder_episode_data and iter_episodes(responder_episode_data):
         episode_context = format_episode_context(responder_episode_data)
     
     # 応答者のペルソナ + 話者のペルソナ（相手を知るため）
@@ -838,29 +832,10 @@ def respond_voice(
 Extended Thinking で各R-STEPを実行し、最終的な応答結果を出力してください。
 """
     
-    # API呼び出し（Extended Thinking）
-    response = client.messages.create(
-        model=model,
-        max_tokens=16000,
-        thinking={
-            "type": "enabled",
-            "budget_tokens": budget_tokens,
-        },
-        system=system_prompt,
-        messages=[
-            {"role": "user", "content": user_message}
-        ],
-    )
-    
-    # レスポンス解析
-    thinking_content = ""
-    text_content = ""
-    
-    for block in response.content:
-        if block.type == "thinking":
-            thinking_content = block.thinking
-        elif block.type == "text":
-            text_content = block.text
+    response = llm.complete(system_prompt, user_message, model=model, effort=effort,
+                            max_output_tokens=32000, show_thinking=show_thinking)
+    thinking_content = response.thinking
+    text_content = response.text
     
     result = {
         "speaker": speaker_name,
@@ -869,10 +844,10 @@ Extended Thinking で各R-STEPを実行し、最終的な応答結果を出力�
         "output": text_content,
         "thinking": thinking_content if show_thinking else "[--show-thinking で表示]",
         "model": model,
-        "budget_tokens": budget_tokens,
+        "effort": response.effort,
         "usage": {
-            "input_tokens": response.usage.input_tokens,
-            "output_tokens": response.usage.output_tokens,
+            "input_tokens": response.usage.get("input_tokens", 0),
+            "output_tokens": response.usage.get("output_tokens", 0),
         }
     }
     
@@ -935,14 +910,16 @@ Examples:
                         help="相手キャラクターのEpisode Memory YAML（optional、--dual時に使用）")
     parser.add_argument("--dual", "-d", action="store_true",
                         help="デュアルボイスモード: PHASE 1(変換) → PHASE 2(応答)")
-    parser.add_argument("--cooldown", type=int, default=60,
-                        help="PHASE 1→2間のクールダウン秒数（default: 60）")
+    parser.add_argument("--cooldown", type=int, default=0,
+                        help="PHASE 1→2間のクールダウン秒数（default: 0）")
     parser.add_argument("--thinking-steps", "-s",
                         help="カスタム思考STEPのテキストファイル")
     parser.add_argument("--model", "-m", default=DEFAULT_MODEL,
                         help=f"使用するモデル（default: {DEFAULT_MODEL}）")
-    parser.add_argument("--budget", "-b", type=int, default=DEFAULT_BUDGET_TOKENS,
-                        help=f"Extended Thinking の budget tokens（default: {DEFAULT_BUDGET_TOKENS}）")
+    parser.add_argument("--effort", default=DEFAULT_EFFORT, choices=EFFORTS,
+                        help=f"推論の強さ（default: {DEFAULT_EFFORT}）")
+    parser.add_argument("--budget", "-b", type=int, default=0,
+                        help="(deprecated) any value > 0 is treated as --effort high")
     parser.add_argument("--show-thinking", action="store_true",
                         help="Extended Thinking の思考過程を表示")
     parser.add_argument("--output-lang", "-l",
@@ -978,7 +955,7 @@ Examples:
     if args.episode:
         print(f"📖 Loading episode memory: {args.episode}")
         episode_data = load_yaml_file(args.episode)
-        ep_count = len(episode_data.get("episodes", []))
+        ep_count = len(iter_episodes(episode_data))
         print(f"   Episodes: {ep_count}")
     
     # ターゲットEpisode Memory 読み込み（optional、--dual時に使用）
@@ -986,7 +963,7 @@ Examples:
     if args.target_episode:
         print(f"📖 Loading target episode memory: {args.target_episode}")
         target_episode_data = load_yaml_file(args.target_episode)
-        ep_count = len(target_episode_data.get("episodes", []))
+        ep_count = len(iter_episodes(target_episode_data))
         print(f"   Target Episodes: {ep_count}")
     
     # --dual モードの検証
@@ -1012,16 +989,17 @@ Examples:
     print(f"   Input: 「{args.input}」")
     print(f"   Context: {args.context}")
     print(f"   Model: {args.model}")
-    print(f"   Budget: {args.budget} tokens")
+    effort = "high" if args.budget > 0 else args.effort
+    print(f"   Effort: {effort}")
     if args.output_lang:
         print(f"   Output lang: {args.output_lang}")
     print("=" * 60)
     print()
     
-    client = Anthropic(timeout=600.0)  # 10 minutes for Extended Thinking
+    llm = LLM(Keys.from_env(), progress=print_progress)
     
     result = transform_voice(
-        client=client,
+        llm=llm,
         persona_data=persona_data,
         input_text=args.input,
         context=args.context,
@@ -1029,7 +1007,7 @@ Examples:
         target_persona_data=target_persona_data,
         episode_data=episode_data,
         model=args.model,
-        budget_tokens=args.budget,
+        effort=effort,
         show_thinking=args.show_thinking,
         output_lang=args.output_lang,
     )
@@ -1091,7 +1069,7 @@ Examples:
         print()
         
         response_result = respond_voice(
-            client=client,
+            llm=llm,
             responder_data=target_persona_data,
             speaker_data=persona_data,
             speaker_utterance=utterance,
@@ -1099,7 +1077,7 @@ Examples:
             response_steps_template=DEFAULT_RESPONSE_STEPS,
             responder_episode_data=target_episode_data,
             model=args.model,
-            budget_tokens=args.budget,
+            effort=effort,
             show_thinking=args.show_thinking,
             output_lang=args.output_lang,
         )
@@ -1139,4 +1117,4 @@ Examples:
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
