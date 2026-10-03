@@ -85,29 +85,45 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - uses: actions/download-artifact@v4
         with:
           path: dist
           merge-multiple: true
 
+      # 本文 = docs/releases/<tag>.md（あれば）＋ ダウンロードと初回起動の案内
+      - name: Compose release notes
+        run: |
+          NOTES="docs/releases/${GITHUB_REF_NAME}.md"
+          {
+            if [[ -f "$NOTES" ]]; then cat "$NOTES"; else echo "## Divergence-Z ${GITHUB_REF_NAME}"; fi
+            echo
+            cat <<'MD'
+          ---
+
+          ## Downloads / ダウンロード
+
+          | | File |
+          |---|---|
+          | macOS (Apple silicon) | `Divergence-Z-*-arm64.dmg` |
+          | macOS (Intel) | `Divergence-Z-*-x64.dmg` |
+          | Windows | `Divergence-Z-Setup-*-x64.exe` |
+
+          BYOK: after launch, enter your OpenAI / Anthropic API key under «キー & モデル».
+          起動後「キー & モデル」で OpenAI / Anthropic の API キーを入れてください。
+
+          **These builds are not signed.** Mac: right-click the app → Open (or allow it in System Settings →
+          Privacy & Security). Windows: on the SmartScreen prompt choose "More info" → "Run anyway".
+          **署名なしのビルドです。** Mac は Finder でアプリを右クリック →「開く」、Windows は「詳細情報」→「実行」で起動してください。
+          MD
+          } > release_body.md
+          sed -i 's/^          //' release_body.md
+          cat release_body.md
+
+      # 下書きで作る: 本文を確認して「Publish」した時点で Zenodo が DOI を発行する
       - uses: softprops/action-gh-release@v2
         with:
+          draft: true
           files: dist/*
-          generate_release_notes: true
-          body: |
-            ## Divergence-Z ${{ github.ref_name }}
-
-            BYOK のデスクトップアプリです。起動後「キー & モデル」で OpenAI / Anthropic の API キーを入れてください。
-
-            | | ファイル |
-            |---|---|
-            | Mac（Apple シリコン） | `Divergence-Z-*-arm64.dmg` |
-            | Mac（Intel） | `Divergence-Z-*-x64.dmg` |
-            | Windows | `Divergence-Z-Setup-*-x64.exe` |
-
-            **このビルドは署名をしていません。** 初回は次のように開いてください。
-            - Mac: Finder でアプリを右クリック →「開く」（開けない場合は システム設定 → プライバシーとセキュリティ →「このまま開く」）
-            - Windows: 「Windows によって PC が保護されました」と出たら「詳細情報」→「実行」
-
-            These builds are unsigned. Mac: right-click the app → Open (or allow it in System Settings →
-            Privacy & Security). Windows: on the SmartScreen prompt choose "More info" → "Run anyway".
+          body_path: release_body.md
