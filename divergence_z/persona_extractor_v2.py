@@ -41,8 +41,9 @@ from typing import List, Optional
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from divergence_z.core import (EFFORTS, LLM, Keys, LLMResult, Progress, clean_yaml_output,
-                               load_source_corpus, print_progress, resolve_progress)
+from divergence_z.core import (EFFORTS, LLM, Keys, LLMResult, Progress, appears_in,
+                               clean_yaml_output, load_source_corpus, normalize_for_match,
+                               print_progress, resolve_progress)
 
 # 既定モデル。環境変数 PERSONA_EXTRACTOR_MODEL / PERSONA_EXTRACTOR_REASONING で上書き
 DEFAULT_MODEL = os.getenv("PERSONA_EXTRACTOR_MODEL", "gpt-5.6-sol")
@@ -468,6 +469,21 @@ class PersonaResult:
     valid: bool
     issues: List[str] = field(default_factory=list)
     llm: Optional[LLMResult] = None
+    lines_total: int = 0                                     # example_lines の数
+    lines_missing: List[str] = field(default_factory=list)   # 原文に見つからなかった例文
+
+
+def verify_example_lines(yaml_text: str, source_text: str) -> tuple:
+    """example_lines が原文に実在するか（地の文で途切れた台詞をつないだものも可）"""
+    import yaml as yaml_lib
+    try:
+        data = yaml_lib.safe_load(yaml_text) or {}
+    except yaml_lib.YAMLError:
+        return 0, []
+    lines = [str(x["line"]) for x in data.get("example_lines") or []
+             if isinstance(x, dict) and x.get("line")]
+    corpus = normalize_for_match(source_text)
+    return len(lines), [l for l in lines if not appears_in(l, corpus)]
 
 
 def extract_persona(source_text: str, character_name: str, *, llm: LLM,
@@ -484,7 +500,8 @@ def extract_persona(source_text: str, character_name: str, *, llm: LLM,
                           background=background)
     yaml_text = clean_yaml_output(result.text, progress=report)
     valid, issues = validate_v33_persona(yaml_text)
-    return PersonaResult(character_name, yaml_text, valid, issues, result)
+    total, missing = verify_example_lines(yaml_text, source_text)
+    return PersonaResult(character_name, yaml_text, valid, issues, result, total, missing)
 
 
 # =============================================================================
@@ -667,6 +684,12 @@ def main() -> int:
             print("⚠️  v3.3 Schema Validation Issues:")
             for issue in result.issues:
                 print(f"   - {issue}")
+
+        if result.lines_total:
+            print(f"🔎 example_lines: {result.lines_total - len(result.lines_missing)}/"
+                  f"{result.lines_total} found in source")
+            for line in result.lines_missing:
+                print(f"   ✗ {line[:80]}")
 
         if args.print_only:
             print(result.yaml_text)

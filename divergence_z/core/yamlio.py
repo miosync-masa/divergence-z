@@ -130,6 +130,36 @@ def normalize_for_match(text: str) -> str:
     return re.sub(r"\s+", "", unicodedata.normalize("NFKC", text))
 
 
-def appears_in(quote: str, normalized_corpus: str) -> bool:
+_SENTENCE_END = re.compile(r"(?<=[。！？!?…])")
+
+
+def appears_in(quote: str, normalized_corpus: str, window: int = 300) -> bool:
+    """
+    台詞が原文に実在するか。完全一致に加え、地の文（「と彼は云った」）で途切れた台詞を
+    1行につないだものも実在とみなす: 文ごとに区切った断片がすべて、原文の近い範囲
+    （前の断片の終わりから window 字以内）に順番どおり現れれば一致。
+    """
     needle = normalize_for_match(quote).strip(QUOTE_STRIP)
-    return not needle or needle in normalized_corpus
+    if not needle or needle in normalized_corpus:
+        return True
+    # 断片の末尾の句点類は、原文では「」と、」で切れていることが多いので照合から外す
+    pieces = [p.strip(QUOTE_STRIP).rstrip("。！？!?…、") for p in _SENTENCE_END.split(needle)]
+    pieces = [p for p in pieces if len(p) >= 2]
+    # 感嘆詞だけの短い台詞（「ああ！おお！」など）はどこにでも現れるので、完全一致のみ
+    if len(pieces) < 2 or sum(len(p) for p in pieces) < 8:
+        return False
+    start = 0
+    while True:
+        first = normalized_corpus.find(pieces[0], start)
+        if first < 0:
+            return False
+        pos, ok = first + len(pieces[0]), True
+        for piece in pieces[1:]:
+            nxt = normalized_corpus.find(piece, pos)
+            if nxt < 0 or nxt - pos > window:
+                ok = False
+                break
+            pos = nxt + len(piece)
+        if ok:
+            return True
+        start = first + 1

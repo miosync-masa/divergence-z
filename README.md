@@ -180,6 +180,10 @@ $PY chapter_translator.py -s ../path/to/STARGAZER/ --cast casts/STARGAZER_cast.y
 $PY chapter_translator.py ... --dry-run   # API を呼ばずにトークン数・費用だけ表示
 ```
 
+長い章（既定 6,000 字超、`--max-section-chars` で変更）は、まず LLM が場面の切れ目でセクションに分ける計画を立て、
+セクションごとに1回ずつ訳します。各セクションには章の計画・直前の訳文・そのセクションの登場人物の資料だけを渡します。
+途中で止まっても、再実行すれば終わったセクションの続きから再開します。
+
 名前で呼ばれる作品なら `--cast` は省略できます。`--source` には単一ファイル（txt / md / pdf / epub）も指定できます。
 
 ### 原作テキストが無い場合（Web 検索で生成）
@@ -484,6 +488,10 @@ $PY chapter_translator.py -s ../path/to/STARGAZER/ --cast casts/STARGAZER_cast.y
   -t en --chapters 0-2          # chapters 0–2; omit for all
 $PY chapter_translator.py ... --dry-run   # tokens and cost only, no API calls
 ```
+
+Long chapters (over 6,000 characters by default, `--max-section-chars`) are first planned by the model into
+scene-level sections, then translated one section per call. Each call gets the chapter plan, the translation
+just before it, and the bible of only the characters in that section. A stopped run resumes at the next section.
 
 `--cast` can be omitted for works where characters are named. `--source` also accepts a single file (txt / md / pdf / epub).
 
