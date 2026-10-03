@@ -252,8 +252,8 @@ into {lang} as a single coherent book. Long chapters are translated one SECTION 
 (a scene or a run of related scenes); you translate exactly the section you are given.
 
 ## WHAT YOU ARE GIVEN
-- CAST SHEET: who is who, and how the text refers to each person (often by description or pronoun,
-  not by name), plus who narrates the chapter.
+- CAST SHEET: the characters in this section — how the text refers to each of them (often by
+  description or pronoun, not by name) and how to tell them apart — plus who narrates the chapter.
 - PERSONAS: for each character in this section — who they are (identity_core), how they speak in the
   original (original_speech_patterns), and recommended compensations for the target language
   (translation_compensations). emotion_states describe how their speech shifts under emotion.
@@ -403,9 +403,28 @@ class Book:
         return list(dict.fromkeys(list(self.persona_paths) + list(self.episode_paths)))
 
     def present_in(self, idx: int) -> List[str]:
-        """その章に登場する人物（cast に appears_in が無ければ全員）"""
+        """その章に登場し、persona / episode がある人物"""
         name = self.files[idx].name
         return [l for l in self.characters if not self.appears.get(l) or name in self.appears[l]]
+
+    @property
+    def cast_labels(self) -> List[str]:
+        return [c["label"] for c in self.cast.get("characters") or [] if c.get("label")]
+
+    def cast_present_in(self, idx: int) -> List[str]:
+        """人物表でその章に登場する人物（資料の有無は問わない）。人物表が無ければ資料のある全員"""
+        if not self.cast_labels:
+            return self.characters
+        name = self.files[idx].name
+        return [l for l in self.cast_labels if not self.appears.get(l) or name in self.appears[l]]
+
+    def cast_subset(self, labels: List[str]) -> str:
+        """人物表のうち labels の人物のエントリだけを YAML で返す（語りは別に渡す）"""
+        if not self.cast:
+            return ""
+        wanted = set(labels)
+        chars = [c for c in self.cast.get("characters") or [] if c.get("label") in wanted]
+        return dump_yaml({"work": self.cast.get("work", ""), "characters": chars}) if chars else ""
 
 
 def open_book(source: str, cast_path: str = "", persona_dir: str = "personas",
@@ -530,7 +549,7 @@ def plan_chapter(book: Book, idx: int, segments: List[Dict[str, str]], *, llm: O
     長い章は LLM が場面の切れ目で分け、登場人物・要約・注意点を付ける。失敗時は字数で分割。
     """
     report = resolve_progress(progress)
-    present = book.present_in(idx)
+    present = book.cast_present_in(idx)
     total = _chars(segments, 0, len(segments) - 1)
     if total <= max_section_chars or llm is None:
         if total <= max_section_chars:
@@ -538,7 +557,7 @@ def plan_chapter(book: Book, idx: int, segments: List[Dict[str, str]], *, llm: O
         spans = split_by_chars(segments, 0, len(segments) - 1, max_section_chars)
         return [Section(f"S{i}", a, b, f"part {i}", present) for i, (a, b) in enumerate(spans, 1)], None
 
-    labels = [c.get("label") for c in book.cast.get("characters") or [] if c.get("label")]
+    labels = book.cast_labels
     roster = "\n".join(f"- {c['label']}: {c.get('role', '')}" for c in book.cast.get("characters") or []
                        if c.get("label")) or "(no cast sheet)"
     listing = "\n".join(f'<seg id="{s["id"]}" chars="{len(s["text"])}">\n{s["text"]}\n</seg>'
@@ -578,10 +597,14 @@ def _previous_chapter_tail(book: Book, idx: int, out_dir: Path, target_lang: str
 def build_section_prompt(book: Book, idx: int, segments: List[Dict[str, str]],
                          sections: List[Section], k: int, translated: Dict[str, str],
                          out_dir: Path, target_lang: str, previous: int = 2) -> Tuple[str, str, List[str]]:
-    """セクション k の (system, user, 渡した人物) を組み立てる"""
+    """
+    セクション k の (system, user, 登場人物) を組み立てる。
+    計画が挙げた登場人物を人物表と照合し、その人物の「人物表のエントリ・ペルソナ・エピソード」
+    だけを渡す（人物表の他の人物は渡さない）。計画に人物が無ければ人物表でその章に出る人物。
+    """
     sec = sections[k]
-    chapter_present = book.present_in(idx)
-    people = [c for c in sec.characters if c in book.characters] or chapter_present
+    known = set(book.cast_labels) or set(book.characters)
+    people = [c for c in sec.characters if c in known] or book.cast_present_in(idx)
     personas = {l: book.persona_paths[l].read_text(encoding="utf-8")
                 for l in people if l in book.persona_paths}
     episodes = {
@@ -601,7 +624,8 @@ def build_section_prompt(book: Book, idx: int, segments: List[Dict[str, str]],
 
     multi = len(sections) > 1
     user = build_user_prompt(
-        book.files[idx].name, segments[sec.start:sec.end + 1], book.cast_text, personas, episodes,
+        book.files[idx].name, segments[sec.start:sec.end + 1],
+        book.cast_subset(people) if book.cast else "", personas, episodes,
         load_notes(out_dir), so_far, book.narration_by_file.get(book.files[idx].name, ""), target_lang,
         plan_text=render_plan(sections, segments, sec.id) if multi else "",
         section_label=f"{sec.id}/{len(sections)} {sec.title}" if multi else "")
@@ -621,7 +645,7 @@ def estimate_chapter(book: Book, idx: int, out_dir: Path, model: str, target_lan
     total = _chars(segments, 0, len(segments) - 1)
     spans = ([(0, len(segments) - 1)] if total <= max_section_chars
              else split_by_chars(segments, 0, len(segments) - 1, max_section_chars))
-    sections = [Section(f"S{i}", a, b, "", book.present_in(idx)) for i, (a, b) in enumerate(spans, 1)]
+    sections = [Section(f"S{i}", a, b, "", book.cast_present_in(idx)) for i, (a, b) in enumerate(spans, 1)]
     reports = []
     if len(sections) > 1:
         plan_in = PLAN_SYSTEM + "\n".join(s["text"] for s in segments)
@@ -718,8 +742,11 @@ def translate_chapter(book: Book, idx: int, *, llm: LLM, out_dir: Path,
         sec_segments = segments[sec.start:sec.end + 1]
         system, user, people = build_section_prompt(book, idx, segments, sections, k, translated,
                                                     out_dir, target_lang, previous)
+        tags = [p + ("[P" if p in book.persona_paths else "[") + ("E]" if p in book.episode_paths else "]")
+                for p in people]
         report(f"🧩 {sec.id}/{len(sections)} {sec_segments[0]['id']}–{sec_segments[-1]['id']} "
-               f"({_chars(segments, sec.start, sec.end):,} chars) {sec.title} · {', '.join(people) or '—'}")
+               f"({_chars(segments, sec.start, sec.end):,} chars) {sec.title} · "
+               f"{', '.join(t.replace('[]', '') for t in tags) or '—'}")
         for attempt in range(2):
             last = llm.complete(system, user, model=model, effort=effort,
                                 max_output_tokens=max_output_tokens)
