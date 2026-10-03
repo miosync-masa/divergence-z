@@ -9,7 +9,9 @@
     "build": "tsc --noEmit && vite build",
     "start": "electron .",
     "typecheck": "tsc --noEmit",
-    "dist": "npm run build && electron-builder --mac --publish never"
+    "dist": "npm run build && electron-builder --mac --publish never",
+    "dist:mac-x64": "npm run build && electron-builder --mac --x64 --publish never",
+    "dist:win": "npm run build && electron-builder --win --x64 --publish never"
   },
   "dependencies": {
     "@fontsource/jetbrains-mono": "^5.3.0",
@@ -39,7 +41,8 @@
     "appId": "com.miosync.divergence-z",
     "productName": "Divergence-Z",
     "directories": {
-      "output": "release"
+      "output": "release",
+      "buildResources": "assets"
     },
     "files": [
       "dist/**",
@@ -66,6 +69,22 @@
     },
     "dmg": {
       "artifactName": "Divergence-Z-${version}-${arch}.dmg"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "Divergence-Z-Setup-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false
     }
   }
 }
