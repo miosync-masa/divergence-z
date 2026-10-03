@@ -129,7 +129,13 @@ class LLM:
     def complete(self, system: str, user: str, model: str, effort: Optional[str] = None,
                  max_output_tokens: Optional[int] = None, web_search: bool = False,
                  max_searches: int = 8, background: Optional[bool] = None,
-                 show_thinking: bool = False, spec: Optional[ModelSpec] = None) -> LLMResult:
+                 show_thinking: bool = False, spec: Optional[ModelSpec] = None,
+                 history: Optional[List[Dict[str, str]]] = None,
+                 cache: bool = False) -> LLMResult:
+        """
+        history: それまでの会話 [{"role": "user"|"assistant", "content": str}, ...]（チャット用）
+        cache:   Anthropic のプロンプトキャッシュを使う（同じ長いシステム指示で何度も呼ぶとき）
+        """
         spec = spec or get_model(model)
         if effort and spec.efforts and effort not in spec.efforts:
             raise LLMError(f"{spec.id} does not support effort '{effort}' "
@@ -139,11 +145,13 @@ class LLM:
             self.cancel.check()
         if spec.provider == "anthropic":
             result = self._complete_anthropic(spec, system, user, effort, max_output_tokens,
-                                              web_search, max_searches, show_thinking)
+                                              web_search, max_searches, show_thinking,
+                                              history or [], cache)
         elif spec.provider == "openai":
             if web_search:
                 raise LLMError("web_search is supported on Anthropic models only in this build")
-            result = self._complete_openai(spec, system, user, effort, max_output_tokens, background)
+            result = self._complete_openai(spec, system, user, effort, max_output_tokens, background,
+                                           history or [])
         else:
             raise LLMError(f"Unknown provider: {spec.provider}")
         self.history.append(result)
@@ -160,12 +168,15 @@ class LLM:
     # --- OpenAI Responses API ---------------------------------------------------
 
     def _complete_openai(self, spec: ModelSpec, system: str, user: str, effort: Optional[str],
-                         max_output_tokens: Optional[int], background: Optional[bool]) -> LLMResult:
+                         max_output_tokens: Optional[int], background: Optional[bool],
+                         history: Optional[List[Dict[str, str]]] = None) -> LLMResult:
         client = self._openai_client()
         use_background = spec.background if background is None else background
+        # OpenAI は長い共通の先頭部分を自動でキャッシュする
         params: Dict[str, Any] = {
             "model": spec.id,
-            "input": [{"role": "system", "content": system}, {"role": "user", "content": user}],
+            "input": [{"role": "system", "content": system}, *(history or []),
+                      {"role": "user", "content": user}],
             "max_output_tokens": max_output_tokens or spec.max_output or 65536,
         }
         if spec.reasoning == "effort" and effort:
@@ -231,10 +242,16 @@ class LLM:
 
     def _complete_anthropic(self, spec: ModelSpec, system: str, user: str, effort: Optional[str],
                             max_output_tokens: Optional[int], web_search: bool,
-                            max_searches: int, show_thinking: bool = False) -> LLMResult:
+                            max_searches: int, show_thinking: bool = False,
+                            history: Optional[List[Dict[str, str]]] = None,
+                            cache: bool = False) -> LLMResult:
         client = self._anthropic_client()
         max_tokens = max_output_tokens or min(spec.max_output or 64000, 64000)
         params: Dict[str, Any] = {"model": spec.id, "max_tokens": max_tokens, "system": system}
+        if cache:
+            # システム指示（長いペルソナ＋エピソード）と、伸びていく会話履歴の両方をキャッシュする
+            params["system"] = [{"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}]
+            params["cache_control"] = {"type": "ephemeral"}
 
         if spec.reasoning == "adaptive":
             # 新しいモデルは思考本文を返さない（既定 omitted）。表示したい場合は要約を要求する
@@ -264,7 +281,7 @@ class LLM:
         self.progress(f"🚀 {spec.id} (Anthropic){f' / effort={effort}' if effort else ''}"
                       f"{' / web_search' if web_search else ''}")
         start = time.time()
-        messages: List[Dict[str, Any]] = [{"role": "user", "content": user}]
+        messages: List[Dict[str, Any]] = [*(history or []), {"role": "user", "content": user}]
         content: List[Any] = []
         response = None
         # web search 等の server tool は pause_turn で一時停止することがある → 続きを要求

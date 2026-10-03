@@ -156,7 +156,19 @@ CLI だけ使う場合は、デスクトップアプリの手順は不要です�
 - エピソードは、直前に作ったペルソナを参考にして作ります。作成済みの資料は「既存を作り直す」を付けない限りスキップします
 - 「Web 検索する」を外すとモデルの知識だけで作ります。台詞が実在しないものになりやすいので注意してください
 
-### 4.8 設定
+### 4.8 AIチャット
+
+左メニューの「**AIチャット**」で、ペルソナを作った人物と会話できます。
+
+- 「＋ 新しい会話」で、プロジェクト・話す相手・モデル・推論の強さ・「あなたについて」（関係性など、任意）を選んで始めます
+- システム指示は「**共通システム指示**」（全会話で共通のテンプレート）に、その人物のペルソナとエピソードを**省略せず丸ごと**差し込んだものです。右上の「共通システム指示を編集」で変更できます
+  - `{{CHARACTER}}` → 人物名、`{{PERSONA_EPISODE}}` → ペルソナとエピソードの YAML、`{{USER}}`（任意）→「あなたについて」
+  - テンプレートは `~/.divergence_z/chat_template.md` に保存されます（リポジトリには入りません）
+- システム指示が長い（数万トークン）ため、Anthropic のモデルではプロンプトキャッシュを使います。2回目以降の発言では、その部分が約1/10の料金になります
+- 会話ログはプロジェクトフォルダの `chats/` に保存され、手元の PC から出ません
+- 指示の内容によっては、モデルの安全機能に断られることがあります（`ERR::refusal`）
+
+### 4.9 設定
 
 「**設定**」タブで、プロジェクト名・原稿フォルダ・資料の説明文の言語と、**ステップごとのモデルと推論の強さ**を変えられます。
 たとえば「抽出は大きいモデル + max、試し訳は安いモデル + low」のように使い分けられます。
@@ -476,7 +488,19 @@ using web search (`persona_generator.py` → `episode_generator.py`). With sourc
 - Episodes are generated with the just-made persona as context; existing files are skipped unless "既存を作り直す" is on
 - Turning web search off relies on model knowledge alone, so quotes are more likely to be invented
 
-### 4.8 Settings
+### 4.8 AI chat
+
+**AIチャット (AI chat)** in the sidebar lets you talk with any character that has a persona.
+
+- "＋ 新しい会話" starts a chat: pick the project, the character, model, effort, and optionally "about you" (your relationship, etc.)
+- The system prompt is a **shared template** with that character's persona and episodes inserted **in full**. Edit it with "共通システム指示を編集"
+  - `{{CHARACTER}}` → name, `{{PERSONA_EPISODE}}` → persona + episode YAML, `{{USER}}` (optional) → "about you"
+  - Stored at `~/.divergence_z/chat_template.md` (never in the repository)
+- The system prompt is long (tens of thousands of tokens), so Anthropic models use prompt caching: later turns pay about a tenth for it
+- Chat logs are saved in the project folder under `chats/` and stay on your machine
+- Depending on the template, a model's safeguards may decline the request (`ERR::refusal`)
+
+### 4.9 Settings
 
 The **設定 (Settings)** tab sets the project name, manuscript folder, description language, and **the model and effort for each step** — e.g. a large model at `max` for extraction and a cheap model at `low` for trial translations.
 

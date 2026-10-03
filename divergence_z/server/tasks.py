@@ -13,6 +13,7 @@ from typing import Any, Dict, List, Optional
 import yaml
 
 from divergence_z.cast_extractor import extract_cast
+from divergence_z.chat import ChatStore, build_system, load_template, reply
 from divergence_z.chapter_translator import (chapter_output_path, open_book,
                                              parse_chapter_selection, translate_chapter)
 from divergence_z.core import LLM, Keys, get_model, load_source_corpus
@@ -395,6 +396,40 @@ def run_generate_character(job: Job, keys: Keys) -> Dict[str, Any]:
 
 
 # =============================================================================
+# chat
+# =============================================================================
+
+def chat_system(project: Project, chat: Dict[str, Any]) -> str:
+    """共通テンプレート＋そのキャラクターのペルソナとエピソード（省略なし）＋ユーザー情報"""
+    persona = project.persona_file(chat["character"])
+    episode = project.episode_file(chat["character"])
+    return build_system(load_template(), chat["character"],
+                        persona.read_text(encoding="utf-8") if persona else "",
+                        episode.read_text(encoding="utf-8") if episode else "",
+                        chat.get("user_profile", ""))
+
+
+def run_chat(job: Job, keys: Keys) -> Dict[str, Any]:
+    project, p = job.project, job.params
+    if not p.get("chat_id") or not str(p.get("text", "")).strip():
+        raise JobInputError("chat_id と text は必須です")
+    store = ChatStore(project.root)
+    try:
+        chat = store.get(p["chat_id"])
+    except KeyError:
+        raise JobInputError(f"チャットが見つかりません: {p['chat_id']}")
+    llm = _llm(job, keys)
+    message = reply(chat, str(p["text"]).strip(), llm=llm, system=chat_system(project, chat),
+                    progress=job.progress)
+    _track(job, llm)
+    store.save(chat)
+    usage = message.get("usage") or {}
+    return {"chat_id": chat["id"], "message": message,
+            "cache_read": usage.get("cache_read_input_tokens"),
+            "cache_write": usage.get("cache_creation_input_tokens")}
+
+
+# =============================================================================
 # pipeline
 # =============================================================================
 
@@ -435,5 +470,6 @@ RUNNERS: Dict[str, Runner] = {
     "generate_persona": run_generate_persona,
     "generate_episodes": run_generate_episodes,
     "generate_character": run_generate_character,
+    "chat": run_chat,
     "pipeline": run_pipeline,
 }
