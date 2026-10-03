@@ -15,7 +15,7 @@ import yaml
 from divergence_z.cast_extractor import extract_cast
 from divergence_z.chapter_translator import (chapter_output_path, open_book,
                                              parse_chapter_selection, translate_chapter)
-from divergence_z.core import LLM, Keys, load_source_corpus
+from divergence_z.core import LLM, Keys, get_model, load_source_corpus
 from divergence_z.episode_extractor import extract_episodes, output_path_for
 from divergence_z.episode_generator import generate_episodes, save_episodes
 from divergence_z.persona_extractor_v2 import extract_persona
@@ -285,8 +285,9 @@ def run_generate_persona(job: Job, keys: Keys) -> Dict[str, Any]:
     project, p = job.project, job.params
     if not p.get("name") or not p.get("source"):
         raise JobInputError("name と source は必須です")
-    llm = _llm(job, keys)
     m = _step(job, "generate")
+    _check_web_model(job, m["model"])
+    llm = _llm(job, keys)
     lang = p.get("lang") or project.output_lang
     r = generate_persona(p["name"], p["source"], p.get("desc", ""), llm=llm, output_lang=lang,
                          model=m["model"], effort=m.get("effort"),
@@ -303,8 +304,9 @@ def run_generate_episodes(job: Job, keys: Keys) -> Dict[str, Any]:
     project, p = job.project, job.params
     if not p.get("name") or not p.get("source"):
         raise JobInputError("name と source は必須です")
-    llm = _llm(job, keys)
     m = _step(job, "generate")
+    _check_web_model(job, m["model"])
+    llm = _llm(job, keys)
     persona_path = project.persona_file(p["name"])
     r = generate_episodes(p["name"], p["source"], p.get("desc", ""), llm=llm,
                           model=m["model"], effort=m.get("effort"),
@@ -321,6 +323,75 @@ def run_generate_episodes(job: Job, keys: Keys) -> Dict[str, Any]:
                  episodes=r.episode_count)
     return {"path": _rel(project, Path(path)), "valid": r.valid, "issues": r.issues,
             "episodes": r.episode_count}
+
+
+def _check_web_model(job: Job, model: str) -> None:
+    if job.params.get("web_search", True) and not get_model(model).web_search:
+        raise JobInputError(f"{model} は Web 検索に対応していません。Web 検索対応のモデルを選ぶか、"
+                            f"Web 検索をオフにしてください")
+
+
+def run_generate_character(job: Job, keys: Keys) -> Dict[str, Any]:
+    """
+    Web 検索で1人分の資料を作る（persona_generator → episode_generator）。
+    エピソード生成には、直前に作ったペルソナを文脈として渡す。作成済みは force が無ければスキップ。
+    """
+    project, p = job.project, job.params
+    if not p.get("name") or not p.get("source"):
+        raise JobInputError("キャラクター名と作品名は必須です")
+    m = _step(job, "generate")
+    _check_web_model(job, m["model"])
+    llm = _llm(job, keys)
+    lang = p.get("lang") or project.output_lang
+    force = bool(p.get("force"))
+    want_persona, want_episodes = p.get("persona", True), p.get("episodes", True)
+    total = int(bool(want_persona)) + int(bool(want_episodes))
+    result: Dict[str, Any] = {"name": p["name"]}
+
+    if want_persona:
+        existing = project.persona_file(p["name"])
+        if existing and not force:
+            job.progress(f"⏭  persona exists: {existing.name}", step="generate", index=0, total=total)
+            result["persona"] = {"path": _rel(project, existing), "skipped": True}
+        else:
+            job.progress(f"🐯 persona: {p['name']} ({p['source']})", step="generate", index=0, total=total)
+            r = generate_persona(p["name"], p["source"], p.get("desc", ""), llm=llm, output_lang=lang,
+                                 model=m["model"], effort=m.get("effort"),
+                                 web_search=p.get("web_search", True), progress=job.progress)
+            _track(job, llm)
+            path = save_generated_persona(r.yaml_text, p["name"], lang, str(project.persona_dir))
+            job.artifact("persona", _rel(project, Path(path)), character=p["name"], valid=r.valid,
+                         issues=r.issues)
+            result["persona"] = {"path": _rel(project, Path(path)), "valid": r.valid,
+                                 "issues": r.issues,
+                                 "searches": r.research.searches if r.research else 0}
+
+    if want_episodes:
+        job.check()
+        existing = project.episode_file(p["name"])
+        if existing and not force:
+            job.progress(f"⏭  episodes exist: {existing.name}", step="generate", index=total - 1, total=total)
+            result["episodes"] = {"path": _rel(project, existing), "skipped": True}
+        else:
+            job.progress(f"📖 episodes: {p['name']} ({p['source']})", step="generate",
+                         index=total - 1, total=total)
+            persona_path = project.persona_file(p["name"])
+            r = generate_episodes(p["name"], p["source"], p.get("desc", ""), llm=llm,
+                                  model=m["model"], effort=m.get("effort"), output_lang=lang,
+                                  web_search=p.get("web_search", True),
+                                  include_sequel=bool(p.get("sequel")),
+                                  max_episodes=int(p.get("max_episodes", 20)),
+                                  persona_text=persona_path.read_text(encoding="utf-8") if persona_path else "",
+                                  progress=job.progress)
+            _track(job, llm)
+            safe = re.sub(r'[\\/:*?"<>|]', "", p["name"].replace(" ", "_"))
+            path, ok = save_episodes(r.yaml_text, str(project.episode_dir / f"{safe}_Episode.yaml"), r.issues)
+            job.artifact("episode", _rel(project, Path(path)), character=p["name"], valid=r.valid,
+                         episodes=r.episode_count)
+            result["episodes"] = {"path": _rel(project, Path(path)), "valid": r.valid,
+                                  "issues": r.issues, "count": r.episode_count,
+                                  "searches": r.research.searches if r.research else 0}
+    return result
 
 
 # =============================================================================
@@ -363,5 +434,6 @@ RUNNERS: Dict[str, Runner] = {
     "voice": run_voice,
     "generate_persona": run_generate_persona,
     "generate_episodes": run_generate_episodes,
+    "generate_character": run_generate_character,
     "pipeline": run_pipeline,
 }

@@ -110,6 +110,7 @@ export const api = {
   cast: (id: string) => call<{ path: string; yaml: string; data: any }>("GET", `/projects/${id}/cast`),
   putCast: (id: string, yaml: string) => call("PUT", `/projects/${id}/cast`, { yaml }),
   personas: (id: string) => call<{ files: string[] }>("GET", `/projects/${id}/personas`).then((r) => r.files),
+  episodes: (id: string) => call<{ files: string[] }>("GET", `/projects/${id}/episodes`).then((r) => r.files),
 
   translations: (id: string, lang: string) =>
     call<{ lang: string; notes: boolean; chapters: { chapter: string; file: string; status: string }[] }>(

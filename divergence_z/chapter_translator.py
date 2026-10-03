@@ -136,10 +136,15 @@ def parse_segments(text: str) -> Dict[str, str]:
 # =============================================================================
 
 def _label_variants(label: str) -> List[str]:
-    """persona_extractor_v2 / episode_extractor の保存名規則に合わせた候補"""
+    """各ツールの保存名規則に合わせた候補
+    persona_extractor_v2: 小文字化して英数字・_・- 以外を除去（「・」は消える）
+    persona_generator:    小文字化して空白と「・」を _ に、英数と _ 以外を除去
+    episode_*:            空白を _ に（「・」は残る）"""
     underscored = label.replace(" ", "_")
     lowered = re.sub(r"[^\w\-]", "", label.lower().replace(" ", "_"))
-    return list(dict.fromkeys([label, underscored, lowered]))
+    generated = "".join(c for c in label.lower().replace(" ", "_").replace("・", "_")
+                        if c.isalnum() or c == "_")
+    return list(dict.fromkeys([label, underscored, lowered, generated]))
 
 
 def find_character_file(label: str, directory: Path, kind: str) -> Optional[Path]:
@@ -147,13 +152,19 @@ def find_character_file(label: str, directory: Path, kind: str) -> Optional[Path
         return None
     for v in _label_variants(label):
         if kind == "persona":
-            candidates = [directory / f"{v}_extracted_v33.yaml", directory / f"{v}_v33.yaml"]
+            # 抽出版 > Web 生成版（日本語）> Web 生成版（他言語 {name}_v33_{lang}.yaml）
+            candidates = [directory / f"{v}_extracted_v33.yaml", directory / f"{v}_v33.yaml",
+                          *sorted(directory.glob(f"{glob_escape(v)}_v33_*.yaml"))]
         else:
             candidates = [directory / f"{v}_Episode.yaml", directory / f"{v}_Episode_full.yaml"]
         for c in candidates:
             if c.exists():
                 return c
     return None
+
+
+def glob_escape(text: str) -> str:
+    return re.sub(r"([*?\[\]])", r"[\1]", text)
 
 
 def parse_overrides(items: List[str]) -> Dict[str, Path]:

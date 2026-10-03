@@ -146,7 +146,17 @@ CLI だけ使う場合は、デスクトップアプリの手順は不要です�
 - **出力言語**を選ぶと、その人物らしさを保ったまま他の言語で出力します
 - 「分析を見る」で、適用された感情の状態（z_mode）や揺れの表れ方（z_leak）を確認できます
 
-### 4.7 設定
+### 4.7 Web 生成（原作テキストが無いとき）
+
+「**Web 生成**」タブでは、キャラクター名と作品名だけで、Web 検索をもとにペルソナとエピソードを作れます
+（`persona_generator.py` → `episode_generator.py`）。原作テキストがある作品は、パイプラインの抽出の方が正確です。
+
+- **キャラクター名**は、人物表のラベルと同じにすると翻訳でこの資料が使われます（入力欄に候補が出ます）
+- **モデル**は Web 検索に対応したものだけが選べます（現在は Anthropic のモデル）
+- エピソードは、直前に作ったペルソナを参考にして作ります。作成済みの資料は「既存を作り直す」を付けない限りスキップします
+- 「Web 検索する」を外すとモデルの知識だけで作ります。台詞が実在しないものになりやすいので注意してください
+
+### 4.8 設定
 
 「**設定**」タブで、プロジェクト名・原稿フォルダ・資料の説明文の言語と、**ステップごとのモデルと推論の強さ**を変えられます。
 たとえば「抽出は大きいモデル + max、試し訳は安いモデル + low」のように使い分けられます。
@@ -456,7 +466,17 @@ In the **ボイス (Voice)** tab, characters with a persona can say new lines:
 - Pick an **output language** to keep the character's voice in another language
 - "分析を見る" shows the emotional state (z_mode) and how it leaks into speech (z_leak)
 
-### 4.7 Settings
+### 4.7 Web generation (no source text)
+
+The **Web 生成 (Web generation)** tab builds a persona and episodes from just a character name and a work title,
+using web search (`persona_generator.py` → `episode_generator.py`). With source text, pipeline extraction is more accurate.
+
+- Use the cast-sheet label as the **character name** so translation picks these files up (labels are suggested)
+- Only **models with web search** are offered (currently Anthropic models)
+- Episodes are generated with the just-made persona as context; existing files are skipped unless "既存を作り直す" is on
+- Turning web search off relies on model knowledge alone, so quotes are more likely to be invented
+
+### 4.8 Settings
 
 The **設定 (Settings)** tab sets the project name, manuscript folder, description language, and **the model and effort for each step** — e.g. a large model at `max` for extraction and a cheap model at `low` for trial translations.
 
