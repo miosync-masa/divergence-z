@@ -286,10 +286,13 @@ into {lang} as a single coherent book. Long chapters are translated one SECTION 
 4. Wordplay, non-standard grammar, mispronunciations, dialect, and language-learning speech are
    meaning, not noise: find a {lang} equivalent that does the same job, and record the decision.
 5. Words already in a foreign/alien language in the source stay as they are.
-6. Keep markdown exactly: headings, **bold**, ``` code blocks ``` (translate their contents, keep layout),
+6. Do not replace culture-specific items (brand names, foods, religious terms, units, currency) with
+   {lang}-culture equivalents: keep them, transliterating where needed. Localization is a separate,
+   recorded step after translation.
+7. Keep markdown exactly: headings, **bold**, ``` code blocks ``` (translate their contents, keep layout),
    --- separators; bracket styles may be adapted to {lang} conventions consistently.
-7. Do not add, omit, merge, or split segments. Every input segment id appears exactly once in output.
-8. Follow TRANSLATION NOTES. If you must deviate, add an updated entry explaining why.
+8. Do not add, omit, merge, or split segments. Every input segment id appears exactly once in output.
+9. Follow TRANSLATION NOTES. If you must deviate, add an updated entry explaining why.
 
 ## OUTPUT FORMAT (exactly this, nothing else)
 <translation>

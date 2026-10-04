@@ -1,0 +1,16 @@
+id: reader_notes
+order: 1
+name: 読者配慮（訳注のみ）
+description: 文化固有の語に短い補足を足す。原文の語は消さず、置き換えもしない（L2 まで）
+domains:
+  religion:
+    action: annotate
+    instruction: 読者が知らない宗教的慣習・語に、初出だけ短い補足を付ける
+  food_taboo:
+    action: annotate
+  politics:
+    action: annotate
+    instruction: 歴史的・政治的な固有名に、初出だけ短い補足を付ける
+  commodity:
+    action: annotate
+    instruction: 何のことか分からない商品・生活用品に、初出だけ短い補足を付ける

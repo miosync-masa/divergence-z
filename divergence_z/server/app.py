@@ -26,6 +26,8 @@ from divergence_z.core import (Keys, check_fit, dump_yaml, get_model, list_model
                                load_source_corpus)
 
 from divergence_z.chat import ChatStore, load_template, save_template, template_path
+from divergence_z.localizer import (ACTIONS, DOMAINS, POLICY_FILE, ledger_path, list_presets,
+                                    load_ledger, set_edit_status)
 from divergence_z.core import estimate_tokens
 
 from .jobs import TERMINAL, JobManager
@@ -73,6 +75,10 @@ class JobIn(BaseModel):
 
 class YamlIn(BaseModel):
     yaml: str
+
+
+class EditStatusIn(BaseModel):
+    status: str                             # "applied" | "reverted"
 
 
 class TemplateIn(BaseModel):
@@ -306,6 +312,68 @@ def create_app(token: str, allowed_origins: Optional[List[str]] = None,
             raise HTTPException(404, "not translated yet")
         return {"chapter": chapter, "lang": lang,
                 "segments": json.loads(seg.read_text(encoding="utf-8"))}
+
+    # --- localizations ----------------------------------------------------------------------
+
+    @app.get("/projects/{project_id}/localize/presets")
+    def localize_presets(project_id: str):
+        project = project_or_404(project_id)
+        try:
+            presets = list_presets(project.preset_dir)
+        except (yaml.YAMLError, ValueError) as e:
+            raise HTTPException(422, f"preset error: {e}")
+        return {"presets": presets,
+                "domains": [{"id": k, "label": v[0], "scope": v[1]} for k, v in DOMAINS.items()],
+                "actions": [{"id": k, "label": v} for k, v in ACTIONS.items()]}
+
+    @app.get("/projects/{project_id}/localizations/{lang}")
+    def list_localizations(project_id: str, lang: str):
+        """translations/<lang>@<variant>/ ごとに、方針と章ごとの介入数"""
+        project = project_or_404(project_id)
+        root = project.root / "translations"
+        variants = []
+        for d in sorted(root.glob(f"{lang}@*")) if root.is_dir() else []:
+            if not d.is_dir():
+                continue
+            policy_path = d / POLICY_FILE
+            chapters = []
+            for led in sorted(d.glob(f"*.{lang}.ledger.json")):
+                data = json.loads(led.read_text(encoding="utf-8"))
+                edits = data.get("edits") or []
+                chapters.append({"chapter": data.get("chapter"),
+                                 "applied": sum(e["status"] == "applied" for e in edits),
+                                 "reverted": sum(e["status"] == "reverted" for e in edits),
+                                 "rejected": sum(e["status"] == "rejected" for e in edits),
+                                 "diagnoses": len(data.get("diagnoses") or [])})
+            variants.append({"variant": d.name.split("@", 1)[1], "path": str(d.relative_to(project.root)),
+                             "policy": yaml.safe_load(policy_path.read_text(encoding="utf-8"))
+                             if policy_path.exists() else None,
+                             "chapters": chapters})
+        return {"lang": lang, "variants": variants}
+
+    def ledger_dir(project: Project, lang: str, variant: str, chapter: str) -> Path:
+        out_dir = project.localization_dir(lang, variant)
+        path = ledger_path(out_dir, chapter, lang)
+        if path.resolve().parent != out_dir.resolve() or not path.exists():
+            raise HTTPException(404, "localized chapter not found")
+        return out_dir
+
+    @app.get("/projects/{project_id}/localizations/{lang}/{variant}/{chapter}")
+    def get_localization(project_id: str, lang: str, variant: str, chapter: str):
+        out_dir = ledger_dir(project_or_404(project_id), lang, variant, chapter)
+        return load_ledger(out_dir, chapter, lang)
+
+    @app.patch("/projects/{project_id}/localizations/{lang}/{variant}/{chapter}/edits/{edit_id}")
+    def patch_edit(project_id: str, lang: str, variant: str, chapter: str, edit_id: str,
+                   body: EditStatusIn):
+        """1件の修正を戻す / 戻した修正を再適用する。クリーン版・注記版を描き直す（API は呼ばない）"""
+        out_dir = ledger_dir(project_or_404(project_id), lang, variant, chapter)
+        try:
+            return set_edit_status(out_dir, chapter, lang, edit_id, body.status)
+        except KeyError:
+            raise HTTPException(404, f"edit not found: {edit_id}")
+        except ValueError as e:
+            raise HTTPException(422, str(e))
 
     # --- characters / chat ----------------------------------------------------------------
 

@@ -47,6 +47,10 @@ stdout に1行だけ JSON が出る。アプリはこれを読んで接続先と
 | GET | `/projects/{id}/translations/{lang}` | 章ごとの状態（done / incomplete / pending） |
 | GET | `/projects/{id}/translations/{lang}/{chapter}` | 原文と訳文の段落対応 |
 | GET / PUT | `/projects/{id}/translations/{lang}/notes` | 訳語表 |
+| GET | `/projects/{id}/localize/presets` | ローカライズ・プリセット（同梱＋`localize/presets/`）と領域・処理の一覧 |
+| GET | `/projects/{id}/localizations/{lang}` | バリアント（`translations/<lang>@<variant>/`）ごとの方針と章ごとの介入数 |
+| GET | `/projects/{id}/localizations/{lang}/{variant}/{chapter}` | 介入台帳（L0・修正・診断） |
+| PATCH | `/projects/{id}/localizations/{lang}/{variant}/{chapter}/edits/{edit}` | `{status: applied\|reverted}` 1件戻す／再適用（API は呼ばない） |
 | POST | `/projects/{id}/estimate` | `{steps, characters?, langs, chapters}` → ステップごとのトークン・適合・概算費用 |
 | POST | `/jobs` | `{type, project_id, params}` → 202 + ジョブ |
 | GET | `/jobs?project_id=` / `/jobs/{id}` | 一覧 / スナップショット |
@@ -60,6 +64,7 @@ stdout に1行だけ JSON が出る。アプリはこれを読んで接続先と
 | `cast` | `hint?` |
 | `persona` / `episode` | `characters?`（省略時は人物表の main）、`force?`、`max_episodes?` |
 | `translate` | `lang`, `chapters?`（`"0-2,5"`）、`previous?`、`force?` |
+| `localize` | `lang`, `presets?`（id の配列、後ろが優先）、`domains?`（`{religion: {action}}` で上書き）、`variant?`、`chapters?`（章 stem の配列）、`force?` |
 | `voice` | `persona`, `input`, `context?`, `target?`, `dual?`, `output_lang?`, `show_thinking?` |
 | `generate_persona` / `generate_episodes` | `name`, `source`, `desc?`, `lang?`, `web_search?` |
 | `pipeline` | `characters?`, `translate_langs?`, `review_cast?`, `force_cast?` |
@@ -92,5 +97,7 @@ MyProject/
   casts/cast.yaml
   personas/  episodes/
   translations/<lang>/    <章>.<lang>.md / .segments.json / translation_notes.yaml
+  translations/<lang>@<variant>/  ローカライズ版: .md（クリーン）/ .annotated.md / .ledger.json / .diagnosis.md / policy.yaml
+  localize/presets/       プロジェクト独自のローカライズ・プリセット
   .dz/jobs/<id>.json      ジョブ履歴（キーは含まない）
 ```

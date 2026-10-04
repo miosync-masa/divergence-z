@@ -5,6 +5,7 @@ import { ErrorBox, Glitch, JobConsole, Pill } from "../components/ui";
 import { PipelineTab } from "./tabs/Pipeline";
 import { CastTab } from "./tabs/Cast";
 import { TranslateTab } from "./tabs/Translate";
+import { LocalizeTab } from "./tabs/Localize";
 import { VoiceTab } from "./tabs/Voice";
 import { GenerateTab } from "./tabs/Generate";
 import { ConfigTab } from "./tabs/Config";
@@ -13,6 +14,7 @@ const TABS: [string, string][] = [
   ["pipeline", "パイプライン"],
   ["cast", "人物表"],
   ["translate", "翻訳"],
+  ["localize", "ローカライズ"],
   ["voice", "ボイス"],
   ["generate", "Web 生成"],
   ["config", "設定"],
@@ -106,6 +108,7 @@ export function ProjectPage({ id, tab }: { id: string; tab: string }) {
       {tab === "pipeline" ? <PipelineTab ctx={ctx} /> : null}
       {tab === "cast" ? <CastTab ctx={ctx} /> : null}
       {tab === "translate" ? <TranslateTab ctx={ctx} /> : null}
+      {tab === "localize" ? <LocalizeTab ctx={ctx} /> : null}
       {tab === "voice" ? <VoiceTab ctx={ctx} /> : null}
       {tab === "generate" ? <GenerateTab ctx={ctx} /> : null}
       {tab === "config" ? <ConfigTab ctx={ctx} /> : null}

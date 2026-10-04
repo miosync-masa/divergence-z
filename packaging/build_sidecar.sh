@@ -27,6 +27,7 @@ if [[ "$(uname)" == "Darwin" ]]; then ARCH_ARGS=(--target-arch "$ARCH"); fi   # 
   --distpath dist-sidecar --workpath build/dz-server --specpath build/dz-server \
   --collect-submodules uvicorn \
   --collect-submodules divergence_z \
+  --collect-data divergence_z.localize_presets \
   --collect-data anthropic \
   --collect-data openai \
   --hidden-import PyPDF2

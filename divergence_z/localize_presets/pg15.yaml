@@ -1,0 +1,16 @@
+id: pg15
+order: 10
+name: PG15（性・暴力表現の緩和）
+description: 露骨な性描写と過激な暴力描写の修飾部（擬態語・程度表現）だけを抑える。述語・出来事・関係性は変えない。差別語は診断のみ
+domains:
+  sexual:
+    action: soften
+    scope: modifier
+    instruction: 露骨さを生む修飾（擬態語・部位の細部・程度表現）だけを削る・弱める。行為があったこと・誰と誰の間かは変えない
+  violence:
+    action: soften
+    scope: modifier
+    instruction: 流血・損壊の細部や擬音などの修飾だけを抑える。暴力が起きた事実・動詞・結果は変えない
+  slurs:
+    action: flag
+    scope: nominal

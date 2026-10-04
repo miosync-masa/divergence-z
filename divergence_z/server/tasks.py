@@ -19,6 +19,7 @@ from divergence_z.chapter_translator import (chapter_output_path, open_book,
 from divergence_z.core import LLM, Keys, get_model, load_source_corpus
 from divergence_z.episode_extractor import extract_episodes, output_path_for
 from divergence_z.episode_generator import generate_episodes, save_episodes
+from divergence_z.localizer import build_policy, l0_chapters, ledger_path, localize_chapter
 from divergence_z.persona_extractor_v2 import extract_persona
 from divergence_z.persona_extractor_v2 import save_persona as save_extracted_persona
 from divergence_z.persona_generator import generate_persona
@@ -217,6 +218,53 @@ def run_translate(job: Job, keys: Keys, llm: Optional[LLM] = None,
                      **{k: v for k, v in info.items()})
         results.append(info)
     return {"lang": lang, "chapters": results}
+
+
+def run_localize(job: Job, keys: Keys) -> Dict[str, Any]:
+    """
+    訳し上がった章（L0）を、プリセット＋領域ごとの調整で選んだ方針でローカライズする。
+    出力は translations/<lang>@<variant>/。L0 には触らない。台帳がある章は force が無ければスキップ。
+    """
+    project, p = job.project, job.params
+    lang = p.get("lang") or "en"
+    try:
+        policy = build_policy(list(p.get("presets") or []), p.get("domains") or None,
+                              project.preset_dir, p.get("variant") or "")
+    except ValueError as e:
+        raise JobInputError(str(e))
+    if not policy.active():
+        raise JobInputError("調整する領域がありません（すべて「触らない」になっています）")
+    l0_dir = project.translation_dir(lang)
+    available = l0_chapters(l0_dir, lang)
+    if not available:
+        raise JobInputError(f"訳し上がった章がありません: translations/{lang}/")
+    wanted = [c for c in (p.get("chapters") or []) if c]
+    missing = [c for c in wanted if c not in available]
+    if missing:
+        raise JobInputError(f"訳し上がっていない章: {missing}")
+    llm = _llm(job, keys)
+    m = _step(job, "localize")
+    out_dir = project.localization_dir(lang, policy.name)
+    force = bool(p.get("force"))
+    chapters = wanted or available
+    results: List[Dict[str, Any]] = []
+    job.progress(f"🧭 {lang}@{policy.name}: " +
+                 ", ".join(f"{d}={r.action}" for d, r in policy.active().items()), step="localize")
+    for n, stem in enumerate(chapters):
+        job.check()
+        if ledger_path(out_dir, stem, lang).exists() and not force:
+            job.progress(f"⏭  already localized: {stem}", step="localize", index=n, total=len(chapters))
+            results.append({"chapter": stem, "skipped": True})
+            continue
+        job.progress(f"🧭 {stem}", step="localize", index=n, total=len(chapters))
+        r = localize_chapter(l0_dir, stem, lang, policy, llm=llm, out_dir=out_dir, model=m["model"],
+                             effort=m.get("effort"), cancel_check=job.check, progress=job.progress)
+        _track(job, llm)
+        info = {"chapter": stem, "edits": r.edits, "applied": r.applied, "rejected": r.rejected,
+                "diagnoses": r.diagnoses, "errors": r.errors}
+        job.artifact("localization", _rel(project, r.output_path), lang=lang, variant=policy.name, **info)
+        results.append(info)
+    return {"lang": lang, "variant": policy.name, "chapters": results}
 
 
 # =============================================================================
@@ -466,6 +514,7 @@ RUNNERS: Dict[str, Runner] = {
     "persona": run_persona,
     "episode": run_episode,
     "translate": run_translate,
+    "localize": run_localize,
     "voice": run_voice,
     "generate_persona": run_generate_persona,
     "generate_episodes": run_generate_episodes,

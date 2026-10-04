@@ -5,7 +5,7 @@ import { ErrorBox, Pill, Sticker } from "../../components/ui";
 import type { ProjectCtx } from "../Project";
 
 const STEP_LABEL: Record<StepName, string> = {
-  cast: "人物表", persona: "ペルソナ", episode: "エピソード", translate: "翻訳", voice: "ボイス", generate: "Web 生成",
+  cast: "人物表", persona: "ペルソナ", episode: "エピソード", translate: "翻訳", localize: "ローカライズ", voice: "ボイス", generate: "Web 生成",
 };
 
 export function ConfigTab({ ctx }: { ctx: ProjectCtx }) {

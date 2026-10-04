@@ -1,0 +1,15 @@
+id: market_adapt
+order: 2
+name: 市場適応（等価置換）
+description: 商品・生活文化と表記を、読者の文化の等価物に置き換える。宗教・政治は補足のみ（L3 まで）
+domains:
+  notation:
+    action: substitute
+    instruction: 度量衡・通貨・日付を読者の慣習の形式に。値は等価に保つ
+  commodity:
+    action: substitute
+    instruction: 同じ時代・同じ社会的な意味（大衆品か高級品か等）の等価物に置き換える
+  religion:
+    action: annotate
+  politics:
+    action: annotate
