@@ -49,6 +49,34 @@
 | **翻訳** | 1章ずつ、原文＋その章の登場人物の資料＋訳語表＋直前の訳文を渡して訳す。訳語や人物の声の決定は訳語表に溜まり、次の章に引き継がれる |
 | **ボイス** | 資料をもとに、原作にない台詞をその人物の声で言わせる。2人の掛け合いもできる |
 
+### 一般的な翻訳 API との違い
+
+一般的な翻訳 API にも、文脈を伝える仕組みはあります。ただし、**その中身はすべて人間が作って登録するもの**です。
+Divergence-Z は、翻訳に必要な人物の特性を**原作そのものから抽出**します。人間が指示を書く必要はありません（出来上がった資料は確認・修正できます）。
+
+| 制御するもの | 一般的な翻訳 API（人間が用意する） | Divergence-Z（原作から作る） |
+|---|---|---|
+| 用語の訳 | 用語集を手で登録する | **訳語表**：章を訳すたびに自動で追記され、次の章へ引き継がれる |
+| 書式・表記 | 書式のスタイル規則を手で設定する | 訳語表の **style**：括弧・数字・見出しの扱いを訳しながら決めて記録する |
+| トーン・口調 | 自然言語のカスタム指示を人間が書く（作品全体で1つ） | **ペルソナ**：人物ごとに、一人称・語尾・口癖・感情で話し方がどう崩れるかを原作から抽出 |
+| 以前の訳の再利用 | 翻訳メモリ（一致する文の訳を再利用） | 直前の訳文と訳語表を毎回渡す。一致する文ではなく、決定を引き継ぐ |
+| 誰の台詞か | 扱わない | **人物表**：名前の出ない作品でも、「彼女」「搭乗者」が誰かを判定する |
+| 何を経験したか | 扱わない | **エピソード**：この章より前／この章／この先 を分けて渡す（先の出来事は漏らさない） |
+
+文単位の翻訳 API が悪いわけではなく、**用途が違います**。文書・メール・技術文書では、1文ずつ自然で標準的な訳を速く安く返すことが正解です。
+小説やエンタメで価値があるのは、1文の正しさよりも **本1冊を通した決定**（誰がどう話すか、何を繰り返すか、作者のどの癖を残すか）です。
+
+作例：이상『날개（翼）』のプロローグ（全文は `Result/Korea/`）
+
+| | 原文 | 文単位の翻訳 API | Divergence-Z |
+|---|---|---|---|
+| 意味 | 정신**분일**자（奔逸） | 精神**分裂**者 | 精神奔逸者 |
+| 意味 | **횟배** 앓는 뱃속 | 胃痛に悩まされる腹 | **回虫に**病む私の腹 |
+| 固有名 | **위고**를 불란서의 빵… | **ヴィゴ**を「フランスのパン一片」 | **ユゴー**を仏蘭西のパン一切れ |
+| 声 | 하오체（〜오）で一貫 | です体 と だ体 が段落内で混在 | です／ます で一貫。終盤の 합네다 のずれは「〜のであります」で出す |
+| 反復 | 굿바이 を繰り返す | 「グッバイ」の次が「さようなら」 | グッドバイ で通す（訳語表で決定） |
+| 作者の仕掛け | 영수(받아들이는) のような括弧の言い換え | 漢語を落として言い換えだけ残す箇所がある | 領収（受け入れる）。括弧書きを残す方針を訳語表に記録 |
+
 **BYOK（Bring Your Own Key）**：API キーは自分のものを使います。原稿もキーもあなたの PC から外には出ません（送信先は OpenAI / Anthropic の API だけ）。
 
 ## 2. 必要なもの
@@ -429,6 +457,34 @@ Divergence-Z has an LLM read an entire novel, script, or game text and build a *
 |---|---|
 | **Translation** | One chapter at a time, with the chapter's characters' bible, a running glossary, and the previous translated chapters. Decisions about terms and each character's voice are recorded in the glossary and carried forward |
 | **Voice** | Make a character say new, non-canonical lines in their own voice — including two-character exchanges |
+
+### How it differs from a general translation API
+
+General translation APIs do have ways to pass context — but **a human has to write and register all of it**.
+Divergence-Z **extracts the character traits a translation needs from the source itself**. Nobody has to write instructions (you can still review and edit the generated bible).
+
+| Controls | General translation API (prepared by a human) | Divergence-Z (built from the source) |
+|---|---|---|
+| Term translations | A glossary you register by hand | **Glossary notes**: appended automatically after every chapter and carried forward |
+| Formatting | Formatting style rules you configure | **style** notes: brackets, numerals, headings decided and recorded while translating |
+| Tone and register | Natural-language custom instructions a human writes (one for the whole work) | **Persona**: per character — pronouns, sentence endings, verbal tics, how speech breaks under emotion — extracted from the text |
+| Reusing past translations | Translation memory (reuses matching sentences) | The previous translation and the glossary are passed every time: decisions carry forward, not just matching sentences |
+| Who is speaking | Not handled | **Cast sheet**: resolves "she" or "the passenger" even in works where no one is named |
+| What the character has lived through | Not handled | **Episodes**: split into before / this chapter / not yet (future events are not leaked) |
+
+Sentence-level translation APIs are not worse — **they serve a different purpose**. For documents, email, and technical text, a fast, cheap, natural translation of each sentence is exactly right.
+In fiction and entertainment, what matters is less the correctness of each sentence than **the decisions that hold across a whole book**: who speaks how, what recurs, which of the author's habits survive.
+
+Example: the prologue of Yi Sang's *Wings* (날개), Korean → Japanese (full text in `Result/Korea/`)
+
+| | Source | Sentence-level translation API | Divergence-Z |
+|---|---|---|---|
+| Meaning | 정신**분일**자 ("a mind that wanders freely") | 精神**分裂**者 ("schizophrenic") | 精神奔逸者 |
+| Meaning | **횟배** 앓는 뱃속 (a belly sick with roundworms) | 胃痛 ("stomach ache") | **回虫** (roundworms) |
+| Names | **위고** (Hugo) | ヴィゴ ("Vigo") | ユゴー (Hugo) |
+| Voice | One archaic register (하오체) throughout | Polite and plain forms mixed within a paragraph | One polite register; the late shift to 합네다 rendered as 〜のであります |
+| Refrain | 굿바이 repeated | グッバイ, then さようなら | グッドバイ every time (fixed in the glossary) |
+| Author's device | Parenthetical glosses like 영수(받아들이는) | Sometimes drops the term and keeps only the gloss | 領収（受け入れる）— the policy to keep them is recorded in the glossary |
 
 **BYOK (Bring Your Own Key):** you use your own API keys. Neither your manuscript nor your keys leave your machine, except for the requests sent to OpenAI / Anthropic under your own account.
 
