@@ -1,0 +1,9 @@
+id: religious_profanity
+order: 21
+name: 宗教的冒涜表現の調整
+description: 神・聖典・聖なるものを罵倒や冗談に使う表現の強度を下げる。信仰や宗教行為の描写そのものは変えない
+domains:
+  religion:
+    action: soften
+    scope: any          # 罵倒そのもの（間投詞・名詞）を置き換えるので修飾部に限らない
+    instruction: 神名を使った罵倒・聖なるものの冒涜的な言及だけを、同じ感情の強さを保つ世俗的な罵倒・言い回しにする。人物の信仰・宗教行為・宗教をめぐる対立の描写は変えない

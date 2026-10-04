@@ -36,6 +36,8 @@ result.text, result.usage, llm.total_usage()
 | `episode_generator` | `generate_episodes(name, source, desc, llm=, web_search=True)` | `EpisodeResult(yaml_text, valid, episode_count, …)` |
 | `chapter_translator` | `open_book(source, cast_path)` → `translate_chapter(book, idx, llm=, out_dir=, target_lang=)` | `ChapterResult(translated, issues, complete, output_path, …)` |
 | `chapter_translator` | `estimate_chapter(book, idx, out_dir, model)` | `FitReport`（API を呼ばない） |
+| `localizer` | `build_policy(presets, overrides)` → `localize_chapter(l0_dir, stem, lang, policy, llm=, out_dir=)` | `LocalizeResult(applied, rejected, diagnoses, output_path, …)`。L0 は変えず `translations/<lang>@<variant>/` に出力 |
+| `localizer` | `set_edit_status(out_dir, stem, lang, edit_id, "reverted")` | 台帳（1件戻して再描画。API を呼ばない） |
 | `persona_voice` | `transform_voice(llm=, persona_data=, input_text=, context=, …)` / `respond_voice(…)` | dict（`output`, `usage`, …） |
 
 どの関数にも `model=` / `effort=` / `progress=` を渡せる。各スクリプトは同名の CLI でもある（`python cast_extractor.py --help`）。

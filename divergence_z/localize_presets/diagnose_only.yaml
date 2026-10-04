@@ -1,0 +1,11 @@
+id: diagnose_only
+order: 90
+name: 市場診断のみ
+description: 本文には一切触れず、摩擦しうる箇所だけを報告する（L4）
+domains:
+  religion: {action: flag}
+  sexual: {action: flag}
+  violence: {action: flag}
+  slurs: {action: flag}
+  food_taboo: {action: flag}
+  politics: {action: flag}

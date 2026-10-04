@@ -45,8 +45,8 @@ export interface ModelSpec {
   price_out: number | null;
 }
 
-export type StepName = "cast" | "persona" | "episode" | "translate" | "voice" | "generate";
-export const STEPS: StepName[] = ["cast", "persona", "episode", "translate", "voice", "generate"];
+export type StepName = "cast" | "persona" | "episode" | "translate" | "localize" | "voice" | "generate";
+export const STEPS: StepName[] = ["cast", "persona", "episode", "translate", "localize", "voice", "generate"];
 
 export interface Project {
   id: string;
@@ -120,6 +120,47 @@ export interface EstimateRow {
   message: string;
 }
 
+export type LocalizeAction = "keep" | "annotate" | "substitute" | "soften" | "flag";
+
+export interface LocalizePreset {
+  id: string;
+  name: string;
+  description?: string;
+  origin: "builtin" | "project";
+  domains: Record<string, { action: LocalizeAction; instruction?: string } | LocalizeAction>;
+}
+
+export interface LocalizeEdit {
+  id: string;
+  seg: string;
+  domain: string;
+  action: LocalizeAction;
+  level: string;
+  before: string;
+  after: string;
+  note: string;
+  status: "applied" | "reverted" | "rejected";
+  reason?: string;
+  pos?: number;                 // L0 の段落内の位置（applied / reverted のみ）
+}
+
+export interface Ledger {
+  chapter: string;
+  lang: string;
+  policy: { name: string; presets: string[]; domains: Record<string, { action: LocalizeAction }> };
+  segments: { id: string; source: string; target: string }[];
+  edits: LocalizeEdit[];
+  diagnoses: { seg?: string; domain?: string; note?: string }[];
+  errors: string[];
+}
+
+export interface LocalizationVariant {
+  variant: string;
+  path: string;
+  policy: Ledger["policy"] | null;
+  chapters: { chapter: string; applied: number; reverted: number; rejected: number; diagnoses: number }[];
+}
+
 export class ApiError extends Error {
   constructor(public status: number, public detail: any) {
     super(typeof detail === "string" ? detail : detail?.detail || detail?.error || `HTTP ${status}`);
@@ -155,6 +196,16 @@ export const api = {
       "GET", `/projects/${id}/translations/${enc(lang)}/${enc(chapter)}`),
   notes: (id: string, lang: string) =>
     call<{ yaml: string; data: any }>("GET", `/projects/${id}/translations/${enc(lang)}/notes`),
+
+  localizePresets: (id: string) =>
+    call<{ presets: LocalizePreset[]; domains: { id: string; label: string; scope: string }[];
+           actions: { id: LocalizeAction; label: string }[] }>("GET", `/projects/${id}/localize/presets`),
+  localizations: (id: string, lang: string) =>
+    call<{ variants: LocalizationVariant[] }>("GET", `/projects/${id}/localizations/${enc(lang)}`).then((r) => r.variants),
+  ledger: (id: string, lang: string, variant: string, chapter: string) =>
+    call<Ledger>("GET", `/projects/${id}/localizations/${enc(lang)}/${enc(variant)}/${enc(chapter)}`),
+  setEdit: (id: string, lang: string, variant: string, chapter: string, edit: string, status: "applied" | "reverted") =>
+    call<Ledger>("PATCH", `/projects/${id}/localizations/${enc(lang)}/${enc(variant)}/${enc(chapter)}/edits/${enc(edit)}`, { status }),
 
   estimate: (id: string, body: { steps: string[]; characters?: string[]; langs?: string[]; chapters?: string }) =>
     call<{ rows: EstimateRow[]; total_input_tokens: number; total_output_tokens: number;

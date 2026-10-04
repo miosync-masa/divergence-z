@@ -57,7 +57,8 @@ where = ["."]
 include = ["divergence_z*"]
 
 [tool.setuptools.package-data]
-divergence_z = ["personas/*.yaml", "episodes/*.yaml", "casts/*.yaml", "scripts/*.txt"]
+divergence_z = ["personas/*.yaml", "episodes/*.yaml", "casts/*.yaml", "scripts/*.txt",
+                "localize_presets/*.yaml"]
 
 [tool.black]
 line-length = 100

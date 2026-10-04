@@ -1,0 +1,8 @@
+id: halal
+order: 20
+name: ハラール配慮（豚肉・飲酒）
+description: 筋に関わらない豚肉・飲酒の描写を等価物に置き換える。筋に関わるものは診断のみ
+domains:
+  food_taboo:
+    action: substitute
+    instruction: 食卓の背景にすぎない豚肉・酒だけを、同じ場面の機能を持つ料理・飲み物に置き換える。酔い・酒場・飲酒の習慣が人物や筋に関わる場合は編集せず診断にする

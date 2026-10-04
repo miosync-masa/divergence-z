@@ -1,0 +1,389 @@
+work: "날개 (翼)"
+narration:
+  - files: ["ep01_prologue.txt"]
+    narrator: "연심이の夫"
+    style: "一人称・序文的独白（하오体）"
+    notes: "地の文の「나／나는」は語り手自身を指し、「그대」に直接語りかける。後続章と同じ一人称人物として統合したが、33番地や妻への明示的言及はなく、同一性は作品の連続性に基づく推定である。"
+  - files: ["ep02_33beonji.txt", "ep03_my_room.txt", "ep04_play_and_scent.txt", "ep05_money.txt", "ep06_first_outing.txt", "ep07_second_outing.txt", "ep08_illness.txt", "ep09_adalin.txt", "ep10_rooftop.txt"]
+    narrator: "연심이の夫"
+    style: "一人称・回想的内面独白"
+    notes: "地の文の「나／나는／내가」は、33番地で妻と暮らす二十六歳の夫。外界への認識や妻の行動は、知識が乏しく睡眠薬も服用しているこの語り手の主観を通して記される。"
+
+characters:
+  - label: "연심이の夫"
+    id: "yeonsimi_husband"
+    proper_names: []
+    references:
+      - expr: "나"
+        where: "全編の一人称。助詞のない形、および引用・自問内で使用"
+      - expr: "나는"
+        where: "全編の一人称主語"
+      - expr: "내가"
+        where: "全編の一人称主語"
+      - expr: "내"
+        where: "全編の一人称所有・連体形"
+      - expr: "나의"
+        where: "ep04などの一人称所有"
+      - expr: "나에게"
+        where: "ep03以降の一人称与格"
+      - expr: "내게"
+        where: "ep04以降の一人称与格"
+      - expr: "나를"
+        where: "妻の行為などの対象となる一人称"
+      - expr: "나더러"
+        where: "ep08で妻から外出しないよう言われる人物"
+      - expr: "나도"
+        where: "ep01の独白など"
+      - expr: "나와"
+        where: "ep05の「나와 내 아내」"
+      - expr: "나처럼"
+        where: "ep05で職業のない自分を比較対象にする箇所"
+      - expr: "나라는 존재"
+        where: "ep02で妻という花にぶら下がって生きる存在として自己規定"
+      - expr: "내 자신"
+        where: "ep06・ep10の自己認識"
+      - expr: "박제(剝製)가 되어 버린 천재"
+        where: "ep01冒頭。題辞風の自己像と読めるが、語り手自身を指すとは明言されない"
+      - expr: "일종의 정신분일자"
+        where: "ep01で自己を説明する表現"
+      - expr: "한 벌 신경"
+        where: "ep04で睡眠から覚めた自己を比喩的に表す"
+      - expr: "사뭇 딴 사람"
+        where: "ep05で眠った後の自分を別人のようだと表す"
+      - expr: "너"
+        where: "ep09で妻が語り手を罵る言葉、およびep10で語り手が自分に問いかける二人称"
+      - expr: "네"
+        where: "ep06で語り手が妻の発言を内心で再現する「네 말마따나」。文脈上、妻から見た語り手ではなく妻を指す用例もあるため要注意"
+      - expr: "얼빠진 사람"
+        where: "ep10で駅をさまよう自分への比喩"
+      - expr: "우리 부부"
+        where: "ep07・ep10。語り手と妻を一組として指す複数表現"
+      - expr: "절름발이"
+        where: "ep10で足並みの合わない夫婦全体を表す比喩"
+      - expr: "내나 아내나"
+        where: "ep10で語り手と妻の双方を並べる表現"
+    is_same_person_as_note: "ep02以降では一貫して妻を「아내」と呼ぶ無名の夫。ep10で生きてきた年月を「스물 여섯 해」と述べる。ep01の「나」も同じ作品内で連続する一人称として統合したが、同一人物である直接的な設定説明はない。"
+    role: "物語の主人公兼語り手。妻に経済的・生活的に依存して部屋に閉じこもり、外出と金銭授受を契機に外界や自我への欲求を取り戻そうとする。"
+    speaks: true
+    dialogue_markers: "大部分は一人称の内面独白。「하오／굿바이」と語る序文、妻への内心の謝罪、「연심이---」という心中の呼びかけ、自問の「너는 인생에 무슨 욕심이 있느냐」、末尾の「날자」などで識別できる。"
+    disambiguation: "ep09で妻が発する「너」は語り手を指す一方、語り手が妻へ向けて心中で使う「너／네」は妻を指す。ep10の「너는 인생에…」は語り手自身への呼びかけ。「내객」の「내」は一人称所有形ではなく「来客」という語の一部。"
+    appears_in: ["ep01_prologue.txt", "ep02_33beonji.txt", "ep03_my_room.txt", "ep04_play_and_scent.txt", "ep05_money.txt", "ep06_first_outing.txt", "ep07_second_outing.txt", "ep08_illness.txt", "ep09_adalin.txt", "ep10_rooftop.txt"]
+    importance: "main"
+
+  - label: "연심이"
+    id: "yeonsimi"
+    proper_names: ["연심이"]
+    references:
+      - expr: "연심이---"
+        where: "ep09で語り手が心の中だけで呼ぶ妻の名前"
+      - expr: "아내"
+        where: "ep02以降、語り手が妻を指す最も一般的な表現"
+      - expr: "내 아내"
+        where: "ep02以降、語り手から見た妻"
+      - expr: "제일 작고 제일 아름다운 것"
+        where: "ep02で33番地の女性たちの中の妻を評する表現"
+      - expr: "특히 아름다운 한 떨기의 꽃"
+        where: "ep02で妻を花にたとえる表現"
+      - expr: "그런 한 떨기 꽃"
+        where: "ep02で直前の妻の比喩を受ける表現"
+      - expr: "그 꽃"
+        where: "ep02で語り手が守り、ぶら下がって生きる対象としての妻"
+      - expr: "한 가엾은 인물"
+        where: "ep05で、客の目には妻が同情される人物に見えたのかと語り手が推測する箇所"
+      - expr: "저"
+        where: "ep08の間接話法で、風邪を引いた夫が「저를 고생시키는」と妻が自称する表現"
+      - expr: "너"
+        where: "ep06の内心の謝罪とep09での反論願望において、語り手が妻へ向ける二人称"
+      - expr: "네"
+        where: "ep06の「네 오해」「네 말마따나」で妻を指す"
+      - expr: "우리 부부"
+        where: "ep07・ep10で語り手と妻を一組として指す"
+      - expr: "절름발이"
+        where: "ep10で語り手と妻から成る夫婦を表す比喩"
+      - expr: "내나 아내나"
+        where: "ep10で語り手と妻の双方を並べる表現"
+      - expr: "두사람"
+        where: "ep06で妻と「낯설은 남자」を一組として指す"
+      - expr: "두 사람"
+        where: "ep07で妻と「아내의 남자」を一組として指す"
+    is_same_person_as_note: "ep09で語り手が妻の体臭を思い出しながら「연심이---」と呼ぶため、それ以前から「아내／내 아내」と呼ばれていた人物の名前が연심이だと分かる。ep01の抽象的な「여인」と同一人物かはuncertain。"
+    role: "主人公の妻。夫に食事や金を与える一方、客を迎えて金を受け取り、夫にはアスピリンだとして薬を飲ませる。客との性的関係が強く示唆されるが、職業名は本文で明示されない。"
+    speaks: true
+    dialogue_markers: "夫への短い指示や間接話法が中心。「옜소」、薬を「먹어야지」と勧める言葉、外出を禁じる言葉、帰宅時間についての囁き、ep09の「너 밤새워 가면서…」という激しい詰問。"
+    disambiguation: "「너／네」は語り手が妻に向ける箇所では妻を指すが、ep09で妻が夫を罵る「너」は夫を指す。「저」はep08の妻の間接話法に限り妻自身。「그들」はep02では33番地の女性集団、ep05では客たちであり、通常は妻個人を指さない。"
+    appears_in: ["ep02_33beonji.txt", "ep03_my_room.txt", "ep04_play_and_scent.txt", "ep05_money.txt", "ep06_first_outing.txt", "ep07_second_outing.txt", "ep08_illness.txt", "ep09_adalin.txt", "ep10_rooftop.txt"]
+    importance: "main"
+
+  - label: "연심이の客たち"
+    id: "yeonsimi_visitors"
+    proper_names: []
+    references:
+      - expr: "내객"
+        where: "ep05以降、妻を訪ねる客の総称"
+      - expr: "내객이"
+        where: "妻の部屋に客がいることを述べる箇所"
+      - expr: "내객들"
+        where: "ep05で複数の客をまとめて指す"
+      - expr: "아내의 내객들"
+        where: "ep05で妻のもとへ来て金を置く人々"
+      - expr: "내 아내를 찾은 서너 사람의 내객들"
+        where: "ep05で妻を訪れた三、四人の客"
+      - expr: "그들 내객"
+        where: "ep05で金を置いていく客たちを受ける表現"
+      - expr: "그들"
+        where: "ep05で妻に金を置く客たちを指す"
+      - expr: "그들 가운데"
+        where: "ep05で客の中の教養の浅い者を取り上げる箇所"
+      - expr: "퍽 교양이 얕은 자"
+        where: "ep05で客の一人を推測して評する表現"
+      - expr: "그런 자"
+        where: "ep05で教養の浅い客を受ける表現"
+      - expr: "실없는 사람들"
+        where: "ep05で語り手の目に映る客たち"
+      - expr: "까닭 모를 내객들"
+        where: "ep05で妻に金を置いていく理由不明の客たち"
+      - expr: "술이 취해서 혀가 잘 돌아가지 않는 내객들"
+        where: "ep06で、酔って話し方が不明瞭になることのある客たち"
+      - expr: "어떤 사람"
+        where: "ep06で妻がどの客とも普段は囁かないと説明する一般表現"
+    is_same_person_as_note: "複数の匿名客から成る集合。ep06の「낯설은 남자」、ep07の「아내의 남자」、ep09で妻の部屋から出てくる「남자」も客に属すると推定できるが、各人が同一人物か、別々の客かはuncertain。"
+    role: "妻を訪ねて飲食・会話をし、帰る際に金を置く男性客たち。妻の収入源と夫婦の葛藤を生む存在。"
+    speaks: true
+    dialogue_markers: "具体的な台詞は引用されない。妻の部屋から聞こえる冗談や談話、酔って舌の回らない声としてのみ描写されるため、個々の発言者は判別不能。"
+    disambiguation: "「그들」はep05ではこの客たちを指すが、ep02の「그들」は33番地の若い女性住民を指す。単数の男については各場面別の項目を参照。"
+    appears_in: ["ep05_money.txt", "ep06_first_outing.txt", "ep07_second_outing.txt", "ep09_adalin.txt"]
+    importance: "supporting"
+
+  - label: "낯설은 남자"
+    id: "unfamiliar_man_ep06"
+    proper_names: []
+    references:
+      - expr: "낯설은 남자"
+        where: "ep06で妻の背後から顔をのぞかせる男"
+      - expr: "그 남자"
+        where: "ep06で妻と小声で話す男"
+      - expr: "남자"
+        where: "ep06で妻と席を立つ人物"
+      - expr: "두사람"
+        where: "ep06で妻とこの男を一組として指す"
+    is_same_person_as_note: "妻の「내객」の一人と考えられる。ep07の「아내의 남자」やep09の男との同一性を示す名前・特徴はなく、uncertain。"
+    role: "主人公の最初の外出帰りに妻の部屋にいた客。妻と普段にない小声で話し、妻に門まで送られる。"
+    speaks: true
+    dialogue_markers: "妻との囁き声が描写されるだけで、具体的な台詞や固有の口調はない。"
+    disambiguation: "ep07・ep09にも匿名の男が登場するが、同一人物と断定しない。ep06の「그 남자」と「두사람」が手掛かり。"
+    appears_in: ["ep06_first_outing.txt"]
+    importance: "minor"
+
+  - label: "아내의 남자"
+    id: "wifes_man_ep07"
+    proper_names: []
+    references:
+      - expr: "아내의 남자"
+        where: "ep07で門の所に妻と立って話している男"
+      - expr: "두 사람"
+        where: "ep07で妻とこの男を一組として指す"
+    is_same_person_as_note: "妻の客の一人と推定される。「아내의 남자」という表現は親密さを示唆するが、ep06またはep09の男と同一かはuncertain。"
+    role: "二度目の外出から帰った主人公が門前で妻と話しているところを目撃する男。"
+    speaks: true
+    dialogue_markers: "妻と話している事実だけが示され、台詞の内容や口調は記されない。"
+    disambiguation: "この呼称はep07に限定される。他場面の「남자」との同一性は保証されない。"
+    appears_in: ["ep07_second_outing.txt"]
+    importance: "minor"
+
+  - label: "ep09で妻の部屋にいた男"
+    id: "man_in_wifes_room_ep09"
+    proper_names: []
+    references:
+      - expr: "남자"
+        where: "ep09で妻の後から部屋を出て、妻を抱えて連れ戻す男"
+    is_same_person_as_note: "妻の客である可能性が高い。ep06の「낯설은 남자」やep07の「아내의 남자」と同一人物かはuncertain。"
+    role: "主人公が見てはならない場面を目撃した直後に現れ、主人公を襲う妻を抱き上げて部屋へ戻す男。"
+    speaks: false
+    dialogue_markers: "台詞はない。妻を一抱えにして部屋へ運ぶ行動で識別する。"
+    disambiguation: "本文では単に「남자」とだけ呼ばれるため、ep06の同じ一般名詞とはファイルと行動で区別する。"
+    appears_in: ["ep09_adalin.txt"]
+    importance: "minor"
+
+  - label: "33番地18世帯の若い女性たち"
+    id: "young_women_of_33"
+    proper_names: []
+    references:
+      - expr: "각 가구에 사는 사람들"
+        where: "ep02で18世帯それぞれに住む若い住民"
+      - expr: "그들"
+        where: "ep02で日光を遮り、昼寝し、夜に活動する住民たち"
+      - expr: "그들의"
+        where: "ep02で住民たちの表札を述べる所有形"
+      - expr: "이네들"
+        where: "ep02で部屋から豆腐を買う住民たち"
+      - expr: "18 가구"
+        where: "ep02で住民集団を世帯単位で指す"
+      - expr: "송이송이 꽃"
+        where: "ep02で若い住民を花々にたとえる"
+      - expr: "18 가구에 각기 빌어 들은 송이송이 꽃들"
+        where: "ep02で各世帯の若い女性たちをまとめた比喩。妻もその中に含まれる"
+      - expr: "젊은 여인네"
+        where: "ep05で語り手が顔を覚えている18世帯の女性たち"
+      - expr: "그들의 아무"
+        where: "ep02で語り手が誰とも交際しないと述べる箇所"
+    is_same_person_as_note: "単一人物ではなく33番地の集合的住民。妻は「송이송이 꽃들 가운데서도」と比較されるため、この集団の一員だが、個人としては別項目の연심이。"
+    role: "妻と同じ33番地に暮らし、昼は眠り夜に活動する若い女性住民たち。閉鎖的な居住環境と妻の美しさを示す背景人物。"
+    speaks: false
+    dialogue_markers: "個別の台詞はない。"
+    disambiguation: "ep02の「그들／이네들」はこの住民集団。ep05で金を置く人物について使われる「그들」は妻の男性客たち。"
+    appears_in: ["ep02_33beonji.txt", "ep05_money.txt"]
+    importance: "minor"
+
+  - label: "プロローグの聞き手"
+    id: "prologue_addressee"
+    proper_names: []
+    references:
+      - expr: "그대"
+        where: "ep01で語り手が直接呼びかける相手"
+      - expr: "그대가"
+        where: "ep01で嫌いな食物を貪食してみよと勧められる相手"
+      - expr: "그대 자신"
+        where: "ep01で自分自身を偽造するよう勧められる相手"
+      - expr: "그대의 작품"
+        where: "ep01で作品について語られる相手"
+      - expr: "그대께"
+        where: "ep01の「부디 그대께 고하는 것이니」"
+    is_same_person_as_note: "作中で固有名や具体的関係は示されない。読者、作家仲間、または語り手が想定した聞き手のいずれかであり、uncertain。"
+    role: "プロローグで語り手の逆説的な忠告を受ける仮想的な聞き手。"
+    speaks: false
+    dialogue_markers: "発言はなく、語り手から二人称「그대」で呼ばれる。"
+    disambiguation: "後続章の妻に向けた「너／네」とは別の二人称。妻と同一である根拠はない。"
+    appears_in: ["ep01_prologue.txt"]
+    importance: "minor"
+
+  - label: "プロローグで論じられる女たち"
+    id: "prologue_women"
+    proper_names: []
+    references:
+      - expr: "여인"
+        where: "ep01で語り手が生活を設計すると述べる女性、および一般的な女性"
+      - expr: "이런 여인"
+        where: "ep01で知性や精神的分裂を備えた女性を受ける表現"
+      - expr: "여인의 반"
+        where: "ep01で語り手が受け入れるとする女性の半分"
+      - expr: "여왕봉과 미망인"
+        where: "ep01で女性を類型化する比喩"
+      - expr: "세상의 하고 많은 여인"
+        where: "ep01で世の女性一般を指す"
+      - expr: "여인의 전부"
+        where: "ep01で全女性を一般化する表現"
+      - expr: "개개'미망인'"
+        where: "ep01で日常における各女性を未亡人になぞらえる表現"
+      - expr: "여성"
+        where: "ep01で語り手の論理が冒険になる対象"
+    is_same_person_as_note: "具体的な一人の登場人物ではなく、設計された恋愛相手と女性一般が連続的に論じられる概念的集団。後続章の妻연심이を暗示する可能性はあるが、同一人物との明示はなくuncertain。"
+    role: "語り手の恋愛観・女性観を示すプロローグ上の概念的対象。"
+    speaks: false
+    dialogue_markers: "台詞はない。"
+    disambiguation: "ep02以降の具体的な「아내」とは区別する。"
+    appears_in: ["ep01_prologue.txt"]
+    importance: "minor"
+
+  - label: "33番地に出入りする商人たち"
+    id: "merchants_of_33"
+    proper_names: []
+    references:
+      - expr: "온갖 장사치들"
+        where: "ep02で33番地の門をいつでも出入りできる商人たち"
+    is_same_person_as_note: "匿名の集合で、妻の「내객들」とは商売上の訪問目的が異なる。"
+    role: "開き放しの門を通り、各部屋の住民へ直接品物を売る商人たち。"
+    speaks: false
+    dialogue_markers: "台詞はない。"
+    disambiguation: "妻に金を置いていく男性客ではなく、豆腐などを売る生活上の商人。"
+    appears_in: ["ep02_33beonji.txt"]
+    importance: "minor"
+
+  - label: "都市の匿名の人々"
+    id: "anonymous_city_people"
+    proper_names: []
+    references:
+      - expr: "사람"
+        where: "ep06・ep07で街にあふれる人間を一般的に指す"
+      - expr: "어느 사람"
+        where: "ep06で語り手が五ウォンを渡そうと考える不特定の通行人"
+      - expr: "사람은"
+        where: "ep06で街にひどく人があふれていると述べる箇所"
+      - expr: "사람들은 모두"
+        where: "ep10で正午のサイレンとともに動く屋上・街の人々"
+    is_same_person_as_note: "単一人物ではなく、主人公が外出先で目にする都市の群衆。"
+    role: "主人公に外界の混雑、活動性、疎外感を感じさせる背景の群衆。"
+    speaks: false
+    dialogue_markers: "個別の台詞はない。"
+    disambiguation: "駅のティールームでコーヒーを飲む「여객들／객」は別の限定された集団。妻の客たちとも別。"
+    appears_in: ["ep06_first_outing.txt", "ep07_second_outing.txt", "ep10_rooftop.txt"]
+    importance: "minor"
+
+  - label: "駅のティールームの客たち"
+    id: "station_tearoom_patron"
+    proper_names: []
+    references:
+      - expr: "여객들"
+        where: "ep07でコーヒーを飲んで立ち去る駅の旅客たち"
+      - expr: "객"
+        where: "ep07で閉店時刻が近づくにつれて減っていく客"
+    is_same_person_as_note: "単一人物ではなく京城駅一・二等待合室のティールーム利用者。妻の「내객」とは無関係。"
+    role: "主人公が時間をつぶすティールームの一時的な利用客。"
+    speaks: false
+    dialogue_markers: "台詞はなく、コーヒーを飲み、壁を見て去る行動だけが記される。"
+    disambiguation: "「객」は駅の店の客、「내객」は妻を訪ねる客であり、文脈で区別する。"
+    appears_in: ["ep07_second_outing.txt"]
+    importance: "minor"
+
+  - label: "하느님"
+    id: "god"
+    proper_names: ["하느님"]
+    references:
+      - expr: "하느님"
+        where: "ep09で語り手が自分の安楽な生活を自慢したい相手として言及"
+    is_same_person_as_note: "宗教的存在として一度言及されるだけで、作中に直接出現する人格的存在かはuncertain。"
+    role: "語り手が自分を褒めることも罰することもできないだろうと想像する超越的存在。"
+    speaks: false
+    dialogue_markers: "台詞・応答はない。"
+    disambiguation: "他の人物を指す比喩ではない。"
+    appears_in: ["ep09_adalin.txt"]
+    importance: "minor"
+
+  - label: "主人公の部屋の南京虫"
+    id: "bedbugs"
+    proper_names: []
+    references:
+      - expr: "빈대"
+        where: "ep04で主人公が何より嫌う虫"
+      - expr: "몇 마리의 빈대"
+        where: "ep04で冬にも部屋から絶えず出る南京虫"
+      - expr: "빈대에게"
+        where: "ep04で主人公を刺す主体"
+    is_same_person_as_note: "複数の南京虫から成る非人間の集合。"
+    role: "主人公を刺して痒みを生じさせ、閉鎖的で不衛生な部屋の生活を示す。"
+    speaks: false
+    dialogue_markers: "台詞はない。"
+    disambiguation: "比喩として挙げられる犬・蛙・蟇などとは異なり、実際に部屋に存在して主人公を刺す。"
+    appears_in: ["ep04_play_and_scent.txt"]
+    importance: "minor"
+
+  - label: "三越屋上の金魚たち"
+    id: "mitsukoshi_goldfish"
+    proper_names: []
+    references:
+      - expr: "금붕어"
+        where: "ep10で主人公が屋上から眺める魚"
+      - expr: "금붕어는"
+        where: "ep10で姿のよさを評される金魚"
+      - expr: "금붕어들"
+        where: "ep10で五月の日光の中、器の底に影を落とす魚たち"
+      - expr: "작은놈"
+        where: "ep10で小さい金魚を指す"
+      - expr: "큰놈"
+        where: "ep10で大きい金魚を指す"
+    is_same_person_as_note: "複数の金魚から成る非人間の集合。"
+    role: "三越屋上で生命力のある動きを見せ、疲弊した都市生活や主人公自身と対照される象徴的存在。"
+    speaks: false
+    dialogue_markers: "台詞はなく、ひれを動かし影を落とす様子で識別される。"
+    disambiguation: "「작은놈／큰놈」はここでは人間ではなく大小の金魚を指す。"
+    appears_in: ["ep10_rooftop.txt"]
+    importance: "minor"

@@ -4,6 +4,8 @@ MyProject/
   project.yaml          作品名・原稿のパス・言語・ステップごとのモデル設定
   casts/ personas/ episodes/
   translations/<lang>/  chapter_translator の出力
+  translations/<lang>@<variant>/  localizer の出力
+  localize/presets/     プロジェクト独自のプリセット
   .dz/jobs/<id>.json    ジョブ履歴（API キーは含まない）
 
 既存の CLI 出力フォルダもそのまま開ける（project.yaml が無ければ既定値で作る）。
@@ -24,14 +26,16 @@ import yaml
 
 from divergence_z.chapter_translator import find_character_file
 from divergence_z.core import dump_yaml
+from divergence_z.localizer import variant_dir
 
-STEPS = ("cast", "persona", "episode", "translate", "voice", "generate")
+STEPS = ("cast", "persona", "episode", "translate", "localize", "voice", "generate")
 
 DEFAULT_MODELS: Dict[str, Dict[str, str]] = {
     "cast": {"model": "gpt-5.6-sol", "effort": "high"},
     "persona": {"model": "gpt-5.6-sol", "effort": "max"},
     "episode": {"model": "gpt-5.6-sol", "effort": "max"},
     "translate": {"model": "gpt-5.6-sol", "effort": "high"},
+    "localize": {"model": "gpt-5.6-sol", "effort": "medium"},
     "voice": {"model": "claude-opus-5-5", "effort": "high"},
     "generate": {"model": "claude-opus-5-5", "effort": "high"},
 }
@@ -67,6 +71,14 @@ class Project:
 
     def translation_dir(self, lang: str) -> Path:
         return self.root / "translations" / lang
+
+    def localization_dir(self, lang: str, variant: str) -> Path:
+        return variant_dir(self.root / "translations", lang, variant)
+
+    @property
+    def preset_dir(self) -> Path:
+        """プロジェクト独自のローカライズ・プリセット（同じ id なら同梱分より優先）"""
+        return self.root / "localize" / "presets"
 
     @property
     def jobs_dir(self) -> Path:
