@@ -11,6 +11,7 @@
               ├─ EPISODE  エピソード この人は何を経験したか（台詞は原文照合つき）
               │
               ├─▶ TRANSLATE  章ごとに資料＋訳語表＋前章を渡して翻訳
+              │     └─▶ LOCALIZE  訳文はそのまま残し、宗教・性表現などをプリセットで調整した版を別に作る
               └─▶ VOICE      その人物の声で、原作にない台詞を言わせる
 ```
 
@@ -145,7 +146,34 @@ CLI だけ使う場合は、デスクトップアプリの手順は不要です�
 
 段落の抜けがあった章は `INCOMPLETE` になります。もう一度翻訳を実行すれば訳し直します。
 
-### 4.6 ボイス
+### 4.6 ローカライズ（宗教・性表現などの調整）
+
+「**ローカライズ**」タブ。訳し上がった訳文（L0）には一切触らず、調整した版を `translations/<言語>@<版の名前>/` に別に作ります。
+
+1. 「宗教・性表現などを調整しますか？」でプリセットを選ぶ（複数可。後から選んだものが優先）
+2. 必要なら「領域ごとに微調整」で、領域ごとの処理を変える
+3. 実行すると、章ごとに **変更一覧** ができる。気に入らない変更は「↩ 戻す」で1件ずつ戻せる（API は呼びません）
+
+| プリセット | すること |
+|---|---|
+| 読者配慮（訳注のみ） | 文化固有の語に短い補足を足す。置き換えはしない |
+| 市場適応（等価置換） | 商品・生活文化と表記（度量衡・通貨・日付）を読者の文化の等価物に |
+| PG15（性・暴力表現の緩和） | 露骨な描写の**修飾部**（擬態語・程度表現）だけを抑える。出来事と述語は変えない |
+| ハラール配慮（豚肉・飲酒） | 筋に関わらない豚肉・飲酒を等価物に。筋に関わるものは診断のみ |
+| 宗教的冒涜表現の調整 | 神名を使った罵倒などを、同じ強さの世俗的な言い回しに |
+| 市場診断のみ | 本文には触れず、摩擦しうる箇所だけを報告 |
+
+処理の種類：**補完**（L2・訳注を足す）／**等価置換**（L3・強度と機能は保つ。表記は L1）／**緩和**（強度を下げる。利用者が選んだときだけ）／**診断のみ**（L4・本文に触れない）。
+
+ツールが勝手に変えないための仕組み：
+
+- LLM は本文を書き直さず、「修正リスト」と「診断」だけを返す。置換前の文字列がその段落の L0 にちょうど1回出てくるときだけ適用する
+- 方針外の修正・他の修正と重なる修正・修飾部を越えて述語に手を入れた緩和（日本語・韓国語）・訳語表で決めた語を消す緩和は、理由つきで「適用せず」として台帳に残る
+- 出力は、クリーン版（`.md`、納品物）・注記版（`.annotated.md`、変更箇所に `〔L3・商品: 元の訳〕` の標識）・台帳（`.ledger.json`）・診断（`.diagnosis.md`）
+
+作品ごとのプリセットは `localize/presets/*.yaml` に置くと一覧に出ます（同梱分と同じ id なら上書き）。作例：`Result/Korea/`（이상『날개』の `ja@pg15`）。
+
+### 4.7 ボイス
 
 「**ボイス**」タブで、ペルソナがある人物に、原作にない台詞を言わせられます。
 
@@ -154,7 +182,7 @@ CLI だけ使う場合は、デスクトップアプリの手順は不要です�
 - **出力言語**を選ぶと、その人物らしさを保ったまま他の言語で出力します
 - 「分析を見る」で、適用された感情の状態（z_mode）や揺れの表れ方（z_leak）を確認できます
 
-### 4.7 Web 生成（原作テキストが無いとき）
+### 4.8 Web 生成（原作テキストが無いとき）
 
 「**Web 生成**」タブでは、キャラクター名と作品名だけで、Web 検索をもとにペルソナとエピソードを作れます
 （`persona_generator.py` → `episode_generator.py`）。原作テキストがある作品は、パイプラインの抽出の方が正確です。
@@ -164,7 +192,7 @@ CLI だけ使う場合は、デスクトップアプリの手順は不要です�
 - エピソードは、直前に作ったペルソナを参考にして作ります。作成済みの資料は「既存を作り直す」を付けない限りスキップします
 - 「Web 検索する」を外すとモデルの知識だけで作ります。台詞が実在しないものになりやすいので注意してください
 
-### 4.8 AIチャット
+### 4.9 AIチャット
 
 左メニューの「**AIチャット**」で、ペルソナを作った人物と会話できます。
 
@@ -176,7 +204,7 @@ CLI だけ使う場合は、デスクトップアプリの手順は不要です�
 - 会話ログはプロジェクトフォルダの `chats/` に保存され、手元の PC から出ません
 - 指示の内容によっては、モデルの安全機能に断られることがあります（`ERR::refusal`）
 
-### 4.9 設定
+### 4.10 設定
 
 「**設定**」タブで、プロジェクト名・原稿フォルダ・資料の説明文の言語と、**ステップごとのモデルと推論の強さ**を変えられます。
 たとえば「抽出は大きいモデル + max、試し訳は安いモデル + low」のように使い分けられます。
@@ -215,6 +243,16 @@ $PY chapter_translator.py ... --dry-run   # API を呼ばずにトークン数�
 途中で止まっても、再実行すれば終わったセクションの続きから再開します。
 
 名前で呼ばれる作品なら `--cast` は省略できます。`--source` には単一ファイル（txt / md / pdf / epub）も指定できます。
+
+### ローカライズ
+
+```bash
+$PY localizer.py --list-presets
+# 訳し上がった章（translations/STARGAZER_en/）を PG15 で → translations/en@pg15/
+$PY localizer.py -i translations/STARGAZER_en -t en -p pg15
+$PY localizer.py ... -p market_adapt -p pg15 --set violence=keep   # 重ねがけ・領域ごとの上書き
+$PY localizer.py ... -p pg15 --revert stargazer_ep01:E003          # 1件戻す（API を呼ばない）
+```
 
 ### 原作テキストが無い場合（Web 検索で生成）
 
@@ -285,6 +323,9 @@ MyProject/
     <章>.<言語>.md              訳文
     <章>.<言語>.segments.json   原文と訳文の段落対応
     translation_notes.yaml      訳語表（手で直してよい）
+  translations/<言語>@<版>/     ローカライズ版（L0 は変えない）
+    <章>.<言語>.md / .annotated.md / .ledger.json / .diagnosis.md、policy.yaml
+  localize/presets/       作品ごとのローカライズ・プリセット
   .dz/jobs/               ジョブの履歴（API キーは含まない）
 ```
 
@@ -310,6 +351,7 @@ MyProject/
 | 章が `INCOMPLETE` | 段落の抜けを検出。再翻訳すれば訳し直します |
 | `*_BROKEN.yaml` ができた | LLM の出力が YAML として壊れていた。手で直してリネームするか、再実行 |
 | ラベルを直したのに資料が古い名前のまま | 既存ファイルはスキップされるので、古いファイルを消してから再実行 |
+| 人物表や訳文が読み込まれない | 「原稿フォルダ」にプロジェクトのフォルダを指定していないか確認。原稿フォルダは原稿だけを読みます。`project.yaml` のあるフォルダは、一覧の「フォルダを開く」でプロジェクトとして開く（指定するとアプリが確認を出します） |
 
 ## 10. 開発者向け
 
@@ -485,7 +527,34 @@ The **翻訳 (Translate)** tab:
 
 Chapters with missing paragraphs are marked `INCOMPLETE`; translate again to fix them.
 
-### 4.6 Voice
+### 4.6 Localize (religion, sexual content, and more)
+
+The **ローカライズ (Localize)** tab. The finished translation (L0) is never touched; each adjusted version is written to `translations/<lang>@<variant>/`.
+
+1. Under "宗教・性表現などを調整しますか？" pick one or more presets (later picks win)
+2. Optionally tweak the action per domain
+3. Run it. Each chapter gets an **edit list**; revert any single edit with "↩ 戻す" (no API call)
+
+| Preset | What it does |
+|---|---|
+| reader_notes | Adds short glosses to culture-specific terms; never replaces them |
+| market_adapt | Replaces products, everyday items, and notation (units, currency, dates) with equivalents for the reader |
+| pg15 | Tones down only the **modifiers** (mimetic words, degree phrases) of explicit sex and violence; events and predicates stay |
+| halal | Swaps incidental pork and alcohol for equivalents; plot-relevant ones are only diagnosed |
+| religious_profanity | Turns oaths using the sacred into secular ones of the same strength |
+| diagnose_only | Touches nothing; reports passages that may conflict |
+
+Actions: **annotate** (L2, add a gloss) / **substitute** (L3, keep intensity and function; L1 for notation) / **soften** (lower intensity, only when you choose it) / **flag** (L4, diagnosis only).
+
+How it avoids silent changes:
+
+- The model never rewrites text. It returns an edit list and diagnoses, and an edit is applied only when its "before" occurs exactly once in the L0 paragraph
+- Out-of-policy edits, overlapping edits, softening that reaches past the modifiers into the predicate (Japanese/Korean), and softening that removes a glossary term are kept in the ledger as rejected, with a reason
+- Output: clean text (`.md`, the deliverable), annotated text (`.annotated.md`, with markers like `〔L3・商品: original〕`), ledger (`.ledger.json`), diagnoses (`.diagnosis.md`)
+
+Project-specific presets go in `localize/presets/*.yaml` (same id overrides a built-in). Example: `Result/Korea/` (Yi Sang's *Wings*, `ja@pg15`).
+
+### 4.7 Voice
 
 In the **ボイス (Voice)** tab, characters with a persona can say new lines:
 
@@ -494,7 +563,7 @@ In the **ボイス (Voice)** tab, characters with a persona can say new lines:
 - Pick an **output language** to keep the character's voice in another language
 - "分析を見る" shows the emotional state (z_mode) and how it leaks into speech (z_leak)
 
-### 4.7 Web generation (no source text)
+### 4.8 Web generation (no source text)
 
 The **Web 生成 (Web generation)** tab builds a persona and episodes from just a character name and a work title,
 using web search (`persona_generator.py` → `episode_generator.py`). With source text, pipeline extraction is more accurate.
@@ -504,7 +573,7 @@ using web search (`persona_generator.py` → `episode_generator.py`). With sourc
 - Episodes are generated with the just-made persona as context; existing files are skipped unless "既存を作り直す" is on
 - Turning web search off relies on model knowledge alone, so quotes are more likely to be invented
 
-### 4.8 AI chat
+### 4.9 AI chat
 
 **AIチャット (AI chat)** in the sidebar lets you talk with any character that has a persona.
 
@@ -516,7 +585,7 @@ using web search (`persona_generator.py` → `episode_generator.py`). With sourc
 - Chat logs are saved in the project folder under `chats/` and stay on your machine
 - Depending on the template, a model's safeguards may decline the request (`ERR::refusal`)
 
-### 4.9 Settings
+### 4.10 Settings
 
 The **設定 (Settings)** tab sets the project name, manuscript folder, description language, and **the model and effort for each step** — e.g. a large model at `max` for extraction and a cheap model at `low` for trial translations.
 
@@ -554,6 +623,16 @@ scene-level sections, then translated one section per call. Each call gets the c
 just before it, and the bible of only the characters in that section. A stopped run resumes at the next section.
 
 `--cast` can be omitted for works where characters are named. `--source` also accepts a single file (txt / md / pdf / epub).
+
+### Localization
+
+```bash
+$PY localizer.py --list-presets
+# finished chapters in translations/STARGAZER_en/ with PG15 → translations/en@pg15/
+$PY localizer.py -i translations/STARGAZER_en -t en -p pg15
+$PY localizer.py ... -p market_adapt -p pg15 --set violence=keep   # stack presets, override a domain
+$PY localizer.py ... -p pg15 --revert stargazer_ep01:E003          # revert one edit (no API call)
+```
 
 ### Without source text (web search)
 
@@ -623,6 +702,9 @@ MyProject/
     <chapter>.<lang>.md             translation
     <chapter>.<lang>.segments.json  source/translation paragraph alignment
     translation_notes.yaml          glossary (safe to edit by hand)
+  translations/<lang>@<variant>/    localized version (L0 is never changed)
+    <chapter>.<lang>.md / .annotated.md / .ledger.json / .diagnosis.md, policy.yaml
+  localize/presets/       project-specific localization presets
   .dz/jobs/               job history (never contains API keys)
 ```
 
@@ -648,6 +730,7 @@ Everything is plain YAML / Markdown. Edit files directly and the app picks the c
 | Chapter shows `INCOMPLETE` | Missing paragraphs were detected — translate it again |
 | A `*_BROKEN.yaml` file appeared | The model returned invalid YAML — fix and rename it, or run again |
 | Bible files keep an old label | Existing files are skipped — delete them and run again |
+| Cast, bible, or translations don't load | Check that the 原稿フォルダ (manuscript folder) isn't a project folder: it only supplies the manuscript. Open a folder with `project.yaml` as a project from the list instead (the app now asks when you pick one) |
 
 ## 10. For developers
 

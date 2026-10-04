@@ -180,6 +180,9 @@ export const api = {
   projects: () => call<{ projects: Project[] }>("GET", "/projects").then((r) => r.projects),
   openProject: (body: Partial<Project> & { root: string }) => call<Project>("POST", "/projects", body),
   project: (id: string) => call<Project>("GET", `/projects/${id}`),
+  inspectFolder: (path: string) =>
+    call<{ path: string; is_project: boolean; name?: string; work?: string; registered_id?: string | null }>(
+      "GET", `/folders/inspect?path=${enc(path)}`),
   patchProject: (id: string, body: Partial<Project>) => call<Project>("PATCH", `/projects/${id}`, body),
   closeProject: (id: string) => call("DELETE", `/projects/${id}`),
 

@@ -187,6 +187,22 @@ def create_app(token: str, allowed_origins: Optional[List[str]] = None,
         cfg = body.model_dump(exclude={"root"}, exclude_none=True)
         return registry_.open(root, **cfg).to_dict()
 
+    @app.get("/folders/inspect")
+    def inspect_folder(path: str):
+        """フォルダがプロジェクト（project.yaml がある）かどうか。原稿フォルダの取り違えを防ぐ"""
+        root = Path(path).expanduser()
+        cfg_path = root / "project.yaml"
+        if not root.is_dir() or not cfg_path.exists():
+            return {"path": str(root), "is_project": False}
+        try:
+            cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) or {}
+        except yaml.YAMLError:
+            cfg = {}
+        resolved = root.resolve()
+        registered = next((p.id for p in registry_.list() if p.root == resolved), None)
+        return {"path": str(resolved), "is_project": True, "name": cfg.get("name") or root.name,
+                "work": cfg.get("work", ""), "registered_id": registered}
+
     @app.get("/projects/{project_id}")
     def get_project(project_id: str):
         project = project_or_404(project_id)

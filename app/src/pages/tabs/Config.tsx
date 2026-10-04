@@ -2,6 +2,7 @@ import { useState } from "react";
 import { api, STEPS, StepName } from "../../lib/api";
 import { useAsync } from "../../lib/hooks";
 import { ErrorBox, Pill, Sticker } from "../../components/ui";
+import { ProjectFolderPrompt } from "../../components/ProjectFolderPrompt";
 import type { ProjectCtx } from "../Project";
 
 const STEP_LABEL: Record<StepName, string> = {
@@ -52,6 +53,7 @@ export function ConfigTab({ ctx }: { ctx: ProjectCtx }) {
               }}>選ぶ</button>
             </div>
           </label>
+          <div style={{ gridColumn: "1 / -1" }}><ProjectFolderPrompt path={cfg.source} currentRoot={project.root} /></div>
           <label className="field">資料の説明文の言語
             <select value={cfg.output_lang} onChange={(e) => setCfg({ ...cfg, output_lang: e.target.value })}>
               {["ja", "en", "zh", "ko", "fr", "es", "de"].map((l) => <option key={l}>{l}</option>)}
