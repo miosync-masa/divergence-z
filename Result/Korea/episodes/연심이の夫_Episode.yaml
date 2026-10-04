@@ -1,0 +1,688 @@
+meta:
+  version: "1.0"
+  generated_by: "episode_extractor"
+  character_id: "연심이の夫"
+  persona_file: "yeonsimi_husband_persona.yaml"
+  source: "날개 (翼)"
+
+timelines:
+  - timeline_id: "main"
+    label: "本編の単一時間軸"
+    episodes:
+      - episode_id: "prologue_intellectual_mask"
+        timeline: "main"
+        chronological_order: 1
+        title: "逆説で作る知的な仮面"
+        source_episode: "ep01_prologue.txt"
+        summary: |
+          語り手は自らを剝製となった天才になぞらえ、疲労時の明晰さ、恋愛、自己偽造、機知と逆説について仮想の聞き手へ語る。具体的な生活を明かす前に、感情を固定されたポーズとして扱い、自分と人生を観念的に眺める語りの仮面を作った。
+        participants:
+          - name: "プロローグの聞き手"
+            role: "仮想的な聞き手"
+        emotional_impact: "low"
+        emotional_detail: |
+          表面には愉快さと知的余裕があるが、感情を停止させ、人生から距離を取ろうとする姿勢も現れている。この知性化は、後に妻への恐怖や疑念を直接語れない時の防御として繰り返される。
+        canonical_quotes:
+          - quote: "'박제(剝製)가 되어 버린 천재'를 아시오? 나는 유쾌하오. 이런 때 연애까지가 유쾌하오."
+            context: "仮想の聞き手へ、逆説的な自己像と恋愛観を提示する冒頭。"
+            z_intensity: "low"
+            z_mode: "stable"
+          - quote: '그대 자신을 위조하는 것도 할 만한 일이오.'
+            context: "聞き手に自己偽造を勧めながら、自身の仮面的な態度も示す。"
+            z_intensity: "low"
+            z_mode: "stable"
+          - quote: '나는 내 비범한 발육을 회고하여 세상을 보는 안목을 규정하였소.'
+            context: "自らの来歴を根拠に、世界を見る枠組みを定めたと宣言する。"
+            z_intensity: "low"
+            z_mode: "stable"
+        z_relevance: |
+          序文の古風な하오体は、後続本編の裸に近い回想文体と区別する必要がある。機知と逆説は客観的な自信ではなく、感情から距離を取る自己演出でもある。また、ここで語られる抽象的な女性を、本文に明示のないまま연심이と同一視してはならない。
+        character_state_change:
+          before: "具体的な生活や感情をまだ開示していない。"
+          after: "古風で逆説的な知識人として自己を演出し、感情を観念へ変換する語りの枠を作る。"
+          permanent: true
+        tags: ["自己像", "知性化", "序文", "逆説", "語りの仮面"]
+
+      - episode_id: "thirty_three_isolation_and_wife_idealization"
+        timeline: "main"
+        chronological_order: 2
+        title: "三十三番地の孤立と妻の理想化"
+        source_episode: "ep02_33beonji.txt"
+        summary: |
+          日の差さない三十三番地で、彼は十八世帯の誰とも遊ばず、挨拶さえ避けて妻とだけ関わろうとする。若い女性たちの中で妻を最も小さく美しい花として崇める一方、自分をその花を守る者ではなく、花にぶら下がって生きる気詰まりな存在だと言い直す。
+        participants:
+          - name: "연심이"
+            role: "妻／愛着と生活依存の対象"
+          - name: "33番地18世帯の若い女性たち"
+            role: "妻を比較し、閉鎖的環境を形作る住民"
+        emotional_impact: "medium"
+        emotional_detail: |
+          妻への強い愛着は、他者との交流を断つ理由になっている。崇拝の比喩の内部には、自分が妻に依存し、対等な夫として立てていないという居心地の悪い自己認識も含まれる。
+        canonical_quotes:
+          - quote: '나는 그러나 그들의 아무와도 놀지 않는다. 놀지 않을 뿐만 아니라 인사도 않는다.'
+            context: "三十三番地の住民との接触を徹底して避ける。"
+            z_intensity: "low"
+            z_mode: "stable"
+          - quote: '나는 이 만큼 까지 내 아내를 소중히 생각한 것이다.'
+            context: "他者と交わらない理由を、妻を大切にしているためだと説明する。"
+            z_intensity: "medium"
+            z_mode: "nurture"
+          - quote: '따라서 그런 한 떨기 꽃을 지키고---아니 그 꽃에 매어달려 사는 나라는 존재가 도무지 형언할 수 없는 거북살스러 운 존재가 아닐 수 없었던 것은 물론이다.'
+            context: "妻を守るという自己像を訂正し、妻にぶら下がって生きる依存を認める。"
+            z_intensity: "medium"
+            z_mode: "concern"
+        z_relevance: |
+          妻を花として称える柔らかさと、「守る」から「ぶら下がる」へ反転する自己訂正を同時に保つ必要がある。後の疑念や怒りも、この初期の崇拝と依存を背景に持つため、単純な支配者対被害者の関係へ平板化しない。
+        character_state_change:
+          before: "閉鎖的な住所に暮らしているが、対人関係の原則はまだ示されていない。"
+          after: "妻だけを対人世界の中心に置き、自分の存在を妻への依存によって規定する。"
+          permanent: true
+        tags: ["孤立", "妻の理想化", "依存", "関係形成", "閉鎖空間"]
+
+      - episode_id: "absolute_room_and_divided_fate"
+        timeline: "main"
+        chronological_order: 3
+        title: "絶対的な部屋と分断された運命"
+        source_episode: "ep03_my_room.txt"
+        summary: |
+          彼は自室を家とは呼ばず、それでも暗さと温度が身体に完全に合う場所として愛する。幸福か不幸かを計算せず、ただ寝転がる状態を絶対的な安逸と捉える。七番目の部屋を幸運の印として愛する一方、明るい妻の部屋と暗い自室を隔てる襖を、自分の運命の象徴として認識する。
+        participants:
+          - name: "연심이"
+            role: "襖の向こう側に暮らす妻"
+        emotional_impact: "medium"
+        emotional_detail: |
+          暗い部屋は社会的役割も感情判断も要求しない安全地帯となる。しかし同時に、妻の明るい領域から隔てられた生活を自ら受容する装置でもあり、安堵と幽閉が重なっている。
+        canonical_quotes:
+          - quote: '나는 어디까지든지 내 방이---집이 아니다. 집은 없다.---마음에 들었다.'
+            context: "自室を家ではないと訂正しながら、それでも強く気に入っていると語る。"
+            z_intensity: "low"
+            z_mode: "stable"
+          - quote: '나는 이런 상태가 좋았다.'
+            context: "幸福・不幸の計算を離れ、寝転がる絶対的状態を肯定する。"
+            z_intensity: "low"
+            z_mode: "stable"
+          - quote: '나는 이 일곱이라는 숫자를 훈장처럼 사랑하였다.'
+            context: "自室が七番目であることを私的な勲章として愛する。"
+            z_intensity: "low"
+            z_mode: "stable"
+        z_relevance: |
+          ここでの満足は明るい幸福ではなく、幸福か不幸かを判断する必要そのものを放棄した安堵である。「家はない」という自己訂正と、明暗に分割された夫婦の空間を残し、単なる居心地のよい部屋として訳さない。
+        character_state_change:
+          before: "妻への依存と住民からの孤立が示されている。"
+          after: "暗い自室と無為を、自分に最も適した絶対的な生存状態として内面化する。"
+          permanent: true
+        tags: ["自室", "安逸", "空間分割", "運命", "無為"]
+
+      - episode_id: "sensory_play_and_social_withdrawal"
+        timeline: "main"
+        chronological_order: 4
+        title: "妻の部屋での感覚遊戯"
+        source_episode: "ep04_play_and_scent.txt"
+        summary: |
+          妻の外出中、彼は明るい妻の部屋へ移り、虫眼鏡で紙を焦がし、鏡や化粧瓶で遊ぶ。香りを妻の体臭の断片として吸い込み、衣服から妻の身体を連想する。自分には着替えさえ与えられていないが、寝床へ戻れば発明、論文、詩を空想し、眠るとすべてを失っても構わない。社会生活と積極的行動は、彼にはただ気詰まりで面倒なものだった。
+        participants:
+          - name: "연심이"
+            role: "不在のまま感覚遊戯と官能的連想を引き起こす妻"
+        emotional_impact: "medium"
+        emotional_detail: |
+          他者から何も要求されない感覚遊戯では、彼の好奇心と創造性が生き生きと現れる。一方、その自由は妻の不在と所有物に依存しており、衣服や社会的役割を持たない生活への受動的な服従も深まる。
+        canonical_quotes:
+          - quote: '나는 조그만 돋보기를 꺼내가지고 아내만이 사용하는 지리가미를 꺼내 가지고 그을려 가면서 불장난을 하고 논다.'
+            context: "妻の留守に虫眼鏡で紙を焦がし、一人遊びへ没頭する。"
+            z_intensity: "medium"
+            z_mode: "stable"
+          - quote: '확실히 아내의 체취의 파편이다.'
+            context: "化粧品の香りを、妻の身体から分かれた断片として感じる。"
+            z_intensity: "medium"
+            z_mode: "nurture"
+          - quote: '나는 내 좀 축축한 이불속에서 참 여러가지 발명도 하였고 논문도 많이 썼다. 시 도 많이 지었다.'
+            context: "眠れない寝床の中で、保存されない創作を次々に空想する。"
+            z_intensity: "low"
+            z_mode: "stable"
+          - quote: '나에게는 인간 사회가 스스러웠다. 생활이 스스러웠다. 모두가 서먹서먹할 뿐이었다.'
+            context: "積極的な社会生活を避ける根本的な疎外感を言い表す。"
+            z_intensity: "medium"
+            z_mode: "concern"
+        z_relevance: |
+          光、熱、煙、匂いを追う精密な感覚描写は、彼の素の活力を示すため省略しない。妻への官能は直接的な接触ではなく、香りと衣服を介した内向きの連想である。終盤の社会への疎外感との落差も保つ。
+        character_state_change:
+          before: "暗い部屋で無為を安全として受け入れている。"
+          after: "非対人的な感覚刺激の中では創造的になれる一方、社会参加を明確に拒む。"
+          permanent: true
+        tags: ["感覚遊戯", "妻への愛着", "創作", "社会的疎外", "依存"]
+
+      - episode_id: "money_visitors_and_pleasure_question"
+        timeline: "main"
+        chronological_order: 5
+        title: "客、銀貨、快感という謎"
+        source_episode: "ep05_money.txt"
+        summary: |
+          妻に客がいる日は自室へ閉じ込められ、遊びもできない彼に、妻は五十銭銀貨を置いていく。彼は金の使い方を知らず、貯金箱へ入れるだけだった。粗末な食事で痩せ衰えながら、客が妻へ金を置く理由と、妻が自分へ金を置く理由を研究するが、妻には尋ねない。貯金箱を便所へ捨てても叱られず、やがて金銭授受に伴う「快感」を自分でも体験したいと考える。
+        participants:
+          - name: "연심이"
+            role: "妻／食事と金を与え、客を迎える生活管理者"
+          - name: "연심이の客たち"
+            role: "金の出所と夫の疑念を生む触媒"
+        emotional_impact: "high"
+        emotional_detail: |
+          空腹、衰弱、疎外感は強いが、彼はそれらを妻への抗議ではなく研究課題へ変える。妻が残り物を与えないことまで、自分への尊敬だと解釈する。金そのものへの欲望はないものの、手から手へ渡る時の触覚と親密さへの好奇心が、初めて外出へ向かう動機になる。
+        canonical_quotes:
+          - quote: '나는 그것이 좋았다.'
+            context: "客のいる日に妻から与えられる五十銭銀貨を、用途とは無関係に気に入る。"
+            z_intensity: "low"
+            z_mode: "stable"
+          - quote: '나는 안색이 여지없이 창백해가면서 말라 들어갔다. 나날이 눈에 보이듯이 기운이 줄어들었다.'
+            context: "粗末な食事によって身体が目に見えて衰弱する。"
+            z_intensity: "high"
+            z_mode: "grief"
+          - quote: '그러나 왜 그들 내객은 돈을 놓고 가나? 왜 내 아내는 그 돈을 받아야 되나? 하는 예의 관념이 내게는 도무지 알 수 없는 것이었다.'
+            context: "妻の客と金の関係を理解できず、疑問を連ねる。"
+            z_intensity: "medium"
+            z_mode: "concern"
+          - quote: '쾌감, 쾌감, 하고 나는 뜻밖에도 이 문제에 대해서만 흥미를 느꼈다.'
+            context: "金銭授受に快感があるのかという一点へ、思考が執着し始める。"
+            z_intensity: "medium"
+            z_mode: "concern"
+        z_relevance: |
+          妻の職業は彼には最後まで明示的に理解されないため、翻訳で職業名や客の目的を断定しない。飢餓を妻の尊敬へ読み替える論理は、皮肉な事実説明ではなく彼自身の切実な合理化として扱う。金は購買力より、触覚と関係を媒介するものとして訳す必要がある。
+        character_state_change:
+          before: "金を与えられても使い道を知らず、部屋で受動的に眠っている。"
+          after: "金銭授受を親密さと快感の仕組みとして捉え、自分で試したいという欲求を持つ。"
+          permanent: true
+        tags: ["金銭", "客", "飢餓", "知性化", "行動の契機"]
+
+      - episode_id: "first_outing_and_early_return"
+        timeline: "main"
+        chronological_order: 6
+        title: "最初の外出と早すぎた帰宅"
+        source_episode: "ep06_first_outing.txt"
+        summary: |
+          妻の夜の外出中、彼は貯まった銀貨を五ウォン紙幣へ替え、目的地を失うために街を歩く。久しぶりの街は神経と身体を疲弊させ、金を一銭も使えないまま帰宅する。自分では深夜だと思っていたがまだ真夜中前で、妻の部屋には見知らぬ男がいた。妻の険しい視線を受けながら通り抜け、襖越しに普段とは違う囁き声と、妻が男を門まで送る足音を聞く。
+        participants:
+          - name: "연심이"
+            role: "妻／帰宅を警戒する相手"
+          - name: "낯설은 남자"
+            role: "妻の秘密めいた態度を示す客"
+          - name: "都市の匿名の人々"
+            role: "外界の混雑と疎外感を体現する群衆"
+        emotional_impact: "high"
+        emotional_detail: |
+          外出は解放というより、身体的疲労と行き先のなさを確認する経験となった。妻と男の囁きには寂しさを感じるが、追及する力はなく、妻の眼差しと自分の疲労を前に再び寝床へ退く。
+        canonical_quotes:
+          - quote: '나는 아내의 밤 외출 틈을 타서 밖으로 나왔다.'
+            context: "妻の不在を利用し、閉じこもった生活から初めて外へ出る。"
+            z_intensity: "medium"
+            z_mode: "resolve"
+          - quote: '돈은 물론 한 푼도 쓰지 않았다. 돈을 쓸 아무 엄두도 나서지 않았다. 나는 벌써 돈을 쓰는 기능을 완전히 상실한 것 같았다.'
+            context: "街へ出ても、持参した金を消費することができない。"
+            z_intensity: "medium"
+            z_mode: "concern"
+          - quote: '나는 과연 피로를 이 이상 견디기가 어려웠다.'
+            context: "長時間の歩行によって身体が限界に達する。"
+            z_intensity: "high"
+            z_mode: "grief"
+          - quote: '나는 아내의 눈초리를 못 본 것은 아니다. 그러나 나는 모른 체하는 수 밖에 없었다.'
+            context: "妻の怒った視線を認識しながら、部屋を通るため見ないふりをする。"
+            z_intensity: "high"
+            z_mode: "concern"
+        z_relevance: |
+          最初の外出を自立した冒険として力強く訳さず、目的のなさ、金を使えない機能喪失、急速な身体崩壊を残す。妻の視線を理解しつつ見ないふりをする二重意識と、囁きへの寂しさが後の内的謝罪へつながる。
+        character_state_change:
+          before: "外界を避け、金銭授受の快感を想像するだけだった。"
+          after: "外へ出ることはできたが、街にも家庭にも安住できず、妻の秘密から排除された感覚を抱く。"
+          permanent: false
+        tags: ["最初の外出", "身体疲労", "妻の客", "疎外", "転機"]
+
+      - episode_id: "five_won_handover_and_first_night"
+        timeline: "main"
+        chronological_order: 7
+        title: "五ウォンの手渡しと妻の部屋での初夜"
+        source_episode: "ep06_first_outing.txt"
+        summary: |
+          帰宅後、妻は彼を揺り起こし、怒りを浮かべる。彼は目を閉じて罰を待ち、布団の中で外出の事情と無実を長々と弁明するが、実際には何も話せない。焦燥の末に妻の部屋へ行き、五ウォンを妻の手へ握らせて倒れる。翌朝、三十三番地で暮らし始めて初めて妻の寝床で目覚め、金を渡した時の快感と、客・妻・自分を結ぶ金銭授受の秘密を理解したと思う。
+        participants:
+          - name: "연심이"
+            role: "怒りの対象であり、金を受け取って私室へ受け入れる妻"
+        emotional_impact: "critical"
+        emotional_detail: |
+          妻の怒りを前に発話は停止するが、内面では誤解を解きたい気持ちがあふれる。言葉の代わりに金を手渡すことで拒絶を回避し、妻の寝床へ入れた経験が最大級の承認となる。以後、彼にとって金は妻との近接を再現する儀式になる。
+        canonical_quotes:
+          - quote: '나는 그대로 눈을 감아 버렸다. 벼락이 내리기를 기다린 것이다.'
+            context: "妻の怒った顔を見て、叱責を雷にたとえながら無言で待つ。"
+            z_intensity: "high"
+            z_mode: "concern"
+          - quote: '나는 이불 속에서 아내에게 사죄하였다. 그것은 네 오해라고……'
+            context: "現実には発話せず、布団の中だけで妻へ謝罪し誤解だと訴える。"
+            z_intensity: "high"
+            z_mode: "concern"
+          - quote: '내 잘못이라면 잘못은 그것 밖에 없다.'
+            context: "外出の事情を整理し、自分の過失を限定しようとする内的弁明。"
+            z_intensity: "high"
+            z_mode: "concern"
+          - quote: '나는 아내 이불 위에 엎드러지면서 바지 포켓 속에서 그 돈 오 원을 꺼내 아내 손에 쥐어 준 것을 간신히 기억할 뿐이다.'
+            context: "意識を失う直前、言葉の代わりに五ウォンを妻へ渡す。"
+            z_intensity: "high"
+            z_mode: "nurture"
+        z_relevance: |
+          謝罪と弁明はすべて内面であり、妻へ実際に語った台詞として訳してはならない。私的な二人称「네」と外面の沈黙を対照させる。金の手渡しは単なる支払いではなく、触覚、服従、受容、妻の寝床への接近を一つにした代替言語である。
+        character_state_change:
+          before: "妻の怒りと拒絶を恐れ、布団の中でしか弁明できない。"
+          after: "金を渡すことで妻の私的空間へ受け入れられるという関係の規則を発見したと信じる。"
+          permanent: true
+        tags: ["内的謝罪", "金銭儀式", "妻の部屋", "受容", "関係の転機"]
+
+      - episode_id: "second_handover_and_acceptance"
+        timeline: "main"
+        chronological_order: 8
+        title: "二ウォンで再現された受容"
+        source_episode: "ep07_second_outing.txt"
+        summary: |
+          ポケットに残っていた二ウォンを見つけた彼は、再び妻へ渡して妻の部屋で眠ることを期待し、空腹もみすぼらしさも忘れて外出する。時計を何度も確認し、真夜中を過ぎてから帰宅すると、門前で妻と男が話していた。二人を無視して入り、妻へ二ウォンを渡す。妻は何度も彼の顔を見た後、無言で寝床へ受け入れ、彼は深い安堵の中で眠る。
+        participants:
+          - name: "연심이"
+            role: "金を受け取り、再び寝床へ受け入れる妻"
+          - name: "아내의 남자"
+            role: "門前で妻と話す客"
+        emotional_impact: "high"
+        emotional_detail: |
+          前夜の偶然と思えた受容が再現され、彼の中で金と親密さの因果関係が確信へ変わる。妻が言葉で愛情を示したわけではないが、拒まれずに眠れたことだけで、世界の何物にも代えられない喜びを感じる。
+        canonical_quotes:
+          - quote: '나는 기운을 얻었다.'
+            context: "ポケットの二ウォンを見つけ、再び外出する活力を得る。"
+            z_intensity: "medium"
+            z_mode: "resolve"
+          - quote: '나는 이 기쁨을 세상의 무엇과도 바꾸고 싶지는 않았다.'
+            context: "妻が自分を再び寝床へ受け入れたことを最大級の喜びとして受け止める。"
+            z_intensity: "medium"
+            z_mode: "nurture"
+          - quote: '나는 편히 잘 잤다.'
+            context: "拒絶されなかった安心を、説明ではなく安眠によって示す。"
+            z_intensity: "low"
+            z_mode: "stable"
+        z_relevance: |
+          時計を気にする焦燥と、儀式の再現を待つ子供じみた期待を保つ。妻は無言であり、相互的な愛情を明言した場面ではない。短い「편히 잘 잤다」は、彼にとって言葉以上に強い受容の証しである。
+        character_state_change:
+          before: "五ウォンの手渡しと妻の寝床への受容を、一度だけ経験している。"
+          after: "金を使わず妻へ返せば親密さを得られるという規則を確信する。"
+          permanent: true
+        tags: ["外出", "金銭儀式", "受容", "安眠", "関係強化"]
+
+      - episode_id: "moneyless_tears_and_wifes_aid"
+        timeline: "main"
+        chronological_order: 9
+        title: "金の欠乏、涙、妻からの紙幣"
+        source_episode: "ep07_second_outing.txt"
+        summary: |
+          妻は初めて彼を自室の夕食へ招き、笑顔で向かい合う。彼は陰謀や最後の晩餐を疑って雷のような叱責を待つが、何も起きない。やがて次の外出に使える金がないと気づき、布団の中で泣く。妻は涙の理由を見抜いたと語り、紙幣を置き、前夜より遅く帰ってよいと囁く。彼は驚きながらも金を心からありがたく受け取る。
+        participants:
+          - name: "연심이"
+            role: "食事を用意し、涙の理由を見抜いて紙幣を与える妻"
+        emotional_impact: "high"
+        emotional_detail: |
+          叱責を予期する緊張は何事も起きない時間によって解けるが、金を失った途端に彼は幼い悲嘆へ崩れる。妻の柔らかな声と具体的な援助は、自分の欲求が理解されたという一時的な安心と行動力を回復させる。
+        canonical_quotes:
+          - quote: '그러나 벼락은 내리지 않았다. 긴장이 차츰 풀어지기 시작한다.'
+            context: "夕食後も予想した叱責が来ず、警戒が徐々に解ける。"
+            z_intensity: "medium"
+            z_mode: "stable"
+          - quote: '나는 이불 속에서 좀 울었나 보다.'
+            context: "次の金がないことに絶望し、布団の中で泣く。"
+            z_intensity: "high"
+            z_mode: "grief"
+          - quote: '왜 없느냐면서……'
+            context: "金の欠乏を、理由だけを問う幼い内語として漏らす。"
+            z_intensity: "high"
+            z_mode: "grief"
+          - quote: '그것은 어렵지 않다. 우선 그 돈이 무엇보다도 고맙고 반가웠다.'
+            context: "遅く帰るよう求められ、何より妻からの紙幣を喜ぶ。"
+            z_intensity: "low"
+            z_mode: "nurture"
+        z_relevance: |
+          「雷」「最後の晩餐」という過剰な予期と、金がないために泣く幼い短文の落差が重要である。妻の言葉は多くが間接話法で、彼の意識を通して再現されている。紙幣は購買力以上に、外出の許可と妻から忘れられていない証しとして響く。
+        character_state_change:
+          before: "罰を恐れ、金を失ったことで妻との親密さを再現できないと絶望する。"
+          after: "妻の援助によって一時的に理解されたと感じ、再び外出できる状態へ戻る。"
+          permanent: false
+        tags: ["欠乏", "涙", "妻の援助", "幼児的退行", "一時的回復"]
+
+      - episode_id: "station_refuge_rain_and_collapse"
+        timeline: "main"
+        chronological_order: 10
+        title: "駅の避難所、雨、禁じられた光景"
+        source_episode: "ep07_second_outing.txt"
+        summary: |
+          彼は京城駅の待合室のティールームを、知人が来ず正確な時計もある避難所として発見する。コーヒー、寂しい旅客、汽笛を気に入るが、閉店後は雨の街へ出される。寒さと濡れに耐えられず真夜中前に帰宅し、ノックを忘れ、妻が見られたくない光景を目撃する。自室へ逃げ込んで震え続け、ついに意識を失う。
+        participants:
+          - name: "연심이"
+            role: "見られたくない光景の当事者"
+          - name: "연심이の客たち"
+            role: "妻の部屋にいた客"
+          - name: "駅のティールームの客たち"
+            role: "一時的な匿名性を作る背景人物"
+        emotional_impact: "high"
+        emotional_detail: |
+          駅の寂しさは対人要求のない新しい安住感を与えるが、閉店と雨によって追い出される。帰宅後は視覚的衝撃より先に寒さ、悪寒、震えが意識を占め、外界を探索する試みは身体的崩壊で終わる。
+        canonical_quotes:
+          - quote: '그리고는 경성역 일 이등 대합실 한곁 티이루움에를 들렀다. 그것은 내게는 큰 발견이었다.'
+            context: "時間を安全に過ごせる匿名の場所として、駅のティールームを発見する。"
+            z_intensity: "medium"
+            z_mode: "stable"
+          - quote: '나는 한 복스에 아무것도 없는 것과 마주 앉아서 잘 끓은 커피를 마셨다.'
+            context: "誰もいない向かい側を相手に、静かにコーヒーを飲む。"
+            z_intensity: "low"
+            z_mode: "stable"
+          - quote: '이따금 들리는 날카로운 혹은 우렁찬 기적 소리가 모오짜르트보다도 더 가깝다.'
+            context: "駅の汽笛を音楽より身近なものとして感じる。"
+            z_intensity: "low"
+            z_mode: "stable"
+          - quote: '그래서 나는 보면 아내가 덜 좋아할 것을 그만 보았다.'
+            context: "ノックを忘れ、妻が見られることを望まない光景を目撃する。"
+            z_intensity: "high"
+            z_mode: "concern"
+          - quote: '덜덜덜덜 떨린다.'
+            context: "濡れと寒さで身体の制御を失い、意識を失う直前。"
+            z_intensity: "high"
+            z_mode: "grief"
+        z_relevance: |
+          駅では寂寥を好む静かな感覚描写を保ち、雨以後は身体語と擬態語へ急落させる。彼が見た内容は本文でも具体化されないため、性的場面などと確定して補わず、「妻が見られたくないもの」という焦点化を維持する。
+        character_state_change:
+          before: "妻から与えられた金と許可によって、外界に一時的な居場所を見つける。"
+          after: "外界にも家庭にも安全な場所を得られず、寒さと衝撃によって倒れる。"
+          permanent: false
+        tags: ["京城駅", "コーヒー", "雨", "目撃", "身体崩壊"]
+
+      - episode_id: "illness_and_daily_tablets"
+        timeline: "main"
+        chronological_order: 11
+        title: "病床と毎日の白い錠剤"
+        source_episode: "ep08_illness.txt"
+        summary: |
+          意識を取り戻すと、妻が心配そうに枕元へ座っていた。彼は風邪をひき、妻から温かい水と白い錠剤四個を渡され、アスピリンだろうと考えて素直に飲む。風邪が治った後も、妻の指示に従って外出しないと誓い、同じ薬を毎日服用する。約一か月、昼夜を問わず眠り続け、その眠気を身体が丈夫になった証拠だと信じる。
+        participants:
+          - name: "연심이"
+            role: "看病者であると同時に、薬と外出を管理する妻"
+        emotional_impact: "high"
+        emotional_detail: |
+          妻の世話は彼に安心を与え、薬の正体を確認する発想を持たせない。外出で傷ついた身体と主体性は、看病への感謝と従順さの中で再び部屋へ回収される。本人は長い睡眠を回復と理解しているため、後の発覚との落差が大きい。
+        canonical_quotes:
+          - quote: '나는 감기가 들었다.'
+            context: "雨の外出後、身体状態を簡潔に確認する。"
+            z_intensity: "medium"
+            z_mode: "concern"
+          - quote: '나는 널름 받아먹었다. 쌉싸름한 것이 짐작 같아서는 아마 아스피린 인가 싶다.'
+            context: "妻から渡された四錠を疑わず飲み、味からアスピリンだと推測する。"
+            z_intensity: "low"
+            z_mode: "nurture"
+          - quote: '그도 그렇다. 그럼 외출을 하지 않겠다고 맹세하고 그 약을 연복하여 몸을 좀 보해 보리라고 나는 생각하였다.'
+            context: "妻の忠告をもっともだと受け入れ、外出しないことを誓う。"
+            z_intensity: "medium"
+            z_mode: "stable"
+          - quote: '나는 이렇게 잠이 자꾸만 오는 것은 내가 몸이 훨씬 튼튼해진 증거라고 굳게 믿 었다.'
+            context: "異常な眠気を、薬の作用ではなく健康回復の証拠だと信じる。"
+            z_intensity: "medium"
+            z_mode: "stable"
+        z_relevance: |
+          この時点の彼は薬物欺瞞を知らず、妻の看病を信頼している。後の知識を先取りして疑い深い調子にしない。妻の行為には養育と管理の両面があるが、どちらか一方へ断定せず、彼の従順な焦点化を優先する。
+        character_state_change:
+          before: "外出と雨で発熱し、身体的に無力な状態にある。"
+          after: "妻の薬と指示へ全面的に従い、外出を放棄して長期間眠り続ける。"
+          permanent: false
+        tags: ["病気", "看病", "服薬", "睡眠", "再隔離"]
+
+      - episode_id: "adalin_discovery_and_overdose"
+        timeline: "main"
+        chronological_order: 12
+        title: "アダリンの発見と衝動的な過量服用"
+        source_episode: "ep09_adalin.txt"
+        summary: |
+          約一か月後、妻の外出中に明るい部屋へ入り、久しぶりに香りを嗅いだ彼は、心の中だけで妻を연심이と呼ぶ。その直後、化粧台の下から睡眠薬アダリンの箱を見つけ、四錠が欠けていることに気づく。自分がアスピリンだと思って飲み続けた薬への疑念に衝撃を受け、山へ逃れる。考えを整理できないまま、残った六錠を一度に噛み砕き、ベンチで一昼夜眠る。
+        participants:
+          - name: "연심이"
+            role: "不在のまま、愛着と薬物への疑念を同時に引き起こす妻"
+        emotional_impact: "critical"
+        emotional_detail: |
+          妻の名を呼ぶ官能的な親密さから、薬の箱を見た短い衝撃文へ急転する。信頼していた世話が、自分を眠らせるための操作だった可能性に変わり、思考は体系を失う。六錠を飲む行為は強い自己破壊性を持つが、本人にも目的は分からない。
+        canonical_quotes:
+          - quote: '나는 아내의 이름을 속으로만 한 번 불러 보았다. "연심이---"하고……'
+            context: "妻の香りを感じ、実際には声に出さず名前を呼ぶ。"
+            z_intensity: "medium"
+            z_mode: "nurture"
+          - quote: '그러나 다음 순간 실로 세상에도 이상스러운 것이 눈에 띄었다. 그것은 최면약 아달린갑이었다.'
+            context: "官能的な回想の直後、化粧台の下で睡眠薬の箱を発見する。"
+            z_intensity: "high"
+            z_mode: "concern"
+          - quote: '이것은 좀 너무 심하다.'
+            context: "一か月の服薬が欺瞞だった可能性を悟り、思考が短文へ崩れる。"
+            z_intensity: "high"
+            z_mode: "concern"
+          - quote: '무슨 생각으로 내가 그 따위 짓을 했나, 알 수가 없다. 그저 그러고 싶었다.'
+            context: "残ったアダリン六錠を一度に飲んだ理由を、自分でも説明できない。"
+            z_intensity: "high"
+            z_mode: "release"
+        z_relevance: |
+          妻の名は内心だけの呼びかけであり、実際の会話へ変えない。香りに満ちた長い文から「이것은 좀 너무 심하다.」へ縮む衝撃を保つ。六錠の服用は危険だが、本文は自殺意図を明示せず、本人も理由を知らないため、計画的な自殺未遂と断定しない。
+        character_state_change:
+          before: "妻の看病と薬を信じ、長い睡眠を健康の証拠と考えている。"
+          after: "妻への信頼が薬の証拠によって崩れ、混乱の中で衝動的な自己破壊へ走る。"
+          permanent: true
+        tags: ["アダリン", "裏切りの疑い", "衝撃", "過量服用", "転機"]
+
+      - episode_id: "suspicion_reversed_into_guilt"
+        timeline: "main"
+        chronological_order: 13
+        title: "疑念から罪悪感への反転"
+        source_episode: "ep09_adalin.txt"
+        summary: |
+          一昼夜後に目覚めた彼は、黄色く見える風景の中でアスピリンとアダリンの語を反復する。妻が一か月間自分を欺き、眠らせて何かをしていた、あるいは少しずつ殺そうとしたのではないかと疑う。しかしすぐに、自分が実際にはアスピリンを飲み、アダリンは不眠の妻自身が使ったのかもしれないという反証を作る。妻を疑った自分を申し訳なく思い、謝罪するため急いで帰宅する。
+        participants:
+          - name: "연심이"
+            role: "疑惑と自己非難の対象となる妻"
+        emotional_impact: "high"
+        emotional_detail: |
+          強い物的証拠を得ても、妻に悪意があるという結論には耐えられない。疑いを抱いた自分の側を罪ある者へ変えることで、依存関係を守ろうとする。謝罪への急ぎは、真相確認より妻との秩序回復を優先する選択である。
+        canonical_quotes:
+          - quote: '아스피린, 아달린, 아스피린, 아달린, 마르크, 말사스, 마도로스, 아스피린, 아달린……'
+            context: "薬の疑念が音の連想へ飛躍し、思考の統制を失う。"
+            z_intensity: "high"
+            z_mode: "concern"
+          - quote: '아내는 한 달 동안 아달린을 아스피린이라고 속이고 내게 먹였다.'
+            context: "妻が薬を偽って飲ませたという最初の結論。"
+            z_intensity: "high"
+            z_mode: "concern"
+          - quote: '그렇다면 나는 참 미안하다. 나는 아내에게 이렇게 큰 의혹을 가졌다는 것이 참 안됐다.'
+            context: "妻自身が薬を使った可能性を考え、疑った自分を責め始める。"
+            z_intensity: "medium"
+            z_mode: "grief"
+          - quote: '나는 내 잘못된 생각을 죄다 일러바치고 아내에게 사죄하려는 것이다.'
+            context: "疑念を自分の誤りと決め、告白と謝罪のため帰宅する。"
+            z_intensity: "high"
+            z_mode: "nurture"
+        z_relevance: |
+          断定、反証、罪悪感への反転を論理的に整理しすぎず、その不安定な往復を残す。薬の客観的真相を翻訳者が補足して解決してはならない。語の連鎖は意味だけでなく音の暴走として再現し、謝罪が事実確認より先に来る依存的な思考を示す。
+        character_state_change:
+          before: "妻に薬で欺かれたという怒りと恐怖を抱いている。"
+          after: "妻に有利な説明を作り、疑った自分を責めて謝罪へ向かう。"
+          permanent: false
+        tags: ["疑念", "合理化", "自己非難", "謝罪", "認識の反転"]
+
+      - episode_id: "violent_rupture_and_escape"
+        timeline: "main"
+        chronological_order: 14
+        title: "目撃、暴力、沈黙の逃走"
+        source_episode: "ep09_adalin.txt"
+        summary: |
+          謝罪するつもりで帰宅した彼は、再び自分が絶対に見るべきでない光景を目撃する。身なりを乱した妻は襟首をつかみ、倒れた彼へ覆いかぶさって肌を噛む。男が妻を抱えて部屋へ戻す姿に、彼は初めて剥き出しの憎さを感じる。妻から夜通し盗みや女遊びをしていたのかと責められ、薬で殺そうとしたのは妻ではないかと叫びたいが、口が動かない。残金を敷居の下へ置き、家から走り去る。
+        participants:
+          - name: "연심이"
+            role: "妻／身体的攻撃と非難を加える最重要関係者"
+          - name: "ep09で妻の部屋にいた男"
+            role: "妻を抱えて部屋へ戻し、夫の疎外を決定的にする男"
+        emotional_impact: "critical"
+        emotional_detail: |
+          薬への疑い、性的な裏切りを示唆する光景、身体的な痛み、冤罪感が一度に重なる。内面では痛みと憎しみが短い言葉で噴出するが、対面では完全に発話を失う。金を残す行為は、親密さの儀式だった金銭授受を、宥めと別離の身振りへ反転させる。
+        canonical_quotes:
+          - quote: '나는 내 눈으로 절대로 보아서 안될 것을 그만 딱 보아 버리고 만 것이다.'
+            context: "謝罪のため帰宅した直後、妻の部屋で禁じられた光景を目撃する。"
+            z_intensity: "high"
+            z_mode: "concern"
+          - quote: '아파 죽겠다.'
+            context: "妻に肌を噛まれ、分析を失って直接的な痛みだけが漏れる。"
+            z_intensity: "high"
+            z_mode: "release"
+          - quote: '아내는 아무 말 없이 다소곳이 그렇게 안겨 들어가는 것이 내 눈에 여간 미운 것이 아니다. 밉다.'
+            context: "男に抱かれて部屋へ戻る妻を見て、憎しみが一語へ凝縮する。"
+            z_intensity: "high"
+            z_mode: "release"
+          - quote: '이것은 참 너무 억울하다. 나는 어안이 벙벙하여 도무지 입이 떨어지지를 않았다.'
+            context: "妻から不実を責められ、反論したいのに現実には話せなくなる。"
+            z_intensity: "high"
+            z_mode: "grief"
+          - quote: '나는 그냥 줄달음박질을 쳐서 나와 버렸다.'
+            context: "残金を置いた後、対決せず家から走り去る。"
+            z_intensity: "high"
+            z_mode: "release"
+        z_relevance: |
+          「殺そうとしたのではないか」という反論は、叫びたいと思っただけで実際には発話されない。内面の「아파 죽겠다」「밉다」と外面の沈黙を明確に分ける。目撃内容は具体化せず、金を置く意味も支払い、宥め、別れのいずれか一つへ固定しない。
+        character_state_change:
+          before: "妻を疑った自分を責め、関係修復のため謝罪しようとしている。"
+          after: "妻への憎しみと冤罪感を抱きながら、言葉では対抗できず生活圏から逃走する。"
+          permanent: true
+        tags: ["暴力", "裏切り", "発話停止", "逃走", "関係破綻"]
+
+      - episode_id: "rooftop_numbness_and_mutual_misunderstanding"
+        timeline: "main"
+        chronological_order: 15
+        title: "三越屋上の虚無と相互誤解"
+        source_episode: "ep10_rooftop.txt"
+        summary: |
+          家から逃げた彼は京城駅でコーヒーを求めるが、残金をすべて置いてきたため飲めない。行き先も分からないまま歩き、気づくと三越屋上にいる。二十六年の人生を回想しても題目を見つけられず、自分に人生への欲望があるかと問い、存在の認識さえ難しくなる。五月の日差しの中で金魚を観察し、疲れた都市を見下ろしながら、妻との関係を一方の悪意ではなく相互の誤解と、歩調の合わない夫婦の運命として再び抽象化する。
+        participants:
+          - name: "연심이"
+            role: "不在のまま、帰還と夫婦関係を考えさせる妻"
+          - name: "三越屋上の金魚たち"
+            role: "虚無の中で彼の観察力を一時的に安定させる対象"
+          - name: "都市の匿名の人々"
+            role: "眼下で活動し続ける都市生活の担い手"
+        emotional_impact: "critical"
+        emotional_detail: |
+          怒りの直後に訪れるのは解放感ではなく、金、行き先、自己像を失った空虚さである。金魚の生命感だけが一時的に感覚をつなぎ止める。妻との破局さえ「相互誤解」という観念へ変えることで、彼は再び一方的な断罪を避けるが、帰るべきかは決められない。
+        canonical_quotes:
+          - quote: '커피! 좋다.'
+            context: "逃走後の苦い口を鎮めるため、駅でコーヒーを求める。"
+            z_intensity: "medium"
+            z_mode: "release"
+          - quote: '나는 또 내 자신에게 물어 보았다. 너는 인생에 무슨 욕심이 있느냐고, 그러나 있다고도 없다고 도 그런 대답은 하기가 싫었다.'
+            context: "自分を二人称化し、人生への欲望を問いながら答えを拒む。"
+            z_intensity: "high"
+            z_mode: "grief"
+          - quote: '나는 거의 나 자신의 존재를 인식하기조차도 어려웠다.'
+            context: "妻の家と行き先を失い、自己の存在感まで希薄になる。"
+            z_intensity: "high"
+            z_mode: "grief"
+          - quote: '금붕어는 참 잘들도 생겼다. 작은놈은 작은놈대로 큰놈은 큰놈대로 다 싱싱하니 보기 좋았다.'
+            context: "屋上の金魚を大小それぞれの生命力として静かに観察する。"
+            z_intensity: "low"
+            z_mode: "stable"
+          - quote: '우리들은 서로 오해하고 있느니라.'
+            context: "夫婦の破局を、互いの誤解という構造へ捉え直す。"
+            z_intensity: "medium"
+            z_mode: "concern"
+        z_relevance: |
+          自問の「너」は妻ではなく自分自身を指す。「互いに誤解している」は客観的な和解宣言ではなく、妻を断罪しきれない彼の再抽象化である。金魚の細部へ戻る静かな観察と、存在希薄化の重い内語を対照させる。
+        character_state_change:
+          before: "妻への痛みと憎しみを抱え、家から衝動的に逃げている。"
+          after: "怒りを虚無と相互誤解の観念へ変えるが、帰る場所も欲望も決められない。"
+          permanent: false
+        tags: ["三越屋上", "虚無", "自己問答", "金魚", "相互誤解"]
+
+      - episode_id: "wings_reawaken"
+        timeline: "main"
+        chronological_order: 16
+        title: "失われた翼への再覚醒"
+        source_episode: "ep10_rooftop.txt"
+        summary: |
+          正午のサイレンが鳴り、都市全体が激しく動き出す瞬間、彼は突然わきの下の痒みを感じる。それを今は失われた人工の翼が生えていた痕跡だと捉え、頭の中で消されていた希望と野心を思い出す。歩みを止め、翼よ再び生えよ、もう一度だけ飛ぼうと叫んでみたいと願う。実際に飛んだ事実は示されないが、無為と虚無の語りは初めて直接的な意志へ変わる。
+        participants:
+          - name: "都市の匿名の人々"
+            role: "正午の運動によって再覚醒を促す群衆"
+        emotional_impact: "critical"
+        emotional_detail: |
+          回復は論理的な結論や妻との和解からではなく、痒み、サイレン、都市の生命感という身体的刺激から生じる。長く抑圧されていた希望が、分析や弁明を越えて命令形と反復になり、最後の瞬間に主体性を取り戻す。
+        canonical_quotes:
+          - quote: '나는 불현듯 겨드랑이가 가렵다.'
+            context: "正午の都市の動きの中で、翼の記憶につながる身体感覚が突然生じる。"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: '아하, 그것은 내 인공의 날개가 돋았던 자국이다. 오늘은 없는 이 날개.'
+            context: "わきの痒みを、失われた人工の翼の痕跡として認識する。"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: '머릿속에서는 희망과 야심이 말소된 페이지가 딕셔너리 넘어가듯 번뜩였다.'
+            context: "自分の中から希望と野心が消されていたことを思い出す。"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: '날개야 다시 돋아라.'
+            context: "再び翼を得たいという願いが、直接的な命令形になる。"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: '날자. 날자. 한 번만 더 날자꾸나.'
+            context: "自分自身へ、もう一度だけ飛ぼうと反復して呼びかける。"
+            z_intensity: "high"
+            z_mode: "resolve"
+          - quote: '한 번만 더 날아 보자꾸나.'
+            context: "作品を閉じる、再挑戦への切実な内的呼びかけ。"
+            z_intensity: "high"
+            z_mode: "resolve"
+        z_relevance: |
+          直前に「叫んでみたい」と記されているため、末尾の言葉を実際に声へ出した確定台詞にしない。翼も実際に再生したとは断定せず、身体感覚から生じた再生願望として扱う。長い分析文から短い命令形へ切り替わる速度と、「날자」の反復を最優先で保持する。
+        character_state_change:
+          before: "自己の存在も行き先も定められず、妻との関係を抽象化して立ち尽くしている。"
+          after: "失われた希望と野心を認識し、もう一度飛ぼうとする意志を言語化する。"
+          permanent: true
+        tags: ["覚醒", "翼", "希望", "主体性", "終幕"]
+
+arcs:
+  - arc_id: "intellectualization_to_direct_cry"
+    title: "研究する語りから直接的な叫びへ"
+    episodes: ["prologue_intellectual_mask", "money_visitors_and_pleasure_question", "five_won_handover_and_first_night", "adalin_discovery_and_overdose", "suspicion_reversed_into_guilt", "violent_rupture_and_escape", "rooftop_numbness_and_mutual_misunderstanding", "wings_reawaken"]
+    theme: "危険な感情を機知や研究へ変える語りが、衝撃と身体感覚によって短い痛み、憎しみ、飛翔の意志へ崩れていく過程。"
+    character_growth: |
+      当初は恋愛も感情も逆説として処理し、妻の客や金も研究対象へ変えていた。薬物と暴力を経験すると論理は維持できなくなり、最後には説明ではなく「飛ぼう」という直接的な自己呼びかけへ到達する。
+    z_translation_note: |
+      平常時の抽象語、長文、自己訂正と、高負荷時の短文・反復を均一化しない。「研究」「誤解」といった知性化の語彙が、「아파 죽겠다」「밉다」「날자」へ急落する振幅がこの人物の感情曲線を作る。
+
+  - arc_id: "sleep_refuge_to_forced_sleep"
+    title: "安らぎの睡眠から管理された睡眠へ"
+    episodes: ["absolute_room_and_divided_fate", "sensory_play_and_social_withdrawal", "station_refuge_rain_and_collapse", "illness_and_daily_tablets", "adalin_discovery_and_overdose"]
+    theme: "自ら選んだ寝床と睡眠が、妻の薬によって外界と真相から隔離する手段へ変質する。"
+    character_growth: |
+      暗い部屋と寝具は当初、社会的要求から自由になれる絶対的な安全地帯だった。しかし雨の外出後、妻の錠剤によって睡眠が反復され、アダリンの発見により安全と拘束の境界が崩れる。彼はその衝撃を処理できず、自ら残薬を飲むことで管理された睡眠を自己破壊的に反復する。
+    z_translation_note: |
+      同じ「眠る」でも、初期は安堵、中盤は病的崩落、服薬期は無自覚な管理、過量服用時は衝動的な放棄を表す。各場面の主体性と感情価を訳し分け、睡眠を一貫して穏やかな休息として扱わない。
+
+  - arc_id: "money_mediated_intimacy"
+    title: "金銭を介した親密さ"
+    episodes: ["money_visitors_and_pleasure_question", "first_outing_and_early_return", "five_won_handover_and_first_night", "second_handover_and_acceptance", "moneyless_tears_and_wifes_aid", "violent_rupture_and_escape"]
+    theme: "使うことのできない金が、妻との接近、受容、許可、最終的な別離を伝える代替言語になる。"
+    character_growth: |
+      銀貨は最初、触感だけが楽しい無意味な物だった。五ウォンを妻へ渡して初めて妻の寝床へ入れたことで、彼は金を親密さの儀式と理解し、再現を求める。破局時には残金を敷居へ置き、同じ身振りを関係から逃れるために用いる。
+    z_translation_note: |
+      金額や経済取引だけを前景化せず、手渡す触覚、妻の無言の受容、寝床への接近を一続きに扱う。終盤で金を置く行為は、以前の親密さを反転させるため、単純な支払いや返済と限定しない。
+
+  - arc_id: "idealization_suspicion_and_rupture"
+    title: "妻の理想化、疑念、自己非難、破局"
+    episodes: ["thirty_three_isolation_and_wife_idealization", "money_visitors_and_pleasure_question", "first_outing_and_early_return", "station_refuge_rain_and_collapse", "illness_and_daily_tablets", "adalin_discovery_and_overdose", "suspicion_reversed_into_guilt", "violent_rupture_and_escape", "rooftop_numbness_and_mutual_misunderstanding"]
+    theme: "最も美しい花として崇めた妻を疑いながら、その疑いを自責によって打ち消し、直接的な暴力と目撃によってようやく生活圏から離脱するまで。"
+    character_growth: |
+      客、金、囁き、薬という証拠が増えても、彼は妻に有利な説明を作り、疑った自分を責める。視覚的な目撃、身体的攻撃、妻からの非難が重なった時に初めて逃走するが、屋上ではなお夫婦を相互誤解として捉え直し、妻を完全には断罪しない。
+    z_translation_note: |
+      妻の意図を全知的に確定せず、彼の限定された知識と揺れる推論を維持する。「틀림없다」に相当する断定の直後に別の可能性を作る反転を省かない。怒りがあっても現実の対話では沈黙する点が重要である。
+
+  - arc_id: "confinement_to_flight"
+    title: "閉鎖された部屋から再飛翔へ"
+    episodes: ["thirty_three_isolation_and_wife_idealization", "absolute_room_and_divided_fate", "first_outing_and_early_return", "station_refuge_rain_and_collapse", "violent_rupture_and_escape", "rooftop_numbness_and_mutual_misunderstanding", "wings_reawaken"]
+    theme: "暗い部屋を最適な世界として受け入れた人物が、失敗する外出と破局を経て、最後にもう一度外界へ向かう意志を取り戻す。"
+    character_growth: |
+      初期の彼は閉鎖と無為を苦痛ではなく絶対的安逸として選び、外出しても疲労によって戻っていた。妻の家から逃げた後は帰る場所も自己認識も失うが、正午の都市と身体の痒みを契機に、失われた希望と野心を自覚する。実際の飛翔は描かれないものの、終幕では少なくとも飛ぼうとする意志が生まれる。
+    z_translation_note: |
+      初期の部屋への愛着を単なる抑圧として訳すと、終幕の転換が弱くなる。最後の飛翔は成功した行動ではなく切実な願望であり、「もう一度だけ」という反復に、長い無為と失敗した外出の全重量を持たせる。

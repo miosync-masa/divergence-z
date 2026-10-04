@@ -1,0 +1,153 @@
+glossary:
+- source: 정신분일자
+  target: 精神奔逸者
+  note: 精神が自由に飛び回るという漢語的・心理学的な響きを保ち、原文の説明的な括弧書きも残した。
+  since: ep01_prologue.txt
+- source: 굿바이
+  target: グッドバイ
+  note: 時代的な外来語の響きを保つため、現代的な「さようなら」に置き換えなかった。
+  since: ep01_prologue.txt
+- source: 위트 / 파라독스 / 아이로니 / 포우즈
+  target: ウイット／パラドックス／アイロニー／ポーズ
+  note: 都市的で観念的な外来語の連鎖を保ち、「ウイット」はやや古風な表記とした。
+  since: ep01_prologue.txt
+- source: 33번지
+  target: 三十三番地
+  note: 物語の主要な居住地として、漢数字を用いた表記で統一した。
+  since: ep02_33beonji.txt
+- source: 탕고도오랑
+  target: タンゴドーラン
+  note: 香料または化粧品を思わせる時代的な外来語の音を、意味語に置き換えず残した。
+  since: ep02_33beonji.txt
+- source: 백인당 / 길상당
+  target: 百忍堂／吉祥堂
+  note: 各戸の引戸上に掲げられた漢語の額・札として漢字表記にした。
+  since: ep02_33beonji.txt
+- source: 칼표 딱지
+  target: 剣印のラベル
+  note: 時代的な商品ラベルらしさを保ち、名刺の大きさを示す比較物として訳した。
+  since: ep02_33beonji.txt
+- source: 럭키 세븐
+  target: ラッキー・セブン
+  note: 数字の七に託された私的な吉兆と、時代的な外来語の響きを保った。
+  since: ep03_my_room.txt
+- source: 지리가미
+  target: ちり紙
+  note: 日本語由来の時代的な借用語であり、妻が化粧に用いる薄紙として元の日本語に戻した。
+  since: ep04_play_and_scent.txt
+- source: 센슈얼
+  target: センシュアル
+  note: 時代的な外来語の響きと、香りに託された官能性を保った。
+  since: ep04_play_and_scent.txt
+- source: 치마와 저고리
+  target: チマやチョゴリ
+  note: 衣服から妻の身体を連想する文化的な形状を保つため、一般化せず名称を残した。
+  since: ep04_play_and_scent.txt
+- source: 골덴양복
+  target: コール天の洋服
+  note: 골덴の日本語由来の古い呼称に合わせ、時代感のある「コール天」とした。
+  since: ep04_play_and_scent.txt
+- source: 사루마다
+  target: サルマタ
+  note: 日本語由来の下着名であり、時代的な生活感を保つため名称を残した。
+  since: ep04_play_and_scent.txt
+- source: 흐늑흐늑한 공기
+  target: ふにゃふにゃした空気
+  note: 弛緩した触感を空気へ移す非標準的・擬態的な表現を、幼さのにじむ日本語で再現した。
+  since: ep04_play_and_scent.txt
+- source: 벙어리 / 금고형 벙어리
+  target: 貯金箱／金庫型の貯金箱
+  note: 硬貨の投入口だけを持つ封じた貯金箱を指す語。直訳の「唖」は避けつつ、口へ銀貨が消える擬人化は本文で残した。
+  since: ep05_money.txt
+- source: 누깔잠
+  target: 目玉簪
+  note: 丸い目玉状の飾りを持つ簪を指す俗称として、妻の髪に吹出物のように生えたという視覚的な比喩を保った。
+  since: ep05_money.txt
+- source: 진솔 버선
+  target: おろしたてのポソン
+  note: まだ洗っていない真新しい朝鮮式の足袋を指すため、衣服名を一般的な「足袋」に置き換えなかった。
+  since: ep05_money.txt
+- source: 장지 / 미닫이
+  target: 襖／引戸
+  note: 夫婦の部屋を隔てる紙張りの장지は既訳の「襖」を継承し、一般的な滑り戸を指す미닫이は「引戸」として区別した。
+  since: ep06_first_outing.txt
+- source: 경성역
+  target: 京城駅
+  note: 植民地期京城の駅名として漢字表記を用いた。
+  since: ep07_second_outing.txt
+- source: 티이루움
+  target: ティールーム
+  note: 駅や街の喫茶室を指す時代的な外来語として、意味を一般化せず名称を残した。
+  since: ep07_second_outing.txt
+- source: 복스
+  target: ボックス席
+  note: 向かい合わせの区画席を指すため、座席形態が分かる表現とした。
+  since: ep07_second_outing.txt
+- source: 모오짜르트
+  target: モオツァルト
+  note: 原文の引き伸ばされた時代的な外来語表記を、現代標準の「モーツァルト」に均さず再現した。
+  since: ep07_second_outing.txt
+- source: 연심이
+  target: ヨンシミ
+  note: 妻の名を心中だけで呼ぶ場面として、原文の親密な呼称形まで含めた音をカタカナで残した。
+  since: ep09_adalin.txt
+- source: 아달린 / 최면약 아달린
+  target: アダリン／催眠薬アダリン
+  note: 薬名の時代的な音写を保ち、薬種は原文どおり「催眠薬」とした。
+  since: ep09_adalin.txt
+- source: 진개나리꽃
+  target: チンゲナリの花
+  note: 植物名の不明瞭さと、混乱した語りの中に現れる特異な響きを一般的な花名へ均さず残した。
+  since: ep09_adalin.txt
+- source: 미쓰꼬시
+  target: 三越
+  note: 植民地期京城の百貨店を指すため、当時の日本語名称を漢字で示した。
+  since: ep10_rooftop.txt
+- source: 오탁의 거리
+  target: 汚濁の街
+  note: 都市生活の疲弊と抜け出せない混濁を示す漢語的な比喩として訳した。
+  since: ep10_rooftop.txt
+- source: 로직
+  target: ロジック
+  note: 語り手が夫婦の行動を知性化する時代的な外来語の響きを残した。
+  since: ep10_rooftop.txt
+- source: 딕셔너리
+  target: ディクショナリー
+  note: 希望と野心の記憶がページとして閃く場面の時代的な外来語表記を保った。
+  since: ep10_rooftop.txt
+- source: 날자
+  target: 飛ぼう
+  note: 分析的な長文から直接的な意志へ転じる簡潔さと反復を最優先した。
+  since: ep10_rooftop.txt
+voice:
+- character: 연심이の夫
+  aspect: プロローグの하오体と二人称
+  decision: 「です・ます」を基調に、勧告では「なさい」、修辞疑問では「でしょうか」を用いて、古風で礼儀正しい演説調を表現した。그대は文学的な距離を持つ「あなた」とした。
+  since: ep01_prologue.txt
+- character: 연심이の夫
+  aspect: P009末尾の합네다
+  decision: 周囲より大仰な「のであります」とし、講釈めいた意図的な語調のずれを示した。
+  since: ep01_prologue.txt
+- character: 연심이の夫
+  aspect: 本編の一人称回想叙述
+  decision: プロローグの演説的な敬体から常体へ切り替え、「私は」の反復、断定後の自己訂正、観察を一項ずつ積み上げるリズムを残した。
+  since: ep02_33beonji.txt
+- character: 연심이の夫
+  aspect: 妻への内心の二人称너／네
+  decision: プロローグで仮想の聞き手に用いる「あなた」と区別し、声には出さない親密な弁明では「君」とした。
+  since: ep06_first_outing.txt
+- character: 연심이
+  aspect: 紙幣を差し出す際の「옜소」
+  decision: 柔らかく親密で、過度に格式ばらない短い提示表現として「ほら」とした。
+  since: ep07_second_outing.txt
+- character: 연심이の夫
+  aspect: 自分自身への二人称너
+  decision: 妻への内心の呼びかけで用いる「君」と区別し、自己を突き放して問い詰める「おまえ」とした。
+  since: ep10_rooftop.txt
+- character: 연심이の夫
+  aspect: 末尾の再飛翔への内的呼びかけ
+  decision: 実際の発声とは確定させず、「叫んでみたかった」に続く内的発話として、短い命令形と勧誘形を反復した。
+  since: ep10_rooftop.txt
+style:
+- decision: 概念を示す原文の引用符は日本語のかぎ括弧に改め、長い破線は二倍ダーシで統一した。
+  since: ep01_prologue.txt

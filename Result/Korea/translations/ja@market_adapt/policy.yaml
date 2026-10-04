@@ -1,0 +1,14 @@
+name: market_adapt
+presets:
+- market_adapt
+domains:
+  notation:
+    action: substitute
+    instruction: 度量衡・通貨・日付を読者の慣習の形式に。値は等価に保つ
+  commodity:
+    action: substitute
+    instruction: 同じ時代・同じ社会的な意味（大衆品か高級品か等）の等価物に置き換える
+  religion:
+    action: annotate
+  politics:
+    action: annotate

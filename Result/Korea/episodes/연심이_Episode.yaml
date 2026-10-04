@@ -1,0 +1,321 @@
+meta:
+  version: "1.0"
+  generated_by: "episode_extractor"
+  character_id: "yeonsimi"
+  persona_file: "yeonsimi_persona.yaml"
+  source: "날개 (翼)"
+
+timelines:
+  - timeline_id: "main"
+    label: "本編の単一時間軸"
+    episodes:
+      - episode_id: "life_in_divided_rooms"
+        timeline: "main"
+        chronological_order: 1
+        title: "33番地の分かたれた夫婦生活"
+        source_episode: "ep02_33beonji.txt / ep03_my_room.txt / ep04_play_and_scent.txt"
+        summary: |
+          연심이は33番地の若い女性たちの一人として暮らし、夫から最も小さく美しい花にたとえられる。日が入る下の部屋は彼女、日が入らない上の部屋は夫の領域となり、彼女の部屋には華やかな衣服や化粧品が並ぶ。
+          夫は他の住民との交際を断って彼女だけを社会との結び目とし、彼女の外出中にだけ下の部屋へ入る。一方、彼女が夫に与える衣服は、黒ずんだ一組の服に限られている。
+        participants:
+          - name: "연심이の夫"
+            role: "夫／観察者・被扶養者"
+          - name: "33番地18世帯の若い女性たち"
+            role: "同じ居住区の住民／比較対象"
+        emotional_impact: "medium"
+        emotional_detail: |
+          연심이自身の感情は示されない。しかし、明るく装飾された彼女の領域と、暗く何もない夫の領域との非対称は、彼女が生活の中心を担いながら私的空間を守っていることを示す。夫からは美化され、保護対象であると同時に、自分がぶら下がって生きる唯一の存在として見られている。
+        canonical_quotes: []
+        z_relevance: |
+          美しさや花の比喩は夫の主観的な理想化であり、연심이自身の自己認識として訳してはならない。後の入室制限や予期しない帰宅への怒りは、この時点から続く部屋の境界を前提としている。彼女の寡黙さを補うために、原文にない説明や愛情表現を追加しない。
+        character_state_change:
+          before: "物語開始以前の暮らしと夫婦関係は不明。"
+          after: "日当たりのよい私室、衣服、金銭、外出を管理し、夫にとって唯一の対人的な拠り所となる。"
+          permanent: true
+        tags: ["起点", "夫婦関係", "空間境界", "生活管理", "理想化"]
+
+      - episode_id: "visitors_meals_and_coins"
+        timeline: "main"
+        chronological_order: 2
+        title: "来客、食事、硬貨による生活管理"
+        source_episode: "ep05_money.txt"
+        summary: |
+          연심이は昼夜に外出し、夜にはより良い服を着て来客を迎える。来客がいる間、夫は上の部屋にとどまり、彼女はその後で夫を訪ね、慰めるように短く話して微笑み、枕元へ五十銭銀貨を置く。
+          彼女は夫のために食事を作って上の部屋へ運ぶが、自室へ招いて一緒に食べることはない。硬貨がたまると貯金箱を買い、鍵を自分で持つ。夫が貯金箱を便所へ捨てても叱らず、その後も変わらず硬貨を置き続ける。
+        participants:
+          - name: "연심이の夫"
+            role: "夫／生活と金銭の受け手"
+          - name: "연심이の客たち"
+            role: "来客／金銭の提供者"
+        emotional_impact: "high"
+        emotional_detail: |
+          慰める時の微笑の下には、夫が見逃さなかった一抹の哀愁がある。ただし、その理由は語られない。食事、硬貨、貯金箱を通じた世話は継続的だが、粗末な食事の間に夫は栄養不足で衰弱しており、保護と放置が同居している。
+        canonical_quotes: []
+        z_relevance: |
+          彼女の慰めの具体的な文言は本文に記録されていないため、翻訳で台詞を創作しない。微笑と哀愁、食事と衰弱、金銭提供と隔離という二重性を保つ必要がある。来客の職業的・性的性格は強く示唆されるが、本文が職業名を明示しない以上、断定語を補わない。
+        character_state_change:
+          before: "空間と物資を分けて夫との生活を維持している。"
+          after: "食事と銀貨を反復して与え、金銭を夫婦間の主要な接触手段として定着させる。"
+          permanent: true
+        tags: ["金銭", "来客", "扶養", "哀愁", "保護と放置"]
+
+      - episode_id: "early_return_silent_anger"
+        timeline: "main"
+        chronological_order: 3
+        title: "早すぎる帰宅への無言の怒り"
+        source_episode: "ep06_first_outing.txt"
+        summary: |
+          夫が彼女の夜の外出中に初めて街へ出て、予想より早く帰宅する。연심이は見知らぬ男と部屋におり、夫と顔を合わせた後、普段とは異なる低い声で男と話し、門まで送っていく。
+          戻ってきた彼女は眠る夫を激しく揺さぶる。笑顔はなく、目には怒気が浮かび、薄い唇が震えているが、叱責の言葉は発さず、自室へ戻る。
+        participants:
+          - name: "연심이の夫"
+            role: "夫／予期せず帰宅した境界侵入者"
+          - name: "낯설은 남자"
+            role: "来客／怒りを誘発する場面の同席者"
+        emotional_impact: "high"
+        emotional_detail: |
+          来客中の私的領域を乱された怒りが、視線、震える唇、荒い呼吸に現れる。それでもこの段階では事情説明も罵倒もせず、沈黙によって感情を押し戻している。この抑制は、後の直接的な露見時に起きる爆発と対照を成す。
+        canonical_quotes: []
+        z_relevance: |
+          この場面の核心は発話の欠如である。夫の内心の謝罪を、彼女が実際に口にした叱責への応答として確定しない。翻訳では無言の怒気を説明台詞へ置き換えず、目、唇、呼吸に漏れる感情を残す。
+        character_state_change:
+          before: "来客と夫の生活時間を分離し、表面上は平静を維持している。"
+          after: "夫の予測不能な帰宅を、自分の部屋と時間割への侵入として警戒する。"
+          permanent: false
+        tags: ["境界侵害", "抑圧された怒り", "沈黙", "来客", "伏線"]
+
+      - episode_id: "five_won_first_night"
+        timeline: "main"
+        chronological_order: 4
+        title: "五円と初めての寝床"
+        source_episode: "ep06_first_outing.txt"
+        summary: |
+          怒りを受けた夫は一時間ほど悩んだ後、연심이の部屋へよろめき入り、彼女の布団へ倒れ込みながら、使わずに持ち帰った五円を彼女の手へ握らせる。
+          翌朝、夫は33番地で暮らし始めて以来初めて、彼女の布団の中で目を覚ます。연심이はすでに不在で、金を受け取った時の言葉や、夫をそこへ留めた意図は記されない。
+        participants:
+          - name: "연심이の夫"
+            role: "夫／金銭の提供者"
+        emotional_impact: "high"
+        emotional_detail: |
+          彼女の内面上の受容、驚き、愛情は観測できない。ただし、直前まで閉ざされていた寝床に夫が朝まで残るという、初めての関係変化が成立する。金銭授受と身体的な近さが隣接することで、親密さと取引性の区別が曖昧になる。
+        canonical_quotes: []
+        z_relevance: |
+          五円を渡したことと寝室への接近は連続しているが、彼女の動機は明示されない。恋愛的な和解にも、明確な取引契約にも固定せず、彼女の無言と空間上の変化をそのまま訳す必要がある。
+        character_state_change:
+          before: "夫を自室や寝床から遠ざけ、来客中の帰宅には怒りを示している。"
+          after: "夫が初めて彼女の寝床で一夜を過ごすという前例が生まれる。"
+          permanent: true
+        tags: ["金銭媒介", "寝室", "親密化", "曖昧さ", "関係の転機"]
+
+      - episode_id: "two_won_shared_supper"
+        timeline: "main"
+        chronological_order: 5
+        title: "二円と初めての共食"
+        source_episode: "ep07_second_outing.txt"
+        summary: |
+          二度目の外出から深夜に戻った夫は、門前で연심이と男が話している脇を通り抜ける。その後、夫から二円を渡された彼女は、なぜ使わず持ち帰ったのか確かめるように何度も顔をうかがい、何も言わず自室で眠らせる。
+          翌夕、彼女は初めて夫を自室へ呼び、絶えず微笑みながら腕を取る。整えられた夕食を二人で向かい合って食べるが、夫婦の間に会話はない。
+        participants:
+          - name: "연심이の夫"
+            role: "夫／金銭の提供者・食卓の相手"
+          - name: "아내의 남자"
+            role: "来客／門前での会話相手"
+        emotional_impact: "high"
+        emotional_detail: |
+          二円を受け取った直後には驚きと警戒が反復する視線に表れ、その後は持続する微笑と腕を取る動作へ軟化する。彼女が自分から夫を部屋と食卓へ招くのは初めてだが、沈黙は解消されず、感情の理由も語られない。
+        canonical_quotes: []
+        z_relevance: |
+          この場面では、反復する視線、無言の許可、微笑、腕を取る動作が台詞の代わりを務める。翻訳で親密な会話や感謝の言葉を補わない。二円と寝床、翌日の招待を関連づけつつも、因果関係を彼女自身の明言として断定しない。
+        character_state_change:
+          before: "五円の授受後、例外的に夫を寝床へ留めたことがある。"
+          after: "再び寝床を開き、さらに自分から夫を招いて同じ食卓につく。"
+          permanent: true
+        tags: ["金銭媒介", "共食", "無言", "微笑", "関係の節目"]
+
+      - episode_id: "banknote_and_late_permission"
+        timeline: "main"
+        chronological_order: 6
+        title: "紙幣と遅い帰宅の許可"
+        source_episode: "ep07_second_outing.txt"
+        summary: |
+          夫が外出用の金を得られず、布団の中で泣くと、연심이はその理由を見抜いて部屋へ来る。声は柔らかく親しげで、彼女は夫の枕元へ紙幣を落とし、前日より遅く帰ってもよいと耳元で囁く。
+          これは彼女が夫から金を受け取るだけでなく、夫の脆弱さに応じて自分から金を与え、同時に帰宅時間を調整する場面である。
+        participants:
+          - name: "연심이の夫"
+            role: "夫／困窮をさらけ出す援助の受け手"
+        emotional_impact: "high"
+        emotional_detail: |
+          夫の泣き声に対して、彼女の声は明確に柔らかくなる。情緒的な慰めは紙幣という具体的な援助に変換される一方、帰宅時間の指定によって、優しさと生活上の管理が同時に保たれている。
+        canonical_quotes:
+          - quote: "돈이 없어서 그러는 게 아 니란다."
+            context: "夫の回想的な間接話法で、金がないことを泣く理由として見抜いたと伝える箇所。"
+            z_intensity: "low"
+            z_mode: "nurture"
+          - quote: "옜소"
+            context: "泣いている夫の枕元へ紙幣を落として渡す際の直接引用。"
+            z_intensity: "low"
+            z_mode: "nurture"
+          - quote: "오늘을랑 어제보다도 늦게 돌아와도 좋다고"
+            context: "紙幣を渡した後、夫の耳元で帰宅時刻を緩める間接話法上の発言。"
+            z_intensity: "low"
+            z_mode: "stable"
+        z_relevance: |
+          「돈이 없어서 그러는 게 아니란다」は形式上の否定を含むが、文脈では金欠を理由として見抜く反語的な確認として扱う。「옜소」は古風だが過剰に格式ばらせず、短い提示表現を保つ。柔らかな囁きを純粋な愛情告白へ変えず、帰宅時間を管理する側面も残す。
+        character_state_change:
+          before: "夫から金を受け取ることで寝室や食卓の境界を緩めていた。"
+          after: "夫の困窮を察して自ら紙幣を与え、金銭援助と時間管理を一体化させる。"
+          permanent: true
+        tags: ["慰め", "紙幣", "帰宅時間", "養育と統制", "親密な囁き"]
+
+      - episode_id: "rain_fever_and_daily_tablets"
+        timeline: "main"
+        chronological_order: 7
+        title: "雨夜の失神と毎日の錠剤"
+        source_episode: "ep07_second_outing.txt / ep08_illness.txt"
+        summary: |
+          遅い帰宅を許された夜、夫は雨と寒さに耐えられず予定より早く戻る。연심이には来客がおり、夫はノックを忘れて、彼女が見られることを望まない場面を目撃した後、濡れたまま上の部屋で失神する。
+          翌朝、彼女は心配そうな顔で枕元に座り、額へ触れて、湯と白い錠剤四個を与える。その後も数日間投薬し、風邪が治って夫が再び外出を望んでも、外出禁止、毎日の服薬、安静を命じる。
+        participants:
+          - name: "연심이の夫"
+            role: "夫／病人・服薬管理の対象"
+          - name: "연심이の客たち"
+            role: "来客／早い帰宅時の同席者"
+        emotional_impact: "high"
+        emotional_detail: |
+          心配顔、額への接触、薬を勧める口調には実務的な看病が見える。一方、彼女は無理な外出で自分に世話をかけたと小言を述べ、回復後も服薬と安静を続けさせる。保護と負担感、看病と行動統制が同じ指示の中に重なる。
+        canonical_quotes:
+          - quote: "약을 먹어야지"
+            context: "発熱した夫の額を確かめ、服薬を当然の処置として勧める。"
+            z_intensity: "low"
+            z_mode: "concern"
+          - quote: "외출하지 말라고"
+            context: "風邪が治った後も外へ出たがる夫に、外出を禁じる間接話法上の指示。"
+            z_intensity: "medium"
+            z_mode: "resolve"
+          - quote: "이 약을 날마다 먹고 그리고 가만히 누워 있으라는 것이다."
+            context: "薬を毎日飲み、静かに横になっているよう求める間接話法。"
+            z_intensity: "medium"
+            z_mode: "resolve"
+          - quote: "저를 고생시키는게 아니란다."
+            context: "夫の無理な外出が自分へ看病の負担をかけたとたしなめる。"
+            z_intensity: "medium"
+            z_mode: "concern"
+        z_relevance: |
+          看病の柔らかさと、外出・睡眠を管理する命令性を分離しすぎない。「저」はこの小言の中で彼女自身を指す。後に錠剤がアダリンだったという疑惑が生じるため、安心させる口調を無条件の善意にも、露骨な悪意にも固定しない。
+        character_state_change:
+          before: "金と帰宅時刻を通じて夫の外出を調整している。"
+          after: "服薬、睡眠、外出禁止を通じ、夫の身体と覚醒状態まで継続的に管理する。"
+          permanent: true
+        tags: ["看病", "病気", "服薬", "外出禁止", "保護と統制"]
+
+      - episode_id: "adalin_box_discovery"
+        timeline: "main"
+        chronological_order: 8
+        title: "アダリンの箱が変えた意味"
+        source_episode: "ep09_adalin.txt"
+        summary: |
+          約一か月後、연심이の外出中に夫が彼女の化粧台を調べ、催眠薬アダリンの箱を発見する。箱からは四錠がなくなっており、夫はその朝も四錠の薬を飲み、長期間眠気に支配されていたことを思い出す。
+          夫は彼女がアスピリンと偽ってアダリンを飲ませたと確信する一方、自分が飲んだ薬は本当にアスピリンで、アダリンは眠れない彼女自身のものだった可能性も考える。연심이は不在で、目的も事実関係も説明しない。
+        participants:
+          - name: "연심이の夫"
+            role: "夫／薬箱の発見者・疑念を抱く者"
+        emotional_impact: "critical"
+        emotional_detail: |
+          연심이の内面は観測されないが、それまでの看病行為は、夫の中で欺瞞、監禁、さらには緩慢な殺害の疑いへ反転する。薬の目的が確定しないまま信頼だけが崩れ、彼女の世話と統制の境界が最も危険な形で曖昧になる。
+        canonical_quotes: []
+        z_relevance: |
+          アダリン投与と殺意は、夫の発見と推論を通じて語られる。翻訳では、彼が一度は別の可能性も考えていることを残し、彼女が殺害目的を認めたかのような確定表現を加えない。彼女の名前「연심이」も、この直前に夫が心中で呼ぶだけで、本人の発話ではない。
+        character_state_change:
+          before: "夫から、心配しながら薬を与える生活管理者として受け入れられている。"
+          after: "夫の認識の中で、薬によって自分を眠らせた欺瞞的な管理者として疑われる。"
+          permanent: true
+        tags: ["発覚", "睡眠薬", "疑念", "信頼崩壊", "不確かな動機"]
+
+      - episode_id: "exposure_rage_and_separation"
+        timeline: "main"
+        chronological_order: 9
+        title: "秘密露見後の噛みつきと逆告発"
+        source_episode: "ep09_adalin.txt"
+        summary: |
+          残っていたアダリン六錠を自ら飲んだ夫は、一昼夜眠った後、疑ったことを謝ろうとして帰宅する。しかし再び、絶対に見るべきでないと感じる場面を彼女の部屋で目撃する。
+          身なりを乱した연심이は即座に戸を開け、夫の襟首を掴む。倒れた夫の上に覆いかぶさって肌へ噛みつき、男に抱えられて部屋へ戻された後、夫が夜通し盗みか女遊びをしていたのかと激しく詰問する。夫は反論せず、残金を敷居の下へ置いて逃走する。
+        participants:
+          - name: "연심이の夫"
+            role: "夫／秘密の目撃者・攻撃を受ける者"
+          - name: "ep09で妻の部屋にいた男"
+            role: "来客／彼女を抱えて制止する者"
+        emotional_impact: "critical"
+        emotional_detail: |
+          それまで視線や沈黙に抑えていた怒りが、襟を掴む、噛みつく、罵倒するという身体的・言語的な攻撃へ一気に変わる。羞恥、恐怖、収入を守る意図などは明言されず、観測できるのは秘密露見に対する激烈な排除と逆告発だけである。
+        canonical_quotes:
+          - quote: "너 밤새워 가면서 도둑질하러 다니느냐, 계집질하러 다니느냐"
+            context: "来客との場面を目撃された直後、夫の夜間行動を窃盗か女遊びとして並列的に詰問する。"
+            z_intensity: "high"
+            z_mode: "release"
+        z_relevance: |
+          平常時に省いていた二人称を「너」と明示し、「도둑질」と侮蔑的な「계집질」を同型の疑問文で重ねる急激な待遇低下を保つ。事情説明や弁明を追加せず、身体的攻撃が言葉より先に出る順序も重要である。夫が心中で叫びたいと考えた殺害疑惑は、彼女の発話へ混同しない。
+        character_state_change:
+          before: "薬と来客に関する秘密を保ち、境界侵害への怒りを主に沈黙で処理している。"
+          after: "秘密を目撃した夫へ身体的攻撃と逆告発を行い、夫婦関係が公然たる破裂と逃走に至る。"
+          permanent: true
+        tags: ["秘密露見", "激昂", "身体的暴力", "逆告発", "決裂"]
+
+      - episode_id: "wife_as_mutual_misunderstanding"
+        timeline: "main"
+        chronological_order: 10
+        title: "不在のまま残る相互誤解"
+        source_episode: "ep10_rooftop.txt"
+        summary: |
+          夫が逃げた後、연심이は物語上の現在には姿を見せない。三越屋上にたどり着いた夫の意識には、彼女の首、アスピリン、アダリンが繰り返し浮かび、自分たちは互いに誤解している、足並みの合わない夫婦だと考える。
+          夫は彼女のもとへ戻るべきか決められないまま、最後には再び飛ぶことへの希求へ向かう。彼女が夫の逃走をどう受け止めたか、帰還を待ったか、薬や来客について何を意図していたかは最後まで示されない。
+        participants:
+          - name: "연심이の夫"
+            role: "夫／彼女との関係を再解釈する離脱者"
+        emotional_impact: "critical"
+        emotional_detail: |
+          ここでの重大さは関係上の帰結であり、연심이自身の感情は完全に観測外にある。彼女は、夫にとって帰る可能性のある場所であると同時に、薬、金銭、秘密、暴力をめぐる解けない疑念の中心として残る。
+        canonical_quotes: []
+        z_relevance: |
+          「互いに誤解している」という理解は夫だけの内面上の整理であり、彼女の同意や告白ではない。終幕の翻訳では、アダリン投与の目的、来客との関係、夫婦の再会を解決済みにせず、彼女の不在と未確定性を保つ。
+        character_state_change:
+          before: "夫と直接衝突し、彼が金を残して逃走する。"
+          after: "夫の記憶と疑念の中に不在の妻として残り、関係は帰還の可否も含めて未解決となる。"
+          permanent: true
+        tags: ["余波", "相互誤解", "不在", "未解決", "結末"]
+
+arcs:
+  - arc_id: "care_and_control"
+    title: "世話から身体管理へ"
+    episodes: ["life_in_divided_rooms", "visitors_meals_and_coins", "rain_fever_and_daily_tablets", "adalin_box_discovery"]
+    theme: "食事、衣服、金銭による生活維持が、外出、服薬、睡眠の管理へ拡大し、保護と統制の境界が崩れていく。"
+    character_growth: |
+      成長というより、연심이が担う管理領域の拡大として描かれる。夫の生活資源を扱う妻から、病気を看護し覚醒状態まで左右する存在へ移り、その行為はアダリン発見によって危険な意味へ反転する。
+    z_translation_note: |
+      世話の短い言葉を冷酷な命令だけにせず、同時に無条件の母性的愛情にも寄せない。薬の目的は本人から説明されないため、優しさと支配性を同じ発話の中に残す。
+
+  - arc_id: "money_mediated_intimacy"
+    title: "金銭を介して開閉する親密さ"
+    episodes: ["visitors_meals_and_coins", "five_won_first_night", "two_won_shared_supper", "banknote_and_late_permission", "exposure_rage_and_separation"]
+    theme: "銀貨や紙幣が、慰め、寝室への接近、共食、外出許可、そして別離のしるしとして夫婦間を往復する。"
+    character_growth: |
+      연심이は夫へ硬貨を与える側から、夫の持ち帰った金を受け取って寝床を開く側となり、さらに泣く夫へ紙幣を与える側へ戻る。言葉による交渉の代わりに、金銭の方向と空間の配分によって距離を調整する性質が強まる。
+    z_translation_note: |
+      金を単なる小道具として弱めず、誰が誰へ渡すかを正確に保つ。一方、寝室との連動だけを根拠に、彼女の感情や職業を明示的な取引契約として断定しない。
+
+  - arc_id: "escalating_private_boundary_conflict"
+    title: "境界侵入と怒りの段階的爆発"
+    episodes: ["early_return_silent_anger", "rain_fever_and_daily_tablets", "adalin_box_discovery", "exposure_rage_and_separation"]
+    theme: "夫による予期しない帰宅、来客場面の目撃、化粧台の探索、秘密の直接露見が重なり、彼女の反応が沈黙から身体的攻撃へ変化する。"
+    character_growth: |
+      最初の侵入では目と唇に怒りを漏らすだけだった연심이が、最後の露見では夫を掴み、噛みつき、「너」を用いて逆告発する。内面の変化は語られないが、表出方法は抑制から爆発へ明確に移行する。
+    z_translation_note: |
+      初期場面の沈黙を後の罵倒と同じ強度で訳さず、段階差を守る。最終場面では「너」、反復疑問、窃盗と女遊びの侮蔑語を弱めず、平常時との待遇落差を別の言語資源でも補償する。
+
+  - arc_id: "unresolved_mutual_misunderstanding"
+    title: "説明されない薬と解けない夫婦の誤解"
+    episodes: ["adalin_box_discovery", "exposure_rage_and_separation", "wife_as_mutual_misunderstanding"]
+    theme: "夫の薬への疑念、彼女の逆告発、夫による相互誤解という整理が交差するが、双方が直接説明し合うことはない。"
+    character_growth: |
+      연심이は自分の事情を説明する主体としてではなく、夫の疑念と回帰願望の中心として残る。衝突後も彼女の目的、罪責、愛情は確定せず、関係だけが修復不能に近い地点まで進む。
+    z_translation_note: |
+      夫の推論を客観的真実へ変えず、彼女の怒りを自白としても扱わない。「相互誤解」は夫の独白上の表現であることを保ち、終幕でも解釈の余白を閉じない。

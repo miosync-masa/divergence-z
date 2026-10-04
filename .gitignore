@@ -12,3 +12,6 @@ app/dist/
 release/
 dist-sidecar/
 build/
+
+# 作例（Result/<作品>/）の訳文はリポジトリに含める
+!Result/*/translations/
