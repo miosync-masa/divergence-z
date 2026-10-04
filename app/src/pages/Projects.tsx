@@ -2,6 +2,7 @@ import { useState } from "react";
 import { api, KeyStatus } from "../lib/api";
 import { go, useAsync } from "../lib/hooks";
 import { Empty, ErrorBox, Glitch, Sticker } from "../components/ui";
+import { ProjectFolderPrompt } from "../components/ProjectFolderPrompt";
 
 const LANGS = ["ja", "en", "zh", "ko", "fr", "es", "de"];
 
@@ -98,6 +99,7 @@ export function ProjectsPage({ keys }: { keys: KeyStatus | null }) {
                 }}>選ぶ</button>
               </div>
             </label>
+            <div style={{ gridColumn: "1 / -1" }}><ProjectFolderPrompt path={form.source} /></div>
             <label className="field">プロジェクト名
               <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
             </label>
