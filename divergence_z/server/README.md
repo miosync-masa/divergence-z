@@ -40,6 +40,7 @@ stdout に1行だけ JSON が出る。アプリはこれを読んで接続先と
 | GET / PUT | `/session/keys` | `{openai?, anthropic?, openai_base_url?}`。`""` でクリア |
 | GET | `/models` | モデル登録表（context_window / max_output / efforts / price） |
 | GET / POST | `/projects` | 一覧 / フォルダを開く・作る `{root, name?, work?, source?, output_lang?, review_cast?, models?}` |
+| GET | `/folders/inspect?path=` | フォルダがプロジェクト（`project.yaml` あり）か。`{is_project, name, work, registered_id}` |
 | GET / PATCH / DELETE | `/projects/{id}` | 状態（人物表・persona・episode の有無）/ 設定変更 / 一覧から外す（フォルダは消さない） |
 | GET / PUT | `/projects/{id}/cast` | 人物表 `{yaml}` |
 | GET | `/projects/{id}/personas`, `/episodes` | ファイル一覧 |
